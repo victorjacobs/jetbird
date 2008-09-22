@@ -69,7 +69,7 @@
 
 					{if $smarty.session.login == 1}
 					<div id="view_post_box">
-					<form name="input" action="./?post?action=make_comment&amp;post_id={$smarty.get.post_id}" method="post">
+					<form name="input" action="./?post&action=make_comment&amp;post_id={$smarty.get.post_id}" method="post">
 					text
 					<textarea rows="10" cols="50" name="comments_text" ></textarea> <br />
 					<input type="submit" value="Post"/>

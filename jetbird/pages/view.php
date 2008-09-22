@@ -15,27 +15,11 @@
     along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-//start the session first
-session_start();
-/*
-/*	include section	       
-*/
 
-require ('C:\xampp\htdocs\blog2/include/common.php');
-require ('C:\xampp\htdocs\blog2\include\smarty\Smarty.class.php');
 
-/*
-/*	smarty config section & DB connect      
-*/
 
-$smarty = new Smarty();
 
-$smarty->template_dir = 'C:\xampp\htdocs\blog2\template\default';
-$smarty->compile_dir = 'C:\xampp\htdocs\blog2\include\smarty\templates_c';
-$smarty->cache_dir = 'C:\xampp\htdocs\blog2\include\smarty\cache';
-$smarty->config_dir = 'C:\xampp\htdocs\blog2\include\smarty\configs';
-//$smarty->debugging = TRUE;
-database_connect("localhost","tidus","tidus","login");
+
 
 switch ($_GET['action']) {
 
