@@ -47,7 +47,7 @@ switch ($_GET['action']) {
 	if (isset($_POST['username'])) {
 		$pwd = md5($_POST['password']);
 		$query = "SELECT * FROM users WHERE username = '$_POST[username]' AND password = '$pwd'";
-		$result = mysql_query($query) or die(mysql_erro());
+		$result = mysql_query($query) or die(mysql_error());
   
 	
 		//checking how much rows are affected
@@ -59,7 +59,7 @@ switch ($_GET['action']) {
 			$_SESSION['username'] = $_POST['username'];
 			$_SESSION['user_id'] = $row['user_id'];
 			$smarty->assign('login', TRUE);
-			redirect('http://127.0.0.1/blog2/index.php', 2);
+			redirect('./index.php', 2);
 		} 
 		else { 
 		$smarty->assign('login', FALSE);
@@ -77,7 +77,7 @@ switch ($_GET['action']) {
 	
 		$_SESSION = array();
 		session_destroy();
-		redirect('http://127.0.0.1/blog2/index.php', 2);
+		redirect('./index.php', 2);
 		break;
 /*
 /*	register section
@@ -102,7 +102,7 @@ switch ($_GET['action']) {
 			$sql="INSERT INTO users (username, password, auth_id) VALUES ('$_POST[username]','$pwd', 0)";
 			mysql_query($sql) or die(mysql_error);
 			$smarty->assign('register', TRUE);
-			redirect('http://127.0.0.1/blog2/index.php', 2);
+			redirect('./index.php', 2);
 			}
 		}
 	break;
