@@ -1,11 +1,4 @@
--- phpMyAdmin SQL Dump
--- version 2.11.7
--- http://www.phpmyadmin.net
---
--- Host: localhost
--- Generatie Tijd: 22 Sept 2008 om 20:17
--- Server versie: 5.0.51
--- PHP Versie: 5.2.6
+-- SQL Dump
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -22,7 +15,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- --------------------------------------------------------
 
 --
--- Tabel structuur voor tabel `comment`
+-- Table structure for`comment`
 --
 
 CREATE TABLE IF NOT EXISTS `comment` (
@@ -38,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
 -- --------------------------------------------------------
 
 --
--- Tabel structuur voor tabel `post`
+-- Table structure for `post`
 --
 
 CREATE TABLE IF NOT EXISTS `post` (
@@ -54,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `post` (
 -- --------------------------------------------------------
 
 --
--- Tabel structuur voor tabel `users`
+-- Table structure for `users`
 --
 
 CREATE TABLE IF NOT EXISTS `users` (
