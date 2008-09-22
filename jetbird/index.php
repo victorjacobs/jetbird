@@ -1,83 +1,50 @@
-<?
-/*This file is part of jetbird.
+<?php
 
-    jetbird is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+	/*This file is part of jetbird.
 
-    Foobar is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+	    jetbird is free software: you can redistribute it and/or modify
+	    it under the terms of the GNU General Public License as published by
+	    the Free Software Foundation, either version 3 of the License, or
+	    (at your option) any later version.
 
-    You should have received a copy of the GNU General Public License
-    along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
-*/
-//start the session first
-session_start();
-/*
-/*	include section	       
-*/
+	    Foobar is distributed in the hope that it will be useful,
+	    but WITHOUT ANY WARRANTY; without even the implied warranty of
+	    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	    GNU General Public License for more details.
 
-require ('C:\xampp\htdocs\blog2/include/common.php');
-require ('C:\xampp\htdocs\blog2\include\smarty\Smarty.class.php');
-
-/*
-/*	smarty config && BBcode initialization section & DB connect      
-*/
-
-//smarty
-$smarty = new Smarty();
-
-
-
-$smarty->template_dir = 'C:\xampp\htdocs\blog2\template\default';
-$smarty->compile_dir = 'C:\xampp\htdocs\blog2\include\smarty\templates_c';
-$smarty->cache_dir = 'C:\xampp\htdocs\blog2\include\smarty\cache';
-$smarty->config_dir = 'C:\xampp\htdocs\blog2\include\smarty\configs';
-//$smarty->debugging = TRUE;
-database_connect("localhost","tidus","tidus","login");
-
-/*
-/*	header section	      
-*/
-
-/*
-/*	content/main body section	      
-*/
-
-	/* here we are going to fetch all the data from the DB
-	/* and place it in one big array so we can output it to smarty
+	    You should have received a copy of the GNU General Public License
+	    along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 	*/
-
-
-	// fetching data out of DB
-	$query = "SELECT post.* , users.username 
-				FROM post
-				INNER JOIN users
-				ON post.puser_id=users.user_id
-				ORDER BY post.post_id DESC LIMIT 5";	
-				
-	$result = query($query);
 	
-	// placing all the data in one array
-	while($row = mysql_fetch_array($result)) {
-		$main_content['title'][] = $row['title'];
-		$main_content['date'][] = date("D M j G:i  Y", $row['date']);
-		$main_content['post'][] = nl2br(preview_text($row['post'], 500, 1));
-		$main_content['post_id'][] = $row['post_id'];
+	// Global init
+	ob_start();
+	session_start();
+	require_once "include/functions.php";
+	$process_start = timer();		// use this wherever you want, can be useful for debugging
+	require_once "include/configuration.php";
+	require_once "include/smarty/Smarty.class.php";
+	require_once "include/database.connect.php";
+	
+	$smarty = new Smarty();
+
+	$smarty->template_dir = 'template\default';
+	$smarty->compile_dir = 'include\smarty\templates_c';
+	$smarty->cache_dir = 'include\smarty\cache';
+	$smarty->config_dir = 'include\smarty\configs';
+	
+	// Getting ready for the real deal: including our pages
+	$arguments = array_keys($_GET);
+	
+	if(isset($args) && file_exists("pages/". $args[0] .".php") && is_readable("pages/". $args[0] .".php") && eregi("^[a-z0-9_-]+$", $args[0])){
+		$include = strtolower($args[0]);
+	}elseif(empty($args[0]) || !empty($_GET[$args[0]])){		// if arguments for specific page like ./?page=1
+		$include = "main";
+	}else{
+		redirect("./");
 	}
 	
-	//output to smarty
-	$smarty->assign('main_post', $main_content['post']);
-	$smarty->assign('main_title', $main_content['title']);
-	$smarty->assign('main_date', $main_content['date']);
-	$smarty->assign('post_id', $main_content['post_id']);
-	$smarty->display('index.tpl');
-
-/*
-/*	footer section	      
-*/
-?>
+	require_once "pages/". $include .".php";
 	
+	ob_end_flush();
+
+?>
