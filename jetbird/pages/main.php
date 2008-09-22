@@ -51,7 +51,6 @@
 		$smarty->assign('main_title', $main_content['title']);
 		$smarty->assign('main_date', $main_content['date']);
 		$smarty->assign('post_id', $main_content['post_id']);
-		$smarty->assign('queries', $dbconnection->queries);
 		$smarty->display('index.tpl');
 
 	/*

@@ -53,6 +53,8 @@
 	
 	require_once "pages/". $include .".php";
 	
+	$smarty->shutdown();
+	
 	ob_end_flush();
 
 ?>
