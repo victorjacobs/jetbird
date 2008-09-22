@@ -50,13 +50,6 @@
 		function fetch($file){
 			return $this->smarty_handle->fetch($file);
 		}
-		
-		// Put all assignments that are common for all pages here
-		function shutdown(){
-			global $process_start;
-			$this->assign('queries', $dbconnection->queries);
-			$this->assign('process_time', round(timer() - $process_start, 3));
-		}
 	}
 
 ?>

@@ -33,13 +33,13 @@
 		$query = "SELECT post.* , users.username 
 					FROM post
 					INNER JOIN users
-					ON post.puser_id=users.user_id
+					ON post.puser_id = users.user_id
 					ORDER BY post.post_id DESC LIMIT 5";	
 
 		$result = $dbconnection->query($query);
 
 		// placing all the data in one array
-		while($row = mysql_fetch_array($result)) {
+		while($row = mysql_fetch_array($result)){
 			$main_content['title'][] = $row['title'];
 			$main_content['date'][] = date("D M j G:i  Y", $row['date']);
 			$main_content['post'][] = nl2br(preview_text($row['post'], 500, 1));
