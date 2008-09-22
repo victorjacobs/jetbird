@@ -35,7 +35,7 @@ switch ($_GET['action']) {
 	if (isset($_POST['username'])) {
 		$pwd = md5($_POST['password']);
 		$query = "SELECT * FROM users WHERE username = '$_POST[username]' AND password = '$pwd'";
-		$result = mysql_query($query) or die(mysql_error());
+		$result = $dbconnection->query($query);
   
 	
 		//checking how much rows are affected
@@ -78,7 +78,7 @@ switch ($_GET['action']) {
 			
 			// checking if user already exists
 			$query = "SELECT username FROM users WHERE username = '$_POST[username]'";
-			$result = mysql_query($query) or die(mysql_error);
+			$result = $dbconnection->query($query);
 			
 			//checking how much rows are affected
 			if (mysql_num_rows($result) == 1)
@@ -87,8 +87,8 @@ switch ($_GET['action']) {
 			} else {
 			
 			//creating user
-			$sql="INSERT INTO users (username, password, auth_id) VALUES ('$_POST[username]','$pwd', 0)";
-			mysql_query($sql) or die(mysql_error);
+			$query="INSERT INTO users (username, password, auth_id) VALUES ('$_POST[username]','$pwd', 0)";
+			$result = $dbconnection->query($query);
 			$smarty->assign('register', TRUE);
 			redirect('./?main', 2);
 			}

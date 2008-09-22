@@ -42,7 +42,7 @@ switch ($_GET['action']) {
 	
 		
 		
-		$result = mysql_query($query) or die(mysql_error());
+		$result = $dbconnection->query($query);
 		if(mysql_num_rows($result) == 1)
 		{
 			$row = mysql_fetch_array($result);
@@ -65,7 +65,7 @@ switch ($_GET['action']) {
 							WHERE comment_parent_id = ". $_GET['post_id'] ."
 							AND comment.pcomment_id = users.user_id";
 	
-		$result = mysql_query($query) or die($query);
+		$result = $dbconnection->query($query);
 	
 		while ($row = mysql_fetch_array($result)) {
 			$view_content['comment'][] = nl2br($row['comment']);

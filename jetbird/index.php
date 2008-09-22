@@ -22,10 +22,15 @@
 	require_once "include/functions.php";
 	$process_start = timer();		// use this wherever you want, can be useful for debugging
 	require_once "include/configuration.php";
-	require_once "include/smarty.handler.class.php";
+	require_once "include/smarty/Smarty.class.php";
 	require_once "include/database.connect.php";
 	
-	$smarty = new smarty_handler();
+	$smarty = new Smarty();
+
+	$smarty->template_dir = 'template\default';
+	$smarty->compile_dir = 'include\smarty\templates_c';
+	$smarty->cache_dir = 'include\smarty\cache';
+	$smarty->config_dir = 'include\smarty\configs';
 	
 	require_once ('PEAR.php');
 	require_once ('HTML/BBCodeParser.php');
