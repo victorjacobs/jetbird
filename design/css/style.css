@@ -1,0 +1,61 @@
+/* @override http://localhost/prototype7/css/style.css */
+
+/* Global */
+
+body, html {
+	margin: 0;
+	padding: 0;
+	background-color: gray;
+	height: 100%;
+}
+
+body * {
+	text-align: justify;
+}
+
+h2 {
+	margin: 0 0 10px;
+}
+
+#wrap {
+	margin: auto;
+	width: 800px;
+	min-height: 100%;
+	height: auto;
+	border-left: 5px solid #3e3e3e;
+	border-right: 5px solid #3e3e3e;
+	background-color: #dcf3c2;
+}
+
+#side, #content {
+	margin: 20px;
+}
+
+/* Content */
+
+#contentwrap {
+	width: 579px;
+	float: left;
+	background-color: white;
+	border-right: 1px solid #bfe794;
+}
+
+#content > p {
+	margin-top: +10px;
+}
+
+/* Side */
+
+#sidewrap {
+	height: 100%;
+	width: 220px;
+	float: right;
+	background-color: #dcf3c2;
+}
+
+/* Footer */
+
+#footer {
+	clear: both;
+	background-color: white;
+}
