@@ -82,6 +82,6 @@ switch ($_GET['action']) {
 	default:
 		$smarty->assign('view', FALSE);
 	}
-		
+$smarty->assign('queries', $dbconnection->queries);	
 $smarty->display('view.tpl');
 ?>

@@ -49,6 +49,8 @@ div#wrap_header {
 
 div#wrap_footer {	
 	height: 50px;
+	text-align: center;
+	font-size: small;
 	background: url(images/test2_06.png) no-repeat;
 	}
 

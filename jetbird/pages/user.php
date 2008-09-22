@@ -95,7 +95,7 @@ switch ($_GET['action']) {
 		}
 	break;
 }	
-		
+	$smarty->assign('queries', $dbconnection->queries);
 	$smarty->display('user.tpl');
 ob_flush();
 ?>

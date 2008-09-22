@@ -78,7 +78,7 @@
 		</div>
 		
 		<div id="wrap_footer">
-		this is some text3
+		Number of queries: {$queries}
 		</div>
 		
 	</div> 
