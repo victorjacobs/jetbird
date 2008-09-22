@@ -35,9 +35,9 @@
 	// Getting ready for the real deal: including our pages
 	$arguments = array_keys($_GET);
 	
-	if(isset($args) && file_exists("pages/". $args[0] .".php") && is_readable("pages/". $args[0] .".php") && eregi("^[a-z0-9_-]+$", $args[0])){
-		$include = strtolower($args[0]);
-	}elseif(empty($args[0]) || !empty($_GET[$args[0]])){		// if arguments for specific page like ./?page=1
+	if(isset($arguments) && file_exists("pages/". $arguments[0] .".php") && is_readable("pages/". $arguments[0] .".php") && eregi("^[a-z0-9_-]+$", $arguments[0])){
+		$include = strtolower($arguments[0]);
+	}elseif(empty($arguments[0]) || !empty($_GET[$arguments[0]])){		// if arguments for specific page like ./?page=1
 		$include = "main";
 	}else{
 		redirect("./");
