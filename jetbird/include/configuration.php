@@ -17,9 +17,9 @@
 	*/
 	
 	// Database config
-	$config['database']['host'] = "";
-	$config['database']['user'] = "";
-	$config['database']['pass'] = "";
-	$config['database']['database'] = "";
+	$config['database']['host'] = "localhost";
+	$config['database']['user'] = "tidus";
+	$config['database']['pass'] = "tidus";
+	$config['database']['database'] = "login";
 
 ?>

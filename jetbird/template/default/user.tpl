@@ -34,7 +34,7 @@
 				
 				{if $smarty.get.action == login}
 					{if !isset($smarty.session.login)}
-					<form name="input" action="user.php?action=login" method="post">
+					<form name="input" action="?user?action=login" method="post">
 					Username: 
 					<input type="text" name="username"> <br />
 					password:
@@ -60,7 +60,7 @@
 				{elseif $smarty.get.action == register}
 				
 					{if !isset($smarty.session.login)}
-					<form name="input" action="user.php?action=register" method="post">
+					<form name="input" action="?user?action=register" method="post">
 					Username: 
 					<input type="text" name="username"> <br />
 					password:

@@ -17,7 +17,7 @@
 	*/
 	
 	// Include the blueprint for our database connection
-	require_once "includes/database.handler.php";
+	require_once "include/database.handler.php";
 	
 	// Now connect
 	$dbconnection = new database_handler;

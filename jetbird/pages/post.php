@@ -63,7 +63,7 @@ database_connect("localhost","tidus","tidus","login");
 			$query="	INSERT INTO post (post, date, puser_id, title) 
 						VALUES ('$text', $date, '$_SESSION[user_id]', '$_POST[main_title]')";
 			mysql_query($query) or die(mysql_error());
-			redirect('./index.php', 2);
+			redirect('./?main', 2);
 		}	
 		
 		break;
@@ -80,7 +80,7 @@ database_connect("localhost","tidus","tidus","login");
 			$query="	INSERT INTO comment (comment_parent_id, comment, pcomment_id, comment_date) 
 						VALUES ('$_GET[post_id]', '$text', '$_SESSION[user_id]', $date)";
 			mysql_query($query) or die(mysql_error());
-			redirect("./view.php?action=view_post&post_id=" . $_GET['post_id'] ."", 0);
+			redirect("./?view?action=view_post&post_id=" . $_GET['post_id'] ."", 0);
 			}
 			
 		break;

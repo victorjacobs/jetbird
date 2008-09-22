@@ -1,5 +1,6 @@
-<?php /* Smarty version 2.6.20, created on 2008-09-15 21:33:58
+<?php /* Smarty version 2.6.20, created on 2008-09-22 22:00:26
          compiled from index.tpl */ ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -16,16 +17,16 @@
 		<div id="wrap_header">
 			<div id="header">
 			<?php if (! isset ( $_SESSION['login'] )): ?>
-			<a class="link_login" href="user.php?action=login"> login</a>
-			<a class="link_login" href="user.php?action=register"> register </a>
+			<a class="link_login" href="./?user?action=login"> login</a>
+			<a class="link_login" href="./?user?action=register"> register </a>
 			<?php else: ?>
-			<a class="link_login" href="user.php?action=logout"> logout</a>
+			<a class="link_login" href="./?user?action=logout"> logout</a>
 			you are logged in as: <?php echo $_SESSION['username']; ?>
 
 			<?php endif; ?>
 			
 			<?php if ($_SESSION['auth_id'] == 1): ?>
-			<a class="link_login" href="post.php?action=main_make_post"> post</a>
+			<a class="link_login" href="?post?action=main_make_post"> post</a>
 			<?php endif; ?>
 			</div>
 		</div>
@@ -77,10 +78,10 @@ $this->_sections['loop']['last']       = ($this->_sections['loop']['iteration'] 
  
 					</p>					
 					
-					<a class="link_view" href="view.php?action=view_post&amp;post_id=<?php echo $this->_tpl_vars['post_id'][$this->_sections['loop']['index']]; ?>
+					<a class="link_view" href="./?view?action=view_post&amp;post_id=<?php echo $this->_tpl_vars['post_id'][$this->_sections['loop']['index']]; ?>
 "> read more</a>
 					<?php if ($_SESSION['auth_id'] == 1): ?>
-					<a class="link_edit" href="post.php?action=main_edit_post&amp;post_id=<?php echo $this->_tpl_vars['post_id'][$this->_sections['loop']['index']]; ?>
+					<a class="link_edit" href="./?post?action=main_edit_post&amp;post_id=<?php echo $this->_tpl_vars['post_id'][$this->_sections['loop']['index']]; ?>
 "> edit</a>
 					<?php endif; ?>
 					<br />

@@ -59,7 +59,7 @@ switch ($_GET['action']) {
 			$_SESSION['username'] = $_POST['username'];
 			$_SESSION['user_id'] = $row['user_id'];
 			$smarty->assign('login', TRUE);
-			redirect('./index.php', 2);
+			redirect('./?main', 2);
 		} 
 		else { 
 		$smarty->assign('login', FALSE);
@@ -77,7 +77,7 @@ switch ($_GET['action']) {
 	
 		$_SESSION = array();
 		session_destroy();
-		redirect('./index.php', 2);
+		redirect('./?main', 2);
 		break;
 /*
 /*	register section
@@ -102,7 +102,7 @@ switch ($_GET['action']) {
 			$sql="INSERT INTO users (username, password, auth_id) VALUES ('$_POST[username]','$pwd', 0)";
 			mysql_query($sql) or die(mysql_error);
 			$smarty->assign('register', TRUE);
-			redirect('./index.php', 2);
+			redirect('./?main', 2);
 			}
 		}
 	break;

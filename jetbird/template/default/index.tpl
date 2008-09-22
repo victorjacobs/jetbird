@@ -30,15 +30,15 @@
 		<div id="wrap_header">
 			<div id="header">
 			{if !isset($smarty.session.login)}
-			<a class="link_login" href="user.php?action=login"> login</a>
-			<a class="link_login" href="user.php?action=register"> register </a>
+			<a class="link_login" href="./?user?action=login"> login</a>
+			<a class="link_login" href="./?user?action=register"> register </a>
 			{else}
-			<a class="link_login" href="user.php?action=logout"> logout</a>
+			<a class="link_login" href="./?user?action=logout"> logout</a>
 			you are logged in as: {$smarty.session.username}
 			{/if}
 			
 			{if $smarty.session.auth_id == 1}
-			<a class="link_login" href="post.php?action=main_make_post"> post</a>
+			<a class="link_login" href="?post?action=main_make_post"> post</a>
 			{/if}
 			</div>
 		</div>
@@ -64,9 +64,9 @@
 					{$main_post[loop]} 
 					</p>					
 					
-					<a class="link_view" href="view.php?action=view_post&amp;post_id={$post_id[loop]}"> read more</a>
+					<a class="link_view" href="./?view?action=view_post&amp;post_id={$post_id[loop]}"> read more</a>
 					{if $smarty.session.auth_id == 1}
-					<a class="link_edit" href="post.php?action=main_edit_post&amp;post_id={$post_id[loop]}"> edit</a>
+					<a class="link_edit" href="./?post?action=main_edit_post&amp;post_id={$post_id[loop]}"> edit</a>
 					{/if}
 					<br />
 					<hr />
