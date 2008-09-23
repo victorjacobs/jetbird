@@ -45,9 +45,9 @@
 				{elseif $smarty.get.action == main_edit_post && $smarty.session.auth_id == 1}
 				<form name="input" action="./?post&action=main_edit_post&amp;post_id={$smarty.get.post_id}" method="post">
 				title
-				<textarea rows="2.5" cols="50" name="main_title" ></textarea>  <br />
+				<textarea rows="2.5" cols="50" name="post_title" >{$post_title}</textarea>  <br />
 				text
-				<textarea rows="10" cols="50" name="main_text" ></textarea> <br />
+				<textarea rows="10" cols="50" name="post_text" >{$post_text}</textarea> <br />
 				<input type="submit" value="Post"/>
 				</form>
 				{else}

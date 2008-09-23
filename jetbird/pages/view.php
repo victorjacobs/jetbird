@@ -32,7 +32,7 @@
 			
 			$query = "SELECT post, title, date
 						FROM post
-						WHERE post_id = '". $_GET['post_id'] ."'";			
+						WHERE post_id = ". $_GET['post_id'] ."";			
 			
 			$result = $dbconnection->query($query);
 			if(mysql_num_rows($result) == 1){

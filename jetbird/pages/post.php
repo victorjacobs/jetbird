@@ -37,6 +37,32 @@
 			break;
 			
 			case main_edit_post:
+
+				if 	(!isset($_POST[post_title])) {		
+					$query = "	SELECT post, post_id, title 
+								FROM post 
+								WHERE post_id =". $_GET[post_id] ."";
+			
+				
+					$row = $dbconnection->fetch_array($query);
+					$smarty->assign('post_text', $row['post']);
+					$smarty->assign('post_title', $row['title']);
+				}
+
+							
+
+							
+			//section to post the modified text
+				if(isset($_POST[post_title])) {
+					$parser = new HTML_BBCodeParser();
+					$text = $parser->qParse(htmlspecialchars($_POST['post_text']));
+					$query = "	UPDATE post 
+								SET post.post ='$text',
+								title = '$_POST[post_title]' WHERE post_id ='$_GET[post_id]' LIMIT 1";
+					$dbconnection->query($query);
+				
+					redirect("./?main", 0);
+				}
 				
 			break;
 			case make_comment:
