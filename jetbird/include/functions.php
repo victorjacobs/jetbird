@@ -17,6 +17,17 @@
 	*/
 	
 	// Some general functions
+	function destroy_cookie(){
+		if(func_num_args() == 0){
+			return false;
+		}
+		$arguments = func_get_args();
+		foreach($arguments as $cookie){
+			setcookie($cookie, false);
+		}
+		return true;
+	}
+	
 	function preview_text($text, $limit, $tags = 0) {
 
 	    // trim text
