@@ -24,6 +24,7 @@
 	require_once "include/configuration.php";
 	require_once "include/database.connect.php";
 	require_once "include/smarty.handler.class.php";
+	require_once "include/get.login.info.php";
 	
 	$smarty = new smarty_handler();
 
