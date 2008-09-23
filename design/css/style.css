@@ -38,6 +38,8 @@ h2 {
 	float: left;
 	background-color: white;
 	border-right: 1px solid #bfe794;
+	display: block;
+	height: 100%;
 }
 
 #content > p {
@@ -53,9 +55,23 @@ h2 {
 	background-color: #dcf3c2;
 }
 
+#side ul {
+	list-style-type: none;
+	padding-left: 0;
+}
+
+#adsense {
+	width: 200px;
+	margin-right: auto;
+	margin-bottom: auto;
+	margin-left: auto;
+	position: relative;
+}
+
 /* Footer */
 
 #footer {
 	clear: both;
 	background-color: white;
+	padding: 10px 20px;
 }
