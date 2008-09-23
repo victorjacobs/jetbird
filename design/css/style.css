@@ -17,6 +17,14 @@ h2 {
 	margin: 0 0 10px;
 }
 
+h3 {
+	margin-bottom: 5px;
+}
+
+small.subtitle {
+	padding-left: 20px;
+}
+
 #wrap {
 	margin: auto;
 	width: 800px;
@@ -74,4 +82,5 @@ h2 {
 	clear: both;
 	background-color: white;
 	padding: 10px 20px;
+	text-align: right;
 }
