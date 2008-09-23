@@ -26,7 +26,7 @@
 	require_once "include/smarty.handler.class.php";
 	
 	$smarty = new smarty_handler();
-	
+
 	require_once ('PEAR.php');
 	require_once ('HTML/BBCodeParser.php');
 	
