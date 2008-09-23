@@ -20,8 +20,8 @@
 	$user['logged_in'] = false;
 	
 	if(isset($_SESSION['user'])){
-		$user['name'] = &$_SESSION['username'];
-		$user['id'] = &$_SESSION['user_id']
+		$user['name'] = $_SESSION['username'];
+		$user['id'] = $_SESSION['user_id']
 		$user['method'] = "session";
 		$user['logged_in'] = true;
 	}elseif(isset($_COOKIE['user'])){			// Just leave this in here for later
