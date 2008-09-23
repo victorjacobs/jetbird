@@ -21,12 +21,12 @@
 	
 	if(isset($_SESSION['user'])){
 		$user['name'] = $_SESSION['username'];
-		$user['id'] = $_SESSION['user_id']
+		$user['id'] = $_SESSION['user_id'];
 		$user['method'] = "session";
 		$user['logged_in'] = true;
 	}elseif(isset($_COOKIE['user'])){			// Just leave this in here for later
 		$user['name'] = $_SESSION['username'];
-		$user['id'] = $_SESSION['user_id']
+		$user['id'] = $_SESSION['user_id'];
 		$user['method'] = "cookie";
 		$user['logged_in'] = true;
 	}
