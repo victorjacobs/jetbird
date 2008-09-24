@@ -34,17 +34,11 @@
 		redirect("../");
 		die();
 	}
-	$config['smarty']['template_dir'] = "../template/";
-	$config['smarty']['compile_dir'] = "../include/smarty/templates_c";
-	$config['smarty']['cache_dir'] = "../include/smarty/cache";
-	$config['smarty']['config_dir'] = "../include/smarty/configs";
 	
 	$smarty = new smarty_handler();
 	
 	// Getting ready for the real deal: including our pages
 	$arguments = array_keys($_GET);
-	
-
 	
 	if(isset($arguments) && file_exists("pages/". $arguments[0] .".php") && is_readable("pages/". $arguments[0] .".php") && eregi("^[a-z0-9_-]+$", $arguments[0])){
 		$include = strtolower($arguments[0]);

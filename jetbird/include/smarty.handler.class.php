@@ -30,11 +30,27 @@
 				$this->template = $config['smarty']['template'];
 			}
 			
-			$this->smarty_handle->template_dir = $config['smarty']['template_dir'] . $this->template . '/';
-			$this->smarty_handle->compile_dir = $config['smarty']['compile_dir'];
-			$this->smarty_handle->cache_dir = $config['smarty']['cache_dir'];
-			$this->smarty_handle->config_dir = $config['smarty']['config_dir'];
-			$this->smarty_handle->compile_id = $this->template;
+			$this->template_dir = &$this->smarty_handle->template_dir;
+			$this->compile_dir = &$this->smarty_handle->compile_dir;
+			$this->cache_dir = &$this->smarty_handle->cache_dir;
+			$this->config_dir = &$this->smarty_handle->config_dir;
+			$this->compile_id = &$this->smarty_handle->compile_id;			
+			
+			$included_files = get_included_files();
+			
+			if(eregi("admin", $included_files[0])){
+				$this->template_dir = "../". $config['smarty']['template_dir'] . $this->template . '/';
+				$this->compile_dir = "../". $config['smarty']['compile_dir'];
+				$this->cache_dir = "../". $config['smarty']['cache_dir'];
+				$this->config_dir = "../". $config['smarty']['config_dir'];
+			}else{
+				$this->template_dir = $config['smarty']['template_dir'] . $this->template . '/';
+				$this->compile_dir = $config['smarty']['compile_dir'];
+				$this->cache_dir = $config['smarty']['cache_dir'];
+				$this->config_dir = $config['smarty']['config_dir'];
+			}
+			unset($included_files);
+			$this->compile_id = $this->template;
 		}
 		
 		function display($file){
