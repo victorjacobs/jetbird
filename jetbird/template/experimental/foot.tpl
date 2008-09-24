@@ -28,7 +28,7 @@
 			<hr />
 
 			<div id="adsense">
-				<img src="image/adsensemockup.gif" alt="" />
+				<img src="template/experimental/image/adsensemockup.gif" alt="" />
 			</div>
 		</div>
 		
