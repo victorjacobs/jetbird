@@ -40,8 +40,7 @@
 	// Getting ready for the real deal: including our pages
 	$arguments = array_keys($_GET);
 	
-	echo "ja";
-	die();
+
 	
 	if(isset($arguments) && file_exists("pages/". $arguments[0] .".php") && is_readable("pages/". $arguments[0] .".php") && eregi("^[a-z0-9_-]+$", $arguments[0])){
 		$include = strtolower($arguments[0]);
