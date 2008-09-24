@@ -16,15 +16,18 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
+	// Global config
+	$config['global']['timestamp'] = "j/m/y";
+	
 	// Database config
-	$config['database']['host'] = "localhost";
-	$config['database']['user'] = "tidus";
-	$config['database']['pass'] = "tidus";
-	$config['database']['database'] = "login";
+	$config['database']['host'] = "";
+	$config['database']['user'] = "";
+	$config['database']['pass'] = "";
+	$config['database']['database'] = "";
 	
 	// Smarty config
 	$config['smarty']['template_dir'] = "template/";
-	$config['smarty']['template'] = "default";
+	$config['smarty']['template'] = "experimental";
 	$config['smarty']['compile_dir'] = "include/smarty/templates_c";
 	$config['smarty']['cache_dir'] = "include/smarty/cache";
 	$config['smarty']['config_dir'] = "include/smarty/configs";
