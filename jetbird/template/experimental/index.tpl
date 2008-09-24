@@ -38,7 +38,7 @@
 				{section name=loop loop=$main_post}
 				
 				<h3>{$main_title[loop]}</h3>
-				<small class="subtitle">By *Placeholder* on {$main_date[loop]}</small>
+				<small class="subtitle">By {$author[loop]|ucfirst} on {$main_date[loop]}</small>
 				
 				<p>{$main_post[loop]}</p>
 				<p><small>

@@ -44,6 +44,7 @@
 			$main_content['date'][] = date($config['global']['timestamp'], $row['date']);
 			$main_content['post'][] = nl2br(preview_text($row['post'], 500, 1));
 			$main_content['post_id'][] = $row['post_id'];
+			$main_content['author'][] = $row['username'];
 		}
 
 		//output to smarty
@@ -51,6 +52,7 @@
 		$smarty->assign('main_title', $main_content['title']);
 		$smarty->assign('main_date', $main_content['date']);
 		$smarty->assign('post_id', $main_content['post_id']);
+		$smarty->assign('author', $main_content['author']);
 		$smarty->assign('queries', $dbconnection->queries);
 		$smarty->display('index.tpl');
 

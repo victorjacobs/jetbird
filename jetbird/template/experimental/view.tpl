@@ -37,7 +37,7 @@
 				<small>The everyday problems of two geeks.</small>
 				
 				<h3>{$view_title}</h3>
-				<small class="subtitle">By *Placeholder* on {$view_date}</small>
+				<small class="subtitle">By {$author|ucfirst} on {$view_date}</small>
 				
 				<p>{$view_post}</p>
 				

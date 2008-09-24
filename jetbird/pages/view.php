@@ -25,9 +25,9 @@
 		redirect("./");
 	}
 
-	$query = "SELECT post, title, date
-		FROM post
-		WHERE post_id = ". $view_id ."";			
+	$query = "SELECT post.post, post.title, post.date, users.username
+		FROM post, users
+		WHERE post_id = ". $view_id ." AND users.user_id = post.puser_id";			
 
 	$result = $dbconnection->query($query);
 	if(mysql_num_rows($result) == 1){
@@ -35,6 +35,7 @@
 		$smarty->assign('view_post', nl2br($row['post']));
 		$smarty->assign('view_date', date($config['global']['timestamp'], $row['date']));
 		$smarty->assign('view_title', $row['title']);
+		$smarty->assign('author', $row['username']);
 	}
 
 	/*
