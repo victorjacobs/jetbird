@@ -15,6 +15,7 @@
 	    You should have received a copy of the GNU General Public License
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
+	
 	// Note: this page is very similar to the main index.php
 	
 	// Global init
@@ -29,7 +30,7 @@
 	require_once "../include/smarty.handler.class.php";
 	
 	// We don't want regular users to sniff around in here
-	if(!$_SESSION['login'] || $_SESSION['auth_id'] !== 1){
+	if(!(bool)$_SESSION['login'] || $_SESSION['auth_id'] ==! 1){
 		redirect("../");
 		die();
 	}
@@ -38,6 +39,9 @@
 	
 	// Getting ready for the real deal: including our pages
 	$arguments = array_keys($_GET);
+	
+	echo "ja";
+	die();
 	
 	if(isset($arguments) && file_exists("pages/". $arguments[0] .".php") && is_readable("pages/". $arguments[0] .".php") && eregi("^[a-z0-9_-]+$", $arguments[0])){
 		$include = strtolower($arguments[0]);
