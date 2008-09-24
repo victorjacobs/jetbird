@@ -40,8 +40,7 @@ CREATE TABLE IF NOT EXISTS `post` (
   `post` text NOT NULL,
   `date` int(11) NOT NULL,
   `title` text NOT NULL,
-  UNIQUE KEY `post_id` (`post_id`),
-  UNIQUE KEY `post_id_2` (`post_id`)
+  UNIQUE KEY `post_id` (`post_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=60 ;
 
 -- --------------------------------------------------------
