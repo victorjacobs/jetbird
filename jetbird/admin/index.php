@@ -35,14 +35,6 @@
 	}
 	
 	$smarty = new smarty_handler();
-
-	require_once ('PEAR.php');
-	require_once ('HTML/BBCodeParser.php');
-	
-	$config = parse_ini_file('conf/BBCodeParser.ini', true);
-	$options = &PEAR::getStaticProperty('HTML_BBCodeParser', '_options');
-	$options = $config['HTML_BBCodeParser'];
-	unset($options);
 	
 	// Getting ready for the real deal: including our pages
 	$arguments = array_keys($_GET);

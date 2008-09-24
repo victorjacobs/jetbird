@@ -17,6 +17,33 @@
 	*/
 	
 	// Some general functions
+	function BBCode($string){
+		// Clean up the input
+		$string = htmlentities($string);
+		
+		$search = array(
+			'/\[b\](.*?)\[\/b\]/is',
+			'/\[i\](.*?)\[\/i\]/is',
+			'/\[u\](.*?)\[\/u\]/is',
+			'/\[img\](.*?)\[\/img\]/is',
+			'/\[url\=(.*?)\](.*?)\[\/url\]/is',
+			'/\[url\](.*?)\[\/url\]/is',
+			'/\[code\](.*?)\[\/code\]/is'
+		);
+		
+		$replace = array(
+			'<b>\\1</b>',
+			'<i>\\1</i>',
+			'<u>\\1</u>',
+			'<img src="\\1" alt="" />',
+			'<a href="\\1">\\2</a>',
+			'<a href="\\1">\\1</a>',
+			'<code>\\1</code>'
+		);
+		
+		return preg_replace($search, $replace, $string);
+	}
+	
 	function preview_text($text, $limit, $tags = 0) {
 
 	    // trim text
