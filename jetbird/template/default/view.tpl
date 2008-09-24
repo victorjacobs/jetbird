@@ -18,7 +18,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-	<title> blog pre-alpha v0.03 </title>
+	<title>Jetbird Preview</title>
 	<link type="text/css" rel="stylesheet" media="screen" href="template/default/css/style.css" />
 
 </head>
