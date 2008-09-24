@@ -16,6 +16,6 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
-	echo "mooi";
-
+	$smarty->assign('text', mooi);
+	$smarty->display('admin.index.tpl');
 ?>
