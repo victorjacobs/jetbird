@@ -1,5 +1,4 @@
 <?php
-
 	/*	This file is part of Jetbird.
 
 	    Jetbird is free software: you can redistribute it and/or modify
@@ -16,6 +15,22 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
+	switch ($_GET['action']) {
 	
-	$smarty->display('admin.index.tpl');
+		case edit_permissions:
+		
+			$query = "	SELECT username 
+						FROM users
+						WHERE auth_id = 1";
+			$admins = $dbconnection->fetch_array($query);
+			foreach($admins as $admin){
+				$main['username'][] = $admin['username'];
+			}
+			$smarty->assign('admin', $main['username']);
+			
+		break;
+	}
+	
+	$smarty->display('admin.user.tpl');
+
 ?>
