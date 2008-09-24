@@ -15,27 +15,34 @@
 	    You should have received a copy of the GNU General Public License
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
+	// Note: this page is very similar to the main index.php
 	
 	// Global init
 	ob_start();
 	session_start();
-	require_once "include/functions.php";
+	require_once "../include/functions.php";
 	$process_start = timer();		// use this wherever you want, can be useful for debugging
-	require_once "include/configuration.php";
-	require_once "include/database.handler.php";
-	require_once "include/database.connect.php";
-	require_once "include/smarty/Smarty.class.php";
-	require_once "include/smarty.handler.class.php";
+	require_once "../include/configuration.php";
+	require_once "../include/database.handler.php";
+	require_once "../include/database.connect.php";
+	require_once "../include/smarty/Smarty.class.php";
+	require_once "../include/smarty.handler.class.php";
+	
+	// We don't want regular users to sniff around in here
+	if(!$_SESSION['login'] || $_SESSION['auth_id'] !== 1){
+		redirect("../");
+		die();
+	}
 	
 	$smarty = new smarty_handler();
 
-	// require_once ('PEAR.php');
-	// require_once ('HTML/BBCodeParser.php');
-	// 
-	// $config = parse_ini_file('conf/BBCodeParser.ini', true);
-	// $options = &PEAR::getStaticProperty('HTML_BBCodeParser', '_options');
-	// $options = $config['HTML_BBCodeParser'];
-	// unset($options);
+	require_once ('PEAR.php');
+	require_once ('HTML/BBCodeParser.php');
+	
+	$config = parse_ini_file('conf/BBCodeParser.ini', true);
+	$options = &PEAR::getStaticProperty('HTML_BBCodeParser', '_options');
+	$options = $config['HTML_BBCodeParser'];
+	unset($options);
 	
 	// Getting ready for the real deal: including our pages
 	$arguments = array_keys($_GET);
@@ -51,5 +58,6 @@
 	require_once "pages/". $include .".php";
 	
 	ob_end_flush();
+	
 
 ?>

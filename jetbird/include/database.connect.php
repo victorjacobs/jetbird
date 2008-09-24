@@ -16,10 +16,7 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
-	// Include the blueprint for our database connection
-	require_once "include/database.handler.php";
-	
-	// Now connect
+	// Connect
 	$dbconnection = new database_handler;
 	$dbconnection->connect($config['database']['user'], $config['database']['pass'], $config['database']['database'], $config['database']['host'])
 

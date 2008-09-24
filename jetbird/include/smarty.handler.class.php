@@ -16,8 +16,6 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
-	require_once "include/smarty/Smarty.class.php";
-	
 	class smarty_handler {
 		var $smarty_handle, $output, $template;
 		
