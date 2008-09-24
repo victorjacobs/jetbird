@@ -16,6 +16,24 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
-	$smarty->assign('text', mooi);
+	switch ($_GET['action']) {
+	
+		case edit_permissions:
+		
+			$query = "	SELECT username 
+						FROM users
+						WHERE auth_id = 1";
+			$result = mysql_query($query);
+			//$test = $dbconnection->fetch_array($query);
+			//die(print_r($test));
+			while($row = mysql_fetch_array($result)) {
+				$main['username'][] = $row['username'];
+				}
+			//die(print_r($main));
+			$smarty->assign('admin', $main['username']);
+			
+		break;
+	}
+	
 	$smarty->display('admin.index.tpl');
 ?>

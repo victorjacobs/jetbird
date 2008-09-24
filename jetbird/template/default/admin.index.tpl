@@ -33,7 +33,31 @@
 		</div>
 		
 		<div id="wrap_content">
-			{$text}
+			<div id="content">
+				{if $smarty.get.action == edit_permissions}
+				
+				administrators: 
+				<div id="admin_list">
+					{section name=loop loop=$admin}
+					{$admin[loop]}
+					<br />
+					{/section}
+					<br />
+					<br />
+				</div>	
+				<br />
+				add a administrator 
+				<form name="input" action="./?main&action=edit_permissions" method="post"	
+				<input type="text" name="username"> <br />
+				<input type="submit" value="submit"/>
+				</form>
+				
+				{else}
+				Welcome to the control panel {$smarty.session.username}!
+				<br />
+				<a id="link_permissions" href="./?main&action=edit_permissions">permissions</a>
+				{/if}
+			</div>
 			<div id="content">
 			</div>
 		</div>

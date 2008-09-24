@@ -67,7 +67,10 @@ div#content {
 div#view_post_box {
 	padding: 50px;
 	}
-	
+div#admin_list {
+	float: right;
+	padding-right: 385px;
+	}
 p.main_title {	
 	font-size: 18px;
 	font-family: sans-serif;
