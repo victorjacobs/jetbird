@@ -15,10 +15,6 @@
 	    You should have received a copy of the GNU General Public License
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
-			
-	/*
-	/*	smarty config section & DB connect      
-	*/
 		
 	/*
 	/*	Login section
