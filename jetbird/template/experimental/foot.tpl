@@ -33,7 +33,7 @@
 		</div>
 		
 		<div id="footer">
-			<small>Powered by <a href="http://jetbird.googlecode.com" target="_blank">Jetbird</a>{if !isset($smarty.session.login)} &raquo; <a href="./?user&amp;action=login">Log in</a>{/if}</small>
+			<small>Powered by <a href="http://jetbird.googlecode.com" target="_blank">Jetbird</a>{if !isset($smarty.session.login)} &raquo; <a href="./?user&amp;action=login">Log in</a>{/if} &raquo; Queries: {$queries}</small>
 		</div>
 	</div>
 	
