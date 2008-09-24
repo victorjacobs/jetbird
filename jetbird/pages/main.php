@@ -41,7 +41,7 @@
 		// placing all the data in one array
 		while($row = mysql_fetch_array($result)){
 			$main_content['title'][] = $row['title'];
-			$main_content['date'][] = date("D M j G:i  Y", $row['date']);
+			$main_content['date'][] = date($config['global']['timestamp'], $row['date']);
 			$main_content['post'][] = nl2br(preview_text($row['post'], 500, 1));
 			$main_content['post_id'][] = $row['post_id'];
 		}
