@@ -70,7 +70,9 @@
 		
 		function fetch_array($query, $mode = MYSQL_ASSOC){
 			$result = $this->query($query);
-			$output = mysql_fetch_array($result, $mode);
+			while($row = mysql_fetch_array($result, $mode)){
+				$output[] = $row;
+			}
 			mysql_free_result($result);
 			return $output;
 		}
