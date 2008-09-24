@@ -30,7 +30,7 @@
 	require_once "../include/smarty.handler.class.php";
 	
 	// We don't want regular users to sniff around in here
-	if(!(bool)$_SESSION['login'] || $_SESSION['auth_id'] ==! 1){
+	if(!$_SESSION['login'] || $_SESSION['auth_id'] ==! 1){
 		redirect("../");
 		die();
 	}
