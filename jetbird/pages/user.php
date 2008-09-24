@@ -37,7 +37,7 @@
 				$_SESSION['username'] = $_POST['username'];
 				$_SESSION['user_id'] = $row['user_id'];
 				$smarty->assign('login', TRUE);
-				redirect('./?main', 2);
+				redirect('./', 2);
 			} 
 			else { 
 			$smarty->assign('login', FALSE);
@@ -51,7 +51,7 @@
 		
 			$_SESSION = array();
 			session_destroy();
-			redirect('./?main', 2);
+			redirect('./', 2);
 			break;
 	/*
 	/*	register section
@@ -75,7 +75,7 @@
 				$query="INSERT INTO users (username, password, auth_id) VALUES ('". $_POST['username'] ."','$pwd', 0)";
 				$result = $dbconnection->query($query);
 				$smarty->assign('register', TRUE);
-				redirect('./?main', 2);
+				redirect('./', 2);
 				}
 			}
 		break;

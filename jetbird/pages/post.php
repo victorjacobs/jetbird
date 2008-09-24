@@ -27,9 +27,9 @@
 
 				$text = BBCode($_POST['main_text']);
 				$query="	INSERT INTO post (post, date, puser_id, title) 
-							VALUES ('$text', $date, '$_SESSION[user_id]', '$_POST[main_title]')";
+							VALUES ('$text', $date, '". $_SESSION['user_id'] ."', '". $_POST['main_title'] ."')";
 				$result = $dbconnection->query($query);
-				redirect('./?main', 2);
+				redirect('./', 2);
 			}	
 			
 			break;
@@ -54,7 +54,7 @@
 								title = '". $_POST['post_title'] ."' WHERE post_id ='". $_GET['post_id'] ."' LIMIT 1";
 					$dbconnection->query($query);
 				
-					redirect("./?main", 0);
+					redirect("./", 0);
 				}
 				
 			break;
