@@ -40,17 +40,12 @@
 					$query = "	SELECT post, post_id, title 
 								FROM post 
 								WHERE post_id =". $_GET['post_id'];
-			
-				
 					$row = $dbconnection->fetch_array($query);
 					$smarty->assign('post_text', $row['post']);
 					$smarty->assign('post_title', $row['title']);
 				}
-
-							
-
-							
-			//section to post the modified text
+											
+				//section to post the modified text
 				if(isset($_POST['post_title'])) {
 
 					$text = BBCode($_POST['post_text']);
