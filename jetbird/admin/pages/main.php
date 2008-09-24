@@ -23,13 +23,10 @@
 			$query = "	SELECT username 
 						FROM users
 						WHERE auth_id = 1";
-			$result = mysql_query($query);
-			//$test = $dbconnection->fetch_array($query);
-			//die(print_r($test));
-			while($row = mysql_fetch_array($result)) {
-				$main['username'][] = $row['username'];
-				}
-			//die(print_r($main));
+			$admins = $dbconnection->fetch_array($query);
+			foreach($admins as $admin){
+				$main['username'][] = $admin['username'];
+			}
 			$smarty->assign('admin', $main['username']);
 			
 		break;
