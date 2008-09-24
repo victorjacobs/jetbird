@@ -74,7 +74,7 @@
 					</table></p>
 				</form>
 				{else}
-				<p><b>Error:</b>You do not have the required authorisation to perform this action.</p>
+				<p><b>Error:</b> you do not have the required authorisation to perform this action.</p>
 				{/if}
 			</div>
 		</div>
