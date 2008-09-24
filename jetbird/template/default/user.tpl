@@ -39,7 +39,7 @@
 					<form name="input" action="./?user&amp;action=login" method="post">
 					Username: 
 					<input type="text" name="username"> <br />
-					password:
+					Password:
 					<input type="password" name="password"> <br />
 					<input type="submit" value="submit"/>
 					</form>	
@@ -49,15 +49,15 @@
 					
 					{if $login === TRUE}
 					Welcome back {$smarty.session.username} <br />
-					redirecting to home page...
+					Redirecting to home page...
 					{/if}
 					
 					{if $login === FALSE}
-					password or username wrong, please try again.
+					Password or username wrong, please try again.
 					{/if}
 				
 				{elseif $smarty.get.action == logout}
-				you sucessfully logged out
+				You successfully logged out
 				
 				{elseif $smarty.get.action == register}
 				
@@ -74,11 +74,11 @@
 					{/if}
 					
 					{if $register === TRUE}
-					you are sucessully register, please login
+					You are successully register, please login
 					{/if}
 					
 					{if $register === FALSE}
-					username already exists
+					Username already exists
 					{/if}
 					
 				{else}

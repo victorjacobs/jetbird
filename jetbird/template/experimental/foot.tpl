@@ -27,9 +27,9 @@
 			</div>
 			<hr />
 
-			<!-- <div id="adsense">
+			<div id="adsense">
 				<img src="image/adsensemockup.gif" alt="" />
-			</div> -->
+			</div>
 		</div>
 		
 		<div id="footer">

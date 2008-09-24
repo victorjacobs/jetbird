@@ -16,84 +16,67 @@
 *}
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-	<title>Jetbird Preview</title>
-	<link type="text/css" rel="stylesheet" media="screen" href="template/default/css/style.css" />
-	<script src="include/common.js"></script>
+	<title>Jetbird Preview &raquo; One</title>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<!-- Squish IE quirks -->
+	<!--[if lt IE 7]>
+	<script src="http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE7.js" type="text/javascript"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" media="screen" href="template/experimental/css/style.css" />
 </head>
 
 <body>
-	<div id="wrap_main">
 	
-		<div id="wrap_header">
-		</div>
-		
-		<div id="wrap_content">
-				<div id="content">
-				
+	<div id="wrap">
+		<div id="contentwrap">
+			<div id="content">
+				<h2>Jetbird - Blog</h2>
+				<small>The everyday problems of two geeks.</small>
 				{if $smarty.get.action == login}
-					{if !isset($smarty.session.login)}
-					<form name="input" action="./?user&amp;action=login" method="post">
-					Username: 
-					<input type="text" name="username"> <br />
-					password:
-					<input type="password" name="password"> <br />
-					<input type="submit" value="submit"/>
-					</form>	
-					{elseif isset($smarty.session.login) && !isset($smarty.post.username)}
-					you are already logged in <br />
-					{/if}
-					
-					{if $login === TRUE}
-					Welcome back {$smarty.session.username} <br />
-					redirecting to home page...
-					{/if}
-					
-					{if $login === FALSE}
-					password or username wrong, please try again.
-					{/if}
+				{if !isset($smarty.session.login)}
+				<form name="input" action="./?user&amp;action=login" method="post">
+					<p><table>
+						<tr>
+							<td><b>Username</b></td>
+							<td><input type="text" name="username" /></td>
+						</tr>
+						
+						<tr>
+							<td><b>Password</b></td>
+							<td><input type="password"></td>
+						</tr>
+						
+						<tr>
+							<td><b>Remind me</b></td>
+							<td><input type="checkbox" name="rememberlogin" disabled /></td>
+						</tr>
+						
+						<tr>
+							<td>&nbsp;</td>
+							<td><input type="submit" value="Login" /></td>
+						</tr>
+					</table></p>
+				</form>
+				{elseif isset($smarty.session.login) && !isset($smarty.post.username)}
+				<p><b>Error:</b> you are already logged in</p>
+				{/if}
+				
+				{if $login === TRUE}
+				<p>Redirecting to home page</p>
+				{/if}
+				
+				{if $login === FALSE}
+				<p>Password or username wrong, please try again.</p>
+				{/if}
 				
 				{elseif $smarty.get.action == logout}
-				you sucessfully logged out
-				
-				{elseif $smarty.get.action == register}
-				
-					{if !isset($smarty.session.login)}
-					<form name="input" action="./?user&amp;action=register" method="post">
-					Username: 
-					<input type="text" name="username"> <br />
-					password:
-					<input type="password" name="password"> <br />
-					<input type="submit" value="submit"/>
-					</form>
-					{elseif isset($smarty.session.login) && !isset($smarty.post.username)}
-					you are already registered <br />
-					{/if}
-					
-					{if $register === TRUE}
-					you are sucessully register, please login
-					{/if}
-					
-					{if $register === FALSE}
-					username already exists
-					{/if}
-					
-				{else}
-				invalid URL please return to the home page.
+				<p>You successfully logged out</p>
 				
 				{/if}
-				</div>
+			</div>
 		</div>
 		
-		<div id="wrap_footer">
-		Number of queries: {$queries}
-		</div>
-		
-	</div> 
-	
-</body>
-</html>
-	
+{include file="foot.tpl"}
