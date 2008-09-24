@@ -24,8 +24,8 @@
 			
 			if(isset($_POST['main_title'])) {
 				$date = time();
-				$parser = new HTML_BBCodeParser();
-				$text = $parser->qParse(htmlspecialchars($_POST['main_text']));
+
+				$text = BBCode($_POST['main_text']);
 				$query="	INSERT INTO post (post, date, puser_id, title) 
 							VALUES ('$text', $date, '$_SESSION[user_id]', '$_POST[main_title]')";
 				$result = $dbconnection->query($query);
@@ -52,8 +52,8 @@
 							
 			//section to post the modified text
 				if(isset($_POST['post_title'])) {
-					$parser = new HTML_BBCodeParser();
-					$text = $parser->qParse(htmlspecialchars($_POST['post_text']));
+
+					$text = BBCode($_POST['post_text']);
 					$query = "	UPDATE post 
 								SET post.post ='$text',
 								title = '". $_POST['post_title'] ."' WHERE post_id ='". $_GET['post_id'] ."' LIMIT 1";

@@ -39,6 +39,7 @@
 			
 			{if $smarty.session.auth_id == 1}
 			<a class="link_login" href="./?post&action=main_make_post"> post</a>
+			<a class="link_login" href="./admin/?main"> control</a>
 			{/if}
 			</div>
 		</div>
