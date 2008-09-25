@@ -32,7 +32,7 @@
 			<div id="header">
 			{if !isset($smarty.session.login)}
 			<a class="link_login" href="./?user&amp;action=login"> login</a>
-			<a class="link_login" href="./?user&amp;action=register"> register </a>
+			
 			{else}
 			<a class="link_login" href="./?user&amp;action=logout"> logout</a>
 			you are logged in as: {$smarty.session.username}

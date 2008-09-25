@@ -23,6 +23,7 @@
 						FROM users
 						WHERE auth_id = 1";
 			$admins = $dbconnection->fetch_array($query);
+			
 			foreach($admins as $admin){
 				$main['username'][] = $admin['username'];
 			}
