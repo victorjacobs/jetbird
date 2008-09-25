@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `user_name` varchar(32) NOT NULL,
   `user_pass` varchar(32) NOT NULL,
   `user_mail` varchar(32) NOT NULL,
-  `user_level` tinyint(1) unsigned NOT NULL,
+  `user_level` tinyint(1) unsigned NOT NULL default '0',
   PRIMARY KEY  (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
