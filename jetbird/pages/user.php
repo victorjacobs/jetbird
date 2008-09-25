@@ -25,14 +25,14 @@
 				
 		if (isset($_POST['username'])) {
 			$pwd = md5($_POST['password']);
-			$query = "SELECT * FROM users WHERE username = '". $_POST['username'] ."' AND password = '$pwd'";
+			$query = "SELECT * FROM user WHERE user_name = '". $_POST['username'] ."' AND user_pass = '$pwd'";
 			$result = $dbconnection->query($query);	  
 		
 			//checking how much rows are affected
 			if (mysql_num_rows($result) == 1) {
 				$row = mysql_fetch_array($result);
 				//setting all session variables
-				$_SESSION['auth_id'] = $row['auth_id'];
+				$_SESSION['auth_id'] = $row['user_level'];
 				$_SESSION['login'] = 1;
 				$_SESSION['username'] = $_POST['username'];
 				$_SESSION['user_id'] = $row['user_id'];
@@ -55,7 +55,9 @@
 			break;
 	/*
 	/*	register section
-	*/			
+	*/	
+		
+		/*
 		case register:
 		
 			if(isset($_POST['username'])){
@@ -79,6 +81,7 @@
 				}
 			}
 		break;
+		*/
 	}	
 		
 	$smarty->assign('queries', $dbconnection->queries);

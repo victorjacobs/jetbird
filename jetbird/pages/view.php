@@ -20,41 +20,37 @@
 	/*	the main post section, here the main post will be done.    
 	*/	
 
-	$view_id = $_GET['id'];
-	if(!isset($_GET['id'])){
-		redirect("./");
-	}
+	
 
-	$query = "SELECT post.post, post.title, post.date, users.username
-		FROM post, users
-		WHERE post_id = ". $view_id ." AND users.user_id = post.puser_id";			
+	$query = "SELECT post.post_content, post.post_title, post.post_date, user.user_name
+		FROM post, user
+		WHERE post_id = ". $_GET['post_id'] ." AND user.user_id = post.post_author";			
 
 	$result = $dbconnection->query($query);
 	if(mysql_num_rows($result) == 1){
 		$row = mysql_fetch_array($result);
-		$smarty->assign('view_post', nl2br($row['post']));
+		$smarty->assign('view_post', nl2br($row['post_content']));
 		$smarty->assign('view_date', date($config['global']['timestamp'], $row['date']));
-		$smarty->assign('view_title', $row['title']);
-		$smarty->assign('author', $row['username']);
+		$smarty->assign('view_title', $row['post_title']);
+		$smarty->assign('author', $row['user_name']);
 	}
 
 	/*
 	/*	the comments sections, here the comments will be done   
 	*/
 
-	$query = "SELECT comment.comment_parent_id, comment.comment, comment.comment_date,
-		users.username, users.user_id, comment.comment_id, comment.pcomment_id
-		FROM comment, users
-		WHERE comment_parent_id = ". $view_id ."
-		AND comment.pcomment_id = users.user_id";
+	$query = "SELECT comment.comment_content, comment.comment_date,
+		comment.comment_id, comment.comment_author
+		FROM comment, user
+		WHERE comment_parent_post_id = ". $_GET['post_id'] ."";
 
 	$comments = $dbconnection->fetch_array($query);
 	
 	if(count($comments) != 0){
 		foreach($comments as $comment){
-			$view_content['comment'][] = nl2br($comment['comment']);
+			$view_content['comment'][] = nl2br($comment['comment_content']);
 			$view_content['date'][] = date($config['global']['timestamp'], $comment['comment_date']);
-			$view_content['username'][] = $comment['username'];
+			$view_content['username'][] = $comment['author'];
 		}
 	}
 

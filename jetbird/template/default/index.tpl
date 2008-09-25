@@ -66,7 +66,7 @@
 					{$main_post[loop]} 
 					</p>					
 					
-					<a class="link_view" href="./?view&amp;id={$post_id[loop]}"> read more</a>
+					<a class="link_view" href="./?view&amp;post_id={$post_id[loop]}"> read more</a>
 					{if $smarty.session.auth_id == 1}
 					<a class="link_edit" href="./?post&amp;action=main_edit_post&amp;post_id={$post_id[loop]}"> edit</a>
 					{/if}

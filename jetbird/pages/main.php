@@ -30,21 +30,21 @@
 
 
 		// fetching data out of DB
-		$query = "SELECT post.* , users.username 
+		$query = "SELECT post.* , user.user_name 
 					FROM post
-					INNER JOIN users
-					ON post.puser_id = users.user_id
+					INNER JOIN user
+					ON post.post_author = user.user_id
 					ORDER BY post.post_id DESC LIMIT 5";	
 
 		$result = $dbconnection->query($query);
 
 		// placing all the data in one array
 		while($row = mysql_fetch_array($result)){
-			$main_content['title'][] = $row['title'];
-			$main_content['date'][] = date($config['global']['timestamp'], $row['date']);
-			$main_content['post'][] = nl2br(preview_text($row['post'], 500, 1));
+			$main_content['title'][] = $row['post_title'];
+			$main_content['date'][] = date($config['global']['timestamp'], $row['post_date']);
+			$main_content['post'][] = nl2br(preview_text($row['post_content'], 500, 1));
 			$main_content['post_id'][] = $row['post_id'];
-			$main_content['author'][] = $row['username'];
+			$main_content['author'][] = $row['user_name'];
 		}
 
 		//output to smarty

@@ -26,7 +26,7 @@
 				$date = time();
 
 				$text = BBCode($_POST['main_text']);
-				$query="	INSERT INTO post (post, date, puser_id, title) 
+				$query="	INSERT INTO post (post_content, post_date, post_author, post_title) 
 							VALUES ('$text', $date, '". $_SESSION['user_id'] ."', '". $_POST['main_title'] ."')";
 				$result = $dbconnection->query($query);
 				redirect('./', 2);
@@ -37,7 +37,7 @@
 			case main_edit_post:
 
 				if 	(!isset($_POST['post_title'])) {		
-					$query = "	SELECT post, post_id, title 
+					$query = "	SELECT post_content, post_id, post_title 
 								FROM post 
 								WHERE post_id =". $_GET['post_id'];
 							
@@ -58,7 +58,7 @@
 
 					$text = BBCode($_POST['post_text']);
 					$query = "	UPDATE post 
-								SET post.post ='$text',
+								SET post.post_content ='$text',
 								title = '". $_POST['post_title'] ."' WHERE post_id ='". $_GET['post_id'] ."' LIMIT 1";
 					$dbconnection->query($query);
 				
@@ -70,10 +70,10 @@
 			
 				if (isset($_POST['comments_text'])) {
 				$date = time();			
-				$parser = new HTML_BBCodeParser();
-				$text = $parser->qParse(htmlspecialchars($_POST['comments_text']));
-				$query="	INSERT INTO comment (comment_parent_id, comment, pcomment_id, comment_date) 
-							VALUES ('$_GET[post_id]', '$text', '$_SESSION[user_id]', $date)";
+				
+				$text = BBCode($_POST['comments_text']);
+				$query="	INSERT INTO comment (comment_parent_post_id, comment_content, comment_author, comment_date) 
+							VALUES ('$_GET[post_id]', '$text', '$_SESSION[user_id]', $date)"; //user_id must be replaced here
 				$result = $dbconnection->query($query);
 				redirect("./?view&action=view_post&post_id=" . $_GET['post_id'] ."", 0);
 				}
