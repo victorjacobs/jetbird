@@ -31,10 +31,9 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `comment_author_ip` varchar(15) NOT NULL,
   `comment_date` int(11) unsigned NOT NULL,
   `comment_content` text NOT NULL,
-  `user_id` bigint(20) NOT NULL,
   `comment_session_id` varchar(32) NOT NULL,
   PRIMARY KEY  (`comment_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 
 -- --------------------------------------------------------
