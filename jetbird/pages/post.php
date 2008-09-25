@@ -40,9 +40,17 @@
 					$query = "	SELECT post, post_id, title 
 								FROM post 
 								WHERE post_id =". $_GET['post_id'];
+							
 					$row = $dbconnection->fetch_array($query);
-					$smarty->assign('post_text', $row['post']);
-					$smarty->assign('post_title', $row['title']);
+					
+					foreach($row as $result) {
+						$main['post'] = $result['post'];
+						$main['title'] = $result['title'];
+					}
+					
+					$smarty->assign('post_text', $main['post']);
+					$smarty->assign('post_title', $main['title']);
+					
 				}
 											
 				//section to post the modified text
