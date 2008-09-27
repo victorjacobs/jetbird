@@ -37,7 +37,6 @@
 		}
 		
 		function connect($user, $pass, $db, $host = "localhost"){
-			var_dump($persistent);
 			// Connect to the database
 			if($this->connected){
 				return $this->link_identifier;
