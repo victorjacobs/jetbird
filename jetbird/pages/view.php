@@ -50,7 +50,7 @@
 		foreach($comments as $comment){
 			$view_content['comment'][] = nl2br($comment['comment_content']);
 			$view_content['date'][] = date($config['global']['timestamp'], $comment['comment_date']);
-			$view_content['username'][] = $comment['author'];
+			$view_content['username'][] = $comment['comment_author'];
 		}
 	}
 

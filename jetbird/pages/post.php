@@ -73,7 +73,7 @@
 				
 				$text = BBCode($_POST['comments_text']);
 				$query="	INSERT INTO comment (comment_parent_post_id, comment_content, comment_author, comment_date) 
-							VALUES ('$_GET[post_id]', '$text', '$_SESSION[user_id]', $date)"; //user_id must be replaced here
+							VALUES ('$_GET[post_id]', '$text', '$_POST[author]', $date)"; //session_user_id must be replaced here
 				$result = $dbconnection->query($query);
 				redirect("./?view&action=view_post&post_id=" . $_GET['post_id'] ."", 0);
 				}

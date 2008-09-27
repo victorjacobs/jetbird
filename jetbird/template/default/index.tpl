@@ -56,7 +56,7 @@
 					</p>
 					
 					<p class="main_date">
-					{$main_date[loop]}
+					{$main_date[loop]} by {$author[loop]}
 					</p>
 					<br />
 					

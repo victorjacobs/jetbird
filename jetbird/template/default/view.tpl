@@ -45,7 +45,7 @@
 					</p>
 					
 					<p class="main_date">
-					{$view_date}
+					{$view_date} by {$author}
 					</p>
 					<br />
 					
@@ -71,7 +71,11 @@
 
 					{if $smarty.session.login == 1}
 					<div id="view_post_box">
+					
 					<form name="input" action="./?post&amp;action=make_comment&amp;post_id={$smarty.get.post_id}" method="post">
+					author
+					<input type="text" name="author" />
+					<br />
 					text
 					<textarea rows="10" cols="50" name="comments_text" ></textarea> <br />
 					<input type="submit" value="Post"/>

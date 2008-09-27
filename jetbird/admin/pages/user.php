@@ -19,9 +19,9 @@
 	
 		case edit_permissions:
 		
-			$query = "	SELECT username 
-						FROM users
-						WHERE auth_id = 1";
+			$query = "	SELECT user_name 
+						FROM user
+						WHERE user_level = 1";
 			$admins = $dbconnection->fetch_array($query);
 			
 			foreach($admins as $admin){
