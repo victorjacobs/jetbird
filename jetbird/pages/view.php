@@ -31,7 +31,7 @@
 		$row = mysql_fetch_array($result);
 		$text = BBCode($row['post_content']);
 		$smarty->assign('view_post', nl2br($text));
-		$smarty->assign('view_date', date($config['global']['timestamp'], $row['date']));
+		$smarty->assign('view_date', date($config['global']['timestamp'], $row['post_date']));
 		$smarty->assign('view_title', $row['post_title']);
 		$smarty->assign('author', $row['user_name']);
 	}

@@ -30,7 +30,7 @@
 			$smarty->assign('admin', $main['username']);
 			*/
 			
-			//generating a random code
+			// generating a random code
 			$_POST['email'] = 1;
 			if(isset($_POST['email'])){
 				$key = crypt(uniqid(sha1(md5(rand())), true));
