@@ -15,8 +15,7 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
-	switch ($_GET['action']) {
-	
+	switch ($_GET['action']){
 		case add_user:
 		
 			/*
@@ -33,22 +32,13 @@
 			
 			//generating a random code
 			$_POST['email'] = 1;
-			if (isset($_POST['email'])) {
-			$arr = array( 	"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k" , "l", "m", 
-							"n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", 
-							"1", "2", "3", "4", "5", "6", "7", "8", "9", "0");
-			$key = array_rand($arr, 5);
+			if(isset($_POST['email'])){
+				$key = crypt(uniqid(sha1(md5(rand())), true));
+				$smarty->assign('key', $result);
 			
-			foreach($key as $value) {
-				$result .= $arr[$value];
-			}
-			$smarty->assign('key', $result);
-			
-			//putting key into DB
-			$query = "INSERT INTO user (user_reg_key) VALUES ('$result')";
-			}
-			
-			
+				// putting key into DB
+				$query = "INSERT INTO user (user_reg_key) VALUES ('$result')";
+			}			
 			
 		break;
 	}

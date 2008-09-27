@@ -37,7 +37,7 @@
 			<div id="content">
 				Welcome to the control panel {$smarty.session.username}!
 				<br />
-				<a id="link_permissions" href="./?user&action=add_user">add a new blogger</a>
+				<a id="link_permissions" href="./?user&amp;action=add_user">Add a new user</a>
 			</div>
 			<div id="content">
 			</div>
