@@ -35,9 +35,10 @@
 			if(isset($_POST['email'])){
 				$key = crypt(uniqid(sha1(md5(rand())), true));
 				$smarty->assign('key', $result);
-			
+				
 				// putting key into DB
-				$query = "INSERT INTO user (user_reg_key) VALUES ('$result')";
+				$query = "INSERT INTO user (user_reg_key) VALUES ('$key')";
+				$dbconnection->query($query);
 			}			
 			
 		break;
