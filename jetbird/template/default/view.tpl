@@ -77,7 +77,7 @@
 					<input type="text" name="author" value="{$smarty.session.username}"/>
 					<br />
 					text
-					<textarea rows="10" cols="50" name="comments_text" ></textarea> <br />
+					<textarea rows="10" cols="50" name="comment" ></textarea> <br />
 					<input type="submit" value="Post"/>
 					</form>
 					</div>

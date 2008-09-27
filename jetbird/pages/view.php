@@ -22,9 +22,9 @@
 
 	
 
-	$query = "SELECT post.post_content, post.post_title, post.post_date, user.user_name
+	$query = "SELECT post.post_content, post.post_title, post.post_date, user.user_name, post.comment_status
 		FROM post, user
-		WHERE post_id = ". $_GET['id'] ." AND user.user_id = post.post_author";			
+		WHERE post_id = ". $_GET['id'];			
 
 	$result = $dbconnection->query($query);
 	if(mysql_num_rows($result) == 1){
@@ -34,6 +34,7 @@
 		$smarty->assign('view_date', date($config['global']['timestamp'], $row['post_date']));
 		$smarty->assign('view_title', $row['post_title']);
 		$smarty->assign('author', $row['user_name']);
+		$smarty->assign('comment_status', $row['comment_status']);
 	}
 
 	/*

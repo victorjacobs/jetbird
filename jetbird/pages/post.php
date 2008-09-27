@@ -72,19 +72,15 @@
 				}
 				
 			break;
-			case make_comment:
-			
+			case make_comment:			
 				if (isset($_POST['comments_text'])) {
-				$date = time();			
-				
-
-				$query="	INSERT INTO comment (comment_parent_post_id, comment_content, comment_author, comment_date) 
-							VALUES ('". $_GET[id] ."', '". $_POST['comments_text'] ."', '". $_POST[author] ."', '$date')";
-							
-				$result = $dbconnection->query($query);
-				redirect("./?view&id=" . $_GET['id'] ."", 0);
-				}
-				
+					$date = time();
+					$query="	INSERT INTO comment (comment_parent_post_id, comment_content, comment_author, comment_date) 
+								VALUES ('". $_GET['id'] ."', '". $_POST['comment'] ."', '". $_POST['author'] ."', '$date')";
+					$result = $dbconnection->query($query);
+					redirect("./?view&id=" . $_GET['id']);
+					die();
+				}				
 			break;
 		}
 	$smarty->assign('queries', $dbconnection->queries);
