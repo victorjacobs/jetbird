@@ -61,24 +61,26 @@
 				
 				{elseif $smarty.get.action == register}
 				
-					{if !isset($smarty.session.login)}
-					<form name="input" action="./?user&amp;action=register" method="post">
+					{if $register_key === TRUE}
+					<form name="input" action="./?user&amp;action=register&amp;key={$smarty.get.key}" method="post">
 					Username: 
 					<input type="text" name="username"> <br />
 					password:
 					<input type="password" name="password"> <br />
 					<input type="submit" value="submit"/>
 					</form>
-					{elseif isset($smarty.session.login) && !isset($smarty.post.username)}
-					you are already registered <br />
 					{/if}
 					
 					{if $register === TRUE}
 					You are successully registered, please login
 					{/if}
 					
-					{if $register === FALSE}
+					{if $register_exist === TRUE}
 					Username already exists
+					{/if}
+					
+					{if $register_key === FALSE}
+					Wrong registration key
 					{/if}
 					
 				{else}

@@ -57,31 +57,52 @@
 	/*	register section
 	*/	
 		
-		/*
+		
 		case register:
 		
-			if(isset($_POST['username'])){
-				// variable setup
-				$pwd = md5($_POST['password']);
-				
-				// checking if user already exists
-				$query = "SELECT username FROM users WHERE username = '". $_POST['username'] ."'";
+			
+				$query ="SELECT user_reg_key FROM user WHERE user_reg_key = '". $_GET['key'] ."'";
 				$result = $dbconnection->query($query);
+				if(mysql_num_rows($result) == 1) {
 				
-				//checking how much rows are affected
-				if(mysql_num_rows($result) == 1){
-					$smarty->assign('register', FALSE);
-				}else{
-				
-				//creating user
-				$query="INSERT INTO users (username, password, user_level) VALUES ('". $_POST['username'] ."','$pwd', 0)";
-				$result = $dbconnection->query($query);
-				$smarty->assign('register', TRUE);
-				redirect('./', 2);
-				}
+					$smarty->assign('register_key', TRUE);
+					
+					if(isset($_POST['username'])) {
+					
+						$pwd = md5($_POST['password']);
+						
+						// checking if user already exists
+						$query = "SELECT user_name FROM user WHERE user_name = '". $_POST['username'] ."'";
+						$result = $dbconnection->query($query);
+						
+						//checking how much rows are affected
+						if(mysql_num_rows($result) == 1){
+						
+							$smarty->assign('register_exist', TRUE);
+							
+						}
+						else {
+						
+							//creating user
+							$query="UPDATE user
+									SET user_name = '". $_POST['username'] ."' , 
+									user_pass = '$pwd' , 
+									user_level = 0
+									user_reg_key = ''
+									WHERE user_reg_key = '". $_GET['key'] ."'";
+							$result = $dbconnection->query($query);
+
+							$smarty->assign('register', TRUE);
+							redirect('./', 2);
+						}
+					}
+				} 
+				else {
+					$smarty->assign('register_key', FALSE);
+					
 			}
 		break;
-		*/
+		
 	}	
 		
 	$smarty->assign('queries', $dbconnection->queries);

@@ -18,17 +18,7 @@
 	switch ($_GET['action']){
 		case add_user:
 		
-			/*
-			$query = "	SELECT user_name 
-						FROM user
-						WHERE user_level = 1";
-			$admins = $dbconnection->fetch_array($query);
-			
-			foreach($admins as $admin){
-				$main['username'][] = $admin['username'];
-			}
-			$smarty->assign('admin', $main['username']);
-			*/
+
 			
 			// generating a random code
 			$_POST['email'] = 1;
