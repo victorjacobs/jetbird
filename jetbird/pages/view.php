@@ -24,7 +24,7 @@
 
 	$query = "SELECT post.post_content, post.post_title, post.post_date, user.user_name, post.comment_status
 		FROM post, user
-		WHERE post_id = ". $_GET['id'];			
+		WHERE post_id = ". $_GET['id'] ." AND user.user_id = post.post_author";			
 
 	$result = $dbconnection->query($query);
 	if(mysql_num_rows($result) == 1){

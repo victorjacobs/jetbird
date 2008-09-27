@@ -40,7 +40,7 @@
 				if 	(!isset($_POST['post_title'])) {		
 					$query = "	SELECT post_content, post_id, post_title, comment_status 
 								FROM post 
-								WHERE post_id =". $_GET['post_id'];
+								WHERE post_id =". $_GET['id'];
 							
 					$row = $dbconnection->fetch_array($query);
 					
@@ -73,7 +73,7 @@
 				
 			break;
 			case make_comment:			
-				if (isset($_POST['comments_text'])) {
+				if (isset($_POST['comment'])) {
 					$date = time();
 					$query="	INSERT INTO comment (comment_parent_post_id, comment_content, comment_author, comment_date) 
 								VALUES ('". $_GET['id'] ."', '". $_POST['comment'] ."', '". $_POST['author'] ."', '$date')";
