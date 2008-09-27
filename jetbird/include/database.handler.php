@@ -31,12 +31,22 @@
 			trigger_error("Cloning not allowed", E_USER_WARNING);
 		}
 		
+		function pconnect($user, $pass, $db, $host){
+			define("PERSISTENT_DB_CONNECT", true);
+			return $this->connect($user, $pass, $db, $host);
+		}
+		
 		function connect($user, $pass, $db, $host = "localhost"){
+			var_dump($persistent);
 			// Connect to the database
 			if($this->connected){
 				return $this->link_identifier;
 			}
-			$this->link_identifier = @mysql_connect($host, $user, $pass, $new_link);
+			if(defined("PERSISTENT_DB_CONNECT")){
+			$this->link_identifier = @mysql_pconnect($host, $user, $pass, $new_link);	
+			}else{
+				$this->link_identifier = @mysql_connect($host, $user, $pass, $new_link);
+			}
 			if($this->link_identifier){
 				$select = mysql_select_db($db, $this->link_identifier);
 				if(!$select){
