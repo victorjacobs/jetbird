@@ -17,8 +17,9 @@
 	
 	switch ($_GET['action']) {
 	
-		case edit_permissions:
+		case add_user:
 		
+			/*
 			$query = "	SELECT user_name 
 						FROM user
 						WHERE user_level = 1";
@@ -28,6 +29,26 @@
 				$main['username'][] = $admin['username'];
 			}
 			$smarty->assign('admin', $main['username']);
+			*/
+			
+			//generating a random code
+			$_POST['email'] = 1;
+			if (isset($_POST['email'])) {
+			$arr = array( 	"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k" , "l", "m", 
+							"n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", 
+							"1", "2", "3", "4", "5", "6", "7", "8", "9", "0");
+			$key = array_rand($arr, 5);
+			
+			foreach($key as $value) {
+				$result .= $arr[$value];
+			}
+			$smarty->assign('key', $result);
+			
+			//putting key into DB
+			$query = "INSERT INTO user (user_reg_key) VALUES ('$result')";
+			}
+			
+			
 			
 		break;
 	}

@@ -35,24 +35,7 @@
 		
 		<div id="wrap_content">
 			<div id="content">	
-				{if $smarty.get.action == edit_permissions}
-				
-				administrators: 
-				<div id="admin_list">
-					{section name=loop loop=$admin}
-					{$admin[loop]}
-					<br />
-					{/section}
-					<br />
-					<br />
-				</div>	
-				<br />
-				add a administrator 
-				<form name="input" action="./?user&action=edit_permissions" method="post"	
-				<input type="text" name="username"> <br />
-				<input type="submit" value="submit"/>
-				</form>
-				{/if}			
+			The registration key: {$key}
 			</div>
 		</div>
 		
