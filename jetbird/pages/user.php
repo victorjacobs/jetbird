@@ -32,7 +32,7 @@
 			if (mysql_num_rows($result) == 1) {
 				$row = mysql_fetch_array($result);
 				//setting all session variables
-				$_SESSION['auth_id'] = $row['user_level'];
+				$_SESSION['user_level'] = $row['user_level'];
 				$_SESSION['login'] = 1;
 				$_SESSION['username'] = $_POST['username'];
 				$_SESSION['user_id'] = $row['user_id'];
@@ -74,7 +74,7 @@
 				}else{
 				
 				//creating user
-				$query="INSERT INTO users (username, password, auth_id) VALUES ('". $_POST['username'] ."','$pwd', 0)";
+				$query="INSERT INTO users (username, password, user_level) VALUES ('". $_POST['username'] ."','$pwd', 0)";
 				$result = $dbconnection->query($query);
 				$smarty->assign('register', TRUE);
 				redirect('./', 2);

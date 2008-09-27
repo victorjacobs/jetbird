@@ -40,7 +40,7 @@
 				if 	(!isset($_POST['post_title'])) {		
 					$query = "	SELECT post_content, post_id, post_title 
 								FROM post 
-								WHERE post_id =". $_GET['id'];
+								WHERE post_id =". $_GET['post_id'];
 							
 					$row = $dbconnection->fetch_array($query);
 					

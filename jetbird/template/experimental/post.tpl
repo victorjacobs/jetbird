@@ -35,7 +35,7 @@
 			<div id="content">
 				<h2>Jetbird - Blog</h2>
 				<small>The everyday problems of two geeks.</small>
-				{if $smarty.get.action == main_make_post && $smarty.session.auth_id == 1}
+				{if $smarty.get.action == main_make_post && $smarty.session.user_level == 1}
 				<form name="input" action="./?post&amp;action=main_make_post" method="post">
 					<p><table>
 						<tr>
@@ -54,7 +54,7 @@
 						</tr>
 					</table></p>
 				</form>
-				{elseif $smarty.get.action == main_edit_post && $smarty.session.auth_id == 1}
+				{elseif $smarty.get.action == main_edit_post && $smarty.session.user_level == 1}
 				<form name="input" action="./?post&amp;action=main_edit_post&amp;post_id={$smarty.get.post_id}" method="post">
 					<p><table>
 						<tr>

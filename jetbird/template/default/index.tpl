@@ -38,7 +38,7 @@
 			you are logged in as: {$smarty.session.username}
 			{/if}
 			
-			{if $smarty.session.auth_id == 1}
+			{if $smarty.session.user_level == 1}
 			<a class="link_login" href="./?post&amp;action=main_make_post"> post</a>
 			<a class="link_login" href="./admin/"> control</a>
 			{/if}
@@ -67,7 +67,7 @@
 					</p>					
 					
 					<a class="link_view" href="./?view&amp;id={$post_id[loop]}"> read more</a>
-					{if $smarty.session.auth_id == 1}
+					{if $smarty.session.user_level == 1}
 					<a class="link_edit" href="./?post&amp;action=main_edit_post&amp;id={$post_id[loop]}"> edit</a>
 					{/if}
 					<br />
