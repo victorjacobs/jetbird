@@ -24,7 +24,7 @@
 
 	$query = "SELECT post.post_content, post.post_title, post.post_date, user.user_name
 		FROM post, user
-		WHERE post_id = ". $_GET['post_id'] ." AND user.user_id = post.post_author";			
+		WHERE post_id = ". $_GET['id'] ." AND user.user_id = post.post_author";			
 
 	$result = $dbconnection->query($query);
 	if(mysql_num_rows($result) == 1){
@@ -43,7 +43,7 @@
 	$query = "SELECT comment.comment_content, comment.comment_date,
 		comment.comment_id, comment.comment_author
 		FROM comment, user
-		WHERE comment_parent_post_id = ". $_GET['post_id'] ."";
+		WHERE comment_parent_post_id = ". $_GET['id'] ."";
 
 	$comments = $dbconnection->fetch_array($query);
 	

@@ -40,7 +40,7 @@
 				if 	(!isset($_POST['post_title'])) {		
 					$query = "	SELECT post_content, post_id, post_title 
 								FROM post 
-								WHERE post_id =". $_GET['post_id'];
+								WHERE post_id =". $_GET['id'];
 							
 					$row = $dbconnection->fetch_array($query);
 					
@@ -60,7 +60,8 @@
 					
 					$query = "	UPDATE post 
 								SET post.post_content = '". $_POST['post_text'] ."',
-								post_title = '". $_POST['post_title'] ."' WHERE post_id = '". $_GET['post_id'] ."' LIMIT 1";
+								post_title = '". $_POST['post_title'] ."' 
+								WHERE post_id = '". $_GET['id'] ."' LIMIT 1";
 								
 					$dbconnection->query($query);
 				
@@ -75,9 +76,10 @@
 				
 
 				$query="	INSERT INTO comment (comment_parent_post_id, comment_content, comment_author, comment_date) 
-							VALUES (". $_GET[post_id] .", ". $_POST['comments_text'] .", ". $_POST[author] .", $date)"; //session_user_id must be replaced here
+							VALUES ('". $_GET[id] ."', '". $_POST['comments_text'] ."', '". $_POST[author] ."', '$date')";
+							
 				$result = $dbconnection->query($query);
-				redirect("./?view&action=view_post&post_id=" . $_GET['post_id'] ."", 0);
+				redirect("./?view&id=" . $_GET['id'] ."", 0);
 				}
 				
 			break;
