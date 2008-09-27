@@ -22,14 +22,10 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
 
---
--- Database: `blog`
---
-
 -- --------------------------------------------------------
 
 --
--- Tabel structuur voor tabel `comment`
+-- Table structure for table `comment`
 --
 
 CREATE TABLE IF NOT EXISTS `comment` (
@@ -43,12 +39,12 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `comment_content` text NOT NULL,
   `comment_session_id` varchar(32) NOT NULL,
   PRIMARY KEY  (`comment_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Tabel structuur voor tabel `post`
+-- Table structure for table `post`
 --
 
 CREATE TABLE IF NOT EXISTS `post` (
@@ -59,12 +55,12 @@ CREATE TABLE IF NOT EXISTS `post` (
   `post_content` longtext NOT NULL,
   `comment_status` enum('open','closed') NOT NULL,
   PRIMARY KEY  (`post_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Tabel structuur voor tabel `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE IF NOT EXISTS `user` (
@@ -75,4 +71,4 @@ CREATE TABLE IF NOT EXISTS `user` (
   `user_level` tinyint(1) unsigned NOT NULL,
   `user_reg_key` varchar(5) NOT NULL,
   PRIMARY KEY  (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
