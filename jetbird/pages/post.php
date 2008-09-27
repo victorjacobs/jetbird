@@ -25,9 +25,10 @@
 			if(isset($_POST['main_title'])) {
 				$date = time();
 
-				$text = BBCode($_POST['main_text']);
+				
 				$query="	INSERT INTO post (post_content, post_date, post_author, post_title) 
-							VALUES ('$text', $date, '". $_SESSION['user_id'] ."', '". $_POST['main_title'] ."')";
+							VALUES ('". $_POST['main_text'] ."', '$date', '". $_SESSION['user_id'] ."', '". $_POST['main_title'] ."')";
+				
 				$result = $dbconnection->query($query);
 				redirect('./', 2);
 			}	
@@ -44,8 +45,8 @@
 					$row = $dbconnection->fetch_array($query);
 					
 					foreach($row as $result) {
-						$main['post'] = $result['post'];
-						$main['title'] = $result['title'];
+						$main['post'] = $result['post_content'];
+						$main['title'] = $result['post_title'];
 					}
 					
 					$smarty->assign('post_text', $main['post']);
@@ -56,10 +57,11 @@
 				//section to post the modified text
 				if(isset($_POST['post_title'])) {
 
-					$text = BBCode($_POST['post_text']);
+					
 					$query = "	UPDATE post 
-								SET post.post_content ='$text',
-								title = '". $_POST['post_title'] ."' WHERE post_id ='". $_GET['post_id'] ."' LIMIT 1";
+								SET post.post_content = '". $_POST['post_text'] ."',
+								post_title = '". $_POST['post_title'] ."' WHERE post_id = '". $_GET['post_id'] ."' LIMIT 1";
+								
 					$dbconnection->query($query);
 				
 					redirect("./", 0);
@@ -71,9 +73,9 @@
 				if (isset($_POST['comments_text'])) {
 				$date = time();			
 				
-				$text = BBCode($_POST['comments_text']);
+
 				$query="	INSERT INTO comment (comment_parent_post_id, comment_content, comment_author, comment_date) 
-							VALUES ('$_GET[post_id]', '$text', '$_POST[author]', $date)"; //session_user_id must be replaced here
+							VALUES (". $_GET[post_id] .", ". $_POST['comments_text'] .", ". $_POST[author] .", $date)"; //session_user_id must be replaced here
 				$result = $dbconnection->query($query);
 				redirect("./?view&action=view_post&post_id=" . $_GET['post_id'] ."", 0);
 				}

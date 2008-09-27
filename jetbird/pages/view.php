@@ -29,7 +29,8 @@
 	$result = $dbconnection->query($query);
 	if(mysql_num_rows($result) == 1){
 		$row = mysql_fetch_array($result);
-		$smarty->assign('view_post', nl2br($row['post_content']));
+		$text = BBCode($row['post_content']);
+		$smarty->assign('view_post', nl2br($text));
 		$smarty->assign('view_date', date($config['global']['timestamp'], $row['date']));
 		$smarty->assign('view_title', $row['post_title']);
 		$smarty->assign('author', $row['user_name']);
@@ -48,7 +49,8 @@
 	
 	if(count($comments) != 0){
 		foreach($comments as $comment){
-			$view_content['comment'][] = nl2br($comment['comment_content']);
+			$text = BBCode($comment['comment_content']);
+			$view_content['comment'][] = nl2br($text);
 			$view_content['date'][] = date($config['global']['timestamp'], $comment['comment_date']);
 			$view_content['username'][] = $comment['comment_author'];
 		}
