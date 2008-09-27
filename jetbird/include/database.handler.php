@@ -32,7 +32,7 @@
 		}
 		
 		function connect($user, $pass, $db, $host = "localhost"){
-			// connect to the database
+			// Connect to the database
 			if($this->connected){
 				return $this->link_identifier;
 			}
@@ -43,11 +43,13 @@
 					trigger_error("Database <b>". $db ."</b> doesn't exist", E_USER_ERROR);
 				}
 				$this->connected = true;
+				return $this->link_identifier;
 			}else{
 				$this->connected = false;
 				if($this->die_on_fail){
 					trigger_error('Could not connect to the database', E_USER_ERROR);
 				}
+				return false;
 			}
 		}
 		

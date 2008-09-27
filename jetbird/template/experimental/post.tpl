@@ -44,7 +44,7 @@
 						</tr>
 						
 						<tr>
-							<td><b>Text</b></td>
+							<td valign="top"><b>Text</b></td>
 							<td><textarea rows="10" cols="50" name="main_text"></textarea></td>
 						</tr>
 						
@@ -63,13 +63,23 @@
 						</tr>
 						
 						<tr>
-							<td><b>Text</b></td>
-							<td><textarea rows="10" cols="50" name="post_text">{$post_text}</textarea></td>
+							<td valign="top"><b>Text</b></td>
+							<td><textarea rows="20" cols="60" name="post_text">{$post_text}</textarea></td>
 						</tr>
 						
 						<tr>
+							<td><b>Comments</b></td>
+							<td>
+								<select name="comment_status">
+									<option value="open"{if $comment_status == "open"} selected{/if}>Open</option>
+									<option value="closed"{if $comment_status == "closed"} selected{/if}>Closed</option>
+								</select>
+							</td>
+						</tr>
+												
+						<tr>
 							<td>&nbsp;</td>
-							<td><input type="submit" value="Post" /></td>
+							<td><input type="submit" value="Edit" /></td>
 						</tr>
 					</table></p>
 				</form>

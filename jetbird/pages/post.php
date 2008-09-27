@@ -38,7 +38,7 @@
 			case main_edit_post:
 
 				if 	(!isset($_POST['post_title'])) {		
-					$query = "	SELECT post_content, post_id, post_title 
+					$query = "	SELECT post_content, post_id, post_title, comment_status 
 								FROM post 
 								WHERE post_id =". $_GET['post_id'];
 							
@@ -47,20 +47,23 @@
 					foreach($row as $result) {
 						$main['post'] = $result['post_content'];
 						$main['title'] = $result['post_title'];
+						$main['comment_status'] = $result['comment_status'];
 					}
 					
 					$smarty->assign('post_text', $main['post']);
 					$smarty->assign('post_title', $main['title']);
-					
+					$smarty->assign('comment_status', $main['comment_status']);				
 				}
 											
-				//section to post the modified text
+				// Section to post the modified text
 				if(isset($_POST['post_title'])) {
-
-					
+					if(!isset($_POST['comment_status'])){
+						$_POST['comment_status'] = "open";
+					}					
 					$query = "	UPDATE post 
-								SET post.post_content = '". $_POST['post_text'] ."',
-								post_title = '". $_POST['post_title'] ."' 
+								SET post_content = '". $_POST['post_text'] ."',
+								post_title = '". $_POST['post_title'] ."',
+								comment_status = '". $_POST['comment_status'] ."'
 								WHERE post_id = '". $_GET['id'] ."' LIMIT 1";
 								
 					$dbconnection->query($query);
