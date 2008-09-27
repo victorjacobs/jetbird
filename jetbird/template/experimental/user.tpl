@@ -37,8 +37,11 @@
 				<small>The everyday problems of two geeks.</small>
 				{if $smarty.get.action == login}
 				{if !isset($smarty.session.login)}
+				{if $login === FALSE}
+				<p><b>Error:</b> password or username wrong, please try again.</p>
+				{/if}
 				<form name="input" action="./?user&amp;action=login" method="post">
-					<p><table>
+					<table>
 						<tr>
 							<td><b>Username</b></td>
 							<td><input type="text" name="username" /></td>
@@ -58,7 +61,7 @@
 							<td>&nbsp;</td>
 							<td><input type="submit" value="Login" /></td>
 						</tr>
-					</table></p>
+					</table>
 				</form>
 				{elseif isset($smarty.session.login) && !isset($smarty.post.username)}
 				<p><b>Error:</b> you are already logged in</p>
@@ -66,10 +69,6 @@
 				
 				{if $login === TRUE}
 				<p>Redirecting to admin dashboard</p>
-				{/if}
-				
-				{if $login === FALSE}
-				<p>Password or username wrong, please try again.</p>
 				{/if}
 				
 				{elseif $smarty.get.action == logout}

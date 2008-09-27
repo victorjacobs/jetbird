@@ -78,7 +78,7 @@
 					$query="	INSERT INTO comment (comment_parent_post_id, comment_content, comment_author, comment_date) 
 								VALUES ('". $_GET['id'] ."', '". $_POST['comment'] ."', '". $_POST['author'] ."', '$date')";
 					$result = $dbconnection->query($query);
-					redirect("./?view&id=" . $_GET['id']);
+					redirect("./?view&id=" . $_GET['id'] ."#comments");
 					die();
 				}				
 			break;
