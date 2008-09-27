@@ -25,7 +25,7 @@
 	<!--[if lt IE 7]>
 	<script src="http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE7.js" type="text/javascript"></script>
 	<![endif]-->
-	<link type="text/css" rel="stylesheet" media="screen" href="template/experimental/css/style.css" />
+	<link type="text/css" rel="stylesheet" media="screen" href="{$template_dir}/css/style.css" />
 </head>
 
 <body>

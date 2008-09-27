@@ -16,39 +16,26 @@
 *}
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-	<title>Jetbird Preview</title>
-	<link type="text/css" rel="stylesheet" media="screen" href="../template/default/css/style.css" />
-
+	<title>Jetbird Preview &raquo; One</title>
+	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<!-- Squish IE quirks -->
+	<!--[if lt IE 7]>
+	<script src="http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE7.js" type="text/javascript"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" media="screen" href="{$template_dir}/css/style.css" />
 </head>
 
 <body>
-	<div id="wrap_main">
 	
-		<div id="wrap_header">
-			<div id="header">
-			</div>
-		</div>
-		
-		<div id="wrap_content">
+	<div id="wrap">
+		<div id="contentwrap">
 			<div id="content">
-				Welcome to the control panel {$smarty.session.username}!
-				<br />
-				<a id="link_permissions" href="./?user&action=add_user">add a new blogger</a>
-			</div>
-			<div id="content">
+				<h2>Jetbird - Admin</h2>
+				<p><i>Statistics to follow here</i></p>
 			</div>
 		</div>
 		
-		<div id="wrap_footer">
-		Number of queries: {$queries}
-		</div>
-		
-	</div> 
-	
-</body>
-</html>
-	
+{include file="foot.tpl"}

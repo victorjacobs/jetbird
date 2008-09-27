@@ -41,7 +41,7 @@ small.subtitle {
 	background-color: #dcf3c2;
 }
 
-#menu, #content, #adsense {
+.menu, #content, #adsense {
 	margin: 20px;
 }
 

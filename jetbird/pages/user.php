@@ -37,7 +37,7 @@
 				$_SESSION['username'] = $_POST['username'];
 				$_SESSION['user_id'] = $row['user_id'];
 				$smarty->assign('login', TRUE);
-				redirect('./', 2);
+				redirect('./admin', 2);
 			} 
 			else { 
 			$smarty->assign('login', FALSE);

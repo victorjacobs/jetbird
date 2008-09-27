@@ -24,12 +24,6 @@
 			// Create smarty handle
 			$this->smarty_handle = new Smarty;
 			
-			if(!is_readable($config['smarty']['template_dir'] . $config['smarty']['template'] . '/')){
-				$this->template = "default";
-			}else{
-				$this->template = $config['smarty']['template'];
-			}
-			
 			$this->template_dir = &$this->smarty_handle->template_dir;
 			$this->compile_dir = &$this->smarty_handle->compile_dir;
 			$this->cache_dir = &$this->smarty_handle->cache_dir;
@@ -39,18 +33,29 @@
 			$included_files = get_included_files();
 			
 			if(eregi("admin", $included_files[0])){
-				$this->template_dir = "../". $config['smarty']['template_dir'] . $this->template . '/';
+				$this->template_dir = "../". $config['smarty']['template_dir'];
 				$this->compile_dir = "../". $config['smarty']['compile_dir'];
 				$this->cache_dir = "../". $config['smarty']['cache_dir'];
 				$this->config_dir = "../". $config['smarty']['config_dir'];
 			}else{
-				$this->template_dir = $config['smarty']['template_dir'] . $this->template . '/';
+				$this->template_dir = $config['smarty']['template_dir'];
 				$this->compile_dir = $config['smarty']['compile_dir'];
 				$this->cache_dir = $config['smarty']['cache_dir'];
 				$this->config_dir = $config['smarty']['config_dir'];
 			}
 			unset($included_files);
+			
+			if(!is_readable($this->template_dir . $config['smarty']['template'] . '/')){
+				$this->template = "default";
+			}else{
+				$this->template = $config['smarty']['template'];
+			}
+			
+			$this->template_dir .= $this->template;
 			$this->compile_id = $this->template;
+			
+			// Assign some vars
+			$this->assign("template_dir", $this->template_dir);
 		}
 		
 		function display($file){

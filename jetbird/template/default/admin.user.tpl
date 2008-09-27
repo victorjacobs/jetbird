@@ -21,7 +21,7 @@
 
 <head>
 	<title>Jetbird Preview</title>
-	<link type="text/css" rel="stylesheet" media="screen" href="../template/default/css/style.css" />
+	<link type="text/css" rel="stylesheet" media="screen" href="{$template_dir}/css/style.css" />
 
 </head>
 
