@@ -17,6 +17,7 @@
 	*/
 	
 	// Global init
+	define("ADMIN_MODE", false);
 	ob_start();
 	session_start();
 	require_once "include/functions.php";

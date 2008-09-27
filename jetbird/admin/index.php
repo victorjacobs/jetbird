@@ -19,6 +19,7 @@
 	// Note: this page is very similar to the main index.php
 	
 	// Global init
+	define("ADMIN_MODE", true);
 	ob_start();
 	session_start();
 	require_once "../include/functions.php";
@@ -30,7 +31,7 @@
 	require_once "../include/smarty.handler.class.php";
 	
 	// We don't want regular users to sniff around in here
-	if(!$_SESSION['login'] || $_SESSION['auth_id'] ==! 1){
+	if(!$_SESSION['login'] || $_SESSION['user_level'] ==! 1){
 		redirect("../");
 		die();
 	}

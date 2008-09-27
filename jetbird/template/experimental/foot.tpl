@@ -17,22 +17,16 @@
 		<div id="sidewrap">
 			<div class="menu">
 				<ul>
-					<li><a href="./">Home</a></li>
-					<li><a href="#">Projects</a></li>
-					<li><a href="#">About us</a></li>
-					<li><a href="#">Contact</a></li>
+					<li><a href="{if $smarty.const.ADMIN_MODE}.{/if}./">Home</a></li>
+					<li><a href="{if $smarty.const.ADMIN_MODE}../{/if}#">Projects</a></li>
+					<li><a href="{if $smarty.const.ADMIN_MODE}../{/if}#">About us</a></li>
+					<li><a href="{if $smarty.const.ADMIN_MODE}../{/if}#">Contact</a></li>
 				</ul>
 			</div>
 			
 			<hr />
 			{if isset($smarty.session.login)}
-			<div class="menu">
-				<ul>
-					<li><a href="./admin">Admin dashboard</a></li>
-					<li><a href="./admin/?user">Users</a></li>
-					<li><a href="./?user&amp;action=logout">Log out</a></li>
-				</ul>
-			</div>
+			{include file="admin.menu.tpl"}
 			
 			<hr />
 			{/if}

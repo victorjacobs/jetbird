@@ -65,7 +65,7 @@
 				{/if}
 				
 				{if $login === TRUE}
-				<p>Redirecting to home page</p>
+				<p>Redirecting to admin dashboard</p>
 				{/if}
 				
 				{if $login === FALSE}
