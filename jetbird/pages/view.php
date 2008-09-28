@@ -44,7 +44,8 @@
 	$query = "SELECT comment.comment_content, comment.comment_date,
 		comment.comment_id, comment.comment_author
 		FROM comment
-		WHERE comment_parent_post_id = ". $_GET['id'] ."";
+		WHERE comment_parent_post_id = ". $_GET['id'] ."
+		ORDER BY comment_id DESC";
 	
 
 	$comments = $dbconnection->fetch_array($query);

@@ -21,6 +21,7 @@
 <head>
 	<title>Jetbird Preview &raquo; One</title>
 	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<script src="{$template_dir}/js/fix.js" type="text/javascript"></script>
 	<!-- Squish IE quirks -->
 	<!--[if lt IE 7]>
 	<script src="http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE7.js" type="text/javascript"></script>
@@ -28,7 +29,7 @@
 	<link type="text/css" rel="stylesheet" media="screen" href="{$template_dir}/css/style.css" />
 </head>
 
-<body>
+<body onLoad="bodyLoad();">
 	
 	<div id="wrap">
 		<div id="contentwrap">

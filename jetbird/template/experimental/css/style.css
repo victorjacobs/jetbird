@@ -9,6 +9,7 @@ body, html {
 	padding: 0;
 	background-color: gray;
 	height: 100%;
+	background-image: url(../image/bg.png);
 }
 
 body * {

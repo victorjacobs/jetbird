@@ -28,12 +28,13 @@
 			{if isset($smarty.session.login)}
 			{include file="admin.menu.tpl"}
 			
-			<hr />
 			{/if}
-
+			
+			{if !isset($smarty.session.login)}
 			<div id="adsense">
 				<img src="{$template_dir}/image/adsensemockup.gif" alt="" />
 			</div>
+			{/if}
 		</div>
 		
 		<div id="footer">
