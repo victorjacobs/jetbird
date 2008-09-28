@@ -29,6 +29,7 @@
 	require_once "include/smarty.handler.class.php";
 	
 	$smarty = new smarty_handler();
+	$config['current_url'] = current_url();
 	
 	// Getting ready for the real deal: including our pages
 	$arguments = array_keys($_GET);
