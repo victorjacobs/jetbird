@@ -45,7 +45,7 @@
 					$row = $dbconnection->fetch_array($query);
 					
 					foreach($row as $result) {
-						$main['post'] = $result['post_content'];
+						$main['post'] = htmlentities($result['post_content']);
 						$main['title'] = $result['post_title'];
 						$main['comment_status'] = $result['comment_status'];
 					}
