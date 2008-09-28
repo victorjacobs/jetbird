@@ -24,6 +24,7 @@
 		case login:
 				
 		if (isset($_POST['username'])) {
+		
 			$pwd = md5($_POST['password']);
 			$query = "SELECT * FROM user WHERE user_name = '". $_POST['username'] ."' AND user_pass = '$pwd'";
 			$result = $dbconnection->query($query);	  
@@ -31,6 +32,7 @@
 			//checking how much rows are affected
 			if (mysql_num_rows($result) == 1) {
 				$row = mysql_fetch_array($result);
+				
 				//setting all session variables
 				$_SESSION['user_level'] = $row['user_level'];
 				$_SESSION['login'] = 1;
@@ -60,16 +62,16 @@
 		
 		case register:
 		
-			
 				$query ="SELECT user_reg_key FROM user WHERE user_reg_key = '". $_GET['key'] ."'";
 				$result = $dbconnection->query($query);
+				
 				if(mysql_num_rows($result) == 1) {
 				
 					$smarty->assign('register_key', TRUE);
 					
 					if(isset($_POST['username'])) {
 					
-						$pwd = md5($_POST['password']);
+						$pwd = md5($_POST['password']);	
 						
 						// checking if user already exists
 						$query = "SELECT user_name FROM user WHERE user_name = '". $_POST['username'] ."'";
@@ -90,6 +92,7 @@
 									user_level = 0
 									user_reg_key = ''
 									WHERE user_reg_key = '". $_GET['key'] ."'";
+									
 							$result = $dbconnection->query($query);
 
 							$smarty->assign('register', TRUE);

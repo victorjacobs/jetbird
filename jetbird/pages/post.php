@@ -24,11 +24,11 @@
 			
 			if(isset($_POST['main_title'])) {
 				$date = time();
-
-				
 				$query="	INSERT INTO post (post_content, post_date, post_author, post_title) 
-							VALUES ('". $_POST['main_text'] ."', '$date', '". $_SESSION['user_id'] ."', '". $_POST['main_title'] ."')";
-				
+							VALUES ('". $_POST['main_text'] ."', 
+							'$date', '". $_SESSION['user_id'] ."', 
+							'". $_POST['main_title'] ."')";
+							
 				$result = $dbconnection->query($query);
 				redirect('./', 2);
 			}	
@@ -76,7 +76,10 @@
 				if (isset($_POST['comment'])) {
 					$date = time();
 					$query="	INSERT INTO comment (comment_parent_post_id, comment_content, comment_author, comment_date) 
-								VALUES ('". $_GET['id'] ."', '". $_POST['comment'] ."', '". $_POST['author'] ."', '$date')";
+								VALUES ('". $_GET['id'] ."', 
+								'". $_POST['comment'] ."', 
+								'". $_POST['author'] ."', 
+								'$date')";
 					$result = $dbconnection->query($query);
 					redirect("./?view&id=" . $_GET['id'] ."#comments");
 					die();
