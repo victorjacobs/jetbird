@@ -44,6 +44,16 @@
 		return preg_replace($search, $replace, $string);
 	}
 	
+	function truncate($string, $limit, $break = ".", $pad = "."){
+		if(strlen($string) <= $limit) return $string;
+		if(false !== ($breakpoint = strpos($string, $break, $limit))) {
+			if($breakpoint < strlen($string) - 1) {
+				$string = substr($string, 0, $breakpoint) . $pad;
+			}
+		}
+		return $string;
+	}
+	
 	function preview_text($text, $limit, $tags = 0) {
 
 	    // trim text
@@ -102,10 +112,10 @@
 			$pageURL .= "://";
 		 if ($_SERVER["SERVER_PORT"] != "80") {
 			$pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
-		 } else {
+		 }else{
 			$pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
 		 }
 	 return $pageURL;
-}
+	}
 
 ?>

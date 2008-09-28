@@ -45,7 +45,7 @@
 			}
 			unset($included_files);
 			
-			if(!is_readable($this->template_dir . $config['smarty']['template'] . '/')){
+			if(!is_readable($this->template_dir . $config['smarty']['template'] . '/') || $config['smarty']['template'] == "rss"){
 				$this->template = "default";
 			}else{
 				$this->template = $config['smarty']['template'];
@@ -62,12 +62,24 @@
 			$this->smarty_handle->display($file);
 		}
 		
+		function display_rss($file){
+			global $config;
+			$this->template_dir = $config['smarty']['template_dir'] ."rss/";
+			$this->display($file);
+		}
+		
 		function assign($var, $value){
 			$this->smarty_handle->assign($var, $value);
 		}
 		
 		function fetch($file){
 			return $this->smarty_handle->fetch($file);
+		}
+		
+		function fetch_rss($file){
+			global $config;
+			$this->template_dir = $config['smarty']['template_dir'] ."rss/";
+			return $this->fetch($file);
 		}
 	}
 

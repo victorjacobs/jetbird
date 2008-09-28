@@ -18,6 +18,14 @@
 	
 	// Global config
 	$config['global']['timestamp'] = "j/m/y";
+	$config['global']['timezone'] = "CET";
+	
+	// RSS
+	$config['rss']['format'] = "rss2.0";
+	$config['rss']['title'] = "Jetbird";
+	$config['rss']['link'] = "http://localhost/jetbird/";
+	$config['rss']['description'] = "The everyday problems of two geeks";
+	$config['rss']['ttl'] = 120;
 	
 	// Database config
 	$config['database']['host'] = "";
