@@ -16,6 +16,6 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
-	
+	$smarty->assign("queries", $dbconnection->queries);
 	$smarty->display('admin.index.tpl');
 ?>
