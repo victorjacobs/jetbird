@@ -43,7 +43,7 @@
 			$text = BBCode($row['post_content']);
 			$main_content['title'][] = $row['post_title'];
 			$main_content['date'][] = date($config['global']['timestamp'], $row['post_date']);
-			$main_content['post'][] = nl2br(preview_text($text, 500, 1));
+			$main_content['post'][] = nl2br(truncate($text, 500));
 			$main_content['post_id'][] = $row['post_id'];
 			$main_content['author'][] = $row['user_name'];
 		}
