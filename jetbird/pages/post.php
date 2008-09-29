@@ -31,6 +31,7 @@
 							
 				$result = $dbconnection->query($query);
 				redirect('./', 2);
+			
 			}	
 			
 			break;

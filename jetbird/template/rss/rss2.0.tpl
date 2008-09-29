@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <rss version="2.0">
 	<channel>
-		</title>{$config.title}</title>
+		<title>{$config.title}</title>
 		<link>{$config.link}</link>
 		<description>{$config.description}</description>
 		<lastBuildDate>{$rss.lastbuild}</lastBuildDate>
