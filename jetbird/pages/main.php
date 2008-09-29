@@ -34,7 +34,7 @@
 					FROM post
 					INNER JOIN user
 					ON post.post_author = user.user_id
-					ORDER BY post.post_id DESC LIMIT 5";	
+					ORDER BY post.post_date DESC";	
 
 		$result = $dbconnection->query($query);
 

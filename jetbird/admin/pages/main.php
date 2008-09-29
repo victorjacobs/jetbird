@@ -25,4 +25,5 @@
 	
 	$smarty->assign("queries", $dbconnection->queries);
 	$smarty->display('admin.index.tpl');
+	
 ?>
