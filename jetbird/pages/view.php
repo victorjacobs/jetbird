@@ -61,6 +61,14 @@
 			$view_content['username'][] = $comment['comment_author'];
 		}
 	}
+	
+	if(count($_SESSION['comment_error']) != 0){
+		$smarty->assign("comment_error", $_SESSION['comment_error']);
+		unset($_SESSION['comment_error']);
+		
+		$smarty->assign("comment_data", $_SESSION['comment_data']);
+		unset($_SESSION['comment_data']);
+	}
 
 	$smarty->assign('comment', $view_content['comment']);
 	$smarty->assign('date', $view_content['date']);

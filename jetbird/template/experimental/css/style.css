@@ -28,6 +28,13 @@ h4 {
 	margin: 0;
 }
 
+.error {
+	background-color: #89322e;
+	color: white;
+	padding: 10px;
+	border: 3px solid #dcf3c2;
+}
+
 small.subtitle {
 	padding-left: 20px;
 }

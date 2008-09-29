@@ -74,17 +74,51 @@
 				
 			break;
 			case make_comment:			
-				if (isset($_POST['comment'])) {
-					$date = time();
-					$query="	INSERT INTO comment (comment_parent_post_id, comment_content, comment_author, comment_date) 
+				if(isset($_POST['comment'])){
+					// Check whether something is inserted in the fields
+					if(!isset($_POST['author']) || empty($_POST['author'])) $comment_error["author"] = true;
+					if(!isset($_POST['email']) || empty($_POST['email'])){
+						$comment_error["author"] = true;
+					}elseif(!check_email_address($_POST['email'])){
+						$comment_error["email"] = true;
+					}
+					if(!isset($_POST['comment']) || empty($_POST['comment'])) $comment_error["comment"] = true;
+					
+					if(isset($_POST['website'])){
+						if(!eregi('^(http://)?(www\.)?[a-z0-9_-]+\.([a-z]{2,4})/?', $_POST['website'])){
+							// When website url doesn't pass eregi validation, just discard it.
+							// TODO: maybe show a little message instead of just discarting it
+							unset($_POST['website']);
+						}else{
+							$start = substr($_POST['website'], 0, 8);
+							if(!eregi("http://", $start) && !eregi("https://", $start)){
+								$_POST['website'] = "http://". $_POST['website'];
+							}
+							$_POST['website'] = strtolower($_POST['website']);	// Links are case-insensitive
+						}
+					}
+					
+					if(count($comment_error) != 0){
+						$_SESSION['comment_error'] = $comment_error;
+						$_SESSION['comment_data'] = $_POST;
+						redirect("./?view&id=" . $_GET['id'] ."#comments");
+						die();
+					}
+					
+					$query="	INSERT INTO comment (comment_parent_post_id, comment_author, comment_author_email, comment_author_url, comment_author_ip, comment_date, comment_content, comment_session_id) 
 								VALUES ('". $_GET['id'] ."', 
-								'". $_POST['comment'] ."', 
-								'". $_POST['author'] ."', 
-								'$date')";
+								'". addslashes($_POST['author']) ."', 
+								'". addslashes($_POST['email']) ."',
+								'". addslashes($_POST['website']) ."',
+								'". $_SERVER['REMOTE_ADDR'] ."',
+								'". time() ."', 
+								'". addslashes($_POST['comment']) ."',
+								'". session_id() ."')";
 					$result = $dbconnection->query($query);
 					redirect("./?view&id=" . $_GET['id'] ."#comments");
-					die();
-				}				
+				}else{
+					redirect("./");		// Just being lame here
+				}			
 			break;
 		}
 	$smarty->assign('queries', $dbconnection->queries);

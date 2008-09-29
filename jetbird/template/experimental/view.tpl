@@ -41,24 +41,25 @@
 				{/if}
 				<h3>Add comment</h3>
 				{if $smarty.session.user_level == 1 or $comment_status == "open"}
+				{if isset($comment_error)}<p class="error"><b>Error:</b> Please fill in all the required fields correctly</p>{/if}
 				<form action="./?post&amp;action=make_comment&amp;id={$smarty.get.id}" method="post">
 					<div>
-						<input type="text" name="author" />
+						<input type="text" name="author"{if isset($comment_data.author)} value="{$comment_data.author}"{/if} />
 						<b><small>Name (required)</small></b>
 					</div>
 					
 					<div>
-						<input type="text" name="email" />
+						<input type="text" name="email"{if isset($comment_data.email)} value="{$comment_data.email}"{/if} />
 						<b><small>Mail (required, won't be shown in public)</small></b>
 					</div>
 					
 					<div>
-						<input type="text" name="website" />
+						<input type="text" name="website"{if isset($comment_data.website)} value="{$comment_data.website}"{/if} />
 						<b><small>Website</small></b>
 					</div>
 					
 					<div>
-						<textarea rows="10" cols="40" name="comment"></textarea>
+						<textarea rows="10" cols="40" name="comment">{if isset($comment_data.comment)}{$comment_data.comment}{/if}</textarea>
 					</div>
 					
 					<div>
