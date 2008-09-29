@@ -42,7 +42,7 @@
 					</table></p>
 				</form>
 				{elseif $smarty.get.action == main_edit_post && $smarty.session.user_level == 1}
-				<form name="input" action="./?post&amp;action=main_edit_post&amp;post_id={$smarty.get.post_id}" method="post">
+				<form name="input" action="./?post&amp;action=main_edit_post&amp;id={$smarty.get.id}" method="post">
 					<p><table>
 						<tr>
 							<td><b>Title</b></td>

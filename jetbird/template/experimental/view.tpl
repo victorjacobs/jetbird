@@ -39,7 +39,7 @@
 				{else}
 				<p>No comments yet, be the first to write one!</p>
 				{/if}
-				<h3 id="add_comment">Add comment</h3>
+				<h3 id="add_comment">Add comment{if $smarty.session.user_level == 1 and $comment_status == "closed"} (closed){/if}</h3>
 				{if $smarty.session.user_level == 1 or $comment_status == "open"}
 				{if isset($comment_error)}<p class="error"><b>Error:</b> Please fill in all the required fields correctly</p>{/if}
 				<form action="./?post&amp;action=make_comment&amp;id={$smarty.get.id}" method="post">
@@ -66,6 +66,8 @@
 						<input type="submit" name="submit" value="Send" />
 					</div>
 				</form>
+				{else}
+				<p>Comments closed</p>
 				{/if}
 			</div>
 		</div>
