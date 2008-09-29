@@ -86,12 +86,7 @@
 						else {
 						
 							//creating user
-							$query="UPDATE user
-									SET user_name = '". $_POST['username'] ."' , 
-									user_pass = '$pwd' , 
-									user_level = 0
-									user_reg_key = ''
-									WHERE user_reg_key = '". $_GET['key'] ."'";
+							$query="UPDATE user SET user_name = '". $_POST['username'] ."', user_pass = '$pwd', user_level = 0, user_reg_key = '' WHERE user_reg_key = '$_GET[key]'";
 									
 							$result = $dbconnection->query($query);
 
