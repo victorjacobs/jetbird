@@ -38,7 +38,7 @@
 			
 			<form name="input" action="./?user&amp;action=add_user" method="post">
 					The e-mail adres of the blogger you want to add:
-			<input type="text" name="email"> <br />
+			<input type="text" name="email" /> <br />
 			<input type="submit" value="submit"/>
 			</form>	
 			

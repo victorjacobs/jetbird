@@ -39,8 +39,6 @@
 				<br />
 				<a id="link_permissions" href="./?user&amp;action=add_user">Add a new user</a>
 			</div>
-			<div id="content">
-			</div>
 		</div>
 		
 		<div id="wrap_footer">

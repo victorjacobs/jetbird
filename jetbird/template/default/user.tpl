@@ -22,7 +22,7 @@
 <head>
 	<title>Jetbird Preview</title>
 	<link type="text/css" rel="stylesheet" media="screen" href="{$template_dir}/css/style.css" />
-	<script src="include/common.js"></script>
+	
 </head>
 
 <body>
@@ -38,9 +38,9 @@
 					{if !isset($smarty.session.login)}
 					<form name="input" action="./?user&amp;action=login" method="post">
 					Username: 
-					<input type="text" name="username"> <br />
+					<input type="text" name="username" /> <br />
 					Password:
-					<input type="password" name="password"> <br />
+					<input type="password" name="password"/> <br />
 					<input type="submit" value="submit"/>
 					</form>	
 					{elseif isset($smarty.session.login) && !isset($smarty.post.username)}
@@ -64,9 +64,9 @@
 					{if $register_key === TRUE}
 					<form name="input" action="./?user&amp;action=register&amp;key={$smarty.get.key}" method="post">
 					Username: 
-					<input type="text" name="username"> <br />
+					<input type="text" name="username"/> <br />
 					password:
-					<input type="password" name="password"> <br />
+					<input type="password" name="password"/> <br />
 					<input type="submit" value="submit"/>
 					</form>
 					{/if}
