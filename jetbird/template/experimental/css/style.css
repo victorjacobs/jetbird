@@ -94,6 +94,10 @@ small.subtitle {
 	padding-left: 0;
 }
 
+#sidewrap ul ul {
+	text-indent: 20px;
+}
+
 #adsense {
 	height: 100%;
 	width: 200px;
