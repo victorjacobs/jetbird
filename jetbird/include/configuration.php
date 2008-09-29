@@ -28,10 +28,10 @@
 	$config['rss']['ttl'] = 120;
 	
 	// Database config
-	$config['database']['host'] = "localhost";
-	$config['database']['user'] = "tidus";
-	$config['database']['pass'] = "tidus";
-	$config['database']['database'] = "blog";
+	$config['database']['host'] = "";
+	$config['database']['user'] = "";
+	$config['database']['pass'] = "";
+	$config['database']['database'] = "";
 	
 	// Smarty config
 	$config['smarty']['template_dir'] = "template/";
