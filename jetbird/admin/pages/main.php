@@ -16,6 +16,13 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
+	
+	if(!$_SESSION['login'] || $_SESSION['user_level'] ==! 1){
+		header('Location: ../');
+		die();
+	}
+	
+	
 	$smarty->assign("queries", $dbconnection->queries);
 	$smarty->display('admin.index.tpl');
 ?>
