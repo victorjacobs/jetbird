@@ -101,7 +101,7 @@
 					if(count($comment_error) != 0){
 						$_SESSION['comment_error'] = $comment_error;
 						$_SESSION['comment_data'] = $_POST;
-						redirect("./?view&id=" . $_GET['id'] ."#comments");
+						redirect("./?view&id=" . $_GET['id'] ."#add_comment");
 						die();
 					}
 					
