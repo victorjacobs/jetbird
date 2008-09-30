@@ -20,7 +20,8 @@
 <head>
 	<title>Jetbird Preview &raquo; One</title>
 	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
-	<script src="{$template_dir}/js/fix.js" type="text/javascript"></script>
+	<script src="{$template_dir}/js/jquery-1.2.6.js" type="text/javascript"></script>
+	<script src="{$template_dir}/js/common.js" type="text/javascript"></script>
 	<!-- Squish IE quirks -->
 	<!--[if lt IE 7]>
 	<script src="http://ie7-js.googlecode.com/svn/version/2.0(beta3)/IE7.js" type="text/javascript"></script>
