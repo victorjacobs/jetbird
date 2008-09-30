@@ -64,7 +64,7 @@
 		
 		function display_rss($file){
 			global $config;
-			$this->template_dir = $config['smarty']['template_dir'] ."rss/";
+			$this->template_dir = str_replace($config['smarty']['template'], "rss", $this->template_dir);
 			$this->display($file);
 		}
 		

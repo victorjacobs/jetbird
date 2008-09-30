@@ -10,7 +10,7 @@ $(window).resize(function() {
 
 $(document).ready(function() {
 	set_height();
-	$("input").one("keydown", function() {
+	$("form").one("keydown", function() {
 		$(".error").fadeOut(1000);
 	});
 });
