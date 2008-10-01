@@ -19,7 +19,7 @@
 		<li><a href="{if $smarty.const.ADMIN_MODE}./{else}./admin{/if}">Admin dashboard</a></li>
 		<li><a href="{if $smarty.const.ADMIN_MODE}./?user{else}./admin/?user{/if}">Users</a></li>
 		<ul>
-			<li><a href="{if $smarty.const.ADMIN_MODE}./?user{else}./admin/?user&amp;action=new_user{/if}">Add user</a></li>
+			<li><a href="{if $smarty.const.ADMIN_MODE}./?user&amp;action=new_user{else}./admin/?user&amp;action=new_user{/if}">Add user</a></li>
 		</ul>
 		<li><a href="#">Posts</a></li>
 		<ul>
