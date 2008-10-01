@@ -24,6 +24,7 @@
 				<small>Manage users</small>
 				
 				{if $smarty.get.action == "new_user"}
+				<h3>Add user</h3>
 				<p>
 					<form action="./?user&amp;add_user" method="post">
 						<table>
@@ -39,8 +40,9 @@
 					</form>
 				</p>
 				{else}
+				<h3>Overview</h3>
 				<p>
-					<table>
+					<table width="100%">
 						<tr>
 							<td><b>Id</b></td>
 							<td width="70"><b>Name</b></td>
@@ -64,6 +66,8 @@
 					</table>
 				</p>
 				<p><a href="./?user&amp;action=new_user">Add user</a></p>
+				
+				<h3>Inactivated register keys</h3>
 				{/if}
 			</div>
 		</div>
