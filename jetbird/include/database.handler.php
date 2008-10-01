@@ -18,6 +18,7 @@
 	
 	class database_handler {
 		var $queries = 0, $link_identifier, $name, $connected, $new_link, $die_on_fail, $last_insert_id;
+		private $persistent_connect = false;
 		
 		function __construct($name = null, $die_on_fail = true, $new_link = true){
 			// set up object
@@ -32,7 +33,7 @@
 		}
 		
 		function pconnect($user, $pass, $db, $host){
-			define("PERSISTENT_DB_CONNECT", true);
+			$this->persistent_connect = true;
 			return $this->connect($user, $pass, $db, $host);
 		}
 		
@@ -41,8 +42,8 @@
 			if($this->connected){
 				return $this->link_identifier;
 			}
-			if(defined("PERSISTENT_DB_CONNECT")){
-			$this->link_identifier = @mysql_pconnect($host, $user, $pass, $new_link);	
+			if($this->persistent_connect){
+				$this->link_identifier = @mysql_pconnect($host, $user, $pass, $new_link);	
 			}else{
 				$this->link_identifier = @mysql_connect($host, $user, $pass, $new_link);
 			}

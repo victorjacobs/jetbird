@@ -25,4 +25,4 @@
 	<link type="text/css" rel="stylesheet" media="screen" href="{$template_dir}/css/style.css" />
 </head>
 
-<body onLoad="bodyLoad();">
+<body>
