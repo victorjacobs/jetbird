@@ -32,7 +32,7 @@
 						
 						<tr>
 							<td valign="top"><b>Text</b></td>
-							<td><textarea rows="10" cols="50" name="main_text"></textarea></td>
+							<td><textarea rows="20" cols="55" name="main_text"></textarea></td>
 						</tr>
 						
 						<tr>
@@ -51,7 +51,7 @@
 						
 						<tr>
 							<td valign="top"><b>Text</b></td>
-							<td><textarea rows="20" cols="60" name="post_text">{$post_text}</textarea></td>
+							<td><textarea rows="20" cols="55" name="post_text">{$post_text}</textarea></td>
 						</tr>
 						
 						<tr>
