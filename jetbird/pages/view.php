@@ -38,6 +38,8 @@
 		$smarty->assign('view_title', $row['post_title']);
 		$smarty->assign('author', $row['user_name']);
 		$smarty->assign('comment_status', $row['comment_status']);
+	}else{
+		redirect("./");
 	}
 
 	/*
