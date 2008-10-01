@@ -21,74 +21,73 @@
 	/*	main post section    
 	*/		
 			case main_make_post:
-			if(isset($_POST['main_title'])) {
-			
-				if(!isset($_POST['main_title']) || empty($_POST['main_title'])) {
-				$post_error['title'] = true;
-				}
+			if(isset($_POST['submit'])){
+				if(!isset($_POST['post_title']) || empty($_POST['post_title'])) $post_error["post_title"] = true;
+				if(!isset($_POST['post_content']) || empty($_POST['post_content'])) $post_error["post_content"] = true;
 				
-					if(!isset($_POST['main_text']) || empty($_POST['main_text'])) {
-					$post_error['text'] = true;
+				if(count($post_error) != 0){
+					$smarty->assign("post_error", $post_error);
+					$smarty->assign("post_data", $_POST);				
+				}else{
+					$query="	INSERT INTO post (post_content, post_date, post_author, post_title, comment_status) 
+								VALUES ('". $_POST['post_content'] ."', 
+								'". time() ."', '". $_SESSION['user_id'] ."', 
+								'". $_POST['post_title'] ."',
+								'". $_POST['comment_status'] ."')";
+
+					$result = $dbconnection->query($query);
+					redirect('./?view&id='. $dbconnection->last_insert_id);
 				}
-				
-				if (count($post_error) !=0 ) {
-					$_SESSION['post_error'] = $post_error;
-					$_SESSION['post_data'] = $_POST;
-					redirect("./?post&action=main_make_post", 0);
-					
-				}
-			
-				$date = time();
-				$query="	INSERT INTO post (post_content, post_date, post_author, post_title) 
-							VALUES ('". $_POST['main_text'] ."', 
-							'$date', '". $_SESSION['user_id'] ."', 
-							'". $_POST['main_title'] ."')";
-							
-				$result = $dbconnection->query($query);
-				redirect('./', 1);
 			}	
 			
 			break;
 			
 			case main_edit_post:
-
-				if 	(!isset($_POST['post_title'])) {		
+				if(isset($_POST['submit'])) {
+					// This is in here for older posts, which don't have the collumn comment_status yet, can be removed later on
+					if(!isset($_POST['comment_status'])){
+						$_POST['comment_status'] = "open";
+					}
+					
+					if(!isset($_POST['post_title']) || empty($_POST['post_title'])) $edit_error["post_title"] = true;
+					if(!isset($_POST['post_content']) || empty($_POST['post_content'])) $edit_error["post_content"] = true;
+					
+					if(count($edit_error) != 0){
+						$smarty->assign("edit_error", $edit_error);
+						$smarty->assign('post_content', $_POST['post_content']);
+						$smarty->assign('post_title', $_POST['post_title']);
+						$smarty->assign('comment_status', $_POST['comment_status']);
+					}else{
+						$query = "	UPDATE post 
+									SET post_content = '". $_POST['post_content'] ."',
+									post_title = '". $_POST['post_title'] ."',
+									comment_status = '". $_POST['comment_status'] ."'
+									WHERE post_id = ". $_GET['id'];
+						$dbconnection->query($query);
+						redirect("./?view&id=". $_GET['id']);
+						die();
+					}
+				}else{
 					$query = "	SELECT post_content, post_id, post_title, comment_status 
 								FROM post 
 								WHERE post_id =". $_GET['id'];
 							
-					$row = $dbconnection->fetch_array($query);
+					$result = $dbconnection->fetch_array($query);
 					
-					foreach($row as $result) {
-						$main['post'] = htmlentities($result['post_content']);
-						$main['title'] = $result['post_title'];
-						$main['comment_status'] = $result['comment_status'];
-					}
+					// Assume there is only one result
+					$main['post'] = htmlentities($result[0]["post_content"]);
+					$main['title'] = $result[0]['post_title'];
+					$main['comment_status'] = $result[0]['comment_status'];
 					
-					$smarty->assign('post_text', $main['post']);
+					$smarty->assign('post_content', $main['post']);
 					$smarty->assign('post_title', $main['title']);
-					$smarty->assign('comment_status', $main['comment_status']);				
-				}
-											
-				// Section to post the modified text
-				if(isset($_POST['post_title'])) {
-					if(!isset($_POST['comment_status'])){
-						$_POST['comment_status'] = "open";
-					}					
-					$query = "	UPDATE post 
-								SET post_content = '". $_POST['post_text'] ."',
-								post_title = '". $_POST['post_title'] ."',
-								comment_status = '". $_POST['comment_status'] ."'
-								WHERE post_id = '". $_GET['id'] ."' LIMIT 1";
-								
-					$dbconnection->query($query);
-				
-					redirect("./", 0);
+					$smarty->assign('comment_status', $main['comment_status']);
 				}
 				
 			break;
+			
 			case make_comment:			
-				if(isset($_POST['comment'])){
+				if(isset($_POST['submit'])){
 					// Check whether something is inserted in the fields
 					if(!isset($_POST['author']) || empty($_POST['author'])) $comment_error["author"] = true;
 					if(!isset($_POST['email']) || empty($_POST['email'])){
@@ -135,6 +134,7 @@
 				}			
 			break;
 		}
+	
 	$smarty->assign('queries', $dbconnection->queries);
 	$smarty->display('post.tpl');
 	

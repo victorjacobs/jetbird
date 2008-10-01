@@ -23,25 +23,37 @@
 				<h2>Jetbird - Blog</h2>
 				<small>The everyday problems of two geeks.</small>
 				{if $smarty.get.action == main_make_post && $smarty.session.user_level == 1}
+				{if isset($post_error)}<p class="error"><b>Error:</b> Please fill in all the required fields correctly</p>{/if}
 				<form name="input" action="./?post&amp;action=main_make_post" method="post">
 					<p><table>
 						<tr>
 							<td><b>Title</b></td>
-							<td><input type="text" name="main_title" /></td>
+							<td><input type="text" name="post_title"{if isset($post_data.post_title)} value="{$post_data.post_title}"{/if} /></td>
 						</tr>
 						
 						<tr>
 							<td valign="top"><b>Text</b></td>
-							<td><textarea rows="20" cols="55" name="main_text"></textarea></td>
+							<td><textarea rows="20" cols="55" name="post_content">{if isset($post_data.post_content)}{$post_data.post_content}{/if}</textarea></td>
+						</tr>
+						
+						<tr>
+							<td><b>Comments</b></td>
+							<td>
+								<select name="comment_status">
+									<option value="open" selected>Open</option>
+									<option value="closed">Closed</option>
+								</select>
+							</td>
 						</tr>
 						
 						<tr>
 							<td>&nbsp;</td>
-							<td><input type="submit" value="Post" /></td>
+							<td><input type="submit" name="submit" value="Post" /></td>
 						</tr>
 					</table></p>
 				</form>
 				{elseif $smarty.get.action == main_edit_post && $smarty.session.user_level == 1}
+				{if isset($edit_error)}<p class="error"><b>Error:</b> Please fill in all the required fields correctly</p>{/if}
 				<form name="input" action="./?post&amp;action=main_edit_post&amp;id={$smarty.get.id}" method="post">
 					<p><table>
 						<tr>
@@ -51,7 +63,7 @@
 						
 						<tr>
 							<td valign="top"><b>Text</b></td>
-							<td><textarea rows="20" cols="55" name="post_text">{$post_text}</textarea></td>
+							<td><textarea rows="20" cols="55" name="post_content">{$post_content}</textarea></td>
 						</tr>
 						
 						<tr>
@@ -66,7 +78,7 @@
 												
 						<tr>
 							<td>&nbsp;</td>
-							<td><input type="submit" value="Edit" /></td>
+							<td><input type="submit" name="submit" value="Edit" /></td>
 						</tr>
 					</table></p>
 				</form>
