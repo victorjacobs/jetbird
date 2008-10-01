@@ -21,8 +21,23 @@
 	/*	main post section    
 	*/		
 			case main_make_post:
-			
 			if(isset($_POST['main_title'])) {
+			
+				if(!isset($_POST['main_title']) || empty($_POST['main_title'])) {
+				$post_error['title'] = true;
+				}
+				
+					if(!isset($_POST['main_text']) || empty($_POST['main_text'])) {
+					$post_error['text'] = true;
+				}
+				
+				if (count($post_error) !=0 ) {
+					$_SESSION['post_error'] = $post_error;
+					$_SESSION['post_data'] = $_POST;
+					redirect("./?post&action=main_make_post", 0);
+					
+				}
+			
 				$date = time();
 				$query="	INSERT INTO post (post_content, post_date, post_author, post_title) 
 							VALUES ('". $_POST['main_text'] ."', 
@@ -30,8 +45,7 @@
 							'". $_POST['main_title'] ."')";
 							
 				$result = $dbconnection->query($query);
-				redirect('./', 2);
-			
+				redirect('./', 1);
 			}	
 			
 			break;
