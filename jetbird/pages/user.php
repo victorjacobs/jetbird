@@ -23,8 +23,7 @@
 	
 		case login:
 				
-		if (isset($_POST['username'])) {
-		
+		if(isset($_POST['username'])){		
 			$pwd = md5($_POST['password']);
 			$query = "SELECT * FROM user WHERE user_name = '". $_POST['username'] ."' AND user_pass = '$pwd'";
 			$result = $dbconnection->query($query);	  
@@ -40,11 +39,15 @@
 				$_SESSION['user_id'] = $row['user_id'];
 				$smarty->assign('login', TRUE);
 				redirect('./admin', 2);
-			} 
-			else { 
-			$smarty->assign('login', FALSE);
+			}else{ 
+				$smarty->assign('login', FALSE);
 			}
 		}
+		
+		if($_SESSION['login']){
+			redirect("./", 2);
+		}
+		
 		break;
 	/*
 	/*	Logout section

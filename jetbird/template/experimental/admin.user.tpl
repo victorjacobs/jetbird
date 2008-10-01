@@ -21,20 +21,50 @@
 		<div id="contentwrap">
 			<div id="content">
 				<h2>Jetbird - Admin</h2>
-				<small>Invite a new user</small>
+				<small>Manage users</small>
 				
-				<p><form action="./?user&amp;add_user" method="post">
+				{if $smarty.get.action == "new_user"}
+				<p>
+					<form action="./?user&amp;add_user" method="post">
+						<table>
+							<tr>
+								<td>Email address</td>
+								<td><input type="text" name="email" /></td>
+							</tr>
+							<tr>
+								<td>&nbsp;</td>
+								<td><input type="submit" name="submit" value="Send" /></td>
+							</tr>
+						</table>
+					</form>
+				</p>
+				{else}
+				<p>
 					<table>
 						<tr>
-							<td>Email address</td>
-							<td><input type="text" name="email" /></td>
-						</tr>
-						<tr>
+							<td><b>Id</b></td>
+							<td width="70"><b>Name</b></td>
+							<td><b>Level</b></td>
+							<td><b>Mail</b></td>
+							<td><b>Last login</b></td>
+							<td><b>Reg key</b></td>
 							<td>&nbsp;</td>
-							<td><input type="submit" name="submit" value="Send" /></td>
 						</tr>
+						{foreach from=$users item=user}
+						<tr>
+							<td>{$user.user_id}</td>
+							<td>{$user.user_name}</td>
+							<td>{$user.user_level}</td>
+							<td>{$user.user_mail}</td>
+							<td><i>Placeholder</i></td>
+							<td>{$user.user_reg_key}</td>
+							<td><a href="#">Edit</a></td>
+						</tr>
+						{/foreach}
 					</table>
-				</form></p>
+				</p>
+				<p><a href="./?user&amp;action=new_user">Add user</a></p>
+				{/if}
 			</div>
 		</div>
 		

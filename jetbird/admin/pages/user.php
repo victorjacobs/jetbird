@@ -16,18 +16,13 @@
 	*/
 	
 	if(!$_SESSION['login'] || $_SESSION['user_level'] ==! 1){
-		header('Location: ../');
 		die();
 	}
 	
-	switch ($_GET['action']){
-		case add_user:
-		
-
+	switch($_GET['action']){
+		case new_user:
 			
-			// generating a random code
-			$_POST['email'] = 1;
-			if(isset($_POST['email'])){
+			if(isset($_POST['submit'])){
 				$key = crypt(uniqid(sha1(md5(rand())), true));
 				$smarty->assign('key', $result);
 				
@@ -36,6 +31,11 @@
 				$dbconnection->query($query);
 			}			
 			
+		break;
+		
+		default:
+			$query = "SELECT * FROM user";
+			$smarty->assign("users", $dbconnection->fetch_array($query));
 		break;
 	}
 	

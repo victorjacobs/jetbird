@@ -18,10 +18,10 @@
 	
 	
 	if(!$_SESSION['login'] || $_SESSION['user_level'] ==! 1){
-		header('Location: ../');
 		die();
 	}
 	
+		
 	
 	$smarty->assign("queries", $dbconnection->queries);
 	$smarty->display('admin.index.tpl');
