@@ -1,4 +1,6 @@
-/* @override http://localhost/prototype7/css/style.css */
+/* @override 
+	http://localhost/jetbird/template/experimental/css/style.css
+*/
 
 /* Global */
 
@@ -7,6 +9,7 @@ body, html {
 	padding: 0;
 	background-color: gray;
 	height: 100%;
+	background-image: url(../image/bg.png);
 }
 
 body * {
@@ -25,6 +28,13 @@ h4 {
 	margin: 0;
 }
 
+.error {
+	background-color: #89322e;
+	color: white;
+	padding: 10px;
+	border: 3px solid #dcf3c2;
+}
+
 small.subtitle {
 	padding-left: 20px;
 }
@@ -39,7 +49,7 @@ small.subtitle {
 	background-color: #dcf3c2;
 }
 
-#menu, #content, #adsense {
+.menu, #content, #adsense {
 	margin: 20px;
 }
 
@@ -58,6 +68,18 @@ small.subtitle {
 	margin-top: +10px;
 }
 
+.comment {
+	background-color: gray;
+	border: 3px solid #dcf3c2;
+	color: white;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-bottom: 10px;
+}
+
+.comment > small {
+}
+
 /* Side */
 
 #sidewrap {
@@ -70,6 +92,10 @@ small.subtitle {
 #sidewrap ul {
 	list-style-type: none;
 	padding-left: 0;
+}
+
+#sidewrap ul ul {
+	text-indent: 20px;
 }
 
 #adsense {
