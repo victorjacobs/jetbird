@@ -27,17 +27,29 @@ $(window).resize(function() {
 $(document).ready(function() {
 	set_height();
 	$("#projects > ul").hide();
+	
 	$("form").one("keydown", function() {
 		$(".error").fadeOut(1000);
+	});
+	
+	$("#sidewrap a").click(function() {
+		$("#content").fadeOut(800, function() {
+			var request = new XMLHttpRequest();
+			request.open("GET", "./AJAXDATA", false);
+			request.send();
+			$(this).html(request.responseText);
+			set_height();
+			$(this).fadeIn(800);
+		});
 	});
 	
 	$("div#projects").hover(function() {
 		$("#projects > ul").show(500);
 	}, function() {
-		$("#projects > ul").hide(500);
+		setTimeout('$("#projects > ul").hide(500)', 2000);
 	});
 	
 	$("div#projects").click(function() {
-		$("#projects > ul").hide(500);
+		$("#projects > ul").toggle(500);
 	});
 });

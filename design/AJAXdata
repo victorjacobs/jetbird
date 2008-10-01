@@ -1,0 +1,4 @@
+<h2>Jetbird + AJAX = Magic</h2>
+<small>Feel the power of AJAX technologies, right here in Jetbird</small>
+<h3>Summary</h3>
+<p>Ajax (asynchronous JavaScript and XML), or AJAX, is a group of interrelated web development techniques used for creating interactive web applications or rich Internet applications. With Ajax, web applications can retrieve data from the server asynchronously in the background without interfering with the display and behavior of the existing page. Data is retrieved using the XMLHttpRequest object or through the use of Remote Scripting in browsers that do not support it. Despite the name, the use of JavaScript, XML, or its asynchronous use is not required.</p>
