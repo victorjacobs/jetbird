@@ -60,7 +60,7 @@
 							<td>{$user.user_mail}</td>
 							<td><i>Placeholder</i></td>
 							<td>{$user.user_reg_key}</td>
-							<td><a href="#">Edit</a></td>
+							<td><a href="./?user&amp;action=edit_user&amp;id={$user.user_id}">Edit</a></td>
 						</tr>
 						{/foreach}
 					</table>
