@@ -44,7 +44,16 @@
 							user_level = '". $_POST['user_level'] ."'
 							WHERE user_id = '". $_GET['id'] ."'";
 				$dbconnection->query($query);
-				}
+			}
+		break;
+		
+		case del_user:
+			
+			if (isset($_POST['submit'])) {
+				$query = "	DELETE FROM user
+							WHERE user_id ='". $_GET['id'] ."'";
+				$dbconnection->query($query);
+			}
 		break;
 		
 		default:
