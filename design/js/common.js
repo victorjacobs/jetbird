@@ -26,19 +26,31 @@ $(window).resize(function() {
 
 $(document).ready(function() {
 	set_height();
+	$("input#search").attr("value", "Search").css("color", "gray");
 	$("#projects > ul").hide();
 	
+	$("input#search").blur(function() {
+		if($(this).attr("value") == ""){
+			$(this).attr("value", "Search").css("color", "gray");
+		}
+	});
+	
+	$("input#search").focus(function() {
+		if($(this).attr("value") == "Search"){
+			$(this).attr("value", "");
+		}
+		if($(this).css("color") == "gray"){
+			$(this).css("color", "black");
+		}
+	});
+	
 	$("form").one("keydown", function() {
-		$(".error").fadeOut(1000);
+		setTimeout('$(".error").fadeOut(1000)', 1000);
 	});
 	
 	$("#sidewrap a").click(function() {
 		$("#content").fadeOut(800, function() {
-			var request = new XMLHttpRequest();
-			request.open("GET", "./AJAXDATA", false);
-			request.send();
-			$(this).html(request.responseText);
-			set_height();
+			$(this).load("./AJAXdata");
 			$(this).fadeIn(800);
 		});
 	});
