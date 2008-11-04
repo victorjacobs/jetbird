@@ -37,6 +37,7 @@
 				$_SESSION['login'] = 1;
 				$_SESSION['username'] = $_POST['username'];
 				$_SESSION['user_id'] = $row['user_id'];
+				$dbconnection->query("UPDATE user SET user_last_login = ". time() ." WHERE user_id = ". $row['user_id']);
 				$smarty->assign('login', TRUE);
 				redirect('./admin', 2);
 			}else{ 

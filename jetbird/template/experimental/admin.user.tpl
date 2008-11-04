@@ -44,12 +44,11 @@
 				<p>
 					<table width="100%">
 						<tr>
-							<td><b>Id</b></td>
+							<td><b>ID</b></td>
 							<td width="70"><b>Name</b></td>
 							<td><b>Level</b></td>
 							<td><b>Mail</b></td>
 							<td><b>Last login</b></td>
-							<td><b>Reg key</b></td>
 							<td>&nbsp;</td>
 						</tr>
 						{foreach from=$users item=user}
@@ -58,8 +57,7 @@
 							<td>{$user.user_name}</td>
 							<td>{$user.user_level}</td>
 							<td>{$user.user_mail}</td>
-							<td><i>Placeholder</i></td>
-							<td>{$user.user_reg_key}</td>
+							<td>{if !$user.user_last_login}<i>Never</i>{else}{$user.user_last_login|date_format:"%D %H:%I"}{/if}</td>
 							<td><a href="./?user&amp;action=edit_user&amp;id={$user.user_id}">Edit</a></td>
 						</tr>
 						{/foreach}

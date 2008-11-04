@@ -18,7 +18,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-	<title>Jetbird Preview &raquo; One</title>
+	<title>Jetbird Preview</title>
 	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
 	<script src="{$template_dir}/js/jquery-1.2.6.js" type="text/javascript"></script>
 	<script src="{$template_dir}/js/common.js" type="text/javascript"></script>

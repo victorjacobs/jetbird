@@ -21,9 +21,9 @@
 		<ul>
 			<li><a href="{if $smarty.const.ADMIN_MODE}./?user&amp;action=new_user{else}./admin/?user&amp;action=new_user{/if}">Add user</a></li>
 		</ul>
-		<li><a href="#">Posts</a></li>
+		<li><a href="{if $smarty.const.ADMIN_MODE}./?post{else}./admin/?post{/if}">Posts</a></li>
 		<ul>
-			<li><a href="{if $smarty.const.ADMIN_MODE}.{/if}./?post&amp;action=main_make_post">Add post</a></li>
+			<li><a href="{if $smarty.const.ADMIN_MODE}.{/if}./admin/?post&amp;add">Add post</a></li>
 			<li><a href="#">Some more</a></li>
 		</ul>
 		<li><a href="{if $smarty.const.ADMIN_MODE}.{/if}./?user&amp;action=logout">Log out</a></li>

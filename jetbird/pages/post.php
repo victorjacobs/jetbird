@@ -19,28 +19,7 @@
 	switch($_GET['action']) {
 	/*
 	/*	main post section    
-	*/		
-			case main_make_post:
-			if(isset($_POST['submit'])){
-				if(!isset($_POST['post_title']) || empty($_POST['post_title'])) $post_error["post_title"] = true;
-				if(!isset($_POST['post_content']) || empty($_POST['post_content'])) $post_error["post_content"] = true;
-				
-				if(count($post_error) != 0){
-					$smarty->assign("post_error", $post_error);
-					$smarty->assign("post_data", $_POST);				
-				}else{
-					$query="	INSERT INTO post (post_content, post_date, post_author, post_title, comment_status) 
-								VALUES ('". $_POST['post_content'] ."', 
-								'". time() ."', '". $_SESSION['user_id'] ."', 
-								'". $_POST['post_title'] ."',
-								'". $_POST['comment_status'] ."')";
-
-					$result = $dbconnection->query($query);
-					redirect('./?view&id='. $dbconnection->last_insert_id);
-				}
-			}	
-			
-			break;
+	*/
 			
 			case main_edit_post:
 				if(isset($_POST['submit'])) {
