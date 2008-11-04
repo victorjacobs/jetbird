@@ -1,26 +1,17 @@
+-- phpMyAdmin SQL Dump
+-- version 2.11.4
+-- http://www.phpmyadmin.net
 --
---		This file is part of Jetbird.
---		
---		Jetbird is free software: you can redistribute it and/or modify
---		it under the terms of the GNU General Public License as published by
---		the Free Software Foundation, either version 3 of the License, or
---		(at your option) any later version.
---		
---		Jetbird is distributed in the hope that it will be useful,
---		but WITHOUT ANY WARRANTY; without even the implied warranty of
---		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
---		GNU General Public License for more details.
---		You should have received a copy of the GNU General Public License
---		along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
---  
+-- Host: localhost
+-- Generation Time: Nov 04, 2008 at 10:29 PM
+-- Server version: 5.0.51
+-- PHP Version: 5.2.5
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+--
+-- Database: `jetbird_new`
+--
 
 -- --------------------------------------------------------
 
@@ -56,7 +47,6 @@ CREATE TABLE IF NOT EXISTS `post` (
   `comment_status` enum('open','closed') NOT NULL,
   PRIMARY KEY  (`post_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
 -- --------------------------------------------------------
 
 --
@@ -70,5 +60,6 @@ CREATE TABLE IF NOT EXISTS `user` (
   `user_mail` varchar(32) NOT NULL,
   `user_level` tinyint(1) unsigned NOT NULL,
   `user_reg_key` varchar(13) NOT NULL,
+  `user_last_login` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`user_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
