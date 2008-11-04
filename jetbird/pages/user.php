@@ -21,7 +21,7 @@
 	*/	
 	switch ($_GET['action']) {
 	
-		case login:
+		case "login":
 				
 		if(isset($_POST['username'])){		
 			$pwd = md5($_POST['password']);
@@ -53,20 +53,16 @@
 	/*
 	/*	Logout section
 	*/
-		case logout:
-		
-			$_SESSION = array();
+		case "logout":
 			session_destroy();
 			redirect('./', 2);
 			break;
 	/*
 	/*	register section
-	*/	
+	*/		
 		
-		
-		case register:
-		
-				$query ="SELECT user_reg_key FROM user WHERE user_reg_key = '". $_GET['key'] ."'";
+		case "register":
+			$query ="SELECT user_reg_key FROM user WHERE user_reg_key = '". $_GET['key'] ."'";
 				$result = $dbconnection->query($query);
 				
 				if(mysql_num_rows($result) == 1) {
@@ -90,7 +86,7 @@
 						else {
 						
 							//creating user
-							$query="UPDATE user SET user_name = '". $_POST['username'] ."', user_pass = '$pwd', user_level = 0, user_reg_key = '' WHERE user_reg_key = '$_GET[key]'";
+							$query="UPDATE user SET user_name = '". $_POST['username'] ."', user_pass = '$pwd', user_level = 0, user_reg_key = '' WHERE user_reg_key = '". $_GET['key'] ."'";
 									
 							$result = $dbconnection->query($query);
 
