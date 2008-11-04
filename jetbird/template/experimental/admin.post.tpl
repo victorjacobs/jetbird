@@ -21,7 +21,7 @@
 	<div id="contentwrap">
 		<div id="content">
 			<h2>Jetbird - Admin</h2>
-			<small>Manage Postst</small>
+			<small>Manage Posts</small>
 			
 			{if isset($smarty.get.add)}
 			{if isset($post_error)}<p class="error"><b>Error:</b> Please fill in all the required fields correctly</p>{/if}

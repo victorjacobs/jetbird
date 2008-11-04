@@ -19,21 +19,18 @@
 		die();
 	}
 	
-	switch($_GET['action']){
-		case new_user:
-			
+	switch($action){
+		case "invite":		
 			if(isset($_POST['submit'])){
 				$key = crypt(uniqid(sha1(md5(rand())), true));
-				$smarty->assign('key', $result);
-				
+								
 				// putting key into DB
 				$query = "INSERT INTO user (user_reg_key) VALUES ('$key')";
 				$dbconnection->query($query);
-			}			
-			
+			}		
 		break;
 		
-		case edit_user:
+		case "edit":
 			$query = "SELECT * FROM user";
 			$smarty->assign("users", $dbconnection->fetch_array($query));
 			
@@ -47,8 +44,7 @@
 			}
 		break;
 		
-		case del_user:
-			
+		case "delete":
 			if (isset($_POST['submit'])) {
 				$query = "	DELETE FROM user
 							WHERE user_id ='". $_GET['id'] ."'";

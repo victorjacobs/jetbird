@@ -23,7 +23,7 @@
 				<h2>Jetbird - Admin</h2>
 				<small>Manage users</small>
 				
-				{if $smarty.get.action == "new_user"}
+				{if isset($smarty.get.invite)}
 				<h3>Add user</h3>
 				<p>
 					<form action="./?user&amp;add_user" method="post">
@@ -37,6 +37,44 @@
 								<td><input type="submit" name="submit" value="Send" /></td>
 							</tr>
 						</table>
+					</form>
+				</p>
+				{elseif isset($smarty.get.edit)}
+				<h3>Edit User</h3>
+				<p>
+					<form action="./?user&amp;edit" method="post">
+						<table>
+							<tr>
+								<td><b>Username</b></td>
+								<td><input type="text" /></td>
+							</tr>
+							
+							<tr>
+								<td><b>Userlevel</b></td>
+								<td>
+									<select>
+										<option>Owner</option>
+										<option>Moderator</option>
+									</select>
+								</td>
+							</tr>
+							
+							<tr>
+								<td><b>New password</b></td>
+								<td><input type="password" /></td>
+							</tr>
+							
+							<tr>
+								<td><b>Retype password</b></td>
+								<td><input type="password" /></td>
+							</tr>
+							
+							<tr>
+								<td><b>Email</b></td>
+								<td><input type="text" /></td>
+							</tr>
+						</table>
+						<input type="submit" value="Update" name="submit" />
 					</form>
 				</p>
 				{else}
@@ -58,7 +96,7 @@
 							<td>{$user.user_level}</td>
 							<td>{$user.user_mail}</td>
 							<td>{if !$user.user_last_login}<i>Never</i>{else}{$user.user_last_login|date_format:"%D %H:%I"}{/if}</td>
-							<td><a href="./?user&amp;action=edit_user&amp;id={$user.user_id}">Edit</a></td>
+							<td><a href="./?user&amp;edit&amp;id={$user.user_id}">Edit</a></td>
 						</tr>
 						{/foreach}
 					</table>

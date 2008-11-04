@@ -20,9 +20,6 @@
 		die();
 	}
 	
-	$args = array_keys($_GET);
-	$action = $args[1];
-	
 	switch($action){
 		case "add":
 			if(isset($_POST['submit'])){

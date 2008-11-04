@@ -30,6 +30,9 @@
 	require_once "../include/smarty/Smarty.class.php";
 	require_once "../include/smarty.handler.class.php";
 	
+	$args = array_keys($_GET);
+	$action = $args[1];
+	
 	// We don't want regular users to sniff around in here
 	if(!$_SESSION['login'] || $_SESSION['user_level'] ==! 1){
 		redirect("../");
