@@ -29,6 +29,9 @@
 				<p>{$view_post}</p>
 				
 				<h3 id="comments">Comments</h3>
+				{if !isset($comment) and $comment_status == "closed"}
+				<p>Comments closed</p>
+				{else}
 				{if isset($comment)}
 				{section name=loop loop=$comment}
 				<div class="comment">
@@ -68,6 +71,7 @@
 				</form>
 				{else}
 				<p>Comments closed</p>
+				{/if}
 				{/if}
 			</div>
 		</div>
