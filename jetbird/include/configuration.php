@@ -20,6 +20,12 @@
 	$config['global']['timestamp'] = "j/m/y";
 	$config['global']['timezone'] = "CET";
 	
+	// Database config
+	$config['database']['host'] = "";
+	$config['database']['user'] = "";
+	$config['database']['pass'] = "";
+	$config['database']['database'] = "";
+	
 	// RSS
 	$config['rss']['format'] = "rss2.0";
 	$config['rss']['title'] = "Jetbird";
@@ -27,15 +33,9 @@
 	$config['rss']['description'] = "The everyday problems of two geeks";
 	$config['rss']['ttl'] = 120;
 	
-	// Database config
-	$config['database']['host'] = "";
-	$config['database']['user'] = "";
-	$config['database']['pass'] = "";
-	$config['database']['database'] = "";
-	
 	// Smarty config
 	$config['smarty']['template_dir'] = "template/";
-	$config['smarty']['template'] = "rss";
+	$config['smarty']['template'] = "default";
 	$config['smarty']['compile_dir'] = "include/smarty/templates_c";
 	$config['smarty']['cache_dir'] = "include/smarty/cache";
 	$config['smarty']['config_dir'] = "include/smarty/configs";
