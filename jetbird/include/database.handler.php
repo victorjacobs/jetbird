@@ -72,7 +72,13 @@
 			$error = mysql_error($this->link_identifier);
 			if(!empty($error)){
 				$backtrace = debug_backtrace();
-				echo "<b>Fatal error:</b> ". $error ." in <b>". $backtrace[0]['file'] ."</b> on line <b>". $backtrace[0]['line'] ."</b>";
+				
+				// Try to be as exact as possible, we want to know where exactly that db_handler crashed, and that's
+				//  most of the time NOT in this file
+				$crashed_file = 0;
+				while(eregi("database.handler.php", $backtrace[$crashed_file]['file'])) $crashed_file++;
+								
+				echo "<b>Fatal error:</b> ". $error ." in <b>". $backtrace[$crashed_file]['file'] ."</b> on line <b>". $backtrace[$crashed_file]['line'] ."</b>";
 				die();
 			}
 			$this->queries++;

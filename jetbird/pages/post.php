@@ -15,13 +15,13 @@
 	    You should have received a copy of the GNU General Public License
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
-		
-	switch($_GET['action']) {
+	
+	switch($action) {
 	/*
 	/*	main post section    
 	*/
 			
-			case main_edit_post:
+			case "edit":
 				if(isset($_POST['submit'])) {
 					// This is in here for older posts, which don't have the collumn comment_status yet, can be removed later on
 					if(!isset($_POST['comment_status'])){

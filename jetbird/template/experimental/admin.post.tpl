@@ -53,6 +53,30 @@
 					</tr>
 				</table></p>
 			</form>
+			{else}
+			<h3>Overview</h3>
+			
+			<table width="100%">
+				<tr>
+					<td><b>ID</b></td>
+					<td><b>Author</b></td>
+					<td width="40%"><b>Title</b></td>
+					<td><b>Date</b></td>
+					<td><b>Comments</b></td>
+					<td>&nbsp;</td>
+				</tr>
+				
+				{foreach from=$posts item=post}
+				<tr>
+					<td>{$post.post_id}</td>
+					<td>{$post.post_author}</td>
+					<td>{$post.post_title}</td>
+					<td>{$post.post_date|date_format:"%D %H:%I"}</td>
+					<td>{$post.comment_status|ucfirst}</td>
+					<td><a href="../?post&amp;edit&amp;id={$post.post_id}">Edit</a></td>
+				</tr>
+				{/foreach}
+			</table>
 			{/if}
 		</div>
 	</div>

@@ -29,7 +29,7 @@
 				
 				<p>{$main_post[loop]}</p>
 				<p><small>
-					<a href="./?view&amp;id={$post_id[loop]}">Read more</a>{if $smarty.session.user_level == 1} | <a href="./?post&amp;action=main_edit_post&amp;id={$post_id[loop]}">Edit</a>{/if}
+					<a href="./?view&amp;id={$post_id[loop]}">Read more</a>{if $smarty.session.user_level == 1} | <a href="./?post&amp;edit&amp;id={$post_id[loop]}">Edit</a>{/if}
 
 				</small></p>{/section}
 			</div>

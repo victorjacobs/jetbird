@@ -43,8 +43,8 @@
 				<input type="submit" value="Post"/>
 				</form>
 	
-				{elseif $smarty.get.action == main_edit_post && $smarty.session.user_level == 1}
-				<form name="input" action="./?post&amp;action=main_edit_post&amp;id={$smarty.get.id}" method="post">
+				{elseif isset($smarty.get.edit) && $smarty.session.user_level == 1}
+				<form name="input" action="./?post&amp;edit&amp;id={$smarty.get.id}" method="post">
 				title
 				<textarea rows="2.5" cols="50" name="post_title" >{$post_title}</textarea>  <br />
 				text

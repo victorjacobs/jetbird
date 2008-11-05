@@ -22,9 +22,9 @@
 			<div id="content">
 				<h2>Jetbird - Blog</h2>
 				<small>The everyday problems of two geeks.</small>
-				{if $smarty.get.action == main_edit_post && $smarty.session.user_level == 1}
+				{if isset($smarty.get.edit) && $smarty.session.user_level == 1}
 				{if isset($edit_error)}<p class="error"><b>Error:</b> Please fill in all the required fields correctly</p>{/if}
-				<form name="input" action="./?post&amp;action=main_edit_post&amp;id={$smarty.get.id}" method="post">
+				<form name="input" action="./?post&amp;edit&amp;id={$smarty.get.id}" method="post">
 					<p><table>
 						<tr>
 							<td><b>Title</b></td>

@@ -25,7 +25,7 @@
 				{if $smarty.get.action == login}
 				{if !isset($smarty.session.login)}
 				{if $login === FALSE}
-				<p><b>Error:</b> password or username wrong, please try again.</p>
+				<p class="error"><b>Error:</b> password or username wrong, please try again.</p>
 				{/if}
 				<form name="input" action="./?user&amp;action=login" method="post">
 					<table>

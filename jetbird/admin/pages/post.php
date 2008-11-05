@@ -40,6 +40,10 @@
 				}
 			}
 		break;
+		
+		default:
+			$smarty->assign("posts", $dbconnection->fetch_array("SELECT * FROM post ORDER BY post_date DESC"));
+		break;
 	}
 		
 	$smarty->assign("queries", $dbconnection->queries);
