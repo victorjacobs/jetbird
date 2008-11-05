@@ -30,9 +30,6 @@
 	require_once "../include/smarty/Smarty.class.php";
 	require_once "../include/smarty.handler.class.php";
 	
-	$args = array_keys($_GET);
-	$action = $args[1];
-	
 	// We don't want regular users to sniff around in here
 	if(!$_SESSION['login'] || $_SESSION['user_level'] ==! 1){
 		redirect("../");
@@ -43,6 +40,8 @@
 	
 	// Getting ready for the real deal: including our pages
 	$arguments = array_keys($_GET);
+	
+	$action = $arguments[1];
 	
 	if(isset($arguments) && file_exists("pages/". $arguments[0] .".php") && is_readable("pages/". $arguments[0] .".php") && eregi("^[a-z0-9_-]+$", $arguments[0])){
 		$include = strtolower($arguments[0]);
