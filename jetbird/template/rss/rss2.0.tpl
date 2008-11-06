@@ -5,7 +5,7 @@
 		<link>{$config.link}</link>
 		<description>{$config.description}</description>
 		<lastBuildDate>{$rss.lastbuild}</lastBuildDate>
-		<generator>Jetbird Revision 112</generator>
+		<generator>Jetbird Revision {$smarty.const.SVN_REVISION}</generator>
 		<ttl>{$config.ttl}</ttl>		
 		{foreach from=$rss.data item=item}	<item>
 			<title>{$item.post_title}</title>

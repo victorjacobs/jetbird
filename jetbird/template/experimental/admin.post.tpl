@@ -73,10 +73,10 @@
 						<td>{$post.post_id}</td>
 						<td>{$post.post_author}</td>
 						<td><a href="../?view&amp;id={$post.post_id}">{$post.post_title}</a></td>
-						<td>{$post.post_date|date_format:"%D %H:%I"}</td>
+						<td>{$post.post_date|date_format:"%d/%m/%y %H:%I"}</td>
 						<td>{$post.comment_status|ucfirst}</td>
 						<td><a href="../?post&amp;edit&amp;id={$post.post_id}">Edit</a></td>
-						<td><a href="#">Delete</a></td>
+						<td><a class="needs_confirmation" href="#">Delete</a></td>
 					</tr>
 					{/foreach}
 				</table>

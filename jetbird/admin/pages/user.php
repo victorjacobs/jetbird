@@ -45,7 +45,7 @@
 		break;
 		
 		case "delete":
-			if (isset($_POST['submit'])) {
+			if(isset($_POST['submit'])) {
 				$query = "	DELETE FROM user
 							WHERE user_id ='". $_GET['id'] ."'";
 				$dbconnection->query($query);
