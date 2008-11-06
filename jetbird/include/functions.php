@@ -111,7 +111,7 @@
 	}
 	
 	function svn_revision(){
-		$svn = File('.svn/entries');
+		$svn = @File('.svn/entries');
 		$svnrev = $svn[3];
 		unset($svn);
 		return $svnrev;
