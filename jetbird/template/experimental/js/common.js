@@ -41,6 +41,13 @@ $(document).ready(function() {
 		$("ul").css("margin", 0);
 	}
 	
+	$(".needs_confirmation").click(function() {		// Need to finish this
+		$(this).fadeOut(200, function() {
+			$(this).text("Sure?");
+			$(this).fadeIn();
+		});		
+	});
+	
 	$("form").one("keydown", function() {
 		$(".error").fadeOut(1000);
 	});
