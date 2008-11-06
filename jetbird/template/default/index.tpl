@@ -26,11 +26,8 @@
 </head>
 
 <body>
-<script type="text/javascript">
-	document.getElementById("wrap_main").style.height = document.getElementById("wrap_post").style.height;
-</script>
 	<div id="wrap_main">
-
+	
 		<div id="wrap_post">
 		{section name=loop loop=$main_post}
 			{$main_post[loop]}

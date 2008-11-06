@@ -1,6 +1,5 @@
 body,html { 	
 	height: 100%;
-
 	}
 
 body {
@@ -13,21 +12,26 @@ div#wrap_main {
 	background-color: #22394b;
 	margin-left: 10%;
 	margin-right: 10%;
+	float: left;
+	
+	
 	}
 	
 div#wrap_post {
-
-	float: left;
+	width: 500px;
+	margin-top: 150px;
+	margin-bottom: 35px;
 	margin-left: 50px;
-	margin-right: 500px;
-
+	float: left;
 	background-color: #b7c1a4;
 	}
 	
 div#wrap_menu {
-	float: right;
-
+	margin-top: 150px;
+	padding-bottom: 550px;
+	margin-right: 50px;
 	background-color: #b7c1a4;
-
+	width: 100px;
+	float: right;
 }
 	
