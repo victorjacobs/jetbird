@@ -22,23 +22,43 @@
 <head>
 	<title>Jetbird Preview</title>
 	<link type="text/css" rel="stylesheet" media="screen" href="{$template_dir}/css/style.css" />
-
 </head>
 
 <body>
 	<div id="wrap_main">
 	
+		{include file="head.tpl"}
+		
 		<div id="wrap_post">
 		{section name=loop loop=$main_post}
-			{$main_post[loop]}
+			<div class="post">
+			
+				<div class="title">
+				{$main_title[loop]}
+				<br />
+				</div>
+				
+				<div class="author">
+				By {$author[loop]} on {$main_date[loop]}
+				</div>
+				<br />
+				
+				{$main_post[loop]}
+				<br />
+				<br />
+				
+				<div class="links">
+				<a href="./?view&amp;id={$post_id[loop]}">Read more</a>
+				</div>
+			</div>
+	
+			<br />
 		{/section}
 		</div>
 		
-		<div id="wrap_menu">
-		this is the menu
-		</div>
-	</div>
+	{include file="foot.tpl"}
 	
+	</div>	
 </body>
 </html>
 	
