@@ -23,7 +23,7 @@
 	switch($action){
 		case "new":
 			
-			if(isset($_POST['post_title'])){
+			if(isset($_POST['submit'])){
 				if(!isset($_POST['post_title']) || empty($_POST['post_title'])) $post_error["post_title"] = true;
 				if(!isset($_POST['post_content']) || empty($_POST['post_content'])) $post_error["post_content"] = true;
 				if(count($post_error) != 0){
