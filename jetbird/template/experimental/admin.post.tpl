@@ -59,9 +59,8 @@
 			<p>
 				<table width="100%">
 					<tr>
-						<td><b>ID</b></td>
-						<td><b>Author</b></td>
 						<td width="35%"><b>Title</b></td>
+						<td><b>Author</b></td>
 						<td><b>Date</b></td>
 						<td><b>Comments</b></td>
 						<td width="1">&nbsp;</td>
@@ -69,10 +68,9 @@
 					</tr>
 					
 					{foreach from=$posts item=post}
-					<tr>
-						<td>{$post.post_id}</td>
-						<td>{$post.post_author}</td>
+					<tr>						
 						<td><a href="../?view&amp;id={$post.post_id}">{$post.post_title}</a></td>
+						<td>{$post.user_name|ucfirst}</td>
 						<td>{$post.post_date|date_format:"%d/%m/%y %H:%I"}</td>
 						<td>{$post.comment_status|ucfirst}</td>
 						<td><a href="../?post&amp;edit&amp;id={$post.post_id}">Edit</a></td>

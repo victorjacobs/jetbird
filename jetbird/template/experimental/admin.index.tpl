@@ -24,6 +24,24 @@
 				<small>Statistics</small>
 				
 				<h3>Recent comments</h3>
+				
+				<p>
+					<table width="100%">
+						<tr>
+							<td width="100"><b>Date</b></td>
+							<td><b>Post</b></td>
+							<td><b>Author</b></td>
+							<td width="40"><b>IP</b></td>
+						</tr>
+						
+					{foreach from=$comments item=comment}	<tr>
+							<td>{$comment.comment_date|date_format:"%d/%m/%y %H:%I"}</td>
+							<td><a href="../?view&amp;id={$comment.comment_parent_post_id}#comments">{$comment.post_title}</a></td>
+							<td>{if !empty($comment.comment_author_url)}<a href="{$comment.comment_author_url}" target="_blank">{/if}{$comment.comment_author}{if isset($comment.comment_author_url)}</a>{/if}</td>
+							<td>{$comment.comment_author_ip}</td>
+						</tr>
+					{/foreach}</table>
+				</p>
 			</div>
 		</div>
 		

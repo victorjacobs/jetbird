@@ -21,7 +21,14 @@
 		die();
 	}
 	
-		
+	$comments = $dbconnection->fetch_array(
+	"	SELECT comment.*, post.post_title
+		FROM comment, post
+		WHERE comment.comment_parent_post_id = post.post_id
+		ORDER BY comment_id DESC
+		LIMIT 5
+	");
+	$smarty->assign("comments", $comments);
 	
 	$smarty->assign("queries", $dbconnection->queries);
 	$smarty->display('admin.index.tpl');
