@@ -21,7 +21,9 @@
 		<div id="contentwrap">
 			<div id="content">
 				<h2>Jetbird - Admin</h2>
-				<p><i>Statistics to follow here</i></p>
+				<small>Statistics</small>
+				
+				<h3>Recent comments</h3>
 			</div>
 		</div>
 		

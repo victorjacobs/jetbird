@@ -65,7 +65,7 @@
 				
 			break;
 			
-			case "make_comment":			
+			case "comment":			
 				if(isset($_POST['submit'])){
 					// Check whether something is inserted in the fields
 					if(!isset($_POST['author']) || empty($_POST['author'])) $comment_error["author"] = true;
