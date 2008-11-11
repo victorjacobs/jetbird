@@ -26,7 +26,7 @@
 		FROM comment, post
 		WHERE comment.comment_parent_post_id = post.post_id
 		ORDER BY comment_id DESC
-		LIMIT 5
+		LIMIT 10
 	");
 	$smarty->assign("comments", $comments);
 	

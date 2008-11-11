@@ -76,15 +76,16 @@
 				WHERE post.post_author = user.user_id
 				ORDER BY post.post_date DESC
 				"));
-			// $smarty->assign("posts", $dbconnection->fetch_array(
+			// $foo = $dbconnection->fetch_array(
 			// "	SELECT post. * , user.user_name , COUNT( comment.comment_id ) AS comment_count
 			// 	FROM comment LEFT JOIN (
 			// 	post, user
 			// 	) ON ( user.user_id = post.post_author
 			// 	AND comment.comment_parent_post_id = post.post_id ) 
 			// 	GROUP BY post.post_id
-			// 	ORDER BY post.post_date DESC"
-			// 	));
+			// 	ORDER BY post.post_date DESC
+			// ");
+			
 		break;
 	}
 		
