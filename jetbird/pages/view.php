@@ -20,7 +20,9 @@
 	/*	the main post section, here the main post will be done.    
 	*/	
 
-	
+	if(empty($_GET['id']) || !eregi("[0-9]+", $_GET['id'])){
+		redirect('./');
+	}
 
 	$query = "	SELECT post.post_content, post.post_title, 
 				post.post_date, user.user_name, post.comment_status
