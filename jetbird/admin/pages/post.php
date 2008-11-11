@@ -37,6 +37,33 @@
 								'". $_POST['comment_status'] ."')";
 
 					$result = $dbconnection->query($query);
+					
+					/*
+					//start of search engine, not completed jet, please leave the code alone 
+					
+					//explode on the space so we get each word in an array 
+					$words = explode(" ", $_POST['post_content']);
+					
+					//fetching all the words with their ID's from the DB and putting them into an array 
+					$query = "	SELECT word, id
+								FROM search";
+							
+					$result = $dbconnection->query($query);
+					$row = mysql_fetch_row($result);
+					
+					//now we are going to compare the $words array with the $row array to find the words that are not in the DB
+					$tmp = array_diff($words, $row);
+					
+					foreach($tmp as $word) {
+						$query = "INSERT INTO search (word) VALUES ('$word')";
+						$dbconnection->query($query);
+					}
+					
+					//now we are going to find the words that are already in the DB
+					$tmp =  array_intersect_assoc($words, $row);
+					
+					//end of search engine 
+					*/
 					redirect('../?view&id='. $dbconnection->last_insert_id);
 				}
 			}
