@@ -22,7 +22,7 @@
 	switch($action){
 		case "invite":		
 			if(isset($_POST['submit'])){
-				$key = crypt(uniqid(sha1(md5(rand())), true));
+				$key = generate_reg_key();
 								
 				// putting key into DB
 				$query = "INSERT INTO user (user_reg_key) VALUES ('$key')";
@@ -52,9 +52,38 @@
 			}
 		break;
 		
+		case "generate":
+			if(isset($_POST['submit'])){
+				if(isset($_POST['key_count']) && !empty($_POST['key_count'])){
+					if(!eregi("[0-9]+", $_POST['key_count']) || $_POST['key_count'] > 10 || $_POST['key_count'] < 0) $generate_error['key_count_invalid'] = true;
+				}else{
+					$generate_error['key_count'] = true;
+				}
+				
+				if(count($generate_error) == 0){
+					for($i = 1; $i <= $_POST['key_count']; $i++){
+						$key = generate_reg_key();
+						$generated_keys[] = $key;
+						
+						$dbconnection->query(
+						"	INSERT INTO user (user_reg_key, user_last_login, user_level)
+							VALUES ('". $key ."', '". time() ."', '-1')
+						");
+					}
+					
+					$smarty->assign("keys", $generated_keys);
+				}else{
+					$smarty->assign("generate_error", $generate_error);
+				}
+			}
+		break;
+		
 		default:
-			$query = "SELECT * FROM user";
+			$query = "SELECT * FROM user WHERE NOT user_level = -1";
 			$smarty->assign("users", $dbconnection->fetch_array($query));
+			
+			$query = "SELECT * FROM user WHERE user_level = -1";
+			$smarty->assign("keys", $dbconnection->fetch_array($query));
 		break;
 	}
 	

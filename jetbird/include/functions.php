@@ -82,6 +82,10 @@
 	 return $pageURL;
 	}
 	
+	function generate_reg_key(){
+		return crypt(uniqid(sha1(md5(rand())), true));
+	}
+	
 	function check_email_address($email) {
 	    // First, we check that there's one @ symbol, and that the lengths are right
 	    if (!ereg("^[^@]{1,64}@[^@]{1,255}$", $email)) {

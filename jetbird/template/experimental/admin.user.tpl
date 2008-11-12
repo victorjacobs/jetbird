@@ -77,6 +77,36 @@
 						<input type="submit" value="Update" name="submit" />
 					</form>
 				</p>
+				{elseif isset($smarty.get.generate)}
+				<p>
+					<h3>Generate registration keys</h3>
+					{if !isset($keys)}
+					{if isset($generate_error)}<p class="error"><b>Error:</b> Please fill in all the required fields correctly</p>{/if}
+					<form action="./?user&amp;generate" method="post">
+						<p>
+							<table>
+								<tr>
+									<td><b>Number</b></td>
+									<td><input type="text" name="key_count" value="1" /></td>
+								</tr>
+
+								<tr>
+									<td>&nbsp;</td>
+									<td><input type="submit" name="submit" value="Create" /></td>
+								</tr>
+							</table>
+						</p>
+					</form>
+					{else}
+					<p>Following keys were created:</p>
+					<ul>
+					{foreach from=$keys item=key}
+						<li>{$key}</li>
+					{/foreach}
+					</ul>
+					{/if}
+				</p>
+						
 				{else}
 				<h3>Overview</h3>
 				<p>
@@ -104,6 +134,22 @@
 				<p><a href="./?user&amp;action=new_user">Add user</a></p>
 				
 				<h3>Inactivated register keys</h3>
+				<p>
+					<table width="100%">
+						<tr>
+							<td><b>Key</b></td>
+							<td width="30%"><b>Sent to</b></td>
+							<td><b>Created on</b></td>
+						</tr>
+						{foreach from=$keys item=key}
+						<tr>
+							<td>{$key.user_reg_key}</td>
+							<td>{if empty($key.user_mail)}<i>No one</i>{else}{$key.user_mail}{/if}</td>
+							<td>{$key.user_last_login|date_format:"%d/%m/%y %H:%I"}</td>
+						</tr>
+						{/foreach}
+					</table>
+				</p>
 				{/if}
 			</div>
 		</div>

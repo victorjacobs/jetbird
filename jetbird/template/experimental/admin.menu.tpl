@@ -20,6 +20,7 @@
 					<li><a href="{if $smarty.const.ADMIN_MODE}./?user{else}./admin/?user{/if}">Users</a></li>
 					<ul>
 						<li><a href="{if $smarty.const.ADMIN_MODE}./?user&amp;invite{else}./admin/?user&amp;invite{/if}">Invite user</a></li>
+						<li><a href="{if $smarty.const.ADMIN_MODE}./?user&amp;generate{else}./admin/?user&amp;invite{/if}">Generate key</a></li>
 					</ul>
 					<li><a href="{if $smarty.const.ADMIN_MODE}./?post{else}./admin/?post{/if}">Posts</a></li>
 					<ul>
