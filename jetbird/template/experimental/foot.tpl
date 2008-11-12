@@ -24,6 +24,16 @@
 				</ul>
 			</div>
 			
+			<div class="menu">
+				<ul>
+					<li>
+						<form action="#" method="post">
+							<input id="search" type="text" name="search" size="24" />
+						</form>
+					</li>
+				</ul>
+			</div>
+			
 			<hr />
 			{if isset($smarty.session.login)}{include file="admin.menu.tpl"}{/if}
 			

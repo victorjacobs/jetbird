@@ -35,11 +35,28 @@ $(window).resize(function() {
 
 $(document).ready(function() {
 	set_height();
+	$("input#search").attr("value", "Search").css("color", "gray");
+	
 	if(ie6()){
 		// Since IE doesn't think the standards apply to them, force IE to display everthing right
 		$("#footer").height(1);
 		$("ul").css("margin", 0);
 	}
+	
+	$("input#search").blur(function() {
+		if($(this).attr("value") == ""){
+			$(this).attr("value", "Search").css("color", "gray");
+		}
+	});
+	
+	$("input#search").focus(function() {
+		if($(this).attr("value") == "Search"){
+			$(this).attr("value", "");
+		}
+		if($(this).css("color") == "gray"){
+			$(this).css("color", "black");
+		}
+	});
 	
 	$(".needs_confirmation").click(function() {		// Need to finish this
 		$(this).fadeOut(200, function() {
