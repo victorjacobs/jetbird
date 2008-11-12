@@ -70,7 +70,7 @@
 					// Check whether something is inserted in the fields
 					if(!isset($_POST['author']) || empty($_POST['author'])) $comment_error["author"] = true;
 					if(!isset($_POST['email']) || empty($_POST['email'])){
-						$comment_error["author"] = true;
+						$comment_error["email"] = true;
 					}elseif(!check_email_address($_POST['email'])){
 						$comment_error["email"] = true;
 					}
