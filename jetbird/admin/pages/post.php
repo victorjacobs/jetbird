@@ -38,32 +38,50 @@
 
 					$result = $dbconnection->query($query);
 					
-					/*
-					//start of search engine, not completed jet, please leave the code alone 
+					
+					//start of search engine, not completed yet, please leave the code alone 
+					
+					// This search engine uses the inverted index method.
+					// First we split the text into words, then we check if the word is already in DB and , if necessary, add it along with the post_id,
+					// then we build a string with all the ID's, so we can do phrase searching.
 					
 					//explode on the space so we get each word in an array 
 					$words = explode(" ", $_POST['post_content']);
 					
 					//fetching all the words with their ID's from the DB and putting them into an array 
-					$query = "	SELECT word, id
+					$query = "	SELECT *
 								FROM search";
-							
+								
 					$result = $dbconnection->query($query);
-					$row = mysql_fetch_row($result);
+					
+					while($row = mysql_fetch_array($result)){
+						$search_id_words[$row['word']] = $row['post_id'];
+						$search_word[] = $row['word'];
+						
+						
+					}
+					$id_post = mysql_result($dbconnection->query("SELECT max(post_id) FROM post"), 0);
 					
 					//now we are going to compare the $words array with the $row array to find the words that are not in the DB
-					$tmp = array_diff($words, $row);
-					
+					$tmp = array_diff($words, $search_word);
 					foreach($tmp as $word) {
-						$query = "INSERT INTO search (word) VALUES ('$word')";
+						$query = "INSERT INTO search (word, post_id) VALUES ('$word', '$id_post')";
 						$dbconnection->query($query);
 					}
 					
-					//now we are going to find the words that are already in the DB
-					$tmp =  array_intersect_assoc($words, $row);
+					//now we are going to find the words that are already in the DB and add the post_id to the word in the DB
+					$tmp =  array_flip(array_intersect($words, $search_word));
+					$id = array_intersect_key($search_id_words, $tmp);
 					
+					foreach($id as $key => $word) {
+						$final_id .= "". $word .";". $id_post ."";
+						$query = "UPDATE search SET post_id = '". $final_id ."' WHERE word = '". $key ."'";
+						$dbconnection->query($query);
+						unset($final_id);
+					}
+			
 					//end of search engine 
-					*/
+					
 					redirect('../?view&id='. $dbconnection->last_insert_id);
 				}
 			}
