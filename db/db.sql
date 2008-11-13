@@ -63,3 +63,14 @@ CREATE TABLE IF NOT EXISTS `user` (
   `user_last_login` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`user_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `search`
+--
+CREATE TABLE IF NOT EXISTS `search` (
+  `id` int(11) NOT NULL auto_increment,
+  `word` text NOT NULL,
+  `post_id` text NOT NULL,
+  KEY `id` (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=24 ;
