@@ -59,10 +59,29 @@ $(document).ready(function() {
 	});
 	
 	$(".needs_confirmation").click(function() {		// Need to finish this
-		$(this).fadeOut(200, function() {
-			$(this).text("Sure?");
-			$(this).fadeIn();
-		});		
+		if($(this).text() != "Sure?"){
+			$(this).fadeOut(200, function() {
+				$(this).text("Sure?");
+				$(this).fadeIn();
+			});
+		}else{
+			var mode = $(this).attr("name").split("_");
+			var id = mode[2];
+			
+			switch(mode[0]){
+				case "del":
+					switch(mode[1]){
+						case "post":
+							alert("deleting post with id: " + id);
+						break;
+						
+						case "user":
+							alert("deleting user with id: " + id);
+						break;
+					}
+				break;
+			}
+		}
 	});
 	
 	$("form").one("keydown", function() {

@@ -28,7 +28,7 @@
 				<ul>
 					<li>
 						<form action="#" method="post">
-							<input id="search" type="text" name="search" size="24" />
+							<input id="search" type="text" name="search" accesskey="f" size="24" />
 						</form>
 					</li>
 				</ul>

@@ -117,7 +117,8 @@
 							<td><b>Level</b></td>
 							<td><b>Mail</b></td>
 							<td><b>Last login</b></td>
-							<td>&nbsp;</td>
+							<td width="1">&nbsp;</td>
+							<td width="1">&nbsp;</td>
 						</tr>
 						{foreach from=$users item=user}
 						<tr>
@@ -127,6 +128,7 @@
 							<td>{$user.user_mail}</td>
 							<td>{if !$user.user_last_login}<i>Never</i>{else}{$user.user_last_login|date_format:"%d/%m/%y %H:%I"}{/if}</td>
 							<td><a href="./?user&amp;edit&amp;id={$user.user_id}">Edit</a></td>
+							<td><a href="#" class="needs_confirmation" name="del_user_{$user.user_id}">Delete</a></td>
 						</tr>
 						{/foreach}
 					</table>
@@ -137,9 +139,9 @@
 				<p>
 					<table width="100%">
 						<tr>
-							<td><b>Key</b></td>
-							<td width="30%"><b>Sent to</b></td>
-							<td><b>Created on</b></td>
+							<td width="150"><b>Key</b></td>
+							<td><b>Sent to</b></td>
+							<td width="96"><b>Created on</b></td>
 						</tr>
 						{foreach from=$keys item=key}
 						<tr>
@@ -149,6 +151,9 @@
 						</tr>
 						{/foreach}
 					</table>
+				</p>
+				<p>
+					<a href="./?user&amp;generate">Generate keys</a>
 				</p>
 				{/if}
 			</div>
