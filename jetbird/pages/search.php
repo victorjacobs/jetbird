@@ -20,7 +20,7 @@
 		case "search":
 			
 			//split the search term into words
-			$search_words = explode(" ", $_GET['search']);
+			$search_words = explode(" ", $_POST['search']);
 			
 			//query the DB to find the posts where the word is
 			foreach($search_words as $word) {

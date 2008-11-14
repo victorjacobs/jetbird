@@ -27,7 +27,7 @@
 			<div class="menu">
 				<ul>
 					<li>
-						<form action="#" method="post">
+						<form action="{if $smarty.const.ADMIN_MODE}.{/if}./?search&amp;action=search" method="post">
 							<input id="search" type="text" name="search" accesskey="f" size="24" />
 						</form>
 					</li>
