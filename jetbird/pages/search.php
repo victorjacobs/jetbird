@@ -25,7 +25,11 @@
 			//query the DB to find the posts where the word is
 			foreach($search_words as $word) {
 				$query = "SELECT post_id FROM search WHERE word = '". $word . "'";
-				$result = mysql_result($dbconnection->query($query), 0);
+				$result = @mysql_result($dbconnection->query($query), 0);
+				
+				if($result === false){
+					break;
+				}
 				
 				// split the result on ";" to get the post_id's
 				$post_id = explode(";", $result);

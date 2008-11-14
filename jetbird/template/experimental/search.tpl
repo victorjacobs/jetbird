@@ -23,6 +23,7 @@
 			<h2>Jetbird - Search</h2>
 			<small>Searchresults</small>
 			
+			{if isset($results)}
 			{foreach from=$results item=result}
 			<h3>{$result.post_title}</h3>
 			<small class="subtitle">By {$result.user_name|ucfirst} on {$result.post_date|date_format:"%d/%m/%y"}</small>
@@ -32,6 +33,9 @@
 				<a href="./?view&amp;id={$result.post_id}">Read more</a>{if $smarty.session.user_level == 1} | <a href="./?post&amp;edit&amp;id={$result.post_id}">Edit</a>{/if}
 
 			</small></p>{/foreach}
+			{else}
+			<p>No search results</p>
+			{/if}
 		</div>
 	</div>
 

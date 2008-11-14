@@ -16,34 +16,17 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
-	/*
-	/*	header section	      
-	*/
-
-	/*
-	/*	content/main body section	      
-	*/
-
-		/* here we are going to fetch all the data from the DB
-		/* and place it in one big array so we can output it to smarty
-		*/
-
-
-		// fetching data out of DB
-		$query = "SELECT post.* , user.user_name 
-					FROM post, user
-					WHERE post.post_author = user.user_id
-					ORDER BY post.post_date DESC";	
-
-		$posts = $dbconnection->fetch_array($query);
-
-		$smarty->assign("posts", $posts);
-		$smarty->assign("queries", $dbconnection->queries);
-		
-		$smarty->display('index.tpl');
-
-	/*
-	/*	footer section	      
-	*/
+	// fetching data out of DB
+	$query = "SELECT post.* , user.user_name 
+				FROM post, user
+				WHERE post.post_author = user.user_id
+				ORDER BY post.post_date DESC";	
+	
+	$posts = $dbconnection->fetch_array($query);
+	
+	$smarty->assign("posts", $posts);
+	$smarty->assign("queries", $dbconnection->queries);
+	
+	$smarty->display('index.tpl');
 
 ?>
