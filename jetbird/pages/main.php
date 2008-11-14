@@ -38,6 +38,7 @@
 		$posts = $dbconnection->fetch_array($query);
 
 		$smarty->assign("posts", $posts);
+		$smarty->assign("queries", $dbconnection->queries);
 		
 		$smarty->display('index.tpl');
 
