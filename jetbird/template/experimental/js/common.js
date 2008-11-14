@@ -70,15 +70,15 @@ $(document).ready(function() {
 			
 			switch(mode[0]){
 				case "del":
-					switch(mode[1]){
-						case "post":
-							alert("deleting post with id: " + id);
-						break;
-						
-						case "user":
-							alert("deleting user with id: " + id);
-						break;
-					}
+					$.post("./?"+ mode[1] +"&delete",
+						{submit:"true", id:id},
+						function(returned_data) {
+							if(returned_data == "success"){
+								$(this).text("afdsqf");
+							}else{
+								
+							}
+					});
 				break;
 			}
 		}

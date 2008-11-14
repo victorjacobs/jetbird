@@ -45,11 +45,19 @@
 		break;
 		
 		case "delete":
-			if(isset($_POST['submit'])) {
-				$query = "	DELETE FROM user
-							WHERE user_id ='". $_GET['id'] ."'";
-				$dbconnection->query($query);
+			if(isset($_POST['submit']) && isset($_POST['id'])){
+				if($dbconnection->num_rows("SELECT * FROM user WHERE user_id = ". $_POST['id'])){
+					$query = "DELETE FROM user WHERE user_id = ". $_POST['id'];
+					
+					if(true){
+						echo "success";
+					}else{
+						echo "fail";
+					}
+				}
 			}
+			
+			die();	// we don't need smarty to show us a template here
 		break;
 		
 		case "generate":
@@ -90,8 +98,4 @@
 	$smarty->assign("queries", $dbconnection->queries);
 	$smarty->display('admin.user.tpl');
 	
-		
-	
-	
-
 ?>
