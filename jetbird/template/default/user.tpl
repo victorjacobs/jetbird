@@ -28,49 +28,52 @@
 	<div id="wrap_main">
 		
 		{include file="head.tpl"}
-		
 		<div id="wrap_content">
-			<div class="post">
-			
-				<div class="title">
-				{$view_title}
-				<br />
+				{if $smarty.get.action == login}
+				{if !isset($smarty.session.login)}
+				{if $login === FALSE}
+				<p class="error"><b>Error:</b> password or username wrong, please try again.</p>
+				{/if}
+				<form name="input" action="./?user&amp;action=login" method="post">
+					<table>
+						<tr>
+							<td><b>Username</b></td>
+							<td><input type="text" name="username" /></td>
+						</tr>
+						
+						<tr>
+							<td><b>Password</b></td>
+							<td><input type="password" name="password"></td>
+						</tr>
+						
+						<tr>
+							<td><b>Remind me</b></td>
+							<td><input type="checkbox" name="rememberlogin" disabled /></td>
+						</tr>
+						
+						<tr>
+							<td>&nbsp;</td>
+							<td><input type="submit" value="Login" /></td>
+						</tr>
+					</table>
+				</form>
+				
+				{elseif isset($smarty.session.login) && !isset($smarty.post.username)}
+				<p><b>Error:</b> you are already logged in</p>
+				{/if}
+				
+				{if $login === TRUE}
+				<p>Redirecting to admin dashboard</p>
+				{/if}
+				
+				{elseif $smarty.get.action == logout}
+				<p>You successfully logged out</p>
+				
+				{/if}	
 				</div>
-				
-				<div class="author">
-				By {$author} on {$view_date}
-				</div>
-				<br />
-				
-				{$view_post}
-				<br />
-				<br />
-			</div>
-			
-			<br />
-			<br />
-			
-			<h2> Comments </h2>
-			
-			<div id="wrap_comments">
-				{section name=loop loop=$comment}
-				
-				<div class="comments">
-					{$comment[loop]}
-				</div>
-				
-				{/section}
-			</div>
-			
-			<br />
-		</div>
-				
-
-
-		
 	{include file="foot.tpl"}
 		
-	
+		
 	</div>	
 </body>
 </html>

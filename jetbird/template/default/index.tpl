@@ -29,7 +29,7 @@
 	
 		{include file="head.tpl"}
 		
-		<div id="wrap_post">
+		<div id="wrap_content">
 		{section name=loop loop=$main_post}
 			<div class="post">
 			
