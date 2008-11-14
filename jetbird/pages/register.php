@@ -24,6 +24,11 @@
 	if(count($user_info) == 1){			
 		if(isset($_POST['submit'])){
 			// Checks	
+			if(strtolower($_SESSION['captcha']) != strtolower($_POST['captcha'])){
+				$register_error['captcha'] = true;
+			}
+			unset($_SESSION['captcha']);
+			
 			if(isset($_POST['pass']) && !empty($_POST['pass'])){
 				if($_POST['pass'] != $_POST['pass_confirm']){
 					$register_error['pass_confirm'] = true;

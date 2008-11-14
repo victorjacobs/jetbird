@@ -49,6 +49,16 @@
 								<td><b>Email</b></td>
 								<td><input type="text" name="mail"{if isset($register_data.mail)} value="{$register_data.mail}"{/if} /></td>
 							</tr>
+							
+							<tr>
+								<td>&nbsp;</td>
+								<td><img src="./?captcha" alt="" /></td>
+							</tr>
+							
+							<tr>
+								<td><b>Security image:</b></td>
+								<td><input type="text" name="captcha" /></td>
+							</tr>
 
 							<tr>
 								<td>&nbsp;</td>
