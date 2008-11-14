@@ -22,16 +22,17 @@
 			<div id="content">
 				<h2>Jetbird - Blog</h2>
 				<small>The everyday problems of two geeks.</small>
-				{section name=loop loop=$main_post}
 				
-				<h3>{$main_title[loop]}</h3>
-				<small class="subtitle">By {$author[loop]|ucfirst} on {$main_date[loop]}</small>
+				{foreach from=$posts item=post}
+				<h3>{$post.post_title}</h3>
+				<small class="subtitle">By {$post.user_name|ucfirst} on {$post.post_date|date_format:"%d/%m/%y"}</small>
 				
-				<p>{$main_post[loop]}</p>
+				<p>{$post.post_content|truncate:500|bbcode|nl2br}</p>
 				<p><small>
-					<a href="./?view&amp;id={$post_id[loop]}">Read more</a>{if $smarty.session.user_level == 1} | <a href="./?post&amp;edit&amp;id={$post_id[loop]}">Edit</a>{/if}
+					<a href="./?view&amp;id={$post.post_id}">Read more</a>{if $smarty.session.user_level == 1} | <a href="./?post&amp;edit&amp;id={$post.post_id}">Edit</a>{/if}
 
-				</small></p>{/section}
+				</small></p>
+				{/foreach}
 			</div>
 		</div>
 		

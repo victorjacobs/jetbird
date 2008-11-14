@@ -31,30 +31,14 @@
 
 		// fetching data out of DB
 		$query = "SELECT post.* , user.user_name 
-					FROM post
-					INNER JOIN user
-					ON post.post_author = user.user_id
+					FROM post, user
+					WHERE post.post_author = user.user_id
 					ORDER BY post.post_date DESC";	
 
-		$result = $dbconnection->query($query);
+		$posts = $dbconnection->fetch_array($query);
 
-		// placing all the data in one array
-		while($row = mysql_fetch_array($result)){
-			$text = BBCode($row['post_content']);
-			$main_content['title'][] = $row['post_title'];
-			$main_content['date'][] = date($config['global']['timestamp'], $row['post_date']);
-			$main_content['post'][] = nl2br(truncate($text, 500));
-			$main_content['post_id'][] = $row['post_id'];
-			$main_content['author'][] = $row['user_name'];
-		}
-
-		//output to smarty
-		$smarty->assign('main_post', $main_content['post']);
-		$smarty->assign('main_title', $main_content['title']);
-		$smarty->assign('main_date', $main_content['date']);
-		$smarty->assign('post_id', $main_content['post_id']);
-		$smarty->assign('author', $main_content['author']);
-		$smarty->assign('queries', $dbconnection->queries);
+		$smarty->assign("posts", $posts);
+		
 		$smarty->display('index.tpl');
 
 	/*
