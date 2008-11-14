@@ -31,14 +31,13 @@
 				$post_id = explode(";", $result);
 				foreach($post_id as $id){
 					//fetching the posts from the DB
-					$query = "SELECT post_content FROM post WHERE post_id=". $id ."";
+					$query = "SELECT post.*, user.user_name FROM post, user WHERE post_id=". $id ." AND post.post_author = user.user_id";
 					
-					$result = mysql_result($dbconnection->query($query), 0);
-					$post[] = $result; //building a array with all the posts
+					$result = $dbconnection->fetch_array($query);
+					$post[] = $result[0]; //building a array with all the posts
 				}
 			}
-			$smarty->assign("post", $post);
-			
+			$smarty->assign("results", $post);
 			
 		break;
 		
@@ -90,7 +89,8 @@
 			break;
 	}
 	
-	
+	$smarty->assign("queries", $dbconnection->queries);
+	$smarty->display("search.tpl");
 	
 ?>	
 	

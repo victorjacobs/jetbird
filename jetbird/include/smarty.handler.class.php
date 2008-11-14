@@ -56,6 +56,7 @@
 			
 			// Assign some vars
 			$this->assign("template_dir", $this->template_dir);
+			$this->smarty_handle->register_modifier('truncate', 'truncate');
 		}
 		
 		function display($file){
