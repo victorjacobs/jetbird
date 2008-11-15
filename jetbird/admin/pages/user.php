@@ -48,9 +48,8 @@
 		case "delete":
 			if(isset($_POST['submit']) && isset($_POST['id'])){
 				if($dbconnection->num_rows("SELECT * FROM user WHERE user_id = ". $_POST['id'])){
-					$query = "DELETE FROM user WHERE user_id = ". $_POST['id'];
-					
-					if(true){
+					$query = "DELETE FROM user WHERE user_id = ". $_POST['id'];					
+					if($dbconnection->query($query)){
 						echo "success";
 					}else{
 						echo "fail";

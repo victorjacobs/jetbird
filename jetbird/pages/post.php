@@ -18,6 +18,9 @@
 	
 	switch($action){
 		case "edit":
+			if(empty($_GET['id'])){
+				redirect("./");
+			}
 			if(isset($_POST['submit'])) {
 				// This is in here for older posts, which don't have the collumn comment_status yet, can be removed later on
 				if(!isset($_POST['comment_status'])){

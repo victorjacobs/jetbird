@@ -67,14 +67,19 @@ $(document).ready(function() {
 		}else{
 			var mode = $(this).attr("name").split("_");
 			var id = mode[2];
+			if(location.pathname.match("admin") != "admin"){
+				var link = "./admin/?";
+			}else{
+				var link = "./?";
+			}
 			
 			switch(mode[0]){
 				case "del":
-					$.post("./?"+ mode[1] +"&delete",
+					$.post(link + mode[1] + "&delete",
 						{submit:"true", id:id},
 						function(returned_data) {
 							if(returned_data == "success"){
-								$(this).text("afdsqf");
+								location.reload();
 							}else{
 								
 							}

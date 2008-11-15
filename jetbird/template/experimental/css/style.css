@@ -10,6 +10,7 @@ body, html {
 	background-color: gray;
 	height: 100%;
 	background-image: url(../image/bg.png);
+	background-attachment: fixed;
 }
 
 body * {

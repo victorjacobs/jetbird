@@ -38,6 +38,8 @@
 
 					$result = $dbconnection->query($query);
 					
+					$created_post_id = $dbconnection->last_insert_id;
+					
 					
 					//start of search engine, not completed yet, please leave the code alone 
 					
@@ -82,7 +84,7 @@
 			
 					//end of search engine 
 					
-					redirect('../?view&id='. $dbconnection->last_insert_id);
+					redirect('../?view&id='. $created_post_id);
 				}
 			}
 		break;
@@ -104,6 +106,21 @@
 			// 	ORDER BY post.post_date DESC
 			// ");
 			
+		break;
+		
+		case "delete":
+			if(isset($_POST['submit']) && isset($_POST['id'])){
+				if($dbconnection->num_rows("SELECT * FROM post WHERE post_id = ". $_POST['id'])){
+					$query = "DELETE FROM post WHERE post_id = ". $_POST['id'];					
+					if($dbconnection->query($query)){
+						echo "success";
+					}else{
+						echo "fail";
+					}
+				}
+			}
+			
+			die();	// we don't need smarty to show us a template here
 		break;
 	}
 		
