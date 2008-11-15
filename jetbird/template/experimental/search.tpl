@@ -21,7 +21,7 @@
 	<div id="contentwrap">
 		<div id="content">
 			<h2>Jetbird - Search</h2>
-			<small>Searchresults</small>
+			<small>Search results</small>
 			
 			{if isset($results)}
 			{foreach from=$results item=result}

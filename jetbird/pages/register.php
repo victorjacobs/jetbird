@@ -18,6 +18,10 @@
 	
 	$key = $_GET['key'];
 	
+	if(!isset($_GET['key'])){
+		redirect('./');
+	}
+	
 	$query = "SELECT * FROM user WHERE user_reg_key = '". $key ."'";
 	$user_info = $dbconnection->fetch_array($query);
 		
