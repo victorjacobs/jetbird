@@ -25,40 +25,40 @@
 </head>
 
 <body>
-	<div id="wrap_main">
+
 	
-		{include file="head.tpl"}
+		<div id="wrap_main">
 		
-		<div id="wrap_content">
-		{section name=loop loop=$main_post}
-			<div class="post">
+			{include file="head.tpl"}
 			
-				<div class="title">
-				{$main_title[loop]}
-				<br />
+			<div id="wrap_content">
+			{foreach from=$posts item=post}
+				<div class="post">
+					<div class="title">
+					{$post.post_title}
+					</div>
+					
+					<div class="author">
+					By {$post.user_name|ucfirst} on {$post.post_date|date_format:"%d/%m/%y"}
+					</div>
+					
+					<p>{$post.post_content|truncate:500|bbcode|nl2br}</p>
+					<br />
+					
+					<div class="links">
+					<a href="./?view&amp;id={$post.post_id}">Read more</a>
+					{if $smarty.session.user_level == 1} | <a href="./?post&amp;edit&amp;id={$post.post_id}">Edit</a>{/if}
+
+					</div>
 				</div>
-				
-				<div class="author">
-				By {$author[loop]} on {$main_date[loop]}
-				</div>
 				<br />
+				{/foreach}
 				
-				{$main_post[loop]}
-				<br />
-				<br />
-				
-				<div class="links">
-				<a href="./?view&amp;id={$post_id[loop]}">Read more</a>
-				</div>
-			</div>
+			</div>	
+		{include file="menu.tpl"}
+		{include file="foot.tpl"}	
+	</div>
 	
-			<br />
-		{/section}
-		</div>
-		
-	{include file="foot.tpl"}
-	
-	</div>	
 </body>
 </html>
 	

@@ -26,7 +26,7 @@
 
 <body>
 	<div id="wrap_main">
-		
+	
 		{include file="head.tpl"}
 		
 		<div id="wrap_content">
@@ -34,44 +34,82 @@
 			
 				<div class="title">
 				{$view_title}
-				<br />
 				</div>
 				
 				<div class="author">
-				By {$author} on {$view_date}
+				By {$author|ucfirst} on {$view_date}
 				</div>
-				<br />
 				
-				{$view_post}
-				<br />
-				<br />
+				<p>{$view_post}</p>	
+				
 			</div>
-			
-			<br />
-			<br />
 			
 			<h2> Comments </h2>
+			<div id="wrap_comments">	
 			
-			<div id="wrap_comments">
+			{if !isset($comment) and $comment_status == "closed"}
+				<p>Comments closed</p>
+			{else}
+			
+			{if isset($comment)}
 				{section name=loop loop=$comment}
-				
-				<div class="comments">
-					{$comment[loop]}
-				</div>
-				
+					<div class="comments">
+						{$comment[loop]}
+					</div>
 				{/section}
-			</div>
+				
+			{else}
+				<p>No comments yet, be the first to write one!</p>	
+			{/if}
+			
+			
 			
 			<br />
-		</div>
+				<h3>Add comment{if $smarty.session.user_level == 1 and $comment_status == "closed"} (closed){/if}</h3>
 				
-
+				{if $smarty.session.user_level == 1 or $comment_status == "open"}
+				{if isset($comment_error)}<p class="error"><b>Error:</b> Please fill in all the required fields correctly</p>{/if}
+					<form action="./?post&amp;comment&amp;id={$smarty.get.id}" method="post">
+					<table>	
+						
+						<tr>	
+							<td><b><small>Name (required):</small></b></td>
+							<td><input type="text" name="author"{if isset($comment_data.author)} value="{$comment_data.author}"{/if} /> </td>
+						</tr>	
+						
+						<tr>	
+							<td><b><small>Mail (required, won't be shown in public)</small></b></td>
+							<td><input type="text" name="email"{if isset($comment_data.email)} value="{$comment_data.email}"{/if} /></td>
+						</tr>	
+							
+						
+						<tr>	
+							<td><b><small>Website</small></b></td>
+							<td><input type="text" name="website"{if isset($comment_data.website)} value="{$comment_data.website}"{/if} /></td>
+						</tr>
+						
+						</table>
+						<table>
+						<tr>
+							<td> <textarea rows="10" cols="40" name="comment">{if isset($comment_data.comment)}{$comment_data.comment}{/if}</textarea> </td>
+						</tr>
+						
+						<tr>
+							<td><input type="submit" name="submit" value="Send" /></td>
+						</td>
+						</table>
+					</form>
+				{else}
+				<p>Comments closed</p>
+				{/if}
+				{/if}
+			</div>
+			{include file="foot.tpl"}
+		</div>
+		{include file="menu.tpl"}		
+	</div>
 
 		
-	{include file="foot.tpl"}
-		
-	
-	</div>	
 </body>
 </html>
 	

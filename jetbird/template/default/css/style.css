@@ -22,7 +22,7 @@ div#wrap_header {
 }
 
 div#wrap_content {
-	width: 600px;
+	width: 650px;
 	margin-top: 100px;
 	margin-bottom: 35px;
 	margin-left: 50px;
@@ -36,7 +36,7 @@ div#wrap_menu {
 	margin-right: 50px;
 	margin-left: 50px;
 	background-color: #b1bea4;
-	width: 120px;
+	width: 150px;
 	float: right;
 	border: 3px solid #282828;
 	padding-left: 10px;
@@ -48,11 +48,16 @@ div#wrap_comments {
 	margin-left: 35px;
 }
 
+div#footer {
+	text-align: right;
+
+}
+
 div.comments {
 	border: 3px solid #282828;
 	background-color: #b1bea4;
-	margin-top: 25px;
-	min-height: 75px;
+	padding: 10px;
+	min-height: 70px;
 }
 
 div.post {
