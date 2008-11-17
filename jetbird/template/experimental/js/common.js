@@ -58,7 +58,7 @@ $(document).ready(function() {
 		}
 	});
 	
-	$(".needs_confirmation").click(function() {		// Need to finish this
+	$(".needs_confirmation").click(function() {
 		if($(this).text() != "Sure?"){
 			$(this).fadeOut(200, function() {
 				$(this).text("Sure?");

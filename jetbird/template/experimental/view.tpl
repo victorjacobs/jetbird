@@ -23,10 +23,10 @@
 				<h2>Jetbird - Blog</h2>
 				<small>The everyday problems of two geeks.</small>
 				
-				<h3>{$view_title}</h3>
-				<small class="subtitle">By {$author|ucfirst} on {$view_date}</small>
+				<h3>{$post.post_title}</h3>
+				<small class="subtitle">By {$post.user_name|ucfirst} on {$post.post_date|date_format:"%d/%m/%y"}</small>
 				
-				<p>{$view_post}</p>
+				<p>{$post.post_content|bbcode|nl2br}</p>
 				
 				{if $smarty.session.user_level == 1}<p>
 					<small>
@@ -35,16 +35,16 @@
 				</p>{/if}
 				
 				<h3 id="comments">Comments</h3>
-				{if !isset($comment) and $comment_status == "closed"}
+				{if !isset($comments) and $comment_status == "closed"}
 				<p>Comments closed</p>
 				{else}
-				{if isset($comment)}
-				{section name=loop loop=$comment}
+				{if isset($comments)}
+				{foreach from=$comments item=comment}
 				<div class="comment">
-					<p>{$comment[loop]}</p>
-					<p><small>{$username[loop]} on {$date[loop]}</small></p>
+					<p>{$comment.comment_content|bbcode|nl2br}</p>
+					<p><small>{$comment.comment_author} on {$comment.comment_date|date_format:"%d/%m/%y %H:%I"}</small></p>
 				</div>
-				{/section}
+				{/foreach}
 				{else}
 				<p>No comments yet, be the first to write one!</p>
 				{/if}

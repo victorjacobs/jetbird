@@ -15,11 +15,7 @@
 	    You should have received a copy of the GNU General Public License
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
-
-	/*
-	/*	the main post section, here the main post will be done.    
-	*/	
-
+	
 	if(empty($_GET['id']) || !eregi("[0-9]+", $_GET['id'])){
 		redirect('./');
 	}
@@ -34,19 +30,10 @@
 	
 	if(mysql_num_rows($result) == 1){
 		$row = mysql_fetch_array($result);
-		$text = BBCode($row['post_content']);
-		$smarty->assign('view_post', nl2br($text));
-		$smarty->assign('view_date', date($config['global']['timestamp'], $row['post_date']));
-		$smarty->assign('view_title', $row['post_title']);
-		$smarty->assign('author', $row['user_name']);
-		$smarty->assign('comment_status', $row['comment_status']);
+		$smarty->assign("post", $row);
 	}else{
 		redirect("./");
 	}
-
-	/*
-	/*	the comments sections, here the comments will be done   
-	*/
 
 	$query = "SELECT comment.comment_content, comment.comment_date,
 		comment.comment_id, comment.comment_author
@@ -58,12 +45,7 @@
 	$comments = $dbconnection->fetch_array($query);
 	
 	if(count($comments) != 0){
-		foreach($comments as $comment){
-			$text = BBCode($comment['comment_content']);
-			$view_content['comment'][] = nl2br($text);
-			$view_content['date'][] = date($config['global']['timestamp'], $comment['comment_date']);
-			$view_content['username'][] = $comment['comment_author'];
-		}
+		$smarty->assign("comments", $comments);
 	}
 	
 	if(count($_SESSION['comment_error']) != 0){
@@ -73,11 +55,6 @@
 		$smarty->assign("comment_data", $_SESSION['comment_data']);
 		unset($_SESSION['comment_data']);
 	}
-
-	$smarty->assign('comment', $view_content['comment']);
-	$smarty->assign('date', $view_content['date']);
-	$smarty->assign('username', $view_content['username']);		
-
 
 	$smarty->assign('queries', $dbconnection->queries);	
 	$smarty->display('view.tpl');
