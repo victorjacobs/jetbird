@@ -30,11 +30,10 @@
 	require_once "include/smarty.handler.class.php";
 	
 	$smarty = new smarty_handler();
-	$config['current_url'] = current_url();
 	
 	// Getting ready for the real deal: including our pages
 	$arguments = array_keys($_GET);
-	$action = $arguments[1];
+	$action = addslashes($arguments[1]);
 	
 	if(isset($arguments) && file_exists("pages/". $arguments[0] .".php") && is_readable("pages/". $arguments[0] .".php") && eregi("^[a-z0-9_-]+$", $arguments[0])){
 		$include = strtolower($arguments[0]);

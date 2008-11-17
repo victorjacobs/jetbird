@@ -16,10 +16,14 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
-	$key = $_GET['key'];
+	$key = addslashes($_GET['key']);
 	
 	if(!isset($_GET['key'])){
-		redirect('./');
+		if(function_exists("redirect")){
+			redirect("./");
+		}else{
+			die();
+		}
 	}
 	
 	$query = "SELECT * FROM user WHERE user_reg_key = '". $key ."'";

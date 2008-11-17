@@ -109,8 +109,15 @@
 				redirect("./?view&id=" . $_GET['id'] ."#comments");
 			}else{
 				redirect("./");		// Just being lame here
+			}					
+		break;
+		
+		default:
+			if(function_exists("redirect")){
+				redirect("./");
+			}else{
+				die();
 			}
-					
 		break;
 	}		
 	
