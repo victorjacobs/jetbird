@@ -35,12 +35,18 @@
 	$arguments = array_keys($_GET);
 	$action = addslashes($arguments[1]);
 	
-	if(isset($arguments) && file_exists("pages/". $arguments[0] .".php") && is_readable("pages/". $arguments[0] .".php") && eregi("^[a-z0-9_-]+$", $arguments[0])){
-		require_once "pages/". strtolower($arguments[0]) .".php";
-	}elseif(empty($arguments[0]) || !empty($_GET[$arguments[0]])){		// if arguments for specific page like ./?page=1
-		require_once "pages/main.php";
-	}elseif(file_exists($smarty->template_dir ."static/". $arguments[0] .".tpl") && is_readable($smarty->template_dir ."static/". $arguments[0] .".tpl")){
-		$smarty->display($smarty->template_dir ."static/". $arguments[0] .".tpl");
+	if(isset($arguments[0]) && !eregi("^[a-z0-9_-]+$", $arguments[0])){
+		redirect("./");
+	}
+	
+	if(isset($arguments)){
+		if(file_exists("pages/". $arguments[0] .".php") && is_readable("pages/". $arguments[0] .".php")){
+			require_once "pages/". strtolower($arguments[0]) .".php";
+		}elseif(empty($arguments[0]) || !empty($_GET[$arguments[0]])){		// if arguments for specific page like ./?page=1
+			require_once "pages/main.php";
+		}elseif(file_exists($smarty->template_dir ."/static/". $arguments[0] .".tpl") && is_readable($smarty->template_dir ."/static/". $arguments[0] .".tpl")){
+			$smarty->display("static/". $arguments[0] .".tpl");
+		}
 	}
 	
 	ob_end_flush();
