@@ -16,14 +16,6 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
-	if(!isset($_GET['action']) || !eregi("$[a-z0-9]+$", $_GET['action'])){
-		if(function_exists("redirect")){
-			redirect("./");
-		}else{
-			die();
-		}
-	}
-	
 	/*
 	/*	Login section
 	*/	

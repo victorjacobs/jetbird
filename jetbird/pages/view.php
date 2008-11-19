@@ -15,15 +15,6 @@
 	    You should have received a copy of the GNU General Public License
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
-	
-	
-	if(!isset($_GET['id']) || !eregi("$[0-9]+$", $_GET['id'])){
-		if(function_exists("redirect")){
-			redirect("./");
-		}else{
-			die();
-		}
-	}
 
 	$query = "	SELECT post.post_content, post.post_title, 
 				post.post_date, user.user_name, post.comment_status
