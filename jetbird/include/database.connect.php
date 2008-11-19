@@ -18,6 +18,6 @@
 	
 	// Connect
 	$dbconnection = new database_handler;
-	$dbconnection->connect($config['database']['user'], $config['database']['pass'], $config['database']['database'], $config['database']['host'])
+	$dbconnection->connect($config['database']['user'], $config['database']['pass'], $config['database']['database'], $config['database']['host']);
 
 ?>
