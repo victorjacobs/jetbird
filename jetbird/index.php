@@ -36,14 +36,12 @@
 	$action = addslashes($arguments[1]);
 	
 	if(isset($arguments) && file_exists("pages/". $arguments[0] .".php") && is_readable("pages/". $arguments[0] .".php") && eregi("^[a-z0-9_-]+$", $arguments[0])){
-		$include = strtolower($arguments[0]);
+		require_once "pages/". strtolower($arguments[0]) .".php";
 	}elseif(empty($arguments[0]) || !empty($_GET[$arguments[0]])){		// if arguments for specific page like ./?page=1
-		$include = "main";
-	}else{
-		redirect("./");
+		require_once "pages/main.php";
+	}elseif(file_exists($smarty->template_dir ."static/". $arguments[0] .".tpl") && is_readable($smarty->template_dir ."static/". $arguments[0] .".tpl")){
+		$smarty->display($smarty->template_dir ."static/". $arguments[0] .".tpl");
 	}
-	
-	require_once "pages/". $include .".php";
 	
 	ob_end_flush();
 
