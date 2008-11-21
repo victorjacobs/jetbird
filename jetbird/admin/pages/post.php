@@ -41,48 +41,67 @@
 					$created_post_id = $dbconnection->last_insert_id;
 					
 					
-					//start of search engine, not completed yet, please leave the code alone 
+					/*
+					 * Start of the indexing process
+					 */
 					
-					// This search engine uses the inverted index method.
-					// First we split the text into words, then we check if the word is already in DB and , if necessary, add it along with the post_id,
-					// then we build a string with all the ID's, so we can do phrase searching.
-					
-					//explode on the space so we get each word in an array 
-					$words = explode(" ", $_POST['post_content']);
-					
-					//fetching all the words with their ID's from the DB and putting them into an array 
-					$query = "	SELECT *
-								FROM search";
-								
-					$result = $dbconnection->query($query);
-					
-					while($row = mysql_fetch_array($result)){
-						$search_id_words[$row['word']] = $row['post_id'];
-						$search_word[] = $row['word'];
+						// Setting some vars
+						$text = $_POST['post_content'];
+						$title = $_POST['post_title'];
+						$post_id = $created_post_id;
 						
+						//splitting text into words and some cleanup.
+						$keyword = split_text($text);
 						
-					}
-					$id_post = mysql_result($dbconnection->query("SELECT max(post_id) FROM post"), 0);
+						//fetching the search_index from the DB and put it in a nice array
+						$query = "SELECT * FROM search_index";
+						$result = $dbconnection->query($query);
+						
+						while($row = mysql_fetch_array($result)) {
+							$index[$row['id']] = $row['word'];
+						}
+						
+						//if $index is empty, we have empty search table, so we can directly import all the records.
+						if (empty($index)) { 
+							//remove all double words, we only want each word 1 time in our index.
+							$keyword_uniq = array_unique($keyword);
+							foreach($keyword_uniq as $word) {
+								//adding word to the search_index
+								$query = "INSERT INTO search_index (word) VALUES ('$word')";
+								$dbconnection->query($query);
+								$word_id = $dbconnection->last_insert_id;
+								//adding word to the search_word
+								$query = "INSERT INTO search_word(word_id, post_id) VALUES ('$word_id', '$post_id')";
+								$dbconnection->query($query);
+							}
+							
+							
+							/*
+							//Now we can get properly the id for each word, as we just added them to the DB.
+							$query = "SELECT * FROM search_index";
+							$result = $dbconnection->query($query);
+							
+							while($row = mysql_fetch_array($result)){
+								$index[$row['word']] = $row['id'];
+							}
+							
+							$keyword_flip = array_flip($keyword);
+							//we will lose come words here with the array_intersect_key because it discards double keys,
+							//but this is not a problem because we only need one mention to the post in search_word
+							
+							$word_id = array_intersect_key($index, $keyword_flip);
+							die(print_r($word_id));
+							
+							*/
+							$process_end = timer();
+							$time = $process_end - $process_start;
+							die($time);
+							
+						redirect('../?view&id='. $created_post_id);
+						break;
+						
+						}
 					
-					//now we are going to compare the $words array with the $row array to find the words that are not in the DB
-					$tmp = array_diff($words, $search_word);
-					foreach($tmp as $word) {
-						$query = "INSERT INTO search (word, post_id) VALUES ('$word', '$id_post')";
-						$dbconnection->query($query);
-					}
-					
-					//now we are going to find the words that are already in the DB and add the post_id to the word in the DB
-					$tmp =  array_flip(array_intersect($words, $search_word));
-					$id = array_intersect_key($search_id_words, $tmp);
-					
-					foreach($id as $key => $word) {
-						$final_id .= "". $word .";". $id_post ."";
-						$query = "UPDATE search SET post_id = '". $final_id ."' WHERE word = '". $key ."'";
-						$dbconnection->query($query);
-						unset($final_id);
-					}
-			
-					//end of search engine 
 					
 					redirect('../?view&id='. $created_post_id);
 				}
