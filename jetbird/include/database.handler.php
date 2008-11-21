@@ -100,10 +100,6 @@
 					$output[] = $row;
 				}
 			}
-			
-			if(count($output) == 1){
-				$output = $output[0];
-			}
 			return $output;
 		}
 		

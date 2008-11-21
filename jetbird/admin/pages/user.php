@@ -32,8 +32,43 @@
 		break;
 		
 		case "edit":
-			$query = "SELECT * FROM user";
-			$smarty->assign("users", $dbconnection->fetch_array($query));
+			if(isset($_POST['submit']) && !empty($_GET['id'])){
+				// Checks
+				if(!isset($_POST['user_name']) || empty($_POST['user_name'])) $user_edit_error["username"] = true;
+				if(isset($_POST['user_mail']) && !empty($_POST['user_mail'])){
+					if(!check_email_address($_POST['user_mail'])) $user_edit_error['mail_invalid'] = true;
+				}else{
+					$user_edit_error['mail'] = true;
+				}
+				if((!empty($_POST['pass']) && !empty($_POST['pass_confirm'])) && $_POST['pass'] == $_POST['pass_confirm']){
+					$update_pass = true;
+				}elseif(empty($_POST['pass']) && empty($_POST['pass_confirm'])){
+					// Do nothing here
+				}else{
+					$user_edit_error['pass'] = true;
+				}
+				
+				if(count($user_edit_error) == 0){
+					// magic
+					
+				}else{
+					$smarty->assign("edit_error", $user_edit_error);
+					$user = array($_POST);
+					$smarty->assign("user", $user);
+				}
+			}else{
+				if(empty($_GET['id'])){
+					redirect("./?user");
+				}
+
+				$query = $dbconnection->query("SELECT * FROM user WHERE user_id = ". $_GET['id']);
+
+				if($dbconnection->num_rows($query) != 1){
+					redirect("./?user");
+				}			
+
+				$smarty->assign("user", $dbconnection->fetch_array($query));
+			}
 			
 			if (isset($_POST['name'])) {
 				$query = "	UPDATE user

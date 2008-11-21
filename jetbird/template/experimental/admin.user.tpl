@@ -41,18 +41,19 @@
 				</p>
 				{elseif isset($smarty.get.edit)}
 				<h3>Edit User</h3>
+				{if isset($edit_error)}<p class="error"><b>Error:</b> Please fill in all the required fields correctly</p>{/if}
 				<p>
-					<form action="./?user&amp;edit" method="post">
+					<form action="./?user&amp;edit&amp;id={$smarty.get.id}" method="post">
 						<table>
 							<tr>
 								<td><b>Username</b></td>
-								<td><input type="text" /></td>
+								<td><input type="text" name="user_name" value="{$user.0.user_name}" /></td>
 							</tr>
 							
 							<tr>
 								<td><b>Userlevel</b></td>
 								<td>
-									<select>
+									<select disabled>
 										<option>Owner</option>
 										<option>Moderator</option>
 									</select>
@@ -60,20 +61,21 @@
 							</tr>
 							
 							<tr>
+								<td><b>Email</b></td>
+								<td><input type="text" name="user_mail" value="{$user.0.user_mail}" /></td>
+							</tr>
+							
+							<tr>
 								<td><b>New password</b></td>
-								<td><input type="password" /></td>
+								<td><input type="password" name="pass" /></td>
 							</tr>
 							
 							<tr>
 								<td><b>Retype password</b></td>
-								<td><input type="password" /></td>
-							</tr>
-							
-							<tr>
-								<td><b>Email</b></td>
-								<td><input type="text" /></td>
+								<td><input type="password" name="pass_confirm" /></td>
 							</tr>
 						</table>
+						
 						<input type="submit" value="Update" name="submit" />
 					</form>
 				</p>
