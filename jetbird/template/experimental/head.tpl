@@ -24,9 +24,6 @@
 	<script src="{$template_dir}/js/common.js" type="text/javascript"></script>
 	<link type="text/css" rel="stylesheet" media="screen" href="{$template_dir}/css/style.css" />
 	<link href="./?feed" rel="alternate" type="application/rss+xml" title="Jetbird RSS Feed" />
-	{if $smarty.const.SVN_REVISION ==! false}<!--
-		This page is served to you by Jetbird revision {$smarty.const.SVN_REVISION}	-->
-{/if}
 </head>
 
 <body>
