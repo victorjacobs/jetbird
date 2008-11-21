@@ -22,7 +22,6 @@
 			<div id="content">
 				<h2>Jetbird - Blog</h2>
 				<small>The everyday problems of two geeks.</small>
-				{if $smarty.get.action == login}
 				{if !isset($smarty.session.login)}
 				{if $login === FALSE}
 				<p class="error"><b>Error:</b> password or username wrong, please try again.</p>
@@ -52,15 +51,6 @@
 				</form>
 				{elseif isset($smarty.session.login) && !isset($smarty.post.username)}
 				<p><b>Error:</b> you are already logged in</p>
-				{/if}
-				
-				{if $login === TRUE}
-				<p>Redirecting to admin dashboard</p>
-				{/if}
-				
-				{elseif $smarty.get.action == logout}
-				<p>You successfully logged out</p>
-				
 				{/if}
 			</div>
 		</div>

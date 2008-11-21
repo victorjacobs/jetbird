@@ -45,7 +45,7 @@
 		}
 		
 		if($_SESSION['login']){
-			redirect("./admin/", 2);
+			redirect("./admin/");
 		}
 		
 		break;
@@ -54,7 +54,7 @@
 	*/
 		case "logout":
 			session_destroy();
-			redirect('./', 2);
+			redirect('./');
 			break;
 	/*
 	/*	register section
