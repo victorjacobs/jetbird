@@ -95,9 +95,14 @@
 				mysql_free_result($result);
 			}elseif(is_resource($query)){
 				$result = &$query;
+				mysql_data_seek($result, 0);		// Reset pointer, needed if using same resource more than once
 				while($row = mysql_fetch_array($result, $mode)){
 					$output[] = $row;
 				}
+			}
+			
+			if(count($output) == 1){
+				$output = $output[0];
 			}
 			return $output;
 		}
