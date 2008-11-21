@@ -87,25 +87,44 @@
 		}
 		
 		function fetch_array($query, $mode = MYSQL_ASSOC){
-			$result = $this->query($query);
-			while($row = mysql_fetch_array($result, $mode)){
-				$output[] = $row;
+			if(is_string($query)){
+				$result = $this->query($query);
+				while($row = mysql_fetch_array($result, $mode)){
+					$output[] = $row;
+				}
+				mysql_free_result($result);
+			}elseif(is_resource($query)){
+				$result = &$query;
+				while($row = mysql_fetch_array($result, $mode)){
+					$output[] = $row;
+				}
 			}
-			mysql_free_result($result);
 			return $output;
 		}
 		
 		function fetch_result($query, $row = 0){
-			$result = $this->query($query);
-			$output = mysql_result($result, $row);
-			mysql_free_result($result);
+			$output = false;
+			if(is_string($query)){
+				$result = $this->query($query);
+				$output = mysql_result($result, $row);
+				mysql_free_result($result);
+			}elseif(is_resource($query)){
+				$result = &$query;
+				$output = mysql_result($result, $row);
+			}
 			return $output;
 		}
 		
 		function num_rows($query){
-			$result = $this->query($query);
-			$output = mysql_num_rows($result);
-			mysql_free_result($result);
+			$output = false;
+			if(is_string($query)){
+				$result = $this->query($query);
+				$output = mysql_num_rows($result);
+				mysql_free_result($result);
+			}elseif(is_resource($query)){
+				$result = &$query;
+				$output = mysql_num_rows($result);
+			}
 			return $output;
 		}
 		
