@@ -43,14 +43,27 @@
 				if((!empty($_POST['pass']) && !empty($_POST['pass_confirm'])) && $_POST['pass'] == $_POST['pass_confirm']){
 					$update_pass = true;
 				}elseif(empty($_POST['pass']) && empty($_POST['pass_confirm'])){
-					// Do nothing here
+					// Do nothing here, this is when we don't want to update the password
 				}else{
 					$user_edit_error['pass'] = true;
 				}
 				
 				if(count($user_edit_error) == 0){
-					// magic
-					
+					if($update_pass){
+						$pass = md5($_POST['pass']);
+						$query = "	UPDATE user
+									SET user_name = '". $_POST['user_name'] ."',
+									user_mail = '". $_POST['user_mail'] ."',
+									user_pass = '". $pass ."'
+									WHERE user_id = ". $_GET['id'];
+					}else{
+						$query = "	UPDATE user
+									SET user_name = '". $_POST['user_name'] ."',
+									user_mail = '". $_POST['user_mail'] ."'
+									WHERE user_id = ". $_GET['id'];
+					}
+					$dbconnection->query($query);
+					redirect("./?user");
 				}else{
 					$smarty->assign("edit_error", $user_edit_error);
 					$user = array($_POST);

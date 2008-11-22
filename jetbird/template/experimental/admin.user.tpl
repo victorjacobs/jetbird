@@ -74,9 +74,12 @@
 								<td><b>Retype password</b></td>
 								<td><input type="password" name="pass_confirm" /></td>
 							</tr>
+							
+							<tr>
+								<td>&nbsp;</td>
+								<td><input type="submit" value="Update" name="submit" /></td>
+							</tr>
 						</table>
-						
-						<input type="submit" value="Update" name="submit" />
 					</form>
 				</p>
 				{elseif isset($smarty.get.generate)}
