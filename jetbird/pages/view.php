@@ -16,27 +16,24 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 
-	$query = "	SELECT post.post_content, post.post_title, 
-				post.post_date, user.user_name, post.comment_status
+	$query = "	SELECT *
 				FROM post, user
 				WHERE post_id = ". $_GET['id'] ." 
 				AND user.user_id = post.post_author";			
 
 	$result = $dbconnection->query($query);
 	
-	if(mysql_num_rows($result) == 1){
-		$row = mysql_fetch_array($result);
-		$smarty->assign("post", $row);
+	if($dbconnection->num_rows($result) == 1){
+		$result = $dbconnection->fetch_array($result);
+		$smarty->assign("post", $result[0]);
 	}else{
 		redirect("./");
 	}
 
-	$query = "SELECT comment.comment_content, comment.comment_date,
-		comment.comment_id, comment.comment_author
+	$query = "SELECT *
 		FROM comment
 		WHERE comment_parent_post_id = ". $_GET['id'] ."
-		ORDER BY comment_id DESC";
-	
+		ORDER BY comment_id DESC";	
 
 	$comments = $dbconnection->fetch_array($query);
 	

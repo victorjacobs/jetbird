@@ -26,29 +26,31 @@
 				{if $login === FALSE}
 				<p class="error"><b>Error:</b> password or username wrong, please try again.</p>
 				{/if}
-				<form name="input" action="./?user&amp;action=login" method="post">
-					<table>
-						<tr>
-							<td><b>Username</b></td>
-							<td><input type="text" name="username" /></td>
-						</tr>
-						
-						<tr>
-							<td><b>Password</b></td>
-							<td><input type="password" name="password"></td>
-						</tr>
-						
-						<tr>
-							<td><b>Remind me</b></td>
-							<td><input type="checkbox" name="rememberlogin" disabled /></td>
-						</tr>
-						
-						<tr>
-							<td>&nbsp;</td>
-							<td><input type="submit" value="Login" /></td>
-						</tr>
-					</table>
-				</form>
+				<p>
+					<form name="input" action="./?user&amp;action=login" method="post">
+						<table>
+							<tr>
+								<td><b>Username</b></td>
+								<td><input type="text" name="username" /></td>
+							</tr>
+
+							<tr>
+								<td><b>Password</b></td>
+								<td><input type="password" name="password"></td>
+							</tr>
+
+							<tr>
+								<td><b>Remind me</b></td>
+								<td><input type="checkbox" name="rememberlogin" disabled /></td>
+							</tr>
+
+							<tr>
+								<td>&nbsp;</td>
+								<td><input type="submit" value="Login" /></td>
+							</tr>
+						</table>
+					</form>
+				</p>
 				{elseif isset($smarty.session.login) && !isset($smarty.post.username)}
 				<p><b>Error:</b> you are already logged in</p>
 				{/if}

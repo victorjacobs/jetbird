@@ -34,8 +34,8 @@
 					</small>
 				</p>{/if}
 				
-				<h3 id="comments">Comments</h3>
-				{if !isset($comments) and $comment_status == "closed"}
+				<h3 id="comments">Comments{if $post.comment_status == "closed" and $smarty.session.user_level == 1} - Closed{/if}</h3>
+				{if !$comments and $post.comment_status == "closed" and $smarty.session.user_level != 1}
 				<p>Comments closed</p>
 				{else}
 				{if isset($comments)}
