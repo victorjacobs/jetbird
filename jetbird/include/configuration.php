@@ -22,9 +22,9 @@
 	
 	// Database config
 	$config['database']['host'] = "localhost";
-	$config['database']['user'] = "root";
-	$config['database']['pass'] = "";
-	$config['database']['database'] = "jetbird_new";
+	$config['database']['user'] = "tidus";
+	$config['database']['pass'] = "tidus";
+	$config['database']['database'] = "jetbird";
 	
 	// RSS
 	$config['rss']['format'] = "rss2.0";

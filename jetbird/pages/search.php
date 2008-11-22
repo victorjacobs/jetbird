@@ -45,7 +45,7 @@
 			
 		break;
 		
-		case "build_index":
+		case "repair_search":
 			// DO NOT USE YET, IT WORKS, BUT THERE IS SOMETHING WRONG ABOUT THIS SCRIPT, IT SEEMS TO BE STUCK IN A LOOP SOMEHOW.
 			//fetching all the posts form the DB.
 			$query = "SELECT post_content, post_id FROM post";
