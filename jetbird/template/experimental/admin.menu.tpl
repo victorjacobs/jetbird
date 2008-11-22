@@ -25,7 +25,6 @@
 					<li><a href="{if $smarty.const.ADMIN_MODE}./?post{else}./admin/?post{/if}">Posts</a></li>
 					<ul>
 						<li><a href="{if $smarty.const.ADMIN_MODE}.{/if}./admin/?post&amp;new">New post</a></li>
-						<li><a href="#">Some more</a></li>
 					</ul>
 					<li><a href="{if $smarty.const.ADMIN_MODE}.{/if}./?user&amp;action=logout">Log out</a></li>
 				</ul>

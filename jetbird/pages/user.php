@@ -25,11 +25,11 @@
 				
 		if(isset($_POST['username'])){		
 			$pwd = md5($_POST['password']);
-			$query = "SELECT * FROM user WHERE user_name = '". $_POST['username'] ."' AND user_pass = '$pwd'";
+			$query = "SELECT * FROM user WHERE user_name = '". $_POST['username'] ."' AND user_pass = '$pwd' AND NOT user_level = -2";
 			$result = $dbconnection->query($query);	  
 		
 			//checking how much rows are affected
-			if (mysql_num_rows($result) == 1) {
+			if ($dbconnection->num_rows($result) == 1) {
 				$row = mysql_fetch_array($result);
 				
 				//setting all session variables

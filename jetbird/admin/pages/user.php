@@ -16,6 +16,16 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
+	/*
+		Some notes on special user_levels:
+		-1 is for user entries that have only a register key associated with it, these will be used
+			when registering new account. User_mail is used as the mail address used to mail
+			the register key, if mailed ofcourse, and user_last_login is used for the unix timestamp
+			when the key was generated.
+		-2 is for removed users. We preferred the "soft delete" method, to keep post_authors from breaking
+			and also adding the possibility to undo deletes.
+	*/
+	
 	if(!$_SESSION['login'] || $_SESSION['user_level'] ==! 1){
 		die();
 	}
@@ -96,7 +106,7 @@
 		case "delete":
 			if(isset($_POST['submit']) && isset($_POST['id'])){
 				if($dbconnection->num_rows("SELECT * FROM user WHERE user_id = ". $_POST['id'])){
-					$query = "DELETE FROM user WHERE user_id = ". $_POST['id'];					
+					$query = "UPDATE user SET user_level = -2 WHERE user_id = ". $_POST['id'];		
 					if($dbconnection->query($query)){
 						echo "success";
 					}else{
@@ -135,7 +145,7 @@
 		break;
 		
 		default:
-			$query = "SELECT * FROM user WHERE NOT user_level = -1";
+			$query = "SELECT * FROM user WHERE NOT user_level = -1 AND NOT user_level = -2";
 			$smarty->assign("users", $dbconnection->fetch_array($query));
 			
 			$query = "SELECT * FROM user WHERE user_level = -1";
