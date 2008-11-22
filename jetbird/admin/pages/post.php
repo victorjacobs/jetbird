@@ -112,9 +112,7 @@
 									$dbconnection->query($query);
 								}
 								
-								$process_end = timer();
-								$time = $process_end - $process_start;
-								die($time);
+								
 								
 							redirect('../?view&id='. $created_post_id);
 							break;
