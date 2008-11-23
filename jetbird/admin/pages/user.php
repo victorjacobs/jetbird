@@ -92,15 +92,6 @@
 
 				$smarty->assign("user", $dbconnection->fetch_array($query));
 			}
-			
-			if (isset($_POST['name'])) {
-				$query = "	UPDATE user
-							SET user_name = '". $_POST['user_name'] ."',
-							user_mail = '". $_POST['user_mail'] ."',
-							user_level = '". $_POST['user_level'] ."'
-							WHERE user_id = '". $_GET['id'] ."'";
-				$dbconnection->query($query);
-			}
 		break;
 		
 		case "delete":
