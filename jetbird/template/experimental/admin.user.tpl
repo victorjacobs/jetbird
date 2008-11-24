@@ -24,7 +24,7 @@
 				<small>Manage users</small>
 				
 				{if isset($smarty.get.invite)}
-				<h3>Add user</h3>
+				<h3>Invite user</h3>
 				<p>
 					<form action="./?user&amp;add_user" method="post">
 						<table>
