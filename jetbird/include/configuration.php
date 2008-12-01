@@ -26,6 +26,10 @@
 	$config['database']['pass'] = "";
 	$config['database']['database'] = "jetbird_new";
 	
+	// Blog engine
+	$config['blog']['landing_page_max_posts'] = 3;
+	$config['blog']['view_post_max_comments'] = 3;
+	
 	// RSS
 	$config['rss']['format'] = "rss2.0";
 	$config['rss']['title'] = "Jetbird";
