@@ -47,12 +47,16 @@
 	//  be a mess otherwise
 	$total_pages = ceil($total_number_posts / $config['blog']['landing_page_max_posts']);
 	
+	// Prevent weird stuff from happening
+	$display_next_link = false;
+	$display_prev_link = false;
+	
 	if($total_pages != 1){
 		if($page > 1){
-			$display_next_link = true;
+			$display_next_link = $page - 1;
 		}
 		if($page < $total_pages){
-			$display_prev_link = true;
+			$display_prev_link = $page + 1;
 		}
 	}
 	

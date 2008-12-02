@@ -37,8 +37,8 @@
 				{if $pagination.total_pages != 1}
 				<small>
 					<p>
-						{if $pagination.prev}<a href="#">Older posts</a>{/if}
-						{if $pagination.next}<a href="#">Newer posts</a>{/if}
+						{if $pagination.prev !== false}<a href="./?page={$pagination.prev}">Older posts</a>{/if}
+						{if $pagination.next !== false}<a href="./?page={$pagination.next}">Newer posts</a>{/if}
 					</p>
 				</small>
 				{/if}
