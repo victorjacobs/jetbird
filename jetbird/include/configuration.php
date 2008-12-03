@@ -27,8 +27,8 @@
 	$config['database']['database'] = "jetbird_new";
 	
 	// Blog engine
-	$config['blog']['landing_page_max_posts'] = 3;
-	$config['blog']['view_post_max_comments'] = 3;
+	$config['blog']['landing_page_max_posts'] = 5;
+	$config['blog']['view_post_max_comments'] = 10;
 	
 	// RSS
 	$config['rss']['format'] = "rss2.0";

@@ -53,10 +53,10 @@
 	
 	if($total_pages != 1){
 		if($page > 1){
-			$display_next_link = $page - 1;
+			$display_next_link = true;
 		}
 		if($page < $total_pages){
-			$display_prev_link = $page + 1;
+			$display_prev_link = true;
 		}
 	}
 	
