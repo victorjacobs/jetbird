@@ -48,7 +48,7 @@
 		$smarty->assign("comment_data", $_SESSION['comment_data']);
 		unset($_SESSION['comment_data']);
 	}
-
+	
 	$smarty->assign('queries', $dbconnection->queries);	
 	$smarty->display('view.tpl');
 	
