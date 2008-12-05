@@ -18,10 +18,27 @@
 	switch($_GET['action']) {
 	
 		case "search":
-			
+			//setting some vars
+			$search = $_POST['search'];
 			//split the search term into words
-			$search_words = explode(" ", $_POST['search']);
+			$search_word = split_text($search);
 			
+			//getting id's of each word
+			foreach($search_word as $word) {
+			$query = "	SELECT id 
+						FROM search_index
+						WHERE word = '". $word ."'";
+			}
+			
+			/*
+			 * this is the part were it gets hard.
+			 */
+			//building the query.
+			/*
+			foreach($search_word as $word) {
+			$q_app .= "";
+			}
+			/*
 			//query the DB to find the posts where the word is
 			foreach($search_words as $word) {
 				$query = "SELECT post_id FROM search WHERE word = '". $word . "'";
@@ -42,25 +59,31 @@
 				}
 			}
 			$smarty->assign("results", $post);
+*/
 			
 		break;
 		
 		case "repair_search":
 			
 			//fetching all the posts form the DB.
-			$query = "SELECT post_content, post_id FROM post";
+			$query = "SELECT post_content, post_id, post_title FROM post";
 			$result = $dbconnection->query($query);
 			while($row = mysql_fetch_array($result)) {
 				$array_post[$row['post_id']] = $row['post_content'];
+				$title[] = $row['post_title'];
 			}
 			
-			foreach($array_post as $id_post => $post) {
-					
+			foreach($array_post as $post_id => $text) {
+				foreach($title as $title_P) {
 			// Setting some vars
+			
+			/*
 						$text = $_POST['post_content'];
 						$title = $_POST['post_title'];
 						$post_id = $created_post_id;
-						
+
+			*/			
+						$title = $title_P;
 						//splitting text and title into words and some cleanup.
 						$keyword_text = split_text($text);
 						$keyword_title = split_text($title);
@@ -123,7 +146,7 @@
 									$dbconnection->query($query);
 								}
 								
-								
+						
 								
 							redirect('../?view&id='. $created_post_id);
 							break;
@@ -168,6 +191,7 @@
 									$dbconnection->query($query);
 								}
 				}
+			}
 	}
 	
 	$smarty->assign("queries", $dbconnection->queries);
