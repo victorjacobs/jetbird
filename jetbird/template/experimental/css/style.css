@@ -1,6 +1,4 @@
-/* @override 
-	http://localhost/jetbird/template/experimental/css/style.css
-*/
+/* @override http://localhost/jetbird-git/jetbird/template/experimental/css/style.css */
 
 /* Global */
 
@@ -78,7 +76,12 @@ small.subtitle {
 	margin-bottom: 10px;
 }
 
-.comment > small {
+code {
+	display: block;
+	border-style: solid;
+	border-color: #bfe794;
+	background: #dcf3c2 url(../image/code.png) no-repeat 100% -3px;
+	overflow: auto;
 }
 
 /* Side */

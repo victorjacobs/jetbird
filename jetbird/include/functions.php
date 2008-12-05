@@ -32,13 +32,13 @@
 		);
 		
 		$replace = array(
-			'<b>\\1</b>',
-			'<i>\\1</i>',
-			'<u>\\1</u>',
-			'<img src="\\1" alt="" />',
-			'<a href="\\1">\\2</a>',
-			'<a href="\\1">\\1</a>',
-			'<code>\\1</code>'
+			'<b>$1</b>',
+			'<i>$1</i>',
+			'<u>$1</u>',
+			'<img src="$1" alt="" />',
+			'<a href="$1">$2</a>',
+			'<a href="$1">$1</a>',
+			'<code>$1</code>'
 		);
 		
 		return preg_replace($search, $replace, $string);

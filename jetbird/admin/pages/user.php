@@ -16,6 +16,16 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
+	/*
+		Some notes on special user_levels:
+		-1 is for user entries that have only a register key associated with it, these will be used
+			when registering new account. User_mail is used as the mail address used to mail
+			the register key, if mailed ofcourse, and user_last_login is used for the unix timestamp
+			when the key was generated.
+		-2 is for removed users. We preferred the "soft delete" method, to keep post_authors from breaking
+			and also adding the possibility to undo deletes.
+	*/
+	
 	if(!$_SESSION['login'] || $_SESSION['user_level'] ==! 1){
 		die();
 	}
@@ -32,23 +42,62 @@
 		break;
 		
 		case "edit":
-			$query = "SELECT * FROM user";
-			$smarty->assign("users", $dbconnection->fetch_array($query));
-			
-			if (isset($_POST['name'])) {
-				$query = "	UPDATE user
-							SET user_name = '". $_POST['user_name'] ."',
-							user_mail = '". $_POST['user_mail'] ."',
-							user_level = '". $_POST['user_level'] ."'
-							WHERE user_id = '". $_GET['id'] ."'";
-				$dbconnection->query($query);
+			if(isset($_POST['submit']) && !empty($_GET['id'])){
+				// Checks
+				if(!isset($_POST['user_name']) || empty($_POST['user_name'])) $user_edit_error["username"] = true;
+				if(isset($_POST['user_mail']) && !empty($_POST['user_mail'])){
+					if(!check_email_address($_POST['user_mail'])) $user_edit_error['mail_invalid'] = true;
+				}else{
+					$user_edit_error['mail'] = true;
+				}
+				if((!empty($_POST['pass']) && !empty($_POST['pass_confirm'])) && $_POST['pass'] == $_POST['pass_confirm']){
+					$update_pass = true;
+				}elseif(empty($_POST['pass']) && empty($_POST['pass_confirm'])){
+					// Do nothing here, this is when we don't want to update the password
+				}else{
+					$user_edit_error['pass'] = true;
+				}
+				
+				if(count($user_edit_error) == 0){
+					if($update_pass){
+						$pass = md5($_POST['pass']);
+						$query = "	UPDATE user
+									SET user_name = '". $_POST['user_name'] ."',
+									user_mail = '". $_POST['user_mail'] ."',
+									user_pass = '". $pass ."'
+									WHERE user_id = ". $_GET['id'];
+					}else{
+						$query = "	UPDATE user
+									SET user_name = '". $_POST['user_name'] ."',
+									user_mail = '". $_POST['user_mail'] ."'
+									WHERE user_id = ". $_GET['id'];
+					}
+					$dbconnection->query($query);
+					redirect("./?user");
+				}else{
+					$smarty->assign("edit_error", $user_edit_error);
+					$user = array($_POST);
+					$smarty->assign("user", $user);
+				}
+			}else{
+				if(empty($_GET['id'])){
+					redirect("./?user");
+				}
+
+				$query = $dbconnection->query("SELECT * FROM user WHERE user_id = ". $_GET['id']);
+
+				if($dbconnection->num_rows($query) != 1){
+					redirect("./?user");
+				}			
+
+				$smarty->assign("user", $dbconnection->fetch_array($query));
 			}
 		break;
 		
 		case "delete":
 			if(isset($_POST['submit']) && isset($_POST['id'])){
 				if($dbconnection->num_rows("SELECT * FROM user WHERE user_id = ". $_POST['id'])){
-					$query = "DELETE FROM user WHERE user_id = ". $_POST['id'];					
+					$query = "UPDATE user SET user_level = -2 WHERE user_id = ". $_POST['id'];		
 					if($dbconnection->query($query)){
 						echo "success";
 					}else{
@@ -87,7 +136,7 @@
 		break;
 		
 		default:
-			$query = "SELECT * FROM user WHERE NOT user_level = -1";
+			$query = "SELECT * FROM user WHERE NOT user_level = -1 AND NOT user_level = -2";
 			$smarty->assign("users", $dbconnection->fetch_array($query));
 			
 			$query = "SELECT * FROM user WHERE user_level = -1";

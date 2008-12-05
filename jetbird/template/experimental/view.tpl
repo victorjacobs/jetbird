@@ -34,8 +34,8 @@
 					</small>
 				</p>{/if}
 				
-				<h3 id="comments">Comments</h3>
-				{if !isset($comments) and $comment_status == "closed"}
+				<h3 id="comments">Comments{if $post.comment_status == "closed" and $smarty.session.user_level == 1} - Closed{/if}</h3>
+				{if !$comments and $post.comment_status == "closed" and $smarty.session.user_level != 1}
 				<p>Comments closed</p>
 				{else}
 				{if isset($comments)}
@@ -49,7 +49,7 @@
 				<p>No comments yet, be the first to write one!</p>
 				{/if}
 				<h3 id="add_comment">Add comment{if $smarty.session.user_level == 1 and $comment_status == "closed"} (closed){/if}</h3>
-				{if $smarty.session.user_level == 1 or $comment_status == "open"}
+				{if $smarty.session.user_level == 1 or $post.comment_status == "open"}
 				{if isset($comment_error)}<p class="error"><b>Error:</b> Please fill in all the required fields correctly</p>{/if}
 				<form action="./?post&amp;comment&amp;id={$smarty.get.id}" method="post">
 					<div>

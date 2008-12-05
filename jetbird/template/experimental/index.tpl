@@ -33,6 +33,15 @@
 
 				</small></p>
 				{/foreach}
+				
+				{if $pagination.total_pages != 1}
+				<small>
+					<p>
+						{if $pagination.prev}<a href="./?page={math equation="x + 1" x=$pagination.page}">&laquo; Older posts</a>{/if}
+						{if $pagination.next}{if $pagination.prev} | {/if}<a href="./?page={math equation="x - 1" x=$pagination.page}">Newer posts &raquo;</a>{/if}
+					</p>
+				</small>
+				{/if}
 			</div>
 		</div>
 		

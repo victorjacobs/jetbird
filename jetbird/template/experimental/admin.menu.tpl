@@ -16,17 +16,39 @@
 *}
 <div class="menu">
 				<ul>
-					<li><a href="{if $smarty.const.ADMIN_MODE}./{else}./admin{/if}">Admin dashboard</a></li>
-					<li><a href="{if $smarty.const.ADMIN_MODE}./?user{else}./admin/?user{/if}">Users</a></li>
+					<li>
+						<a href="{if $smarty.const.ADMIN_MODE}./{else}./admin{/if}">Admin dashboard</a>
+					</li>
+					<li>
+						<a href="{if $smarty.const.ADMIN_MODE}./?user{else}./admin/?user{/if}">Users</a>
+					</li>
 					<ul>
 						<li><a href="{if $smarty.const.ADMIN_MODE}./?user&amp;invite{else}./admin/?user&amp;invite{/if}">Invite user</a></li>
 						<li><a href="{if $smarty.const.ADMIN_MODE}./?user&amp;generate{else}./admin/?user&amp;invite{/if}">Generate key</a></li>
 					</ul>
-					<li><a href="{if $smarty.const.ADMIN_MODE}./?post{else}./admin/?post{/if}">Posts</a></li>
+					<li>
+						<a href="{if $smarty.const.ADMIN_MODE}./?post{else}./admin/?post{/if}">Posts</a>
+					</li>
 					<ul>
-						<li><a href="{if $smarty.const.ADMIN_MODE}.{/if}./admin/?post&amp;new">New post</a></li>
-						<li><a href="#">Some more</a></li>
+						<li>
+							<a href="{if $smarty.const.ADMIN_MODE}.{/if}./admin/?post&amp;new">New post</a>
+						</li>
 					</ul>
-					<li><a href="{if $smarty.const.ADMIN_MODE}.{/if}./?user&amp;action=logout">Log out</a></li>
+					
+					<li>
+						<a href="{if $smarty.const.ADMIN_MODE}.{/if}./admin/?file">Attachments</a>
+					</li>
+					<ul>
+						<li>
+							<a href="{if $smarty.const.ADMIN_MODE}.{/if}./admin/?file&amp;upload">Upload file</a>
+						</li>
+						<li>
+							<a href="#">Bla</a>
+						</li>
+					</ul>
+					
+					<li>
+						<a href="{if $smarty.const.ADMIN_MODE}.{/if}./?user&amp;action=logout">Log out</a>
+					</li>
 				</ul>
 			</div>

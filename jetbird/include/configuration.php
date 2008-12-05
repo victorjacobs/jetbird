@@ -26,6 +26,10 @@
 	$config['database']['pass'] = "tidus";
 	$config['database']['database'] = "jetbird";
 	
+	// Blog engine
+	$config['blog']['landing_page_max_posts'] = 5;
+	$config['blog']['view_post_max_comments'] = 10;
+	
 	// RSS
 	$config['rss']['format'] = "rss2.0";
 	$config['rss']['title'] = "Jetbird";

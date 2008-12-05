@@ -24,7 +24,7 @@
 				<small>Manage users</small>
 				
 				{if isset($smarty.get.invite)}
-				<h3>Add user</h3>
+				<h3>Invite user</h3>
 				<p>
 					<form action="./?user&amp;add_user" method="post">
 						<table>
@@ -41,18 +41,19 @@
 				</p>
 				{elseif isset($smarty.get.edit)}
 				<h3>Edit User</h3>
+				{if isset($edit_error)}<p class="error"><b>Error:</b> Please fill in all the required fields correctly</p>{/if}
 				<p>
-					<form action="./?user&amp;edit" method="post">
+					<form action="./?user&amp;edit&amp;id={$smarty.get.id}" method="post">
 						<table>
 							<tr>
 								<td><b>Username</b></td>
-								<td><input type="text" /></td>
+								<td><input type="text" name="user_name" value="{$user.0.user_name}" /></td>
 							</tr>
 							
 							<tr>
 								<td><b>Userlevel</b></td>
 								<td>
-									<select>
+									<select disabled>
 										<option>Owner</option>
 										<option>Moderator</option>
 									</select>
@@ -60,21 +61,25 @@
 							</tr>
 							
 							<tr>
+								<td><b>Email</b></td>
+								<td><input type="text" name="user_mail" value="{$user.0.user_mail}" /></td>
+							</tr>
+							
+							<tr>
 								<td><b>New password</b></td>
-								<td><input type="password" /></td>
+								<td><input type="password" name="pass" /></td>
 							</tr>
 							
 							<tr>
 								<td><b>Retype password</b></td>
-								<td><input type="password" /></td>
+								<td><input type="password" name="pass_confirm" /></td>
 							</tr>
 							
 							<tr>
-								<td><b>Email</b></td>
-								<td><input type="text" /></td>
+								<td>&nbsp;</td>
+								<td><input type="submit" value="Update" name="submit" /></td>
 							</tr>
 						</table>
-						<input type="submit" value="Update" name="submit" />
 					</form>
 				</p>
 				{elseif isset($smarty.get.generate)}
@@ -113,8 +118,7 @@
 					<table width="100%">
 						<tr>
 							<td><b>ID</b></td>
-							<td width="70"><b>Name</b></td>
-							<td><b>Level</b></td>
+							<td width="100"><b>Name</b></td>
 							<td><b>Mail</b></td>
 							<td><b>Last login</b></td>
 							<td width="1">&nbsp;</td>
@@ -124,7 +128,6 @@
 						<tr>
 							<td>{$user.user_id}</td>
 							<td>{$user.user_name}</td>
-							<td>{$user.user_level}</td>
 							<td>{$user.user_mail}</td>
 							<td>{if !$user.user_last_login}<i>Never</i>{else}{$user.user_last_login|date_format:"%d/%m/%y %H:%I"}{/if}</td>
 							<td><a href="./?user&amp;edit&amp;id={$user.user_id}">Edit</a></td>
