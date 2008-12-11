@@ -21,6 +21,7 @@
 		
 		public function __construct($string){
 			echo "<pre>";
+			var_dump($string);
 			var_dump($this->build_tree($string));
 			echo "</pre>";
 		}
@@ -32,15 +33,24 @@
 		private function build_tree($string){
 			$blocks = preg_split("/(\[\/{0,1}[^\]]+\])/i", $string, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
 			
+			$level = 0;
+			$this->tree = array();
+			$parent = &$this->tree;
+			$tree_refs[] = $parent;
+			
 			foreach($blocks as $text_block){
 				if($text_block{0} == "["){			// The bbtags are normally at predictable places, but let's be sure
 					if($text_block{1} == "/"){		// Tag gets closed
 						$level--;
+						$parent = $tree_refs[$level];
 					}else{							// Tag opened
 						$level++;
+						$tree_refs[$level] = $parent;
+						$parent[$text_block] = array();
+						$parent = &$parent[$text_block];
 					}
 				}else{								// We are dealing with char data here
-					
+					$parent['data'] = $text_block;
 				}
 				
 			}
