@@ -15,7 +15,8 @@
 	    You should have received a copy of the GNU General Public License
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
-
+	
+	// Post
 	$query = "	SELECT *
 				FROM post, user
 				WHERE post_id = ". $_GET['id'] ." 
@@ -26,19 +27,61 @@
 	if($dbconnection->num_rows($result) == 1){
 		$result = $dbconnection->fetch_array($result);
 		$smarty->assign("post", $result[0]);
+		
+		if(isset($_GET['page']) && $_GET['page'] <= 1){		// TODO: protect this with some regex or something
+			redirect('./?view&id='. $_GET['id']);
+		}
 	}else{
 		redirect("./");
+	}
+	
+	// Comments
+	if(!isset($_GET['page'])){
+		$page = 1;
+	}else{
+		$page = $_GET['page'];
+	}
+	
+	// Figure out what the lower limit is based on the current page and settings in configuration.php
+	$pagination_lower_limit = (($page * $config['blog']['view_post_max_comments']) - $config['blog']['view_post_max_comments']);
+	
+	$total_number_comments = $dbconnection->fetch_result("SELECT COUNT(comment_id) FROM comment WHERE comment_parent_post_id = ". $_GET['id']);
+	
+	if($pagination_lower_limit > $total_number_comments){
+		while(($page * $config['blog']['view_post_max_comments']) - $config['blog']['view_post_max_comments'] > $total_number_posts) $page--;
+		redirect("./?view&id=". $_GET['id'] ."&page=". $page);
 	}
 
 	$query = "SELECT *
 		FROM comment
 		WHERE comment_parent_post_id = ". $_GET['id'] ."
-		ORDER BY comment_id DESC";	
+		ORDER BY comment_id DESC
+		LIMIT ". $pagination_lower_limit .", ". $config['blog']['view_post_max_comments'];	
 
 	$comments = $dbconnection->fetch_array($query);
 	
 	if(count($comments) != 0){
 		$smarty->assign("comments", $comments);
+		
+		// Figure out what links to show in template, it's better to do this here than in template, would
+		//  be a mess otherwise
+		$total_pages = ceil($total_number_comments / $config['blog']['view_post_max_comments']);
+
+		// Prevent weird stuff from happening
+		$display_next_link = false;
+		$display_prev_link = false;
+
+		if($total_pages != 1){
+			if($page > 1){
+				$display_next_link = true;
+			}
+			if($page < $total_pages){
+				$display_prev_link = true;
+			}
+		}
+
+		$smarty->assign("pagination", array("next" => $display_next_link, "prev" => $display_prev_link,
+											"page" => $page, "total_pages" => $total_pages));
 	}
 	
 	if(count($_SESSION['comment_error']) != 0){
