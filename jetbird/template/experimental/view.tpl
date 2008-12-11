@@ -45,6 +45,14 @@
 					<p><small>{$comment.comment_author} on {$comment.comment_date|date_format:"%d/%m/%y %H:%I"}</small></p>
 				</div>
 				{/foreach}
+				{if $pagination.total_pages != 1}
+				<small>
+					<p>
+						{if $pagination.prev}<a href="./?view&amp;id={$smarty.get.id}&amp;page={math equation="x + 1" x=$pagination.page}#comments">&laquo; Older comments</a>{/if}
+						{if $pagination.next}{if $pagination.prev} | {/if}<a href="./?view&amp;id={$smarty.get.id}&amp;page={math equation="x - 1" x=$pagination.page}#comments">Newer comments &raquo;</a>{/if}
+					</p>
+				</small>
+				{/if}
 				{else}
 				<p>No comments yet, be the first to write one!</p>
 				{/if}
