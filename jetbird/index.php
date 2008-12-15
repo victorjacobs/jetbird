@@ -21,7 +21,7 @@
 	ob_start();
 	session_start();
 	require_once "include/functions.php";
-	$process_start = timer();		// use this wherever you want, can be useful for debugging
+	$process_start = timer();		// Use this wherever you want, can be useful for debugging
 	require_once "include/configuration.php";
 	require_once "include/database.handler.php";
 	require_once "include/database.connect.php";
