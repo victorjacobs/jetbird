@@ -29,13 +29,6 @@
 	require_once "include/smarty.handler.class.php";
 	require_once "include/login.bootstrap.php";
 	
-	// <DEBUG>
-	if(isset($_COOKIE['logged_in_as'])){
-		echo "<b>Debug</b> logged_in_as <i>set</i>";
-	}else{
-		
-	}
-	
 	$smarty = new smarty_handler;
 	
 	// Getting ready for the real deal: including our pages
