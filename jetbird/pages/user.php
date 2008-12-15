@@ -46,12 +46,12 @@
 							$_SESSION['logged_in_as'] = $login_id;
 							
 							$_SESSION['user_level'] = $user[0]['user_level'];
-							$_SESSION['username'] = $user[0]['user_name'];
+							$_SESSION['user_name'] = $user[0]['user_name'];
 							$_SESSION['user_id'] = $user[0]['user_id'];
 							$_SESSION['login'] = true;
 						}else{
 							$_SESSION['user_level'] = $user[0]['user_level'];
-							$_SESSION['username'] = $user[0]['user_name'];
+							$_SESSION['user_name'] = $user[0]['user_name'];
 							$_SESSION['user_id'] = $user[0]['user_id'];
 							$_SESSION['login'] = true;
 						}
@@ -75,8 +75,18 @@
 	/*	Logout section
 	*/
 		case "logout":
-			session_destroy();
+			if(isset($_COOKIE['logged_in_as'])){
+				cookie_destroy("logged_in_as", "user_id");
+			}
+			
+			// Let's be nice to other people who might be needing $_SESSION
+			unset($_SESSION['user_level']);
+			unset($_SESSION['user_name']);
+			unset($_SESSION['user_id']);
+			unset($_SESSION['login']);
+			
 			redirect('./');
+			
 			break;
 	/*
 	/*	register section

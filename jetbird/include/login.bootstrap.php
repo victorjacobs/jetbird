@@ -31,7 +31,7 @@
 		$user = $dbconnection->fetch_array($query);
 		
 		$_SESSION['user_level'] = $user[0]['user_level'];
-		$_SESSION['username'] = $user[0]['user_name'];
+		$_SESSION['user_name'] = $user[0]['user_name'];
 		$_SESSION['user_id'] = $user[0]['user_id'];
 		$_SESSION['login'] = true;
 		
