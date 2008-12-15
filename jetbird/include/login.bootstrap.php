@@ -16,8 +16,7 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
-	if($_COOKIE['logged_in_as'] != $_SESSION['logged_in_as']){		// Session expired, but we are still logged in by cookie
-		echo "<b>Debug:</b> Bootstrapping login";
+	if(isset($_COOKIE['logged_in_as']) && ($_COOKIE['logged_in_as'] != $_SESSION['logged_in_as'])){		// Session expired, but we are still logged in by cookie
 		// Refresh the cookie's expire timer by setting new uniqid
 		$login_id = uniqid();
 		setcookie('logged_in_as', $login_id);	// TODO: add expire here
@@ -31,7 +30,7 @@
 		$user = $dbconnection->fetch_array($query);
 		
 		$_SESSION['user_level'] = $user[0]['user_level'];
-		$_SESSION['username'] = $user[0]['user_name'];
+		$_SESSION['user_name'] = $user[0]['user_name'];
 		$_SESSION['user_id'] = $user[0]['user_id'];
 		$_SESSION['login'] = true;
 		

@@ -86,7 +86,7 @@
 		return crypt(uniqid(sha1(md5(rand())), true));
 	}
 	
-	function destroy_cookie(){
+	function cookie_destroy(){
 		if(func_num_args() == 0){
 			return false;
 		}
