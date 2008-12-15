@@ -29,6 +29,7 @@
 	require_once "../include/database.connect.php";
 	require_once "../include/smarty/Smarty.class.php";
 	require_once "../include/smarty.handler.class.php";
+	require_once "../include/login.bootstrap.php";
 	
 	// We don't want regular users to sniff around in here
 	if(!$_SESSION['login'] || $_SESSION['user_level'] ==! 1){

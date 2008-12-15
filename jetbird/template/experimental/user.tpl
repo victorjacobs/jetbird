@@ -41,12 +41,12 @@
 
 							<tr>
 								<td><b>Remind me</b></td>
-								<td><input type="checkbox" name="rememberlogin" disabled /></td>
+								<td><input type="checkbox" name="rememberlogin" /></td>
 							</tr>
 
 							<tr>
 								<td>&nbsp;</td>
-								<td><input type="submit" value="Login" /></td>
+								<td><input type="submit" name="submit" value="Login" /></td>
 							</tr>
 						</table>
 					</form>

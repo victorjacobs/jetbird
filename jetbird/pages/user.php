@@ -22,39 +22,71 @@
 	switch($_GET['action']) {
 	
 		case "login":
-				
-		if(isset($_POST['username'])){		
-			$pwd = md5($_POST['password']);
-			$query = "SELECT * FROM user WHERE user_name = '". $_POST['username'] ."' AND user_pass = '$pwd' AND NOT user_level = -2";
-			$result = $dbconnection->query($query);	  
-		
-			//checking how much rows are affected
-			if ($dbconnection->num_rows($result) == 1) {
-				$row = mysql_fetch_array($result);
-				
-				//setting all session variables
-				$_SESSION['user_level'] = $row['user_level'];
-				$_SESSION['login'] = 1;
-				$_SESSION['username'] = $_POST['username'];
-				$_SESSION['user_id'] = $row['user_id'];
-				$dbconnection->query("UPDATE user SET user_last_login = ". time() ." WHERE user_id = ". $row['user_id']);
-				$smarty->assign('login', TRUE);
-			}else{ 
-				$smarty->assign('login', FALSE);
+			
+			if(isset($_POST['submit'])){
+				if(isset($_POST['username'])){
+					$password = md5($_POST['password']);
+					$query = "	SELECT *
+								FROM user
+								WHERE user_name = '". $_POST['username'] ."'
+								AND user_pass = '$password'
+								AND NOT user_level = -2";
+					$result = $dbconnection->query($query);
+					
+					if($dbconnection->num_rows($result) == 1){
+						$user = $dbconnection->fetch_array($result);
+						
+						// Bootstrap
+						if(isset($_POST['rememberlogin'])){
+							// We only set two cookies here, to minimize security breaches, we set real login
+							//  info in $_SESSION
+							$login_id = uniqid();
+							setcookie('logged_in_as', $login_id);	// TODO: add expire here
+							setcookie('user_id', $user[0]['user_id']);
+							$_SESSION['logged_in_as'] = $login_id;
+							
+							$_SESSION['user_level'] = $user[0]['user_level'];
+							$_SESSION['user_name'] = $user[0]['user_name'];
+							$_SESSION['user_id'] = $user[0]['user_id'];
+							$_SESSION['login'] = true;
+						}else{
+							$_SESSION['user_level'] = $user[0]['user_level'];
+							$_SESSION['user_name'] = $user[0]['user_name'];
+							$_SESSION['user_id'] = $user[0]['user_id'];
+							$_SESSION['login'] = true;
+						}
+						
+						$dbconnection->query("	UPDATE user
+												SET user_last_login = ". time() ."
+												WHERE user_id = ". $user[0]['user_id']);
+						
+						$smarty->assign('login', TRUE);
+						
+						redirect("./admin");
+					}else{
+						$smarty->assign('login', FALSE);
+					}
+					
+				}
 			}
-		}
-		
-		if($_SESSION['login']){
-			redirect("./admin/");
-		}
 		
 		break;
 	/*
 	/*	Logout section
 	*/
 		case "logout":
-			session_destroy();
+			if(isset($_COOKIE['logged_in_as'])){
+				cookie_destroy("logged_in_as", "user_id");
+			}
+			
+			// Let's be nice to other people who might be needing $_SESSION
+			unset($_SESSION['user_level']);
+			unset($_SESSION['user_name']);
+			unset($_SESSION['user_id']);
+			unset($_SESSION['login']);
+			
 			redirect('./');
+			
 			break;
 	/*
 	/*	register section
