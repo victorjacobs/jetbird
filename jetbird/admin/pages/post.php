@@ -111,16 +111,28 @@
 		case "delete":
 			if(isset($_POST['submit']) && isset($_POST['id'])){
 				if($dbconnection->num_rows("SELECT * FROM post WHERE post_id = ". $_POST['id'])){
-					$query = "DELETE FROM post WHERE post_id = ". $_POST['id'];					
+					$query = "DELETE FROM post WHERE post_id = ". $_POST['id'];	
 					if($dbconnection->query($query)){
-						echo "success";
+						$success = true;
 					}else{
-						echo "fail";
+						$success = false;
+					}
+					
+					if($_POST['method'] == "ajax"){		// If delete was requested via ajax
+						if($success){
+							echo "success";
+						}else{
+							echo "fail";
+						}
+						
+						die();							// we don't need smarty to show us a template here
+					}else{
+						redirect("./?post");
 					}
 				}
+			}else{
+				$smarty->display("admin.post.tpl");
 			}
-			
-			die();	// we don't need smarty to show us a template here
 		break;
 	}
 		

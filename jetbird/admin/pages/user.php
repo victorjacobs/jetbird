@@ -104,16 +104,16 @@
 						$success = false;
 					}
 					
-					if($_POST['method'] == "ajax"){		// If delete was requested via ajax technologies
+					if($_POST['method'] == "ajax"){		// If delete was requested via ajax
 						if($success){
 							echo "success";
 						}else{
 							echo "fail";
 						}
 						
-						die();	// we don't need smarty to show us a template here
+						die();							// we don't need smarty to show us a template here
 					}else{
-						redirect("./?user");
+						redirect("./?user");			// Assume here that was called from admin panel
 					}
 				}
 			}else{
