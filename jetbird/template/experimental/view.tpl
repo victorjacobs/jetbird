@@ -42,7 +42,7 @@
 				{foreach from=$comments item=comment}
 				<div class="comment">
 					<p>{$comment.comment_content|bbcode|nl2br}</p>
-					<p><small>{$comment.comment_author} on {$comment.comment_date|date_format:"%d/%m/%y %H:%I"}</small></p>
+					<p><small>{if !empty($comment.comment_author_url)}<a href="{$comment.comment_author_url}">{/if}{$comment.comment_author}{if !empty($comment.comment_author_url)}</a>{/if} on {$comment.comment_date|date_format:"%d/%m/%y %H:%I"}</small></p>
 				</div>
 				{/foreach}
 				{if $pagination.total_pages != 1}
