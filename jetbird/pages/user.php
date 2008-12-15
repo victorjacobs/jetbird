@@ -22,6 +22,29 @@
 	switch($_GET['action']) {
 	
 		case "login":
+		
+			if(isset($_POST['submit'])){
+				if(isset($_POSY['username'])){
+					$password = md5($_POST['password']);
+					$query = "	SELECT *
+								FROM user
+								WHERE user_name = '". $_POST['username'] ."'
+								AND user_pass = '$password'
+								AND NOT user_level = -2";
+					$result = $dbconnection->query($query);
+					
+					if($dbconnection->num_rows($result) == 1){
+						$user = $dbconnection->fetch_array($result);
+						
+						if(isset($_POST['rememberlogin'])){
+							
+						}else{
+							
+						}
+					}
+					
+				}
+			}
 				
 		if(isset($_POST['username'])){		
 			$pwd = md5($_POST['password']);

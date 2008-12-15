@@ -41,7 +41,7 @@
 
 							<tr>
 								<td><b>Remind me</b></td>
-								<td><input type="checkbox" name="rememberlogin" disabled /></td>
+								<td><input type="checkbox" name="rememberlogin" /></td>
 							</tr>
 
 							<tr>
