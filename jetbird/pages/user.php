@@ -24,7 +24,7 @@
 		case "login":
 		
 			if(isset($_POST['submit'])){
-				if(isset($_POSY['username'])){
+				if(isset($_POST['username'])){
 					$password = md5($_POST['password']);
 					$query = "	SELECT *
 								FROM user
@@ -41,6 +41,13 @@
 						}else{
 							
 						}
+						
+						$dbconnection->query("UPDATE user SET user_last_login = ". time() ." WHERE user_id = ". $row['user_id']);
+						$smarty->assign('login', TRUE);
+						
+						redirect("./admin");
+					}else{
+						$smarty->assign('login', FALSE);
 					}
 					
 				}
