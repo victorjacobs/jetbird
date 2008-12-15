@@ -28,7 +28,7 @@
 	require_once "include/smarty/Smarty.class.php";
 	require_once "include/smarty.handler.class.php";
 	
-	$smarty = new smarty_handler();
+	$smarty = new smarty_handler;
 	
 	// Getting ready for the real deal: including our pages
 	$arguments = array_keys($_GET);

@@ -76,7 +76,7 @@ $(document).ready(function() {
 			switch(mode[0]){
 				case "del":
 					$.post(link + mode[1] + "&delete",
-						{submit:"true", id:id},
+						{submit:"true", id:id, method:"ajax"},
 						function(returned_data) {
 							if(returned_data == "success"){
 								location.reload();

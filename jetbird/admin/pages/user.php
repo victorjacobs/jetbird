@@ -97,16 +97,28 @@
 		case "delete":
 			if(isset($_POST['submit']) && isset($_POST['id'])){
 				if($dbconnection->num_rows("SELECT * FROM user WHERE user_id = ". $_POST['id'])){
-					$query = "UPDATE user SET user_level = -2 WHERE user_id = ". $_POST['id'];		
+					$query = "UPDATE user SET user_level = -2 WHERE user_id = ". $_POST['id'];
 					if($dbconnection->query($query)){
-						echo "success";
+						$success = true;
 					}else{
-						echo "fail";
+						$success = false;
+					}
+					
+					if($_POST['method'] == "ajax"){		// If delete was requested via ajax
+						if($success){
+							echo "success";
+						}else{
+							echo "fail";
+						}
+						
+						die();							// we don't need smarty to show us a template here
+					}else{
+						redirect("./?user");			// Assume here that was called from admin panel
 					}
 				}
+			}else{
+				$smarty->display("admin.user.tpl");
 			}
-			
-			die();	// we don't need smarty to show us a template here
 		break;
 		
 		case "generate":

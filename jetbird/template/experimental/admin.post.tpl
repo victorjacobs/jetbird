@@ -53,6 +53,8 @@
 					</tr>
 				</table></p>
 			</form>
+			{elseif isset($smarty.get.delete)}
+			<p><b>Error:</b> don't use this in this template</p>
 			{else}
 			<h3>Overview</h3>
 			
