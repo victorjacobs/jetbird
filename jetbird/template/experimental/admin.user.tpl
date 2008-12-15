@@ -111,7 +111,8 @@
 					</ul>
 					{/if}
 				</p>
-						
+				{elseif isset($smarty.get.delete)}
+				<p><b>Error:</b> Don't use this in this template</p>
 				{else}
 				<h3>Overview</h3>
 				<p>
@@ -136,7 +137,7 @@
 						{/foreach}
 					</table>
 				</p>
-				<p><a href="./?user&amp;action=new_user">Add user</a></p>
+				<p><a href="./?user&amp;action=new_user">Add user</a> | <a href="#">Display deleted users</a></p>
 				
 				<h3>Inactivated register keys</h3>
 				<p>
