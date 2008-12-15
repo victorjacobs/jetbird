@@ -123,17 +123,17 @@
 		break;
 		
 		case "repair_search":
-			
+			//call to set time limet, because this can take a very long time.
+			set_time_limit(0);
 			//fetching all the posts form the DB.
 			$query = "SELECT post_content, post_id, post_title FROM post";
 			$result = $dbconnection->query($query);
 			while($row = mysql_fetch_array($result)) {
-				$array_post[$row['post_id']] = $row['post_content'];
-				$title[] = $row['post_title'];
+				$array_post[$row['post_id']] = array($row['post_content'], $row['post_title']);
 			}
-			
-			foreach($array_post as $post_id => $text) {
-				foreach($title as $title_P) {
+			//die(print_r($array_post));
+			foreach($array_post as $post_id => $text_title) {
+				
 			// Setting some vars
 			
 			/*
@@ -142,7 +142,8 @@
 						$post_id = $created_post_id;
 
 			*/			
-						$title = $title_P;
+						$title = $text_title[1];
+						$text = $text_title[0];
 						//splitting text and title into words and some cleanup.
 						$keyword_text = split_text($text);
 						$keyword_title = split_text($title);
@@ -249,7 +250,7 @@
 												VALUES ('$word_id', '$post_id')";
 									$dbconnection->query($query);
 								}
-				}
+				
 			}
 	}
 	
