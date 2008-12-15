@@ -19,17 +19,76 @@
 	
 		case "search":
 			//setting some vars
-			$search = $_POST['search'];
+			$search = $_GET['search'];
 			//split the search term into words
 			$search_word = split_text($search);
 			
-			//getting id's of each word
+			//Building the query to get the ID's of the word
 			foreach($search_word as $word) {
-			$query = "	SELECT id 
-						FROM search_index
-						WHERE word = '". $word ."'";
+				if(empty($query_append)) {
+					$query_append = " word = '". $word ."'";
+				} 
+				else 
+				{
+					$query_append .= " OR word = '". $word ."'";
+				}
 			}
 			
+			
+			$query = "	SELECT id 
+						FROM search_index
+						WHERE ".$query_append ."";
+			$result = $dbconnection->query($query);
+			while ($row = mysql_fetch_array($result)) {
+				$word_id[] = $row['id'];
+			}
+			
+			/*
+			 * first we fetch the posts that have a title match
+			 */
+			
+			//Building query to get the post_id and title_match.
+			foreach($word_id as $id) {
+				if(empty($query_append_2)) {
+					$query_append_2 = " word_id = '". $id ."'";
+				} 
+				else 
+				{
+					$query_append_2 .= " OR word_id = '". $id ."'";
+				}
+			}
+			
+			//Getting the post_id's that have a title match.
+			$query = "	SELECT post_id, title_match 
+						FROM search_word
+						WHERE ". $query_append_2 ." AND title_match = 1";
+			$result = $dbconnection->query($query);
+			while($row = mysql_fetch_array($result)) {
+				$id_title_match[] = $row['post_id'];
+			}
+			
+			//finding the post that has the most title matches.
+			$shizzle = array_count_values($id_title_match);
+			die(var_dump($shizzle));
+			
+			/*
+			 * fetching the posts that don't have a title match
+			 */
+			//getting the rest of the ID's.
+			$query = "	SELECT post_id, title_match 
+						FROM search_word
+						WHERE ". $query_append_2 ."";
+			$result = $dbconnection->query($query);
+			while($row = mysql_fetch_array($result)) {
+				$id_word_match[] = $row['post_id'];
+			}
+			
+			//die(var_dump($query));
+		
+			
+	
+			
+	
 			/*
 			 * this is the part were it gets hard.
 			 */

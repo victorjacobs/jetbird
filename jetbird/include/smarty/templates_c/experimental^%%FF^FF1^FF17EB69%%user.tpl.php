@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.20, created on 2008-11-22 21:05:01
+<?php /* Smarty version 2.6.20, created on 2008-12-05 20:45:43
          compiled from user.tpl */ ?>
 
 <?php $_smarty_tpl_vars = $this->_tpl_vars;
@@ -16,29 +16,31 @@ unset($_smarty_tpl_vars);
 				<?php if ($this->_tpl_vars['login'] === FALSE): ?>
 				<p class="error"><b>Error:</b> password or username wrong, please try again.</p>
 				<?php endif; ?>
-				<form name="input" action="./?user&amp;action=login" method="post">
-					<table>
-						<tr>
-							<td><b>Username</b></td>
-							<td><input type="text" name="username" /></td>
-						</tr>
-						
-						<tr>
-							<td><b>Password</b></td>
-							<td><input type="password" name="password"></td>
-						</tr>
-						
-						<tr>
-							<td><b>Remind me</b></td>
-							<td><input type="checkbox" name="rememberlogin" disabled /></td>
-						</tr>
-						
-						<tr>
-							<td>&nbsp;</td>
-							<td><input type="submit" value="Login" /></td>
-						</tr>
-					</table>
-				</form>
+				<p>
+					<form name="input" action="./?user&amp;action=login" method="post">
+						<table>
+							<tr>
+								<td><b>Username</b></td>
+								<td><input type="text" name="username" /></td>
+							</tr>
+
+							<tr>
+								<td><b>Password</b></td>
+								<td><input type="password" name="password"></td>
+							</tr>
+
+							<tr>
+								<td><b>Remind me</b></td>
+								<td><input type="checkbox" name="rememberlogin" disabled /></td>
+							</tr>
+
+							<tr>
+								<td>&nbsp;</td>
+								<td><input type="submit" value="Login" /></td>
+							</tr>
+						</table>
+					</form>
+				</p>
 				<?php elseif (isset ( $_SESSION['login'] ) && ! isset ( $_POST['username'] )): ?>
 				<p><b>Error:</b> you are already logged in</p>
 				<?php endif; ?>

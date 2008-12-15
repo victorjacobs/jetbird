@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.20, created on 2008-11-22 00:15:56
+<?php /* Smarty version 2.6.20, created on 2008-12-05 20:46:08
          compiled from view.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'ucfirst', 'view.tpl', 27, false),array('modifier', 'date_format', 'view.tpl', 27, false),array('modifier', 'bbcode', 'view.tpl', 29, false),array('modifier', 'nl2br', 'view.tpl', 29, false),)), $this); ?>
@@ -32,8 +32,8 @@ unset($_smarty_tpl_vars);
 					</small>
 				</p><?php endif; ?>
 				
-				<h3 id="comments">Comments</h3>
-				<?php if (! isset ( $this->_tpl_vars['comments'] ) && $this->_tpl_vars['comment_status'] == 'closed'): ?>
+				<h3 id="comments">Comments<?php if ($this->_tpl_vars['post']['comment_status'] == 'closed' && $_SESSION['user_level'] == 1): ?> - Closed<?php endif; ?></h3>
+				<?php if (! $this->_tpl_vars['comments'] && $this->_tpl_vars['post']['comment_status'] == 'closed' && $_SESSION['user_level'] != 1): ?>
 				<p>Comments closed</p>
 				<?php else: ?>
 				<?php if (isset ( $this->_tpl_vars['comments'] )): ?>
@@ -52,7 +52,7 @@ unset($_smarty_tpl_vars);
 				<p>No comments yet, be the first to write one!</p>
 				<?php endif; ?>
 				<h3 id="add_comment">Add comment<?php if ($_SESSION['user_level'] == 1 && $this->_tpl_vars['comment_status'] == 'closed'): ?> (closed)<?php endif; ?></h3>
-				<?php if ($_SESSION['user_level'] == 1 || $this->_tpl_vars['comment_status'] == 'open'): ?>
+				<?php if ($_SESSION['user_level'] == 1 || $this->_tpl_vars['post']['comment_status'] == 'open'): ?>
 				<?php if (isset ( $this->_tpl_vars['comment_error'] )): ?><p class="error"><b>Error:</b> Please fill in all the required fields correctly</p><?php endif; ?>
 				<form action="./?post&amp;comment&amp;id=<?php echo $_GET['id']; ?>
 " method="post">

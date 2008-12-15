@@ -1,7 +1,7 @@
-<?php /* Smarty version 2.6.20, created on 2008-11-22 21:04:57
+<?php /* Smarty version 2.6.20, created on 2008-12-05 20:45:33
          compiled from index.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('modifier', 'ucfirst', 'index.tpl', 28, false),array('modifier', 'date_format', 'index.tpl', 28, false),array('modifier', 'truncate', 'index.tpl', 30, false),array('modifier', 'bbcode', 'index.tpl', 30, false),array('modifier', 'nl2br', 'index.tpl', 30, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('modifier', 'ucfirst', 'index.tpl', 28, false),array('modifier', 'date_format', 'index.tpl', 28, false),array('modifier', 'truncate', 'index.tpl', 30, false),array('modifier', 'bbcode', 'index.tpl', 30, false),array('modifier', 'nl2br', 'index.tpl', 30, false),array('function', 'math', 'index.tpl', 40, false),)), $this); ?>
 
 <?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => "head.tpl", 'smarty_include_vars' => array()));
@@ -34,6 +34,17 @@ unset($_smarty_tpl_vars);
 
 				</small></p>
 				<?php endforeach; endif; unset($_from); ?>
+				
+				<?php if ($this->_tpl_vars['pagination']['total_pages'] != 1): ?>
+				<small>
+					<p>
+						<?php if ($this->_tpl_vars['pagination']['prev']): ?><a href="./?page=<?php echo smarty_function_math(array('equation' => "x + 1",'x' => $this->_tpl_vars['pagination']['page']), $this);?>
+">&laquo; Older posts</a><?php endif; ?>
+						<?php if ($this->_tpl_vars['pagination']['next']): ?><?php if ($this->_tpl_vars['pagination']['prev']): ?> | <?php endif; ?><a href="./?page=<?php echo smarty_function_math(array('equation' => "x - 1",'x' => $this->_tpl_vars['pagination']['page']), $this);?>
+">Newer posts &raquo;</a><?php endif; ?>
+					</p>
+				</small>
+				<?php endif; ?>
 			</div>
 		</div>
 		

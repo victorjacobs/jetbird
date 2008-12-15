@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.20, created on 2008-11-21 23:23:31
+<?php /* Smarty version 2.6.20, created on 2008-12-05 20:45:55
          compiled from admin.post.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'ucfirst', 'admin.post.tpl', 73, false),array('modifier', 'date_format', 'admin.post.tpl', 74, false),)), $this); ?>
@@ -13,7 +13,7 @@ unset($_smarty_tpl_vars);
 	<div id="contentwrap">
 		<div id="content">
 			<h2>Jetbird - Admin</h2>
-			<small>Manage Posts</small>
+			<small>Manage posts</small>
 			
 			<?php if (isset ( $_GET['new'] )): ?>
 			<?php if (isset ( $this->_tpl_vars['post_error'] )): ?><p class="error"><b>Error:</b> Please fill in all the required fields correctly</p><?php endif; ?>
