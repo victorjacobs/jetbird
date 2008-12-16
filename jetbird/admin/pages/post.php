@@ -44,8 +44,7 @@
 					/*
 					 * Start of the indexing process
 					 */
-						// setting magic quotes to zero.
-						set_magic_quotes_runtime(false);
+						
 						// Setting some vars
 						$text = $_POST['post_content'];
 						$title = $_POST['post_title'];
@@ -67,7 +66,7 @@
 						while($row = mysql_fetch_array($result)) {
 							$index[$row['id']] = $row['word'];
 						}
-						
+						//die(var_dump($index));
 						//if $index is empty, we have an empty search table, so we have to do things a bit different.
 						if (empty($index)) {
 						
@@ -99,7 +98,10 @@
 								$keyword_title_flip = array_flip($keyword_uniq_title);
 								$word_id_title = array_intersect_key($index, $keyword_title_flip);																
 								foreach($word_id_title as $word_id) {
-									
+									//because array_intersect_key makes an array that starts at zero,
+									//and the DB's ID index starts at one,
+									//this is the easiest way to solve this (i think)
+									$word_id = $word_id + 1;
 									$query = "	INSERT INTO search_word(word_id, post_id, title_match) 
 												VALUES ('$word_id', '$post_id', 1)";
 									$dbconnection->query($query);
@@ -108,6 +110,7 @@
 								$keyword_text_flip = array_flip($keyword_uniq_text);
 								$word_id_text = array_intersect_key($index, $keyword_text_flip);
 								foreach($word_id_text as $word_id) {
+									$word_id = $word_id + 1;
 									$query = "	INSERT INTO search_word(word_id, post_id) 
 												VALUES ('$word_id', '$post_id')";
 									$dbconnection->query($query);
@@ -143,7 +146,9 @@
 							//title
 							$keyword_title_flip = array_flip($keyword_uniq_title);
 							$word_id_title = array_intersect_key($word_id_all, $keyword_title_flip);
+							
 							foreach($word_id_title as $word_id) {
+								$word_id = $word_id + 1;
 								$query = "	INSERT INTO search_word(word_id, post_id, title_match) 
 											VALUES ('$word_id', '$post_id', 1)";
 								$dbconnection->query($query);
@@ -153,6 +158,7 @@
 								$keyword_text_flip = array_flip($keyword_uniq_text);
 								$word_id_text = array_intersect_key($word_id_all, $keyword_text_flip);
 								foreach($word_id_text as $word_id) {
+									$word_id = $word_id + 1;
 									$query = "	INSERT INTO search_word(word_id, post_id) 
 												VALUES ('$word_id', '$post_id')";
 									$dbconnection->query($query);

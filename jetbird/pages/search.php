@@ -23,67 +23,71 @@
 			//split the search term into words
 			$search_word = split_text($search);
 			
-			//Building the query to get the ID's of the word
-			foreach($search_word as $word) {
-				if(empty($query_append)) {
-					$query_append = " word = '". $word ."'";
-				} 
-				else 
-				{
-					$query_append .= " OR word = '". $word ."'";
+			/*
+			 * Getting ID's
+			 */
+				//Building the query to get the ID's of the word
+				foreach($search_word as $word) {
+					if(empty($query_append)) {
+						$query_append = " word = '". $word ."'";
+					} 
+					else 
+					{
+						$query_append .= " OR word = '". $word ."'";
+					}
 				}
-			}
-			
-			
-			$query = "	SELECT id 
-						FROM search_index
-						WHERE ".$query_append ."";
-			$result = $dbconnection->query($query);
-			while ($row = mysql_fetch_array($result)) {
-				$word_id[] = $row['id'];
-			}
-			
+				
+				
+				$query = "	SELECT id 
+							FROM search_index
+							WHERE ".$query_append ."";
+				$result = $dbconnection->query($query);
+				while ($row = mysql_fetch_array($result)) {
+					$word_id[] = $row['id'];
+				}
+				
+				
 			/*
 			 * first we fetch the posts that have a title match
 			 */
 			
-			//Building query to get the post_id and title_match.
-			foreach($word_id as $id) {
-				if(empty($query_append_2)) {
-					$query_append_2 = " word_id = '". $id ."'";
-				} 
-				else 
-				{
-					$query_append_2 .= " OR word_id = '". $id ."'";
+				//Building query to get the post_id and title_match.
+				foreach($word_id as $id) {
+					if(empty($query_append_2)) {
+						$query_append_2 = " word_id = '". $id ."'";
+					} 
+					else 
+					{
+						$query_append_2 .= " OR word_id = '". $id ."'";
+					}
 				}
-			}
-			
-			//Getting the post_id's that have a title match.
-			$query = "	SELECT post_id, title_match 
-						FROM search_word
-						WHERE ". $query_append_2 ." AND title_match = 1";
-			$result = $dbconnection->query($query);
-			while($row = mysql_fetch_array($result)) {
-				$id_title_match[] = $row['post_id'];
-			}
-			
-			//finding the post that has the most title matches.
-			$shizzle = array_count_values($id_title_match);
-			die(var_dump($shizzle));
-			
+				
+				//Getting the post_id's that have a title match.
+				$query = "	SELECT post_id, title_match 
+							FROM search_word
+							WHERE ". $query_append_2 ." AND title_match = 1";
+				$result = $dbconnection->query($query);
+				while($row = mysql_fetch_array($result)) {
+					$id_title_match[] = $row['post_id'];
+				}
+				die(var_dump($id_title_match));
+				//finding the post that has the most title matches.
+				$shizzle = array_count_values($id_title_match);
+				die(var_dump($shizzle));
+				
 			/*
 			 * fetching the posts that don't have a title match
 			 */
-			//getting the rest of the ID's.
-			$query = "	SELECT post_id, title_match 
-						FROM search_word
-						WHERE ". $query_append_2 ."";
-			$result = $dbconnection->query($query);
-			while($row = mysql_fetch_array($result)) {
-				$id_word_match[] = $row['post_id'];
-			}
-			
-			//die(var_dump($query));
+				//getting the rest of the ID's.
+				$query = "	SELECT post_id, title_match 
+							FROM search_word
+							WHERE ". $query_append_2 ."";
+				$result = $dbconnection->query($query);
+				while($row = mysql_fetch_array($result)) {
+					$id_word_match[] = $row['post_id'];
+				}
+				
+				//die(var_dump($query));
 		
 			
 	
@@ -92,33 +96,8 @@
 			/*
 			 * this is the part were it gets hard.
 			 */
-			//building the query.
-			/*
-			foreach($search_word as $word) {
-			$q_app .= "";
-			}
-			/*
-			//query the DB to find the posts where the word is
-			foreach($search_words as $word) {
-				$query = "SELECT post_id FROM search WHERE word = '". $word . "'";
-				$result = @mysql_result($dbconnection->query($query), 0);
-				
-				if($result === false){
-					break;
-				}
-				
-				// split the result on ";" to get the post_id's
-				$post_id = explode(";", $result);
-				foreach($post_id as $id){
-					//fetching the posts from the DB
-					$query = "SELECT post.*, user.user_name FROM post, user WHERE post_id=". $id ." AND post.post_author = user.user_id";
-					
-					$result = $dbconnection->fetch_array($query);
-					$post[] = $result[0]; //building a array with all the posts
-				}
-			}
-			$smarty->assign("results", $post);
-*/
+			
+
 			
 		break;
 		
@@ -194,7 +173,7 @@
 								$keyword_title_flip = array_flip($keyword_uniq_title);
 								$word_id_title = array_intersect_key($index, $keyword_title_flip);														
 								foreach($word_id_title as $word_id) {
-									
+									$word_id = $word_id + 1;
 									$query = "	INSERT INTO search_word(word_id, post_id, title_match) 
 												VALUES ('$word_id', '$post_id', 1)";
 									$dbconnection->query($query);
@@ -203,6 +182,7 @@
 								$keyword_text_flip = array_flip($keyword_uniq_text);
 								$word_id_text = array_intersect_key($index, $keyword_text_flip);
 								foreach($word_id_text as $word_id) {
+									$word_id = $word_id + 1;
 									$query = "	INSERT INTO search_word(word_id, post_id) 
 												VALUES ('$word_id', '$post_id')";
 									$dbconnection->query($query);
@@ -239,6 +219,7 @@
 							$keyword_title_flip = array_flip($keyword_uniq_title);
 							$word_id_title = array_intersect_key($word_id_all, $keyword_title_flip);
 							foreach($word_id_title as $word_id) {
+								$word_id = $word_id + 1;
 								$query = "	INSERT INTO search_word(word_id, post_id, title_match) 
 											VALUES ('$word_id', '$post_id', 1)";
 								$dbconnection->query($query);
@@ -248,6 +229,7 @@
 								$keyword_text_flip = array_flip($keyword_uniq_text);
 								$word_id_text = array_intersect_key($word_id_all, $keyword_text_flip);
 								foreach($word_id_text as $word_id) {
+									$word_id = $word_id + 1;
 									$query = "	INSERT INTO search_word(word_id, post_id) 
 												VALUES ('$word_id', '$post_id')";
 									$dbconnection->query($query);
