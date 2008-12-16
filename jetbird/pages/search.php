@@ -123,8 +123,9 @@
 		break;
 		
 		case "repair_search":
-			//call to set time limet, because this can take a very long time.
+			//call to set time limit, because this can take a very long time.
 			set_time_limit(0);
+			
 			//fetching all the posts form the DB.
 			$query = "SELECT post_content, post_id, post_title FROM post";
 			$result = $dbconnection->query($query);
@@ -167,9 +168,10 @@
 							/*
 							 * Building the index.
 							 */
-													
+											
 								foreach ($keyword_uniq_all as $word) {
-									$query = "INSERT INTO search_index (word) VALUES ('$word')";
+									
+									$query = "INSERT INTO search_index (word) VALUES ('". addslashes($word) ."')";
 									$dbconnection->query($query);
 								}
 							
@@ -190,7 +192,7 @@
 								}
 								
 								$keyword_title_flip = array_flip($keyword_uniq_title);
-								$word_id_title = array_intersect_key($index, $keyword_title_flip);																
+								$word_id_title = array_intersect_key($index, $keyword_title_flip);														
 								foreach($word_id_title as $word_id) {
 									
 									$query = "	INSERT INTO search_word(word_id, post_id, title_match) 
@@ -221,7 +223,7 @@
 							$new_words = array_diff($keyword_uniq_all, $index);
 							
 							foreach ($new_words as $word) {
-								$query = "INSERT INTO search_index (word) VALUES ('$word')";
+								$query = "INSERT INTO search_index (word) VALUES ('". addslashes($word) ."')";
 								$dbconnection->query($query);
 							}
 							

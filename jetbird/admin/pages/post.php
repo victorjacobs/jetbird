@@ -44,7 +44,8 @@
 					/*
 					 * Start of the indexing process
 					 */
-						
+						// setting magic quotes to zero.
+						set_magic_quotes_runtime(false);
 						// Setting some vars
 						$text = $_POST['post_content'];
 						$title = $_POST['post_title'];
