@@ -28,7 +28,8 @@
 			$this->compile_dir = &$this->smarty_handle->compile_dir;
 			$this->cache_dir = &$this->smarty_handle->cache_dir;
 			$this->config_dir = &$this->smarty_handle->config_dir;
-			$this->compile_id = &$this->smarty_handle->compile_id;			
+			$this->compile_id = &$this->smarty_handle->compile_id;
+			$this->caching = &$this->smarty_handle->caching;		
 			
 			$included_files = get_included_files();
 			
