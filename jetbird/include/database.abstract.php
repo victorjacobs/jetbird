@@ -29,7 +29,7 @@
 		abstract public function close();
 		
 		// Common funcions
-		public function __construct($name = null, $die_on_fail = true, $new_link = true){
+		final public function __construct($name = null, $die_on_fail = true, $new_link = true){
 			// set up object
 			$this->name = $name;
 			$this->new_link = $new_link;
@@ -46,7 +46,7 @@
 			trigger_error("Cloning not allowed", E_USER_WARNING);
 		}
 		
-		public function __destruct(){
+		final public function __destruct(){
 			$this->close();
 		}
 		
