@@ -70,10 +70,13 @@
 				while($row = mysql_fetch_array($result)) {
 					$id_title_match[] = $row['post_id'];
 				}
-				die(var_dump($id_title_match));
+				//die(var_dump($id_title_match));
+				
 				//finding the post that has the most title matches.
-				$shizzle = array_count_values($id_title_match);
-				die(var_dump($shizzle));
+				$title_word_count = array_count_values($id_title_match);
+				//sorting it
+				arsort($title_word_count, SORT_NUMERIC);
+				
 				
 			/*
 			 * fetching the posts that don't have a title match
@@ -87,8 +90,10 @@
 					$id_word_match[] = $row['post_id'];
 				}
 				
-				//die(var_dump($query));
-		
+			/*
+			 * fetching posts from DB and outputting them to smarty
+			 */
+				
 			
 	
 			
@@ -104,7 +109,18 @@
 		case "repair_search":
 			//call to set time limit, because this can take a very long time.
 			set_time_limit(0);
+			$_GET['done'] = 1;
+			if($_GET['done'] != 1) {
 			
+			$query = "TRUNCATE search_index";
+			$dbconnection->query($query);
+			
+			$query = "TRUNCATE search_word";
+			$dbconnection->query($query);
+			
+			$query = "TRUNCATE search_cache";
+			$dbconnection->query($query);
+			}
 			//fetching all the posts form the DB.
 			$query = "SELECT post_content, post_id, post_title FROM post";
 			$result = $dbconnection->query($query);
@@ -190,8 +206,7 @@
 								
 						
 								
-							redirect('../?view&id='. $created_post_id);
-							break;
+							redirect('../?search&action=repair_search&done=1');
 							}
 					//now the real work can start
 					
