@@ -22,7 +22,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- --------------------------------------------------------
 
 --
--- Tabel structuur voor tabel `comment`
+-- Table structure for table `comment`
 --
 
 CREATE TABLE IF NOT EXISTS `comment` (
@@ -36,12 +36,12 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `comment_content` text NOT NULL,
   `comment_session_id` varchar(32) NOT NULL,
   PRIMARY KEY  (`comment_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Tabel structuur voor tabel `post`
+-- Table structure for table `post`
 --
 
 CREATE TABLE IF NOT EXISTS `post` (
@@ -52,12 +52,12 @@ CREATE TABLE IF NOT EXISTS `post` (
   `post_content` longtext character set utf8 NOT NULL,
   `comment_status` enum('open','closed') character set utf8 NOT NULL,
   PRIMARY KEY  (`post_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=319 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Tabel structuur voor tabel `search_cache`
+-- Table structure for table `search_cache`
 --
 
 CREATE TABLE IF NOT EXISTS `search_cache` (
@@ -67,19 +67,19 @@ CREATE TABLE IF NOT EXISTS `search_cache` (
 -- --------------------------------------------------------
 
 --
--- Tabel structuur voor tabel `search_index`
+-- Table structure for table `search_index`
 --
 
 CREATE TABLE IF NOT EXISTS `search_index` (
   `id` int(11) NOT NULL auto_increment,
   `word` text character set utf8 NOT NULL,
   KEY `id` (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3087 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Tabel structuur voor tabel `search_word`
+-- Table structure for table `search_word`
 --
 
 CREATE TABLE IF NOT EXISTS `search_word` (
@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `search_word` (
 -- --------------------------------------------------------
 
 --
--- Tabel structuur voor tabel `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE IF NOT EXISTS `user` (
@@ -103,4 +103,18 @@ CREATE TABLE IF NOT EXISTS `user` (
   `user_reg_key` varchar(13) NOT NULL,
   `user_last_login` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `attachment_list`
+--
+
+CREATE TABLE IF NOT EXISTS `attachment_list` (
+  `attachment_id` bigint(20) unsigned NOT NULL,
+  `attachment_file` varchar(40) NOT NULL,
+  `attachment_original_name` varchar(256) NOT NULL,
+  `attachment_type` varchar(32) NOT NULL,
+  `attachment_size` int(32) NOT NULL default '0',
+  `attachment_date` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`attachment_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
