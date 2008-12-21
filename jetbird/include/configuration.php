@@ -19,6 +19,7 @@
 	// Global config
 	$config['global']['timestamp'] = "j/m/y";
 	$config['global']['timezone'] = "CET";
+	$config['global']['login_expire'] = 60 * 60 * 24 * 14;		// 14 days
 	
 	// Database config
 	$config['database']['host'] = "localhost";

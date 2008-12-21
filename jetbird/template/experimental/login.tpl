@@ -27,7 +27,7 @@
 				<p class="error"><b>Error:</b> password or username wrong, please try again.</p>
 				{/if}
 				<p>
-					<form name="input" action="./?user&amp;action=login" method="post">
+					<form name="input" action="./?login" method="post">
 						<table>
 							<tr>
 								<td><b>Username</b></td>
