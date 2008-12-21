@@ -131,11 +131,11 @@
 							$content[] = $row['post_content'];
 							$title[] = $row['post_title'];
 							$date[] = $row['post_date'];
-							$query = "SELECT * FROM user WHERE user_name = ". $row['post_author'] ."";
-							$result = $dbconnection->query($query);
-							while($row = mysql_fetch_array($result)) {
-								$author[] = $row['user_name'];
 							}
+						$query = "SELECT * FROM user WHERE user_name = ". $row['post_author'] ."";
+						$result = $dbconnection->query($query);
+						while($row = mysql_fetch_array($result)) {
+							$author[] = $row['user_name'];
 						}
 					}
 				}
