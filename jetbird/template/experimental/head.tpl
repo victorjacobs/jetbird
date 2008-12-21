@@ -19,7 +19,7 @@
 
 <head>
 	<title>Jetbird Preview</title>
-	<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<script src="{$template_dir}/js/jquery-1.2.6.js" type="text/javascript"></script>
 	<script src="{$template_dir}/js/common.js" type="text/javascript"></script>
 	<link type="text/css" rel="stylesheet" media="screen" href="{$template_dir}/css/style.css" />
