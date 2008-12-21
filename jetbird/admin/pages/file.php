@@ -56,11 +56,13 @@
 					
 					if(move_uploaded_file($file['tmp_name'], $target)){
 						$query = "INSERT INTO attachment_list(	attachment_file,
+																attachment_owner,
 																attachment_original_name,
 																attachment_type,
 																attachment_size,
 																attachment_date)
 									VALUES ('". $filename ."',
+											". $_SESSION['user_id'] .",
 											'". $file['name'] ."',
 											'". $file_type ."',
 											". $file['size'] .",
@@ -71,6 +73,10 @@
 						}else{
 							$smarty->assign("success", true);
 						}
+						
+						if($file_type = "image"){
+							// Resize images here
+						}
 					}
 				}else{
 					$smarty->assign("upload_error", $upload_error);
@@ -79,7 +85,10 @@
 		break;
 		
 		default:
-			
+			$query = "SELECT attachment_list.*, user.user_name
+						FROM attachment_list, user
+						WHERE user.user_id = attachment_list.attachment_owner";
+			$smarty->assign("attachments", $dbconnection->fetch_array($query));
 		break;
 	}
 	

@@ -38,6 +38,21 @@
 			</p>
 			{else}
 			<h3>Overview</h3>
+			
+			<table width="100%">
+				<tr>
+					<td><b>File name</b></td>
+					<td><b>Owner</b></td>
+					<td><b>Date</b></td>
+				</tr>
+				{foreach from=$attachments item=file}
+				<tr>
+					<td>{$file.attachment_original_name}</td>
+					<td>{$file.user_name|ucfirst}</td>
+					<td>{$file.attachment_date}</td>
+				</tr>
+				{/foreach}
+			</table>
 			{/if}
 		</div>
 	</div>
