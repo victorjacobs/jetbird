@@ -132,7 +132,7 @@
 							<td>{$user.user_mail}</td>
 							<td>{if !$user.user_last_login}<i>Never</i>{else}{$user.user_last_login|date_format:"%d/%m/%y %H:%I"}{/if}</td>
 							<td><a href="./?user&amp;edit&amp;id={$user.user_id}">Edit</a></td>
-							<td><a href="#" class="needs_confirmation" name="del_user_{$user.user_id}">Delete</a></td>
+							<td><a href="#" class="needs_confirmation" name="del_user_{$user.user_id}">{if $user.user_level == -2}Restore{else}Delete{/if}</a></td>
 						</tr>
 						{/foreach}
 					</table>
