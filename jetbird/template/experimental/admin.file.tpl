@@ -23,7 +23,22 @@
 			<h2>Jetbird - Admin</h2>
 			<small>Manage attachments</small>
 			
+			{if isset($smarty.get.upload)}
+			<h3>Upload attachment</h3>
+			
+			{if isset($upload_error)}<p class="error">Something went wrong processing your file. Please check it</p>{/if}
+			{if isset($error_message)}<p class="error">{$error_message}</p>{/if}
+			
+			<p>
+				<form enctype="multipart/form-data" action="./?file&amp;upload" method="post" id="upload_attachment">
+					<input type="hidden" name="MAX_FILE_SIZE" value="{$max_file_size}" />
+					<input type="file" name="uploaded_file" />
+					<input type="submit" name="upload" value="Upload"{if isset($error_message)} disabled{/if} />
+				</form>
+			</p>
+			{else}
 			<h3>Overview</h3>
+			{/if}
 		</div>
 	</div>
 	

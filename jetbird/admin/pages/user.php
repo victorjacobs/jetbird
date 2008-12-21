@@ -103,9 +103,16 @@
 		
 		case "delete":
 			if(isset($_POST['submit']) && isset($_POST['id'])){
-				if($dbconnection->num_rows("SELECT * FROM user WHERE user_id = ". $_POST['id'])){
-					$query = "UPDATE user SET user_level = -2 WHERE user_id = ". $_POST['id'];
-					if($dbconnection->query($query)){
+				$user_level_result = $dbconnection->query("SELECT user_level FROM user WHERE user_id = ". $_POST['id']);
+				
+				if($dbconnection->num_rows($user_level_result) == 1){
+					if($dbconnection->fetch_result($user_level_result) == -2){
+						$delete_query = "UPDATE user SET user_level = 1 WHERE user_id = ". $_POST['id'];
+					}else{
+						$delete_query = "UPDATE user SET user_level = -2 WHERE user_id = ". $_POST['id'];
+					}
+					
+					if($dbconnection->query($delete_query)){
 						$success = true;
 					}else{
 						$success = false;

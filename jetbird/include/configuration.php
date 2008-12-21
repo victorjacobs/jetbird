@@ -23,13 +23,17 @@
 	
 	// Database config
 	$config['database']['host'] = "localhost";
-	$config['database']['user'] = "tidus";
-	$config['database']['pass'] = "tidus";
-	$config['database']['database'] = "jetbird";
+	$config['database']['user'] = "root";
+	$config['database']['pass'] = "";
+	$config['database']['database'] = "jetbird_new";
 	
 	// Blog engine
 	$config['blog']['landing_page_max_posts'] = 5;
 	$config['blog']['view_post_max_comments'] = 10;
+	
+	// Uploader
+	$config['uploader']['max_file_size'] = "5mb";
+	$config['uploader']['upload_dir'] = "../attachments/";
 	
 	// RSS
 	$config['rss']['format'] = "rss2.0";

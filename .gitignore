@@ -1,1 +1,6 @@
-﻿configuration.phptemplates_c/cache.svn.DS_Store.settings/.project.cache/.setting/jetbird/jerbird/
+configuration.php
+templates_c/
+cache
+.svn
+.DS_Store
+attachments/

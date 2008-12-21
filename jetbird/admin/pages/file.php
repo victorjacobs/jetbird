@@ -20,7 +20,63 @@
 		die();
 	}
 	
+	require_once "../include/uploader.functions.php";
+	
 	switch($action){
+		case "upload":
+			$smarty->assign("max_file_size", unformat_size($config['uploader']['max_file_size']));
+			
+			if(!file_exists($config['uploader']['upload_dir']) || !is_writable($config['uploader']['upload_dir'])){
+				$smarty->assign("error_message", "Upload directory doesn't exist, or isn't writable.");
+				$upload_error['upload_dir_corrupt'] = true;
+			}
+			
+			// sanity checks
+			if(isset($_POST['upload'])){
+				// Let's make our life easier by assigning our file to a shorter var
+				$file = &$_FILES['uploaded_file'];
+				
+				if(!isset($file['name']) || empty($file['name'])) $upload_error['no_file_uploaded'] = true;
+				if(!is_uploaded_file($file['tmp_name'])) $upload_error['invalid_upload'] = true;
+				if($file['size'] <= 0) $upload_error['invalid_upload'] = true;
+				if($file['size'] > unformat_size($config['uploader']['max_file_size'])) $upload_error['file_too_big'] = true;
+
+				
+				if(count($upload_error) == 0){
+					if(empty($_FILES['uploaded_file']['type'])){
+						$mime = mime($_FILES['uploaded_file']['name']);
+					}else{
+						$mime = $_FILES['uploaded_file']['type'];
+					}
+					
+					list($file_type, ) = explode("/", $mime);
+					
+					$filename = md5(uniqid(rand(), true));
+					$target = $config['uploader']['upload_dir'] . $filename;
+					
+					if(move_uploaded_file($file['tmp_name'], $target)){
+						$query = "INSERT INTO attachment_list(	attachment_file,
+																attachment_original_name,
+																attachment_type,
+																attachment_size,
+																attachment_date)
+									VALUES ('". $filename ."',
+											'". $file['name'] ."',
+											'". $file_type ."',
+											". $file['size'] .",
+											". time() .")";
+						
+						if(!$dbconnection->query($query)){		// Destroy file if query doesn't succeed
+							unlink($target);
+						}else{
+							$smarty->assign("success", true);
+						}
+					}
+				}else{
+					$smarty->assign("upload_error", $upload_error);
+				}
+			}
+		break;
 		
 		default:
 			
