@@ -111,6 +111,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 CREATE TABLE IF NOT EXISTS `attachment_list` (
   `attachment_id` bigint(20) unsigned NOT NULL auto_increment,
+`attachment_owner` int(11) unsigned NOT NULL,
   `attachment_file` varchar(40) NOT NULL,
   `attachment_original_name` varchar(256) NOT NULL,
   `attachment_type` varchar(32) NOT NULL,
