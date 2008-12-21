@@ -2,6 +2,10 @@
 
 /* Global */
 
+a:visited {
+	color: #00e;
+}
+
 body, html {
 	margin: 0;
 	padding: 0;
