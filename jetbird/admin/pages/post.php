@@ -42,7 +42,10 @@
 					
 					
 					/*
-					 * Start of the indexing process
+					 * Start of the indexing process.
+					 * TODO: add a word count.
+					 * TODO: find a way to avoid using so much array intersects.
+					 * TODO: get rid of the if(empty($index)) loop.
 					 */
 						
 						// Setting some vars
@@ -68,12 +71,13 @@
 						}
 						//die(var_dump($index));
 						//if $index is empty, we have an empty search table, so we have to do things a bit different.
+						/*
 						if (empty($index)) {
 						
 							/*
 							 * Building the index.
 							 */
-													
+						/*						
 								foreach ($keyword_uniq_all as $word) {
 									$query = "INSERT INTO search_index (word) VALUES ('$word')";
 									$dbconnection->query($query);
@@ -88,7 +92,7 @@
 							//and the id as the value, with the right intersect we can determine the ID for each word.
 								
 								
-								
+							/*	
 								$query = "SELECT * FROM search_index";
 								$result = $dbconnection->query($query);								
 								while($row = mysql_fetch_array($result)) {
@@ -121,18 +125,31 @@
 							redirect('../?view&id='. $created_post_id);
 							break;
 							}
+*/
 					//now the real work can start
 					
 					/*
 					 * Updating the index table
 					 */
 							//We have to check wich words are already in the DB
-							
+							if(empty($index)){
+								$new_words = $keyword_uniq_all;
+							} else {
 							$new_words = array_diff($keyword_uniq_all, $index);
+							}
 							
 							foreach ($new_words as $word) {
 								$query = "INSERT INTO search_index (word) VALUES ('$word')";
 								$dbconnection->query($query);
+							}
+							
+							if(empty($index)) {
+								$query = "SELECT * FROM search_index";
+								$result = $dbconnection->query($query);
+							
+								while($row = mysql_fetch_array($result)) {
+									$index[$row['id']] = $row['word'];
+								}
 							}
 							
 						

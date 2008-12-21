@@ -76,7 +76,7 @@
 				$title_word_count = array_count_values($id_title_match);
 				//sorting it
 				arsort($title_word_count, SORT_NUMERIC);
-				
+				die(var_dump($title_word_count));
 				
 			/*
 			 * fetching the posts that don't have a title match
@@ -94,13 +94,14 @@
 			 * fetching posts from DB and outputting them to smarty
 			 */
 				
-			
-	
-			
-	
 			/*
-			 * this is the part were it gets hard.
+			 * Rank system: all the posts will recieve a certain rank depending on some factors
+			 * Array will be in the form of post_id => rank.
 			 */
+	
+			
+	
+			
 			
 
 			
