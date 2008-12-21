@@ -79,7 +79,7 @@
 				");
 				
 				$smarty->assign("success", true);
-				redirect('./?user&action=login', 2);
+				redirect('./?login', 2);
 			}
 		}
 	}else{

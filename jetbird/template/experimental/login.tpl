@@ -27,7 +27,7 @@
 				<p class="error"><b>Error:</b> password or username wrong, please try again.</p>
 				{/if}
 				<p>
-					<form name="input" action="./?user&amp;action=login" method="post">
+					<form name="input" action="./?login" method="post">
 						<table>
 							<tr>
 								<td><b>Username</b></td>
@@ -41,12 +41,12 @@
 
 							<tr>
 								<td><b>Remind me</b></td>
-								<td><input type="checkbox" name="rememberlogin" disabled /></td>
+								<td><input type="checkbox" name="rememberlogin" /></td>
 							</tr>
 
 							<tr>
 								<td>&nbsp;</td>
-								<td><input type="submit" value="Login" /></td>
+								<td><input type="submit" name="submit" value="Login" /></td>
 							</tr>
 						</table>
 					</form>

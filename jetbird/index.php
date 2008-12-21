@@ -24,15 +24,16 @@
 	//from now on there is only one charset in the world for me: UTF-8
 	header('Content-Type: text/html; charset=utf-8');
 	require_once "include/functions.php";
-	$process_start = timer();		// use this wherever you want, can be useful for debugging
+	$process_start = timer();		// Use this wherever you want, can be useful for debugging
 	require_once "include/configuration.php";
 	require_once "include/database.handler.php";
 	require_once "include/database.connect.php";
 	require_once "include/function_search.php";
 	require_once "include/smarty/Smarty.class.php";
 	require_once "include/smarty.handler.class.php";
+	require_once "include/login.bootstrap.php";
 	
-	$smarty = new smarty_handler();
+	$smarty = new smarty_handler;
 	
 	// Getting ready for the real deal: including our pages
 	$arguments = array_keys($_GET);
@@ -48,6 +49,8 @@
 		}elseif(empty($arguments[0]) || !empty($_GET[$arguments[0]])){		// if arguments for specific page like ./?page=1
 			require_once "pages/main.php";
 		}elseif(file_exists($smarty->template_dir ."/static/". $arguments[0] .".tpl") && is_readable($smarty->template_dir ."/static/". $arguments[0] .".tpl")){
+			// These pages are called static for a reason, so let's enable smarty caching
+			$smarty->caching = 1;
 			$smarty->display("static/". $arguments[0] .".tpl");
 		}
 	}

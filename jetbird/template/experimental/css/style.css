@@ -2,6 +2,10 @@
 
 /* Global */
 
+a:visited {
+	color: #00e;
+}
+
 body, html {
 	margin: 0;
 	padding: 0;
@@ -80,6 +84,7 @@ code {
 	display: block;
 	border-style: solid;
 	border-color: #bfe794;
+	text-align: left;
 	background: #dcf3c2 url(../image/code.png) no-repeat 100% -3px;
 	overflow: auto;
 }

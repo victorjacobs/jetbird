@@ -111,7 +111,8 @@
 					</ul>
 					{/if}
 				</p>
-						
+				{elseif isset($smarty.get.delete)}
+				<p><b>Error:</b> Don't use this in this template</p>
 				{else}
 				<h3>Overview</h3>
 				<p>
@@ -126,7 +127,7 @@
 						</tr>
 						{foreach from=$users item=user}
 						<tr>
-							<td>{$user.user_id}</td>
+							<td{if $user.user_level == -2} style="background-color: #89322e; color: white;"{/if}>{$user.user_id}</td>
 							<td>{$user.user_name}</td>
 							<td>{$user.user_mail}</td>
 							<td>{if !$user.user_last_login}<i>Never</i>{else}{$user.user_last_login|date_format:"%d/%m/%y %H:%I"}{/if}</td>
@@ -136,7 +137,7 @@
 						{/foreach}
 					</table>
 				</p>
-				<p><a href="./?user&amp;action=new_user">Add user</a></p>
+				<p><a href="./?user&amp;action=new_user">Add user</a> | {if !isset($smarty.get.deleted)}<a href="./?user&amp;deleted">Also display deleted users</a>{else}<a href="./?user">Only display existing users</a>{/if}</p>
 				
 				<h3>Inactivated register keys</h3>
 				<p>
