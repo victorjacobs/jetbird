@@ -31,6 +31,9 @@
 	$config['blog']['landing_page_max_posts'] = 5;
 	$config['blog']['view_post_max_comments'] = 10;
 	
+	// Uploader
+	$config['uploader']['max_file_size'] = "5mb";
+	
 	// RSS
 	$config['rss']['format'] = "rss2.0";
 	$config['rss']['title'] = "Jetbird";

@@ -23,7 +23,19 @@
 			<h2>Jetbird - Admin</h2>
 			<small>Manage attachments</small>
 			
+			{if isset($smarty.get.upload)}
+			<h3>Upload attachment</h3>
+			
+			<p>
+				<form enctype="multipart/form-data" action="./?file&amp;upload" method="post" id="upload_attachment">
+					<input type="hidden" name="MAX_FILE_SIZE" value="{$max_file_size}" />
+					<input type="file" name="uploaded_file" />
+					<input type="submit" name="upload" value="Upload" />
+				</form>
+			</p>
+			{else}
 			<h3>Overview</h3>
+			{/if}
 		</div>
 	</div>
 	

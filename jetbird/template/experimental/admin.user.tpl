@@ -91,7 +91,7 @@
 						<p>
 							<table>
 								<tr>
-									<td><b>Number</b></td>
+									<td>Number</td>
 									<td><input type="text" name="key_count" value="1" /></td>
 								</tr>
 
