@@ -18,8 +18,13 @@
 	switch($_GET['action']) {
 	
 		case "search":
+			/*
+			 * Rank system: all the posts will recieve a certain rank depending on some factors
+			 * Array will be in the form of rank => post_id.
+			 */
+			
 			//setting some vars
-			$search = $_GET['search'];
+			$search = $_POST['search'];
 			//split the search term into words
 			$search_word = split_text($search);
 			
@@ -68,15 +73,26 @@
 							WHERE ". $query_append_2 ." AND title_match = 1";
 				$result = $dbconnection->query($query);
 				while($row = mysql_fetch_array($result)) {
+			
 					$id_title_match[] = $row['post_id'];
 				}
 				//die(var_dump($id_title_match));
 				
 				//finding the post that has the most title matches.
+			
 				$title_word_count = array_count_values($id_title_match);
 				//sorting it
+				
 				arsort($title_word_count, SORT_NUMERIC);
-				die(var_dump($title_word_count));
+				
+				/*
+				//counting how much post_id's there are.
+				$count = count($title_word_count);
+				foreach($title_word_count as $post_id) {
+					$rank = "";
+					$title_word_count[$rank] = $post_id;
+				}
+				*/
 				
 			/*
 			 * fetching the posts that don't have a title match
@@ -93,15 +109,30 @@
 			/*
 			 * fetching posts from DB and outputting them to smarty
 			 */
+				//first the titles
 				
-			/*
-			 * Rank system: all the posts will recieve a certain rank depending on some factors
-			 * Array will be in the form of post_id => rank.
-			 */
-	
-			
-	
-			
+				foreach ($title_word_count as $post_id => $foo) {
+					$query = "SELECT post_content, post_title FROM post WHERE post_id = ". $post_id ."";
+					$result = $dbconnection->query($query);
+					while($row = mysql_fetch_array($result)) {
+						$text['content'] = $row['post_content'];
+						$text['title'] = $row['post_title'];
+					}
+				}
+				
+				//then the rest
+				foreach ($id_word_match as $post_id) {
+					$query = "SELECT post_content, post_title FROM post WHERE post_id = ". $post_id ."";
+					$result = $dbconnection->query($query);
+					while($row = mysql_fetch_array($result)) {
+						$text['content'] = $row['post_content'];
+						$text['title'] = $row['post_title'];
+					}
+				}
+				
+		$smarty->assign("post_title", $text['title']);
+		$smarty->assign("post_content", $text['content']);
+		
 			
 
 			
@@ -111,8 +142,8 @@
 			//call to set time limit, because this can take a very long time.
 			set_time_limit(0);
 			$_GET['done'] = 1;
-			if($_GET['done'] != 1) {
 			
+			if($_GET['done'] != 1) {
 			$query = "TRUNCATE search_index";
 			$dbconnection->query($query);
 			

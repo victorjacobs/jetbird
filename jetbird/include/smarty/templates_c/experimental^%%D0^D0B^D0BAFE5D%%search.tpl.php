@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.20, created on 2008-11-22 23:37:15
+<?php /* Smarty version 2.6.20, created on 2008-12-21 22:41:34
          compiled from search.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
 smarty_core_load_plugins(array('plugins' => array(array('modifier', 'ucfirst', 'search.tpl', 29, false),array('modifier', 'date_format', 'search.tpl', 29, false),array('modifier', 'truncate', 'search.tpl', 31, false),array('modifier', 'nl2br', 'search.tpl', 31, false),)), $this); ?>
@@ -15,8 +15,8 @@ unset($_smarty_tpl_vars);
 			<h2>Jetbird - Search</h2>
 			<small>Search results</small>
 			
-			<?php if (isset ( $this->_tpl_vars['results'] )): ?>
-			<?php $_from = $this->_tpl_vars['results']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }if (count($_from)):
+			<?php if (isset ( $this->_tpl_vars['post_content'] )): ?>
+			<?php $_from = $this->_tpl_vars['post_content']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }if (count($_from)):
     foreach ($_from as $this->_tpl_vars['result']):
 ?>
 			<h3><?php echo $this->_tpl_vars['result']['post_title']; ?>
