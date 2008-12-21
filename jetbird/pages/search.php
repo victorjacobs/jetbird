@@ -50,7 +50,9 @@
 				while ($row = mysql_fetch_array($result)) {
 					$word_id[] = $row['id'];
 				}
-				
+				if(!isset($word_id)) {
+					break;
+				}
 				
 			/*
 			 * first we fetch the posts that have a title match
@@ -76,15 +78,25 @@
 			
 					$id_title_match[] = $row['post_id'];
 				}
-				//die(var_dump($id_title_match));
+				if(isset($id_title_match)) {
+					//die(var_dump($id_title_match));
+					
+					//finding the post that has the most title matches.
 				
-				//finding the post that has the most title matches.
-			
-				$title_word_count = array_count_values($id_title_match);
-				//sorting it
-				
-				arsort($title_word_count, SORT_NUMERIC);
-				
+					$title_word_count = array_count_values($id_title_match);
+					//sorting it
+					
+					arsort($title_word_count, SORT_NUMERIC);
+					
+					foreach ($title_word_count as $post_id => $foo) {
+						$query = "SELECT post_content, post_title FROM post WHERE post_id = ". $post_id ."";
+						$result = $dbconnection->query($query);
+						while($row = mysql_fetch_array($result)) {
+							$text['content'] = $row['post_content'];
+							$text['title'] = $row['post_title'];
+						}
+					}
+				}
 				/*
 				//counting how much post_id's there are.
 				$count = count($title_word_count);
@@ -106,30 +118,16 @@
 					$id_word_match[] = $row['post_id'];
 				}
 				
-			/*
-			 * fetching posts from DB and outputting them to smarty
-			 */
-				//first the titles
-				
-				foreach ($title_word_count as $post_id => $foo) {
-					$query = "SELECT post_content, post_title FROM post WHERE post_id = ". $post_id ."";
-					$result = $dbconnection->query($query);
-					while($row = mysql_fetch_array($result)) {
-						$text['content'] = $row['post_content'];
-						$text['title'] = $row['post_title'];
+				if(isset($id_word_match)){					
+					foreach ($id_word_match as $post_id) {
+						$query = "SELECT post_content, post_title FROM post WHERE post_id = ". $post_id ."";
+						$result = $dbconnection->query($query);
+						while($row = mysql_fetch_array($result)) {
+							$text['content'] = $row['post_content'];
+							$text['title'] = $row['post_title'];
+						}
 					}
 				}
-				
-				//then the rest
-				foreach ($id_word_match as $post_id) {
-					$query = "SELECT post_content, post_title FROM post WHERE post_id = ". $post_id ."";
-					$result = $dbconnection->query($query);
-					while($row = mysql_fetch_array($result)) {
-						$text['content'] = $row['post_content'];
-						$text['title'] = $row['post_title'];
-					}
-				}
-				
 		$smarty->assign("post_title", $text['title']);
 		$smarty->assign("post_content", $text['content']);
 		

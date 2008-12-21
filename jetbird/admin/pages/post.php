@@ -86,8 +86,10 @@
 							}
 							
 							foreach ($new_words as $word) {
-								$query = "INSERT INTO search_index (word) VALUES ('$word')";
+								$query = "INSERT INTO search_index (word) VALUES ('". addslashes($word) ."')";
+						
 								$dbconnection->query($query);
+								
 							}
 							
 							if(empty($index)) {
