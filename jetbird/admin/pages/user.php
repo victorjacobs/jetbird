@@ -44,6 +44,8 @@
 		case "edit":
 			if(isset($_POST['submit']) && !empty($_GET['id'])){
 				// Checks
+				$user_info = $dbconnection->fetch_array("SELECT * FROM user WHERE user_id = ". $_GET['id']);
+				if(empty($user_info[0]['user_level'])) $user_edit_error['user_does_not_exist'] = true;
 				if(!isset($_POST['user_name']) || empty($_POST['user_name'])) $user_edit_error["username"] = true;
 				if(isset($_POST['user_mail']) && !empty($_POST['user_mail'])){
 					if(!check_email_address($_POST['user_mail'])) $user_edit_error['mail_invalid'] = true;
@@ -73,10 +75,15 @@
 									WHERE user_id = ". $_GET['id'];
 					}
 					$dbconnection->query($query);
-					redirect("./?user");
+					
+					if($user_info[0]['user_level'] == -2){
+						redirect("./?user&deleted");
+					}else{
+						redirect("./?user");
+					}
 				}else{
 					$smarty->assign("edit_error", $user_edit_error);
-					$user = array($_POST);
+					$user = array($_POST);								// Fix backward compatibility with database_handler
 					$smarty->assign("user", $user);
 				}
 			}else{
@@ -96,9 +103,16 @@
 		
 		case "delete":
 			if(isset($_POST['submit']) && isset($_POST['id'])){
-				if($dbconnection->num_rows("SELECT * FROM user WHERE user_id = ". $_POST['id'])){
-					$query = "UPDATE user SET user_level = -2 WHERE user_id = ". $_POST['id'];
-					if($dbconnection->query($query)){
+				$user_level_result = $dbconnection->query("SELECT user_level FROM user WHERE user_id = ". $_POST['id']);
+				
+				if($dbconnection->num_rows($user_level_result) == 1){
+					if($dbconnection->fetch_result($user_level_result) == -2){
+						$delete_query = "UPDATE user SET user_level = 1 WHERE user_id = ". $_POST['id'];
+					}else{
+						$delete_query = "UPDATE user SET user_level = -2 WHERE user_id = ". $_POST['id'];
+					}
+					
+					if($dbconnection->query($delete_query)){
 						$success = true;
 					}else{
 						$success = false;
@@ -124,6 +138,7 @@
 		case "generate":
 			if(isset($_POST['submit'])){
 				if(isset($_POST['key_count']) && !empty($_POST['key_count'])){
+					// I don't think someone would like to create more than 10 keys at a time
 					if(!eregi("[0-9]+", $_POST['key_count']) || $_POST['key_count'] > 10 || $_POST['key_count'] < 0) $generate_error['key_count_invalid'] = true;
 				}else{
 					$generate_error['key_count'] = true;
@@ -148,7 +163,12 @@
 		break;
 		
 		default:
-			$query = "SELECT * FROM user WHERE NOT user_level = -1 AND NOT user_level = -2";
+			if(isset($_GET['deleted'])){
+				$query = "SELECT * FROM user WHERE NOT user_level = -1";
+			}else{
+				$query = "SELECT * FROM user WHERE NOT user_level = -1 AND NOT user_level = -2";
+			}
+			
 			$smarty->assign("users", $dbconnection->fetch_array($query));
 			
 			$query = "SELECT * FROM user WHERE user_level = -1";

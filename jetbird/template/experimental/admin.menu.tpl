@@ -48,7 +48,7 @@
 					</ul>
 					
 					<li>
-						<a href="{if $smarty.const.ADMIN_MODE}.{/if}./?user&amp;action=logout">Log out</a>
+						<a href="{if $smarty.const.ADMIN_MODE}.{/if}./?logout">Log out</a>
 					</li>
 				</ul>
 			</div>

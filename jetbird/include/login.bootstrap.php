@@ -19,7 +19,8 @@
 	if(isset($_COOKIE['logged_in_as']) && ($_COOKIE['logged_in_as'] != $_SESSION['logged_in_as'])){		// Session expired, but we are still logged in by cookie
 		// Refresh the cookie's expire timer by setting new uniqid
 		$login_id = uniqid();
-		setcookie('logged_in_as', $login_id);	// TODO: add expire here
+		setcookie('logged_in_as', $login_id, time() + $config['global']['login_expire']);
+		setcookie('user_id', $_COOKIE['user_id'], time() + $config['global']['login_expire']);
 		$_SESSION['logged_in_as'] = $login_id;
 		
 		// Re-set all other session vars, we assume here that $_COOKIE['user_id'] was a valid user id
