@@ -15,7 +15,8 @@
 	    You should have received a copy of the GNU General Public License
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
-	
+	//setting magic quotes to avoid intersect problems in indexer
+
 	if(!$_SESSION['login'] || $_SESSION['user_level'] ==! 1){
 		die();
 	}
@@ -43,10 +44,11 @@
 					
 					/*
 					 * Start of the indexing process.
-					 * TODO: add a word count.
-					 * TODO: find a way to avoid using so much array intersects.
-					 * TODO: get rid of the if(empty($index)) loop.
+					 * TODO: add a word count.										PENDING
+					 * TODO: find a way to avoid using so much array intersects.	PENDING
+					 * TODO: get rid of the large if(empty($index)) loop. 			DONE
 					 */
+						// Setting magic quotes off
 						
 						// Setting some vars
 						$text = $_POST['post_content'];
@@ -56,9 +58,11 @@
 						//splitting text and title into words and some cleanup.
 						$keyword_text = split_text($text);
 						$keyword_title = split_text($title);
+						
 						//make them unique
 						$keyword_uniq_title = array_unique($keyword_title);
 						$keyword_uniq_text = array_unique($keyword_text);
+						
 						//merge them
 						$keyword_uniq_all = array_unique(array_merge($keyword_uniq_text, $keyword_uniq_title));
 						
@@ -69,64 +73,7 @@
 						while($row = mysql_fetch_array($result)) {
 							$index[$row['id']] = $row['word'];
 						}
-						//die(var_dump($index));
-						//if $index is empty, we have an empty search table, so we have to do things a bit different.
-						/*
-						if (empty($index)) {
-						
-							/*
-							 * Building the index.
-							 */
-						/*						
-								foreach ($keyword_uniq_all as $word) {
-									$query = "INSERT INTO search_index (word) VALUES ('$word')";
-									$dbconnection->query($query);
-								}
-							
-							/*
-							 * Building the search_word table.
-							 */
-						
-							//Now we have a index, we can use it to build our search_word table
-							//We need to preserve our id's, so we are going to assign the words as the key,
-							//and the id as the value, with the right intersect we can determine the ID for each word.
-								
-								
-							/*	
-								$query = "SELECT * FROM search_index";
-								$result = $dbconnection->query($query);								
-								while($row = mysql_fetch_array($result)) {
-									$index[$row['word']] = $row['id'];
-								}
-								
-								$keyword_title_flip = array_flip($keyword_uniq_title);
-								$word_id_title = array_intersect_key($index, $keyword_title_flip);																
-								foreach($word_id_title as $word_id) {
-									//because array_intersect_key makes an array that starts at zero,
-									//and the DB's ID index starts at one,
-									//this is the easiest way to solve this (i think)
-									$word_id = $word_id + 1;
-									$query = "	INSERT INTO search_word(word_id, post_id, title_match) 
-												VALUES ('$word_id', '$post_id', 1)";
-									$dbconnection->query($query);
-								}
-								
-								$keyword_text_flip = array_flip($keyword_uniq_text);
-								$word_id_text = array_intersect_key($index, $keyword_text_flip);
-								foreach($word_id_text as $word_id) {
-									$word_id = $word_id + 1;
-									$query = "	INSERT INTO search_word(word_id, post_id) 
-												VALUES ('$word_id', '$post_id')";
-									$dbconnection->query($query);
-								}
-								
-								
-								
-							redirect('../?view&id='. $created_post_id);
-							break;
-							}
-*/
-					//now the real work can start
+
 					
 					/*
 					 * Updating the index table
@@ -135,7 +82,7 @@
 							if(empty($index)){
 								$new_words = $keyword_uniq_all;
 							} else {
-							$new_words = array_diff($keyword_uniq_all, $index);
+								$new_words = array_diff($keyword_uniq_all, $index);
 							}
 							
 							foreach ($new_words as $word) {
@@ -163,7 +110,7 @@
 							//title
 							$keyword_title_flip = array_flip($keyword_uniq_title);
 							$word_id_title = array_intersect_key($word_id_all, $keyword_title_flip);
-							
+			
 							foreach($word_id_title as $word_id) {
 								$word_id = $word_id + 1;
 								$query = "	INSERT INTO search_word(word_id, post_id, title_match) 

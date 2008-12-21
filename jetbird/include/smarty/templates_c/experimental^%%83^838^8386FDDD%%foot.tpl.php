@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.20, created on 2008-11-21 23:23:31
+<?php /* Smarty version 2.6.20, created on 2008-12-21 19:50:44
          compiled from foot.tpl */ ?>
 		<div id="sidewrap">
 			<div class="menu">
@@ -35,7 +35,7 @@ unset($_smarty_tpl_vars);
 		</div>
 		
 		<div id="footer">
-			<small>Powered by <a href="http://jetbird.googlecode.com" target="_blank">Jetbird</a><?php if (! isset ( $_SESSION['login'] )): ?> &raquo; <a href="./?user&amp;action=login">Log in</a><?php endif; ?><?php if (isset ( $this->_tpl_vars['queries'] )): ?> &raquo; Queries: <?php echo $this->_tpl_vars['queries']; ?>
+			<small>Powered by <a href="http://jetbird.googlecode.com" target="_blank">Jetbird</a><?php if (! isset ( $_SESSION['login'] )): ?> &raquo; <a href="./?login">Log in</a><?php endif; ?><?php if (isset ( $this->_tpl_vars['queries'] )): ?> &raquo; Queries: <?php echo $this->_tpl_vars['queries']; ?>
 <?php endif; ?></small>
 		</div>
 	</div>

@@ -1,7 +1,7 @@
-<?php /* Smarty version 2.6.20, created on 2008-12-05 20:45:55
+<?php /* Smarty version 2.6.20, created on 2008-12-21 19:50:53
          compiled from admin.post.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('modifier', 'ucfirst', 'admin.post.tpl', 73, false),array('modifier', 'date_format', 'admin.post.tpl', 74, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('modifier', 'ucfirst', 'admin.post.tpl', 75, false),array('modifier', 'date_format', 'admin.post.tpl', 76, false),)), $this); ?>
 
 <?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => "head.tpl", 'smarty_include_vars' => array()));
@@ -47,6 +47,8 @@ unset($_smarty_tpl_vars);
 					</tr>
 				</table></p>
 			</form>
+			<?php elseif (isset ( $_GET['delete'] )): ?>
+			<p><b>Error:</b> don't use this in this template</p>
 			<?php else: ?>
 			<h3>Overview</h3>
 			

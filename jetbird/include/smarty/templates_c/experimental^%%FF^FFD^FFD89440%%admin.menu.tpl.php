@@ -1,4 +1,4 @@
-<?php /* Smarty version 2.6.20, created on 2008-12-05 20:45:50
+<?php /* Smarty version 2.6.20, created on 2008-12-21 19:50:51
          compiled from admin.menu.tpl */ ?>
 <div class="menu">
 				<ul>
@@ -34,7 +34,7 @@
 					</ul>
 					
 					<li>
-						<a href="<?php if (@ADMIN_MODE): ?>.<?php endif; ?>./?user&amp;action=logout">Log out</a>
+						<a href="<?php if (@ADMIN_MODE): ?>.<?php endif; ?>./?logout">Log out</a>
 					</li>
 				</ul>
 			</div>

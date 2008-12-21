@@ -1,7 +1,7 @@
-<?php /* Smarty version 2.6.20, created on 2008-12-05 20:46:08
+<?php /* Smarty version 2.6.20, created on 2008-12-21 19:51:07
          compiled from view.tpl */ ?>
 <?php require_once(SMARTY_CORE_DIR . 'core.load_plugins.php');
-smarty_core_load_plugins(array('plugins' => array(array('modifier', 'ucfirst', 'view.tpl', 27, false),array('modifier', 'date_format', 'view.tpl', 27, false),array('modifier', 'bbcode', 'view.tpl', 29, false),array('modifier', 'nl2br', 'view.tpl', 29, false),)), $this); ?>
+smarty_core_load_plugins(array('plugins' => array(array('modifier', 'ucfirst', 'view.tpl', 27, false),array('modifier', 'date_format', 'view.tpl', 27, false),array('modifier', 'bbcode', 'view.tpl', 29, false),array('modifier', 'nl2br', 'view.tpl', 29, false),array('function', 'math', 'view.tpl', 51, false),)), $this); ?>
 
 <?php $_smarty_tpl_vars = $this->_tpl_vars;
 $this->_smarty_include(array('smarty_include_tpl_file' => "head.tpl", 'smarty_include_vars' => array()));
@@ -43,11 +43,24 @@ unset($_smarty_tpl_vars);
 				<div class="comment">
 					<p><?php echo ((is_array($_tmp=((is_array($_tmp=$this->_tpl_vars['comment']['comment_content'])) ? $this->_run_mod_handler('bbcode', true, $_tmp) : BBCode($_tmp)))) ? $this->_run_mod_handler('nl2br', true, $_tmp) : smarty_modifier_nl2br($_tmp)); ?>
 </p>
-					<p><small><?php echo $this->_tpl_vars['comment']['comment_author']; ?>
- on <?php echo ((is_array($_tmp=$this->_tpl_vars['comment']['comment_date'])) ? $this->_run_mod_handler('date_format', true, $_tmp, "%d/%m/%y %H:%I") : smarty_modifier_date_format($_tmp, "%d/%m/%y %H:%I")); ?>
+					<p><small><?php if (! empty ( $this->_tpl_vars['comment']['comment_author_url'] )): ?><a href="<?php echo $this->_tpl_vars['comment']['comment_author_url']; ?>
+"><?php endif; ?><?php echo $this->_tpl_vars['comment']['comment_author']; ?>
+<?php if (! empty ( $this->_tpl_vars['comment']['comment_author_url'] )): ?></a><?php endif; ?> on <?php echo ((is_array($_tmp=$this->_tpl_vars['comment']['comment_date'])) ? $this->_run_mod_handler('date_format', true, $_tmp, "%d/%m/%y %H:%I") : smarty_modifier_date_format($_tmp, "%d/%m/%y %H:%I")); ?>
 </small></p>
 				</div>
 				<?php endforeach; endif; unset($_from); ?>
+				<?php if ($this->_tpl_vars['pagination']['total_pages'] != 1): ?>
+				<small>
+					<p>
+						<?php if ($this->_tpl_vars['pagination']['prev']): ?><a href="./?view&amp;id=<?php echo $_GET['id']; ?>
+&amp;page=<?php echo smarty_function_math(array('equation' => "x + 1",'x' => $this->_tpl_vars['pagination']['page']), $this);?>
+#comments">&laquo; Older comments</a><?php endif; ?>
+						<?php if ($this->_tpl_vars['pagination']['next']): ?><?php if ($this->_tpl_vars['pagination']['prev']): ?> | <?php endif; ?><a href="./?view&amp;id=<?php echo $_GET['id']; ?>
+&amp;page=<?php echo smarty_function_math(array('equation' => "x - 1",'x' => $this->_tpl_vars['pagination']['page']), $this);?>
+#comments">Newer comments &raquo;</a><?php endif; ?>
+					</p>
+				</small>
+				<?php endif; ?>
 				<?php else: ?>
 				<p>No comments yet, be the first to write one!</p>
 				<?php endif; ?>
