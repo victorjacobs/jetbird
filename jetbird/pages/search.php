@@ -75,7 +75,6 @@
 							WHERE ". $query_append_2 ." AND title_match = 1";
 				$result = $dbconnection->query($query);
 				while($row = mysql_fetch_array($result)) {
-			
 					$id_title_match[] = $row['post_id'];
 				}
 				if(isset($id_title_match)) {
@@ -89,11 +88,17 @@
 					arsort($title_word_count, SORT_NUMERIC);
 					
 					foreach ($title_word_count as $post_id => $foo) {
-						$query = "SELECT post_content, post_title FROM post WHERE post_id = ". $post_id ."";
+						$query = "SELECT * FROM post WHERE post_id = ". $post_id ."";
 						$result = $dbconnection->query($query);
 						while($row = mysql_fetch_array($result)) {
-							$text['content'] = $row['post_content'];
-							$text['title'] = $row['post_title'];
+							$content[] = $row['post_content'];
+							$title[] = $row['post_title'];
+							$date[] = $row['post_date'];
+						}
+						$query = "SELECT * FROM user WHERE user_name = ". $row['post_author'] ."";
+						$result = $dbconnection->query($query);
+						while($row = mysql_fetch_array($result)) {
+							$author[] = $row['user_name'];
 						}
 					}
 				}
@@ -120,16 +125,24 @@
 				
 				if(isset($id_word_match)){					
 					foreach ($id_word_match as $post_id) {
-						$query = "SELECT post_content, post_title FROM post WHERE post_id = ". $post_id ."";
+						$query = "SELECT * FROM post WHERE post_id = ". $post_id ."";
 						$result = $dbconnection->query($query);
 						while($row = mysql_fetch_array($result)) {
-							$text['content'] = $row['post_content'];
-							$text['title'] = $row['post_title'];
+							$content[] = $row['post_content'];
+							$title[] = $row['post_title'];
+							$date[] = $row['post_date'];
+							$query = "SELECT * FROM user WHERE user_name = ". $row['post_author'] ."";
+							$result = $dbconnection->query($query);
+							while($row = mysql_fetch_array($result)) {
+								$author[] = $row['user_name'];
+							}
 						}
 					}
 				}
-		$smarty->assign("post_title", $text['title']);
-		$smarty->assign("post_content", $text['content']);
+		$smarty->assign("post_title", $title);
+		$smarty->assign("post_content", $content);
+		$smarty->assign("post_date", $date);
+		$smarty->assign("author", $author);
 		
 			
 
