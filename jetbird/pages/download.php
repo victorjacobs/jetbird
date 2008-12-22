@@ -20,16 +20,14 @@
 		die();
 	}
 	
-	if(isset($_COOKIE['logged_in_as'])){
-		cookie_destroy("logged_in_as", "user_id");
+	if(!isset($_GET['id'])){
+		if(function_exists("redirect")){
+			redirect("./");
+		}else{
+			die();
+		}
 	}
 	
-	// Let's be nice to other people who might be needing $_SESSION
-	unset($_SESSION['user_level']);
-	unset($_SESSION['user_name']);
-	unset($_SESSION['user_id']);
-	unset($_SESSION['login']);
 	
-	redirect('./');
 
 ?>

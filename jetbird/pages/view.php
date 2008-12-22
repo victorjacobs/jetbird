@@ -16,6 +16,14 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
+	if(!isset($_GET['id'])){
+		if(function_exists("redirect")){
+			redirect("./");
+		}else{
+			die();
+		}
+	}
+	
 	// Post
 	$query = "	SELECT *
 				FROM post, user
