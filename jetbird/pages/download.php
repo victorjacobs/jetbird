@@ -21,11 +21,7 @@
 	}
 	
 	if(!isset($_GET['id'])){
-		if(function_exists("redirect")){
-			redirect("./");
-		}else{
-			die();
-		}
+		redirect("./");
 	}
 	
 	require_once "include/uploader.functions.php";
