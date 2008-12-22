@@ -30,6 +30,14 @@
 		case "upload":
 			$smarty->assign("max_file_size", unformat_size($config['uploader']['max_file_size']));
 			
+			// Find attachment directory, since $config gives us a path relative to jetbird's root
+			// NOTE: Need to find out how this code behaves on windows hosts
+			if($config['uploader']['upload_dir']{0} == "/"){
+				$config['uploader']['upload_dir'] = "..". $config['uploader']['upload_dir'];
+			}else{
+				$config['uploader']['upload_dir'] = "../". $config['uploader']['upload_dir'];
+			}
+			
 			if(!file_exists($config['uploader']['upload_dir']) || !is_writable($config['uploader']['upload_dir'])){
 				$smarty->assign("error_message", "Upload directory doesn't exist, or isn't writable.");
 				$upload_error['upload_dir_corrupt'] = true;
@@ -56,6 +64,7 @@
 					list($file_type, ) = explode("/", $mime);
 					
 					$filename = md5(uniqid(rand(), true));
+					
 					$target = $config['uploader']['upload_dir'] . $filename;
 					
 					if(move_uploaded_file($file['tmp_name'], $target)){
@@ -68,7 +77,7 @@
 									VALUES ('". $filename ."',
 											". $_SESSION['user_id'] .",
 											'". $file['name'] ."',
-											'". $file_type ."',
+											'". $mime ."',
 											". $file['size'] .",
 											". time() .")";
 						
