@@ -100,7 +100,8 @@
 		default:
 			$query = "SELECT attachment_list.*, user.user_name
 						FROM attachment_list, user
-						WHERE user.user_id = attachment_list.attachment_owner";
+						WHERE user.user_id = attachment_list.attachment_owner
+						ORDER BY attachment_date DESC";
 			$smarty->assign("attachments", $dbconnection->fetch_array($query));
 		break;
 	}
