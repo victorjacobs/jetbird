@@ -160,8 +160,8 @@
 				if($dbconnection->num_rows("SELECT * FROM post WHERE post_id = ". $_POST['id'])){
 					$delete_post = "DELETE FROM post WHERE post_id = ". $_POST['id'];
 					$delete_comments = "DELETE FROM comment WHERE comment_parent_post_id = ". $_POST['id'];
-						
-					if($dbconnection->query($delete_post) && $dbconnection->query($delete_comments)){
+					$delete_search = "DELETA FROM search_word WHERE post_id = ". $_POST['id'] ."";
+					if($dbconnection->query($delete_post) && $dbconnection->query($delete_comments) && $dbconnection->query($delete_search)){
 						$success = true;
 					}else{
 						$success = false;
