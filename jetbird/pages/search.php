@@ -95,14 +95,12 @@
 						$query = "SELECT * FROM post WHERE post_id = ". $post_id ."";
 						$result = $dbconnection->query($query);
 						while($row = mysql_fetch_array($result)) {
-							$content[] = $row['post_content'];
-							$title[] = $row['post_title'];
-							$date[] = $row['post_date'];
-						}
-						$query = "SELECT * FROM user WHERE user_name = ". $row['post_author'] ."";
-						$result = $dbconnection->query($query);
-						while($row = mysql_fetch_array($result)) {
-							$author[] = $row['user_name'];
+							$query = "SELECT * FROM user WHERE user_name = ". $row['post_author'] ."";
+							$result = $dbconnection->query($query);
+							while($row_auth = mysql_fetch_array($result)) {
+								$text['author'][] = $row['user_name'];
+							}
+							$text[] = array('post_content' => $row['post_content'], 'post_title' => $row['post_title'], 'post_date' => $row['post_date'], 'post_author' => $row['post_author']);
 						}
 					}
 				}
@@ -132,21 +130,17 @@
 						$query = "SELECT * FROM post WHERE post_id = ". $post_id ."";
 						$result = $dbconnection->query($query);
 						while($row = mysql_fetch_array($result)) {
-							$content[] = $row['post_content'];
-							$title[] = $row['post_title'];
-							$date[] = $row['post_date'];
+							$query = "SELECT * FROM user WHERE user_name = ". $row['post_author'] ."";
+							$result = $dbconnection->query($query);
+							while($row_auth = mysql_fetch_array($result)) {
+								$text['author'][] = $row['user_name'];
 							}
-						$query = "SELECT * FROM user WHERE user_name = ". $row['post_author'] ."";
-						$result = $dbconnection->query($query);
-						while($row = mysql_fetch_array($result)) {
-							$author[] = $row['user_name'];
+							$text[] = array('post_content' => $row['post_content'], 'post_title' => $row['post_title'], 'post_date' => $row['post_date'], 'post_author' => $row['post_author']);
 						}
 					}
 				}
-		$smarty->assign("post_title", $title);
-		$smarty->assign("post_content", $content);
-		$smarty->assign("post_date", $date);
-		$smarty->assign("author", $author);
+		$smarty->assign("results", $text);
+		
 		
 			
 
