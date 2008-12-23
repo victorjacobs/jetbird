@@ -16,6 +16,9 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
+	if(!function_exists("redirect")){		// This means that this page hasn't been included right
+		die();
+	}	
 	
 	if(!$_SESSION['login'] || $_SESSION['user_level'] ==! 1){
 		die();

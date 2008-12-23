@@ -15,6 +15,10 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
+	if(!function_exists("redirect")){		// This means that this page hasn't been included right
+		die();
+	}
+	
 	switch($_GET['action']) {
 	
 		case "search":
@@ -75,7 +79,6 @@
 							WHERE ". $query_append_2 ." AND title_match = 1";
 				$result = $dbconnection->query($query);
 				while($row = mysql_fetch_array($result)) {
-			
 					$id_title_match[] = $row['post_id'];
 				}
 				if(isset($id_title_match)) {
@@ -89,11 +92,15 @@
 					arsort($title_word_count, SORT_NUMERIC);
 					
 					foreach ($title_word_count as $post_id => $foo) {
-						$query = "SELECT post_content, post_title FROM post WHERE post_id = ". $post_id ."";
+						$query = "SELECT * FROM post WHERE post_id = ". $post_id ."";
 						$result = $dbconnection->query($query);
 						while($row = mysql_fetch_array($result)) {
-							$text['content'] = $row['post_content'];
-							$text['title'] = $row['post_title'];
+							$query = "SELECT * FROM user WHERE user_name = ". $row['post_author'] ."";
+							$result = $dbconnection->query($query);
+							while($row_auth = mysql_fetch_array($result)) {
+								$text['author'][] = $row['user_name'];
+							}
+							$text[] = array('post_content' => $row['post_content'], 'post_title' => $row['post_title'], 'post_date' => $row['post_date'], 'post_author' => $row['post_author']);
 						}
 					}
 				}
@@ -120,16 +127,20 @@
 				
 				if(isset($id_word_match)){					
 					foreach ($id_word_match as $post_id) {
-						$query = "SELECT post_content, post_title FROM post WHERE post_id = ". $post_id ."";
+						$query = "SELECT * FROM post WHERE post_id = ". $post_id ."";
 						$result = $dbconnection->query($query);
 						while($row = mysql_fetch_array($result)) {
-							$text['content'] = $row['post_content'];
-							$text['title'] = $row['post_title'];
+							$query = "SELECT * FROM user WHERE user_name = ". $row['post_author'] ."";
+							$result = $dbconnection->query($query);
+							while($row_auth = mysql_fetch_array($result)) {
+								$text['author'][] = $row['user_name'];
+							}
+							$text[] = array('post_content' => $row['post_content'], 'post_title' => $row['post_title'], 'post_date' => $row['post_date'], 'post_author' => $row['post_author']);
 						}
 					}
 				}
-		$smarty->assign("post_title", $text['title']);
-		$smarty->assign("post_content", $text['content']);
+		$smarty->assign("results", $text);
+		
 		
 			
 

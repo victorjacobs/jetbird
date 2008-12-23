@@ -15,7 +15,11 @@
 	    You should have received a copy of the GNU General Public License
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
-
+	
+	if(!function_exists("redirect")){		// This means that this page hasn't been included right
+		die();
+	}
+	
 	if(isset($_COOKIE['logged_in_as'])){
 		cookie_destroy("logged_in_as", "user_id");
 	}

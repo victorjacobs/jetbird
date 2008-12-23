@@ -16,6 +16,10 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
+	if(!function_exists("redirect")){		// This means that this page hasn't been included right
+		die();
+	}
+	
 	$key = addslashes($_GET['key']);
 	
 	if(!isset($_GET['key'])){

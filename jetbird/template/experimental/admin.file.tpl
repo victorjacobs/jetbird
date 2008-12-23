@@ -38,6 +38,25 @@
 			</p>
 			{else}
 			<h3>Overview</h3>
+			
+			<p>
+				<table width="100%">
+					<tr>
+						<td><b>File name</b></td>
+						<td><b>Owner</b></td>
+						<td width="100"><b>Date</b></td>
+						<td width="1">&nbsp;</td>
+					</tr>
+					{foreach from=$attachments item=file}
+					<tr>
+						<td>{$file.attachment_original_name}</td>
+						<td>{$file.user_name|ucfirst}</td>
+						<td>{$file.attachment_date|date_format:"%d/%m/%y %H:%I"}</td>
+						<td><a href="#" class="needs_confirmation" name="del_file_{$file.attachment_id}">Delete</a></td>
+					</tr>
+					{/foreach}
+				</table>
+			</p>
 			{/if}
 		</div>
 	</div>

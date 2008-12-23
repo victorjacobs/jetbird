@@ -16,6 +16,10 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
+	if(!function_exists("redirect")){		// This means that this page hasn't been included right
+		die();
+	}
+	
 	if(!$_SESSION['login'] || $_SESSION['user_level'] ==! 1){
 		die();
 	}
@@ -25,6 +29,14 @@
 	switch($action){
 		case "upload":
 			$smarty->assign("max_file_size", unformat_size($config['uploader']['max_file_size']));
+			
+			// Find attachment directory, since $config gives us a path relative to jetbird's root
+			// NOTE: Need to find out how this code behaves on windows hosts
+			if($config['uploader']['upload_dir']{0} == "/"){
+				$config['uploader']['upload_dir'] = "..". $config['uploader']['upload_dir'];
+			}else{
+				$config['uploader']['upload_dir'] = "../". $config['uploader']['upload_dir'];
+			}
 			
 			if(!file_exists($config['uploader']['upload_dir']) || !is_writable($config['uploader']['upload_dir'])){
 				$smarty->assign("error_message", "Upload directory doesn't exist, or isn't writable.");
@@ -52,17 +64,20 @@
 					list($file_type, ) = explode("/", $mime);
 					
 					$filename = md5(uniqid(rand(), true));
+					
 					$target = $config['uploader']['upload_dir'] . $filename;
 					
 					if(move_uploaded_file($file['tmp_name'], $target)){
 						$query = "INSERT INTO attachment_list(	attachment_file,
+																attachment_owner,
 																attachment_original_name,
 																attachment_type,
 																attachment_size,
 																attachment_date)
 									VALUES ('". $filename ."',
+											". $_SESSION['user_id'] .",
 											'". $file['name'] ."',
-											'". $file_type ."',
+											'". $mime ."',
 											". $file['size'] .",
 											". time() .")";
 						
@@ -70,6 +85,10 @@
 							unlink($target);
 						}else{
 							$smarty->assign("success", true);
+						}
+						
+						if($file_type = "image"){
+							// Resize images here
 						}
 					}
 				}else{
@@ -79,7 +98,11 @@
 		break;
 		
 		default:
-			
+			$query = "SELECT attachment_list.*, user.user_name
+						FROM attachment_list, user
+						WHERE user.user_id = attachment_list.attachment_owner
+						ORDER BY attachment_date DESC";
+			$smarty->assign("attachments", $dbconnection->fetch_array($query));
 		break;
 	}
 	
