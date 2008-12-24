@@ -23,7 +23,37 @@
 			<h2>Jetbird - Admin</h2>
 			<small>Manage posts</small>
 			
-			{if isset($smarty.get.new)}
+			{if isset($smarty.get.edit) && $smarty.session.user_level == 1}
+			{if isset($edit_error)}<p class="error"><b>Error:</b> Please fill in all the required fields correctly</p>{/if}
+			<form name="input" action="./?post&amp;edit&amp;id={$smarty.get.id}" method="post">
+				<p><table>
+					<tr>
+						<td><b>Title</b></td>
+						<td><input type="text" name="post_title" value="{$post_title}" /></td>
+					</tr>
+					
+					<tr>
+						<td valign="top"><b>Text</b></td>
+						<td><textarea rows="20" cols="55" name="post_content">{$post_content}</textarea></td>
+					</tr>
+					
+					<tr>
+						<td><b>Comments</b></td>
+						<td>
+							<select name="comment_status">
+								<option value="open"{if $comment_status == "open"} selected{/if}>Open</option>
+								<option value="closed"{if $comment_status == "closed"} selected{/if}>Closed</option>
+							</select>
+						</td>
+					</tr>
+											
+					<tr>
+						<td>&nbsp;</td>
+						<td><input type="submit" name="submit" value="Edit" /></td>
+					</tr>
+				</table></p>
+			</form>
+			{elseif isset($smarty.get.new)}
 			{if isset($post_error)}<p class="error"><b>Error:</b> Please fill in all the required fields correctly</p>{/if}
 			<form name="input" action="./?post&amp;new" method="post">
 				<p><table>

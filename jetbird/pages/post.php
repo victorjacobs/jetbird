@@ -21,52 +21,6 @@
 	}
 	
 	switch($action){
-		case "edit":
-			if(empty($_GET['id'])){
-				redirect("./");
-			}
-			if(isset($_POST['submit'])) {
-				// This is in here for older posts, which don't have the collumn comment_status yet, can be removed later on
-				if(!isset($_POST['comment_status'])){
-					$_POST['comment_status'] = "open";
-				}
-				
-				if(!isset($_POST['post_title']) || empty($_POST['post_title'])) $edit_error["post_title"] = true;
-				if(!isset($_POST['post_content']) || empty($_POST['post_content'])) $edit_error["post_content"] = true;
-				
-				if(count($edit_error) != 0){
-					$smarty->assign("edit_error", $edit_error);
-					$smarty->assign('post_content', $_POST['post_content']);
-					$smarty->assign('post_title', $_POST['post_title']);
-					$smarty->assign('comment_status', $_POST['comment_status']);
-				}else{
-					$query = "	UPDATE post 
-								SET post_content = '". $_POST['post_content'] ."',
-								post_title = '". $_POST['post_title'] ."',
-								comment_status = '". $_POST['comment_status'] ."'
-								WHERE post_id = ". $_GET['id'];
-					$dbconnection->query($query);
-					redirect("./?view&id=". $_GET['id']);
-					die();
-				}
-			}else{
-				$query = "	SELECT post_content, post_id, post_title, comment_status 
-							FROM post 
-							WHERE post_id =". $_GET['id'];
-						
-				$result = $dbconnection->fetch_array($query);
-				
-				// Assume there is only one result
-				$main['post'] = htmlentities($result[0]["post_content"]);
-				$main['title'] = $result[0]['post_title'];
-				$main['comment_status'] = $result[0]['comment_status'];
-				
-				$smarty->assign('post_content', $main['post']);
-				$smarty->assign('post_title', $main['title']);
-				$smarty->assign('comment_status', $main['comment_status']);
-			}
-			
-		break;
 		
 		case "comment":			
 			if(isset($_POST['submit'])){

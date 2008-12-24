@@ -29,7 +29,7 @@
 				
 				<p>{$post.post_content|truncate:500|bbcode|nl2br}</p>
 				<p><small>
-					<a href="./?view&amp;id={$post.post_id}">Read more</a>{if $smarty.session.user_level == 1} | <a href="./?post&amp;edit&amp;id={$post.post_id}">Edit</a> | <a href="#" class="needs_confirmation" name="del_post_{$post.post_id}">Delete</a>{/if}
+					<a href="./?view&amp;id={$post.post_id}">Read more</a>{if $smarty.session.user_level == 1} | <a href="./admin/?post&amp;edit&amp;id={$post.post_id}">Edit</a> | <a href="#" class="needs_confirmation" name="del_post_{$post.post_id}">Delete</a>{/if}
 
 				</small></p>
 				{/foreach}
