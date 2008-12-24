@@ -77,9 +77,6 @@
 				die();
 			}
 		break;
-	}		
-	
-	$smarty->assign('queries', $dbconnection->queries);
-	$smarty->display('post.tpl');
+	}
 	
 ?>
