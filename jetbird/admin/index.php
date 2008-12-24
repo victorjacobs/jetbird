@@ -25,7 +25,7 @@
 	//making sure all the data we recieve is UTF-8, 
 	//from now on there is only one charset in the world for me: UTF-8
 	header('Content-Type: text/html; charset=utf-8');
-	require_once "../include/functions.php";
+	require_once "../include/core.functions.php";
 	$process_start = timer();		// use this wherever you want, can be useful for debugging
 	require_once "../include/configuration.php";
 	require_once "../include/database.handler.php";
