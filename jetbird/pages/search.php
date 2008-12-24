@@ -35,21 +35,8 @@
 			/*
 			 * Getting ID's
 			 */
-				//Building the query to get the ID's of the word
-				foreach($search_word as $word) {
-					if(empty($query_append)) {
-						$query_append = " word = '". $word ."'";
-					} 
-					else 
-					{
-						$query_append .= " OR word = '". $word ."'";
-					}
-				}
 				
-				
-				$query = "	SELECT id 
-							FROM search_index
-							WHERE ".$query_append ."";
+				$query = create_query("SELECT id FROM search_index WHERE", "", $search_word, "word", "OR" );
 				$result = $dbconnection->query($query);
 				while ($row = mysql_fetch_array($result)) {
 					$word_id[] = $row['id'];
@@ -58,25 +45,14 @@
 					break;
 				}
 				
-			/*
-			 * first we fetch the posts that have a title match
-			 */
 			
-				//Building query to get the post_id and title_match.
-				foreach($word_id as $id) {
-					if(empty($query_append_2)) {
-						$query_append_2 = " word_id = '". $id ."'";
-					} 
-					else 
-					{
-						$query_append_2 .= " OR word_id = '". $id ."'";
-					}
-				}
 				
-				//Getting the post_id's that have a title match.
-				$query = "	SELECT post_id, title_match 
-							FROM search_word
-							WHERE ". $query_append_2 ." AND title_match = 1";
+			/*
+			 * TITLE SECTION: first we fetch the posts that have a title match
+			 */
+				//Building the query...
+				
+				$query = create_query("SELECT post_id, title_match FROM search_word WHERE", "AND title_match = 1", $word_id, "word_id", "OR" );
 				$result = $dbconnection->query($query);
 				while($row = mysql_fetch_array($result)) {
 					$id_title_match[] = $row['post_id'];
@@ -98,33 +74,21 @@
 							$query = "SELECT * FROM user WHERE user_name = ". $row['post_author'] ."";
 							$result = $dbconnection->query($query);
 							while($row_auth = mysql_fetch_array($result)) {
-								$text['author'][] = $row['user_name'];
+								$text['author'] = $row_auth['user_name'];
 							}
-							$text[] = array('post_content' => $row['post_content'], 'post_title' => $row['post_title'], 'post_date' => $row['post_date'], 'post_author' => $row['post_author']);
+							$text[] = array('post_title' => $row['post_title'], 'post_content' => $row['post_content'], 'post_date' => $row['post_date'], 'user_name' => $row['author']);
 						}
 					}
-				}
-				/*
-				//counting how much post_id's there are.
-				$count = count($title_word_count);
-				foreach($title_word_count as $post_id) {
-					$rank = "";
-					$title_word_count[$rank] = $post_id;
-				}
-				*/
-				
+				}	
 			/*
-			 * fetching the posts that don't have a title match
+			 * BODY SECTION: fetching the posts that don't have a title match
 			 */
-				//getting the rest of the ID's.
-				$query = "	SELECT post_id, title_match 
-							FROM search_word
-							WHERE ". $query_append_2 ."";
+				$query = create_query("SELECT post_id, title_match FROM search_word WHERE", "AND title_match = 0", $word_id, "word_id", "OR" );
 				$result = $dbconnection->query($query);
 				while($row = mysql_fetch_array($result)) {
 					$id_word_match[] = $row['post_id'];
 				}
-				
+				//die(var_dump($id_word_match));
 				if(isset($id_word_match)){					
 					foreach ($id_word_match as $post_id) {
 						$query = "SELECT * FROM post WHERE post_id = ". $post_id ."";
@@ -133,12 +97,13 @@
 							$query = "SELECT * FROM user WHERE user_name = ". $row['post_author'] ."";
 							$result = $dbconnection->query($query);
 							while($row_auth = mysql_fetch_array($result)) {
-								$text['author'][] = $row['user_name'];
+								$text['author'] = $row_auth['user_name'];
 							}
-							$text[] = array('post_content' => $row['post_content'], 'post_title' => $row['post_title'], 'post_date' => $row['post_date'], 'post_author' => $row['post_author']);
+							$text[] = array('post_title' => $row['post_title'], 'post_content' => $row['post_content'], 'post_date' => $row['post_date'], 'user_name' => $row['author']);
 						}
 					}
 				}
+		
 		$smarty->assign("results", $text);
 		
 		
@@ -147,6 +112,8 @@
 			
 		break;
 		
+		
+		//BROKEN
 		case "repair_search":
 			//call to set time limit, because this can take a very long time.
 			set_time_limit(0);
