@@ -31,21 +31,8 @@
 			/*
 			 * Getting ID's
 			 */
-				//Building the query to get the ID's of the word
-				foreach($search_word as $word) {
-					if(empty($query_append)) {
-						$query_append_id = " word = '". $word ."'";
-					} 
-					else 
-					{
-						$query_append_id .= " OR word = '". $word ."'";
-					}
-				}
 				
-				
-				$query = "	SELECT id 
-							FROM search_index
-							WHERE ".$query_append_id ."";
+				$query = create_query("SELECT id FROM search_index WHERE", "", $search_word, "word", "OR" );
 				$result = $dbconnection->query($query);
 				while ($row = mysql_fetch_array($result)) {
 					$word_id[] = $row['id'];
@@ -57,26 +44,11 @@
 			
 				
 			/*
-			 * first we fetch the posts that have a title match
+			 * TITLE SECTION: first we fetch the posts that have a title match
 			 */
 				//Building the query...
 				
-				foreach($word_id as $id) {
-					if(empty($query_append)) {
-						$query_append = " word_id = '". $id ."' AND title_match = 1";
-					} 
-					else 
-					{
-						$query_append .= " OR word_id = '". $id ."' AND title_match = 1";
-					}
-				}
-			
-				
-				//Getting the post_id's that have a title match.
-				$query = "	SELECT post_id, title_match 
-							FROM search_word
-							WHERE ". $query_append ."";
-				//die($query);
+				$query = create_query("SELECT post_id, title_match FROM search_word WHERE", "AND title_match = 1", $word_id, "word_id", "OR" );
 				$result = $dbconnection->query($query);
 				while($row = mysql_fetch_array($result)) {
 					$id_title_match[] = $row['post_id'];
@@ -103,33 +75,11 @@
 							$text[] = array('post_title' => $row['post_title'], 'post_content' => $row['post_content'], 'post_date' => $row['post_date'], 'user_name' => $row['author']);
 						}
 					}
-				}
-				/*
-				//counting how much post_id's there are.
-				$count = count($title_word_count);
-				foreach($title_word_count as $post_id) {
-					$rank = "";
-					$title_word_count[$rank] = $post_id;
-				}
-				*/
-				
+				}	
 			/*
-			 * fetching the posts that don't have a title match 355 271 433
+			 * BODY SECTION: fetching the posts that don't have a title match
 			 */
-				//building the query...
-				foreach($word_id as $id) {
-					if(empty($query_append_2)) {
-						$query_append_2 = " word_id = '". $id ."' AND title_match = 0";
-					} 
-					else 
-					{
-						$query_append_2 .= " OR word_id = '". $id ."' AND title_match = 0";
-					}
-				}
-				//getting the rest of the ID's.
-				$query = "	SELECT post_id, title_match 
-							FROM search_word
-							WHERE ". $query_append_2 ."";
+				$query = create_query("SELECT post_id, title_match FROM search_word WHERE", "AND title_match = 0", $word_id, "word_id", "OR" );
 				$result = $dbconnection->query($query);
 				while($row = mysql_fetch_array($result)) {
 					$id_word_match[] = $row['post_id'];
