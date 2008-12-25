@@ -84,6 +84,7 @@
 		
 		$page_url .= str_replace(basename($_SERVER['PHP_SELF']), "", $_SERVER['PHP_SELF']);
 		
+		// TODO: this following line is an ugly hack, should replace this
 		if(eregi("admin/", $page_url)) $page_url = str_replace("admin/", "", $page_url);
 		
 		return $page_url;

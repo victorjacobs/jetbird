@@ -4,3 +4,5 @@ cache
 .svn
 .DS_Store
 attachments/
+.project
+.cache/
