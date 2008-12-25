@@ -45,7 +45,7 @@
 					/*
 					 * Start of the indexing process.
 					 * TODO: add a word count.										PENDING
-					 * TODO: find a way to avoid using so much array intersects.	PENDING
+					 * TODO: find a way to avoid using so much array intersects.	PENDING (JOIN, UNION? have to look into this)
 					 * TODO: get rid of the large if(empty($index)) loop. 			DONE
 					 */
 						// Setting magic quotes off
@@ -87,15 +87,12 @@
 							
 							foreach ($new_words as $word) {
 								$query = "INSERT INTO search_index (word) VALUES ('". addslashes($word) ."')";
-						
-								$dbconnection->query($query);
-								
+								$dbconnection->query($query);	
 							}
 							
 							if(empty($index)) {
 								$query = "SELECT * FROM search_index";
 								$result = $dbconnection->query($query);
-							
 								while($row = mysql_fetch_array($result)) {
 									$index[$row['id']] = $row['word'];
 								}
