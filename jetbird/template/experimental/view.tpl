@@ -30,7 +30,7 @@
 				
 				{if $smarty.session.user_level == 1}<p>
 					<small>
-						<a href="./?post&amp;edit&amp;id={$smarty.get.id}">Edit</a> | <a href="#" class="needs_confirmation" name="del_post_{$smarty.get.id}">Delete</a>
+						<a href="./admin/?post&amp;edit&amp;id={$smarty.get.id}">Edit</a> | <a href="#" class="needs_confirmation" name="del_post_{$smarty.get.id}">Delete</a>
 					</small>
 				</p>{/if}
 				

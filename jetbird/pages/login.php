@@ -16,6 +16,10 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
+	if(!function_exists("redirect")){		// This means that this page hasn't been included right
+		die();
+	}
+	
 	if(isset($_POST['submit'])){
 		if(isset($_POST['username'])){
 			$password = md5($_POST['password']);

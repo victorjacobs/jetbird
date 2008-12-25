@@ -26,6 +26,10 @@
 			and also adding the possibility to undo deletes.
 	*/
 	
+	if(!function_exists("redirect")){		// This means that this page hasn't been included right
+		die();
+	}
+	
 	if(!$_SESSION['login'] || $_SESSION['user_level'] ==! 1){
 		die();
 	}

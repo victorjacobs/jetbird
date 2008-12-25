@@ -16,14 +16,66 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	//setting magic quotes to avoid intersect problems in indexer
-
+	
+	if(!function_exists("redirect")){		// This means that this page hasn't been included right
+		die();
+	}
+	
 	if(!$_SESSION['login'] || $_SESSION['user_level'] ==! 1){
 		die();
 	}
 	
 	switch($action){
-		case "new":
+		case "edit":
+		
+			if(empty($_GET['id'])){
+				redirect("./");
+			}
+			if(isset($_POST['submit'])) {
+				// This is in here for older posts, which don't have the collumn comment_status yet, can be removed later on
+				if(!isset($_POST['comment_status'])){
+					$_POST['comment_status'] = "open";
+				}
+				
+				if(!isset($_POST['post_title']) || empty($_POST['post_title'])) $edit_error["post_title"] = true;
+				if(!isset($_POST['post_content']) || empty($_POST['post_content'])) $edit_error["post_content"] = true;
+				
+				if(count($edit_error) != 0){
+					$smarty->assign("edit_error", $edit_error);
+					$smarty->assign('post_content', $_POST['post_content']);
+					$smarty->assign('post_title', $_POST['post_title']);
+					$smarty->assign('comment_status', $_POST['comment_status']);
+				}else{
+					$query = "	UPDATE post 
+								SET post_content = '". $_POST['post_content'] ."',
+								post_title = '". $_POST['post_title'] ."',
+								comment_status = '". $_POST['comment_status'] ."'
+								WHERE post_id = ". $_GET['id'];
+					$dbconnection->query($query);
+					redirect("../?view&id=". $_GET['id']);
+					die();
+				}
+			}else{
+				$query = "	SELECT post_content, post_id, post_title, comment_status 
+							FROM post 
+							WHERE post_id =". $_GET['id'];
+						
+				$result = $dbconnection->fetch_array($query);
+				
+				// Assume there is only one result
+				$main['post'] = htmlentities($result[0]["post_content"]);
+				$main['title'] = $result[0]['post_title'];
+				$main['comment_status'] = $result[0]['comment_status'];
+				
+				$smarty->assign('post_content', $main['post']);
+				$smarty->assign('post_title', $main['title']);
+				$smarty->assign('comment_status', $main['comment_status']);
+			}
 			
+		break;
+		
+		case "new":
+		
 			if(isset($_POST['submit'])){
 				if(!isset($_POST['post_title']) || empty($_POST['post_title'])) $post_error["post_title"] = true;
 				if(!isset($_POST['post_content']) || empty($_POST['post_content'])) $post_error["post_content"] = true;
@@ -42,6 +94,7 @@
 					$created_post_id = $dbconnection->last_insert_id;
 					
 					
+
 					/*
 					 * Start of the indexing process.
 					 * TODO: add a word count.										PENDING
@@ -127,6 +180,7 @@
 									$dbconnection->query($query);
 								}
 				}
+
 							
 					redirect('../?view&id='. $created_post_id);
 				}
