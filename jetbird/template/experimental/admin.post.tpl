@@ -25,7 +25,7 @@
 			
 			{if isset($smarty.get.new)}
 			{if isset($post_error)}<p class="error"><b>Error:</b> Please fill in all the required fields correctly</p>{/if}
-			<form name="input" action="./?post&amp;new" method="post">
+			<form accept-charset="utf-8" name="input" action="./?post&amp;new" method="post">
 				<p><table>
 					<tr>
 						<td><b>Title</b></td>
