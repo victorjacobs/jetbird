@@ -105,7 +105,7 @@
 						<td>{$post.user_name|ucfirst}</td>
 						<td>{$post.post_date|date_format:"%d/%m/%y %H:%I"}</td>
 						<td>{$post.comment_status|ucfirst}</td>
-						<td><a href="../?post&amp;edit&amp;id={$post.post_id}">Edit</a></td>
+						<td><a href="./?post&amp;edit&amp;id={$post.post_id}">Edit</a></td>
 						<td><a class="needs_confirmation" href="#" name="del_post_{$post.post_id}">Delete</a></td>
 					</tr>
 					{/foreach}
