@@ -70,16 +70,23 @@
 	    return $microtime;
 	}
 	
-	function current_url() {
-		 $pageURL = 'http';
-		 if ($_SERVER["HTTPS"] == "on") {$pageURL .= "s";}
-			$pageURL .= "://";
-		 if ($_SERVER["SERVER_PORT"] != "80") {
-			$pageURL .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
-		 }else{
-			$pageURL .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
-		 }
-	 return $pageURL;
+	// This function fetches the url to the root of the jetbird installation
+	function jetbird_root_url(){
+		$page_url = 'http';
+		
+		if($_SERVER["HTTPS"] == "on") $page_url .= "s";
+		$page_url .= "://";
+		if($_SERVER["SERVER_PORT"] != "80"){
+			$page_url .= $_SERVER["SERVER_NAME"] . ":".$_SERVER["SERVER_PORT"];
+		}else{
+			$page_url .= $_SERVER["SERVER_NAME"];
+		}
+		
+		$page_url .= str_replace(basename($_SERVER['PHP_SELF']), "", $_SERVER['PHP_SELF']);
+		
+		if(eregi("admin/", $page_url)) $page_url = str_replace("admin/", "", $page_url);
+		
+		return $page_url;
 	}
 	
 	function generate_reg_key(){
