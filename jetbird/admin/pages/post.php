@@ -94,10 +94,11 @@
 					$created_post_id = $dbconnection->last_insert_id;
 					
 					
+
 					/*
 					 * Start of the indexing process.
 					 * TODO: add a word count.										PENDING
-					 * TODO: find a way to avoid using so much array intersects.	PENDING
+					 * TODO: find a way to avoid using so much array intersects.	PENDING (JOIN, UNION? have to look into this)
 					 * TODO: get rid of the large if(empty($index)) loop. 			DONE
 					 */
 						// Setting magic quotes off
@@ -139,15 +140,12 @@
 							
 							foreach ($new_words as $word) {
 								$query = "INSERT INTO search_index (word) VALUES ('". addslashes($word) ."')";
-						
-								$dbconnection->query($query);
-								
+								$dbconnection->query($query);	
 							}
 							
 							if(empty($index)) {
 								$query = "SELECT * FROM search_index";
 								$result = $dbconnection->query($query);
-							
 								while($row = mysql_fetch_array($result)) {
 									$index[$row['id']] = $row['word'];
 								}
@@ -182,6 +180,7 @@
 									$dbconnection->query($query);
 								}
 				}
+
 							
 					redirect('../?view&id='. $created_post_id);
 				}
@@ -212,7 +211,7 @@
 				if($dbconnection->num_rows("SELECT * FROM post WHERE post_id = ". $_POST['id']) == 1){
 					$delete_post = "DELETE FROM post WHERE post_id = ". $_POST['id'];
 					$delete_comments = "DELETE FROM comment WHERE comment_parent_post_id = ". $_POST['id'];
-					$delete_search = "DELETA FROM search_word WHERE post_id = ". $_POST['id'] ."";
+					$delete_search = "DELETE FROM search_word WHERE post_id = ". $_POST['id'] ."";
 					if($dbconnection->query($delete_post) && $dbconnection->query($delete_comments) && $dbconnection->query($delete_search)){
 						$success = true;
 					}else{

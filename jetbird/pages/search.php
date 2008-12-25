@@ -36,50 +36,31 @@
 			 * Getting ID's
 			 */
 				
-				$query = create_query("SELECT id FROM search_index WHERE", "", $search_word, "word", "OR" );
+				$query = create_query("SELECT id FROM search_index WHERE", "", $search_word , "word", "OR" );
 				$result = $dbconnection->query($query);
+				
 				while ($row = mysql_fetch_array($result)) {
 					$word_id[] = $row['id'];
 				}
 				if(!isset($word_id)) {
 					break;
 				}
-				
-			
-				
+		
 			/*
 			 * TITLE SECTION: first we fetch the posts that have a title match
 			 */
 				//Building the query...
 				
-				$query = create_query("SELECT post_id, title_match FROM search_word WHERE", "AND title_match = 1", $word_id, "word_id", "OR" );
+				$query = create_query("SELECT post_id, title_match FROM search_word WHERE", "AND title_match = 1", $word_id , "word_id", "OR" );
 				$result = $dbconnection->query($query);
 				while($row = mysql_fetch_array($result)) {
 					$id_title_match[] = $row['post_id'];
 				}
 				if(isset($id_title_match)) {
-					//die(var_dump($id_title_match));
-					
-					//finding the post that has the most title matches.
-				
 					$title_word_count = array_count_values($id_title_match);
-					//sorting it
-					
 					arsort($title_word_count, SORT_NUMERIC);
+				}
 					
-					foreach ($title_word_count as $post_id => $foo) {
-						$query = "SELECT * FROM post WHERE post_id = ". $post_id ."";
-						$result = $dbconnection->query($query);
-						while($row = mysql_fetch_array($result)) {
-							$query = "SELECT * FROM user WHERE user_name = ". $row['post_author'] ."";
-							$result = $dbconnection->query($query);
-							while($row_auth = mysql_fetch_array($result)) {
-								$text['author'] = $row_auth['user_name'];
-							}
-							$text[] = array('post_title' => $row['post_title'], 'post_content' => $row['post_content'], 'post_date' => $row['post_date'], 'user_name' => $row['author']);
-						}
-					}
-				}	
 			/*
 			 * BODY SECTION: fetching the posts that don't have a title match
 			 */
@@ -88,28 +69,40 @@
 				while($row = mysql_fetch_array($result)) {
 					$id_word_match[] = $row['post_id'];
 				}
-				//die(var_dump($id_word_match));
-				if(isset($id_word_match)){					
-					foreach ($id_word_match as $post_id) {
-						$query = "SELECT * FROM post WHERE post_id = ". $post_id ."";
-						$result = $dbconnection->query($query);
-						while($row = mysql_fetch_array($result)) {
-							$query = "SELECT * FROM user WHERE user_name = ". $row['post_author'] ."";
-							$result = $dbconnection->query($query);
-							while($row_auth = mysql_fetch_array($result)) {
-								$text['author'] = $row_auth['user_name'];
-							}
-							$text[] = array('post_title' => $row['post_title'], 'post_content' => $row['post_content'], 'post_date' => $row['post_date'], 'user_name' => $row['author']);
-						}
-					}
+				
+				//die(var_dump($query));
+				if(isset($id_word_match)){
+					$id_word_count = array_count_values($id_word_match);
+					//sorting it
+					arsort($id_word_count, SORT_NUMERIC);
 				}
-		
-		$smarty->assign("results", $text);
-		
-		
 			
-
+			/*
+			 * checking title and body matches for the same posts
+			 */
+			//THIS NEEDS A REVIEW TO CHECH IF IT WORKS DECENTLY: see if $double keeps the rank in order, some arrays need to be flipped??
+			$double = array_intersect_key($title_word_count, $id_word_count);
+			//filtering these values out of $title_word_count and $id_word_count because they will move more up in the array.
+			$title = array_diff($title_word_count, $double);
+			$body = array_diff($id_word_count, $double);
 			
+			/*
+			 * fetching posts
+			 */
+			foreach($double as $id) {
+				$total[] = $dbconnection->fetch_array("SELECT * FROM post WHERE post_id = ". $id ."");
+				//die(var_dump($double));
+			}
+			
+			foreach($title as $id) {
+				$total[] = $dbconnection->fetch_array("SELECT * FROM post WHERE post_id = ". $id ."");
+			}
+			
+			foreach($body as $id) {
+				$total[] = $dbconnection->fetch_array("SELECT * FROM post WHERE post_id = ". $id ."");
+			}
+			die(var_dump($total));
+		$smarty->assign("results", $total);	
 		break;
 		
 		

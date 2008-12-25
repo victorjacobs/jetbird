@@ -179,8 +179,9 @@ function create_query($base_query, $and_or, $loop_var, $row, $operator) {
 		}
 		
 	$query = $base_query . $append;
+	}
 	return $query;
-}
+
 }
 
 ?>
