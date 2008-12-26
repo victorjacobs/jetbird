@@ -37,3 +37,5 @@ Vikking:
 - we should really rethink the structure of a template. it's getting way to complicated for a
 	designer to make a template
 - BBcode parser
+- save configuration in the database
+- *maybe* make read_mime() recognize more file types

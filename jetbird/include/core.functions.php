@@ -16,6 +16,41 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
+	
+	/*
+	*	Hard Core file mime fetching
+	*
+	*	First three bytes, converted to hex value:
+	*	bin2hex(fgets($handle, 3));
+	*	
+	*	These bytes (the signature of a file) tell us enough:
+	*	8950 => png
+	*	FFD8 => jpg (SOI)
+	*	4749 => gif
+	*
+	*	Since these are the only file types supported by GD, we only need to check those
+	*/
+	
+	function get_file_signature($file){
+		if(!($handle = @fopen($file, "r"))){
+			return false;
+		}
+			
+		$signature = bin2hex(fgets($handle, 3));
+		fclose($handle);
+		
+		return $signature;
+	}
+	
+	function read_mime($file){
+		switch(get_file_signature($file)){
+			case "8950": return "image/png"; break;
+			case "FFD8": return "image/jpeg"; break;
+			case "4749": return "image/gif"; break;
+			default: return false; break;
+		}
+	}
+	
 	// Some general functions
 	function BBCode($string){
 		// Clean up the input
