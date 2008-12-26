@@ -25,11 +25,15 @@ Vikking:
 			mysql_connect() <> fbsql_connect()
 			mysql_query()	<> fbsql_query()
 			...				<> ...
+			>> make use of call_user_func()?
 - find a better way to get file mimes, we now just use $_FILES['file_type'] and that's not safe
 	since it's based on the file's extension
 	>> there is a PECL package called fileinfo that does just that, but we don't want Jetbird to
 		depend on external packages (http://pecl.php.net/package/Fileinfo)
-		>> fileinfo will be part of PHP starting from version 5.3.0
+		>> fileinfo will be part of PHP starting with version 5.3.0
 - make the attachment uploader produce thumbnails of image files
 	>> problem is that when using standard GD functions, exif info is destroyed
 	>> we need to get the file mime thing right before trying this, could have weird consequences
+- we should really rethink the structure of a template. it's getting way to complicated for a
+	designer to make a template
+- BBcode parser

@@ -6,3 +6,5 @@ cache
 attachments/
 .project
 .cache/
+test.php
+test/
