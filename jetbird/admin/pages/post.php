@@ -26,8 +26,56 @@
 	}
 	
 	switch($action){
-		case "new":
+		case "edit":
+		
+			if(empty($_GET['id'])){
+				redirect("./");
+			}
+			if(isset($_POST['submit'])) {
+				// This is in here for older posts, which don't have the collumn comment_status yet, can be removed later on
+				if(!isset($_POST['comment_status'])){
+					$_POST['comment_status'] = "open";
+				}
+				
+				if(!isset($_POST['post_title']) || empty($_POST['post_title'])) $edit_error["post_title"] = true;
+				if(!isset($_POST['post_content']) || empty($_POST['post_content'])) $edit_error["post_content"] = true;
+				
+				if(count($edit_error) != 0){
+					$smarty->assign("edit_error", $edit_error);
+					$smarty->assign('post_content', $_POST['post_content']);
+					$smarty->assign('post_title', $_POST['post_title']);
+					$smarty->assign('comment_status', $_POST['comment_status']);
+				}else{
+					$query = "	UPDATE post 
+								SET post_content = '". $_POST['post_content'] ."',
+								post_title = '". $_POST['post_title'] ."',
+								comment_status = '". $_POST['comment_status'] ."'
+								WHERE post_id = ". $_GET['id'];
+					$dbconnection->query($query);
+					redirect("../?view&id=". $_GET['id']);
+					die();
+				}
+			}else{
+				$query = "	SELECT post_content, post_id, post_title, comment_status 
+							FROM post 
+							WHERE post_id =". $_GET['id'];
+						
+				$result = $dbconnection->fetch_array($query);
+				
+				// Assume there is only one result
+				$main['post'] = htmlentities($result[0]["post_content"]);
+				$main['title'] = $result[0]['post_title'];
+				$main['comment_status'] = $result[0]['comment_status'];
+				
+				$smarty->assign('post_content', $main['post']);
+				$smarty->assign('post_title', $main['title']);
+				$smarty->assign('comment_status', $main['comment_status']);
+			}
 			
+		break;
+		
+		case "new":
+		
 			if(isset($_POST['submit'])){
 				if(!isset($_POST['post_title']) || empty($_POST['post_title'])) $post_error["post_title"] = true;
 				if(!isset($_POST['post_content']) || empty($_POST['post_content'])) $post_error["post_content"] = true;
@@ -46,10 +94,11 @@
 					$created_post_id = $dbconnection->last_insert_id;
 					
 					
+
 					/*
 					 * Start of the indexing process.
 					 * TODO: add a word count.										PENDING
-					 * TODO: find a way to avoid using so much array intersects.	PENDING
+					 * TODO: find a way to avoid using so much array intersects.	PENDING (JOIN, UNION? have to look into this)
 					 * TODO: get rid of the large if(empty($index)) loop. 			DONE
 					 */
 						// Setting magic quotes off
@@ -91,15 +140,12 @@
 							
 							foreach ($new_words as $word) {
 								$query = "INSERT INTO search_index (word) VALUES ('". addslashes($word) ."')";
-						
-								$dbconnection->query($query);
-								
+								$dbconnection->query($query);	
 							}
 							
 							if(empty($index)) {
 								$query = "SELECT * FROM search_index";
 								$result = $dbconnection->query($query);
-							
 								while($row = mysql_fetch_array($result)) {
 									$index[$row['id']] = $row['word'];
 								}
@@ -134,6 +180,7 @@
 									$dbconnection->query($query);
 								}
 				}
+
 							
 					redirect('../?view&id='. $created_post_id);
 				}
@@ -161,10 +208,10 @@
 		
 		case "delete":
 			if(isset($_POST['submit']) && isset($_POST['id'])){
-				if($dbconnection->num_rows("SELECT * FROM post WHERE post_id = ". $_POST['id'])){
+				if($dbconnection->num_rows("SELECT * FROM post WHERE post_id = ". $_POST['id']) == 1){
 					$delete_post = "DELETE FROM post WHERE post_id = ". $_POST['id'];
 					$delete_comments = "DELETE FROM comment WHERE comment_parent_post_id = ". $_POST['id'];
-					$delete_search = "DELETA FROM search_word WHERE post_id = ". $_POST['id'] ."";
+					$delete_search = "DELETE FROM search_word WHERE post_id = ". $_POST['id'] ."";
 					if($dbconnection->query($delete_post) && $dbconnection->query($delete_comments) && $dbconnection->query($delete_search)){
 						$success = true;
 					}else{

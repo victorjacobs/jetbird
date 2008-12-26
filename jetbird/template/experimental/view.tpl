@@ -30,7 +30,7 @@
 				
 				{if $smarty.session.user_level == 1}<p>
 					<small>
-						<a href="./?post&amp;edit&amp;id={$smarty.get.id}">Edit</a> | <a href="#" class="needs_confirmation" name="del_post_{$smarty.get.id}">Delete</a>
+						<a href="./admin/?post&amp;edit&amp;id={$smarty.get.id}">Edit</a> | <a href="#" class="needs_confirmation" name="del_post_{$smarty.get.id}">Delete</a>
 					</small>
 				</p>{/if}
 				
@@ -38,7 +38,7 @@
 				{if !$comments and $post.comment_status == "closed" and $smarty.session.user_level != 1}
 				<p>Comments closed</p>
 				{else}
-				{if isset($comments)}
+				{if !empty($comments)}
 				{foreach from=$comments item=comment}
 				<div class="comment">
 					<p>{$comment.comment_content|bbcode|nl2br}</p>

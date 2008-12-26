@@ -37,12 +37,12 @@
 
 							<tr>
 								<td><b>Password</b></td>
-								<td><input type="password" name="pass"{if isset($register_data.pass)} value="{$register_data.pass}"{/if} /></td>
+								<td><input type="password" name="pass" /></td>
 							</tr>
 
 							<tr>
 								<td><b>Confirm</b></td>
-								<td><input type="password" name="pass_confirm"{if isset($register_data.pass_confirm)} value="{$register_data.pass_confirm}"{/if} /></td>
+								<td><input type="password" name="pass_confirm" /></td>
 							</tr>
 							
 							<tr>

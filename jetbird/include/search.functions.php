@@ -165,5 +165,23 @@ function split_text($text)
 		return $text;
 }
 
+/*
+ * This function builds some queries for the search engine
+ */
+function create_query($base_query, $and_or, $loop_var, $row, $operator) {
+	foreach($loop_var as $var) {
+		if(empty($append)) {
+			$append = " ". $row ." = '". $var ."' ". $and_or ."";
+		}
+		else
+		{
+			$append .= " OR ". $row ." = '". $var ."' ". $and_or ."";
+		}
+		
+	$query = $base_query . $append;
+	}
+	return $query;
+
+}
 
 ?>

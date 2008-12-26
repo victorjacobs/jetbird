@@ -89,6 +89,7 @@
 		}
 		
 		function fetch_array($query, $mode = MYSQL_ASSOC){
+			$output = false;
 			if(is_string($query)){
 				$result = $this->query($query);
 				while($row = mysql_fetch_array($result, $mode)){

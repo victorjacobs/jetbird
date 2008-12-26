@@ -25,7 +25,10 @@
 			
 			{if isset($smarty.get.upload)}
 			<h3>Upload attachment</h3>
-			
+			{if $success}
+			<p>Your file was successfully uploaded. It can now be downloaded from:</p>
+			<p><a href="{$download_link}" target="_blank">{$download_link}</a></p>
+			{else}
 			{if isset($upload_error)}<p class="error">Something went wrong processing your file. Please check it</p>{/if}
 			{if isset($error_message)}<p class="error">{$error_message}</p>{/if}
 			
@@ -36,6 +39,7 @@
 					<input type="submit" name="upload" value="Upload"{if isset($error_message)} disabled{/if} />
 				</form>
 			</p>
+			{/if}
 			{else}
 			<h3>Overview</h3>
 			
@@ -56,6 +60,9 @@
 					</tr>
 					{/foreach}
 				</table>
+			</p>
+			<p>
+				<a href="./?file&amp;upload">Upload file</a>
 			</p>
 			{/if}
 		</div>
