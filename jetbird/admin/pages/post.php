@@ -97,93 +97,62 @@
 
 					/*
 					 * Start of the indexing process.
-					 * TODO: add a word count.										PENDING
-					 * TODO: find a way to avoid using so much array intersects.	PENDING (JOIN, UNION? have to look into this)
-					 * TODO: get rid of the large if(empty($index)) loop. 			DONE
+					 * TODO: add a word count.										
+					 * TODO: find a way to avoid using so much array intersects.	
+					 * 
 					 */
-						// Setting magic quotes off
 						
-						// Setting some vars
-						$text = $_POST['post_content'];
-						$title = $_POST['post_title'];
-						$post_id = $created_post_id;
 						
-						//splitting text and title into words and some cleanup.
-						$keyword_text = split_text($text);
-						$keyword_title = split_text($title);
+					// Setting some vars
+					$text = $_POST['post_content'];
+					$title = $_POST['post_title'];
+					$post_id = $created_post_id;
 						
-						//make them unique
-						$keyword_uniq_title = array_unique($keyword_title);
-						$keyword_uniq_text = array_unique($keyword_text);
+					//splitting text and title into words and some cleanup.
+					$text = split_text($text);
+					$title = split_text($title);
 						
-						//merge them
-						$keyword_uniq_all = array_unique(array_merge($keyword_uniq_text, $keyword_uniq_title));
+					//make them unique
+					$title = array_unique($title);
+					$text = array_unique($text);
 						
-						//fetching the search_index from the DB and put it in a nice array
-						$query = "SELECT * FROM search_index";
-						$result = $dbconnection->query($query);
+					//query to fetch the id's
+					$query = "SELECT * FROM search_index";
+					$result = $dbconnection->query($query);
+					while($row = mysql_fetch_array($result)) {
+						$index[$row['word']] = $row['id'];
+					}
 						
-						while($row = mysql_fetch_array($result)) {
-							$index[$row['id']] = $row['word'];
+					//adding title words to search_word
+					foreach($title as $word) {
+						if(empty($index[$word])) {
+							$query = "INSERT INTO search_index (word) VALUES ('". addslashes($word) ."')";
+							$dbconnection->query($query);
+							$index[$word] = $dbconnection->last_insert_id;
 						}
-
-					
-					/*
-					 * Updating the index table
-					 */
-							//We have to check wich words are already in the DB
-							if(empty($index)){
-								$new_words = $keyword_uniq_all;
-							} else {
-								$new_words = array_diff($keyword_uniq_all, $index);
-							}
-							
-							foreach ($new_words as $word) {
-								$query = "INSERT INTO search_index (word) VALUES ('". addslashes($word) ."')";
-								$dbconnection->query($query);	
-							}
-							
-							if(empty($index)) {
-								$query = "SELECT * FROM search_index";
-								$result = $dbconnection->query($query);
-								while($row = mysql_fetch_array($result)) {
-									$index[$row['id']] = $row['word'];
-								}
-							}
-							
+						$query = "	INSERT INTO search_word(word_id, post_id, title_match) 
+									VALUES ('$index[$word]', '$post_id', 1)";
+						$dbconnection->query($query);
+					}
 						
-					/*
-					 * Updating the search_word table
-					 */
-							$word_id_all = array_flip(array_merge($index, $new_words));
-							
-							//now we should have all the word_id's with the keys as our ID
-							
-							//title
-							$keyword_title_flip = array_flip($keyword_uniq_title);
-							$word_id_title = array_intersect_key($word_id_all, $keyword_title_flip);
-			
-							foreach($word_id_title as $word_id) {
-								$word_id = $word_id + 1;
-								$query = "	INSERT INTO search_word(word_id, post_id, title_match) 
-											VALUES ('$word_id', '$post_id', 1)";
-								$dbconnection->query($query);
-							}
-							
-							//text
-								$keyword_text_flip = array_flip($keyword_uniq_text);
-								$word_id_text = array_intersect_key($word_id_all, $keyword_text_flip);
-								foreach($word_id_text as $word_id) {
-									$word_id = $word_id + 1;
-									$query = "	INSERT INTO search_word(word_id, post_id) 
-												VALUES ('$word_id', '$post_id')";
-									$dbconnection->query($query);
-								}
-				}
+					//adding text words to search_word
+					foreach($text as $word) {
+						if(empty($index[$word])) {
+							$query = "INSERT INTO search_index (word) VALUES ('". addslashes($word) ."')";
+							$dbconnection->query($query);
+							$index[$word] = $dbconnection->last_insert_id;
+						}
+						$query = "	INSERT INTO search_word(word_id, post_id) 
+									VALUES ('$index[$word]', '$post_id')";
+						$dbconnection->query($query);
+					}
+						
+						
+					}	
+				
+				redirect('../?view&id='. $created_post_id);
+			}
 
-							
-					redirect('../?view&id='. $created_post_id);
-				}
 			
 		break;
 		
