@@ -166,22 +166,106 @@ function split_text($text)
 }
 
 /*
- * This function builds some queries for the search engine
+ * This function fetches the id of each word.
+ * an array is returned in word => id format.
+ * returns false if there are no results.
  */
-function create_query($base_query, $and_or, $loop_var, $row, $operator) {
-	foreach($loop_var as $var) {
-		if(empty($append)) {
-			$append = " ". $row ." = '". $var ."' ". $and_or ."";
+function get_word_id($words) {
+	$index = get_index();
+		foreach($words as $word) {
+			$word_id[$word] = $index[$word];
 		}
-		else
-		{
-			$append .= " OR ". $row ." = '". $var ."' ". $and_or ."";
-		}
-		
-	$query = $base_query . $append;
+	if(empty($word_id)) {
+		return false;
 	}
-	return $query;
-
+	else
+	{
+		return $word_id;
+	}
 }
 
+/*
+ * This function gets the index out of the database used for searching.
+ * Use this function to supply index_title and index_text an index.
+ */
+function get_index() {
+	$query = "SELECT * FROM search_index";
+	$result = $dbconnection->query($query);
+	while($row = mysql_fetch_array($result)) {
+		$index[$row['word']] = $row['id'];
+	}
+	return $index;
+}
+
+/*
+ * This function indexes titles
+ * $index must we in the format of word => id
+ */
+function index_title($title, $index, $post_id) {
+	//cleaning and splitting text
+	$title = split_text($title);
+	$title = array_unique($title);
+	
+	foreach($title as $word) {
+		if(empty($index[$word])) {
+			$query = "INSERT INTO search_index (word) VALUES ('". addslashes($word) ."')";
+			$dbconnection->query($query);
+			$index[$word] = $dbconnection->last_insert_id;
+		}
+		$query = "	INSERT INTO search_word(word_id, post_id, title_match) 
+					VALUES ('$index[$word]', '$post_id', 1)";
+		$dbconnection->query($query);
+	}
+return true;	
+}
+
+/*
+ * This function indexes text
+ * $index must we in the format of word => id
+ */
+function index_text($text, $index, $post_id) {
+	$text = split_text($text);
+	$text = array_unique($text);
+	
+	foreach($text as $word) {
+		if(empty($index[$word])) {
+			$query = "INSERT INTO search_index (word) VALUES ('". addslashes($word) ."')";
+			$dbconnection->query($query);
+			$index[$word] = $dbconnection->last_insert_id;
+		}
+		$query = "	INSERT INTO search_word(word_id, post_id) 
+					VALUES ('$index[$word]', '$post_id')";
+		$dbconnection->query($query);
+	}
+return true;
+}
+
+/*
+ * Returns an array with the post id's that have a title match for the provided word id's.
+ */
+function search_title($word_id) {
+	foreach($word_id as $id) {
+		if(empty($query_append)) {
+			$sub_query = " word_id = '". $id ."' AND title_match = 1";
+		} 
+		else 
+		{
+			$sub_query .= " OR word_id = '". $id ."' AND title_match = 1";
+		}
+	}
+	$query = "  SELECT * 
+				FROM search_word
+				WHERE ". $sub_query."";
+	$result = $dbconnection->query($query);
+	while($row = mysql_fetch_array($result)) {
+		$post_id[] = $row['post_id'];
+	}
+}
+
+/*
+ * Returns an array with the post id's that have a text match for the provided word id's.
+ */
+function search_text($word_id) {
+	
+}
 ?>

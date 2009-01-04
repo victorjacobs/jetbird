@@ -16,7 +16,9 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	//setting magic quotes to avoid intersect problems in indexer
-	
+	/*
+	 * TODO: add a tag system for easy searching
+	 */
 	if(!function_exists("redirect")){		// This means that this page hasn't been included right
 		die();
 	}
@@ -97,12 +99,9 @@
 
 					/*
 					 * Start of the indexing process.
-					 * TODO: add a word count.										
-					 * TODO: find a way to avoid using so much array intersects.	
-					 * 
+					 * TODO: add a word count.
 					 */
-						
-						
+							
 					// Setting some vars
 					$text = $_POST['post_content'];
 					$title = $_POST['post_title'];
@@ -145,11 +144,8 @@
 						$query = "	INSERT INTO search_word(word_id, post_id) 
 									VALUES ('$index[$word]', '$post_id')";
 						$dbconnection->query($query);
-					}
-						
-						
 					}	
-				
+				}	
 				redirect('../?view&id='. $created_post_id);
 			}
 
