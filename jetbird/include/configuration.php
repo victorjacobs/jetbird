@@ -32,7 +32,7 @@
 	$config['blog']['view_post_max_comments'] = 10;
 	
 	// Uploader
-	$config['uploader']['max_file_size'] = "5mb";
+	$config['uploader']['max_file_size'] = "2mb";
 	$config['uploader']['upload_dir'] = "attachments/";
 	
 	// RSS

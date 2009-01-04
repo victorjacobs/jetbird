@@ -26,6 +26,12 @@
 	
 	require_once "../include/uploader.functions.php";
 	
+	if(unformat_size($config['uploader']['max_file_size']) > unformat_size(ini_get('upload_max_filesize'))){
+		// Just throw an ugly warning here:
+		trigger_error("max_file_size is bigger than PHP allows us (". format_size(unformat_size(ini_get('upload_max_filesize'))) .")", E_USER_WARNING);
+		$config['uploader']['max_file_size'] = ini_get('upload_max_filesize');
+	}
+	
 	// Find attachment directory, since $config gives us a path relative to jetbird's root
 	// NOTE: Need to find out how this code behaves on windows hosts
 	if($config['uploader']['upload_dir']{0} == "/"){
@@ -54,12 +60,6 @@
 				if($file['size'] > unformat_size($config['uploader']['max_file_size'])) $upload_error['file_too_big'] = true;
 								
 				if(count($upload_error) == 0){
-					if(empty($_FILES['uploaded_file']['type'])){
-						$mime = mime($_FILES['uploaded_file']['name']);
-					}else{
-						$mime = $_FILES['uploaded_file']['type'];
-					}
-					
 					list($file_type, ) = explode("/", $mime);
 					
 					$filename = md5(uniqid(rand(), true));

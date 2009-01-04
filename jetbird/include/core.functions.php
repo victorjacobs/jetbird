@@ -52,7 +52,7 @@
 		// If first three bytes don't give us anything, try to move pointer further but within limits
 		// Note: fgets moves pointer, in other words: fgetc gets the character after the last one from the
 		//  fgets call
-		if($signature == 0){
+		if($signature == "0"){
 			while(bin2hex(fgetc($handle)) == 0){
 				if(ftell($handle) > 128){
 					return false;
@@ -69,7 +69,7 @@
 	function read_mime($file){
 		switch(get_file_signature($file)){
 			case "8950": return "image/png"; break;
-			case "FFD8": return "image/jpeg"; break;
+			case "ffd8": return "image/jpeg"; break;
 			case "4749": return "image/gif"; break;
 			case "4d5a": return "application/octet-stream"; break;
 			case "504b": return "application/zip"; break;

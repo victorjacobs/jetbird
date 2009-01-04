@@ -16,16 +16,6 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
-	function mime($string){
-		$temp_arr = explode(".", $string);
-		$conversion = array("m4a" => "audio/m4a", "m4v" => "video/m4v", "c" => "text/c");
-		$mime = end($temp_arr);
-		if(!empty($conversion[$mime])){
-			$mime = $conversion[$mime];
-		}
-		return $mime;
-	}
-	
 	function format_size($size){
 		$suffixes = array(" bytes", " kB", " MB", " GB", " TB");
 		$exp = 0;
