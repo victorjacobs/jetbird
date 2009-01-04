@@ -26,17 +26,17 @@
 	
 	require_once "../include/uploader.functions.php";
 	
+	// Find attachment directory, since $config gives us a path relative to jetbird's root
+	// NOTE: Need to find out how this code behaves on windows hosts
+	if($config['uploader']['upload_dir']{0} == "/"){
+		$config['uploader']['upload_dir'] = "..". $config['uploader']['upload_dir'];
+	}else{
+		$config['uploader']['upload_dir'] = "../". $config['uploader']['upload_dir'];
+	}
+	
 	switch($action){
 		case "upload":
 			$smarty->assign("max_file_size", unformat_size($config['uploader']['max_file_size']));
-			
-			// Find attachment directory, since $config gives us a path relative to jetbird's root
-			// NOTE: Need to find out how this code behaves on windows hosts
-			if($config['uploader']['upload_dir']{0} == "/"){
-				$config['uploader']['upload_dir'] = "..". $config['uploader']['upload_dir'];
-			}else{
-				$config['uploader']['upload_dir'] = "../". $config['uploader']['upload_dir'];
-			}
 			
 			if(!file_exists($config['uploader']['upload_dir']) || !is_writable($config['uploader']['upload_dir'])){
 				$smarty->assign("error_message", "Upload directory doesn't exist, or isn't writable.");
@@ -52,8 +52,7 @@
 				if(!is_uploaded_file($file['tmp_name'])) $upload_error['invalid_upload'] = true;
 				if($file['size'] <= 0) $upload_error['invalid_upload'] = true;
 				if($file['size'] > unformat_size($config['uploader']['max_file_size'])) $upload_error['file_too_big'] = true;
-
-				
+								
 				if(count($upload_error) == 0){
 					if(empty($_FILES['uploaded_file']['type'])){
 						$mime = mime($_FILES['uploaded_file']['name']);
@@ -84,6 +83,8 @@
 						if(!$dbconnection->query($query)){		// Destroy file if query doesn't succeed
 							unlink($target);
 						}else{
+							$download_link = jetbird_root_url() . "?download&amp;id=". $dbconnection->last_insert_id;
+							$smarty->assign("download_link", $download_link);
 							$smarty->assign("success", true);
 						}
 						
@@ -95,6 +96,40 @@
 					$smarty->assign("upload_error", $upload_error);
 				}
 			}
+		break;
+		
+		case "delete":
+		
+			if(isset($_POST['submit']) && isset($_POST['id'])){
+				$file_query = $dbconnection->query("SELECT * FROM attachment_list WHERE attachment_id = ". $_POST['id']);
+				
+				if($dbconnection->num_rows($file_query) == 1){
+					$file_info = $dbconnection->fetch_array($file_query);
+					
+					$query = "DELETE FROM attachment_list WHERE attachment_id = ". $_POST['id'];
+					if($dbconnection->query($query) &&
+								@unlink($config['uploader']['upload_dir'] . $file_info[0]['attachment_file'])){
+						$success = true;
+					}else{
+						$success = false;
+					}
+					
+					if($_POST['method'] == "ajax"){		// If delete was requested via ajax
+						if($success){
+							echo "success";
+						}else{
+							echo "fail";
+						}
+						
+						die();							// we don't need smarty to show us a template here
+					}else{
+						redirect("./?file");
+					}
+				}
+			}else{
+				$smarty->display("admin.file.tpl");
+			}
+		
 		break;
 		
 		default:

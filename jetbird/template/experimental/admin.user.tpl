@@ -118,7 +118,6 @@
 				<p>
 					<table width="100%">
 						<tr>
-							<td><b>ID</b></td>
 							<td width="100"><b>Name</b></td>
 							<td><b>Mail</b></td>
 							<td><b>Last login</b></td>
@@ -127,8 +126,7 @@
 						</tr>
 						{foreach from=$users item=user}
 						<tr>
-							<td{if $user.user_level == -2} style="background-color: #89322e; color: white;"{/if}>{$user.user_id}</td>
-							<td>{$user.user_name}</td>
+							<td{if $user.user_level == -2} style="background-color: #89322e; color: white;"{/if}>{$user.user_name}</td>
 							<td>{$user.user_mail}</td>
 							<td>{if !$user.user_last_login}<i>Never</i>{else}{$user.user_last_login|date_format:"%d/%m/%y %H:%I"}{/if}</td>
 							<td><a href="./?user&amp;edit&amp;id={$user.user_id}">Edit</a></td>
@@ -147,6 +145,7 @@
 							<td><b>Sent to</b></td>
 							<td width="96"><b>Created on</b></td>
 						</tr>
+						{if !empty($keys)}
 						{foreach from=$keys item=key}
 						<tr>
 							<td>{$key.user_reg_key}</td>
@@ -154,6 +153,7 @@
 							<td>{$key.user_last_login|date_format:"%d/%m/%y %H:%I"}</td>
 						</tr>
 						{/foreach}
+						{/if}
 					</table>
 				</p>
 				<p>

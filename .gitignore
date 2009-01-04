@@ -4,3 +4,7 @@ cache
 .svn
 .DS_Store
 attachments/
+.project
+.cache/
+test.php
+test/

@@ -38,7 +38,7 @@
 				{if !$comments and $post.comment_status == "closed" and $smarty.session.user_level != 1}
 				<p>Comments closed</p>
 				{else}
-				{if isset($comments)}
+				{if !empty($comments)}
 				{foreach from=$comments item=comment}
 				<div class="comment">
 					<p>{$comment.comment_content|bbcode|nl2br}</p>
