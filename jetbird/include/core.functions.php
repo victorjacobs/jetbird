@@ -27,8 +27,19 @@
 	*	8950 => png
 	*	FFD8 => jpg (SOI)
 	*	4749 => gif
+	*	4d5a => exe
+	*	504b => zip
+	*	5261 => rar
+	*	377a => 7zip
+	*	2550 => pdf
+	*	d0cf => word 2003 doc
+	*	5249 => avi
+	*	3026 => wmv
 	*
-	*	Since these are the only file types supported by GD, we only need to check those
+	*	Problems with:
+	*	- iso files > don't seem to have a header
+	*	- mp4 and mov files have the same signature cause they are essentially the same
+	*	- mpg files have two mime types: audio/mpeg and video/mpeg
 	*/
 	
 	function get_file_signature($file){
@@ -37,6 +48,19 @@
 		}
 			
 		$signature = bin2hex(fgets($handle, 3));
+		
+		// If first three bytes don't give us anything, try to move pointer further but within limits
+		// Note: fgets moves pointer, in other words: fgetc gets the character after the last one from the
+		//  fgets call
+		if($signature == 0){
+			while(bin2hex(fgetc($handle)) == 0){
+				if(ftell($handle) > 128){
+					return false;
+				}
+			}
+			$signature = bin2hex(fgets($handle, 3));
+		}
+		
 		fclose($handle);
 		
 		return $signature;
@@ -47,6 +71,15 @@
 			case "8950": return "image/png"; break;
 			case "FFD8": return "image/jpeg"; break;
 			case "4749": return "image/gif"; break;
+			case "4d5a": return "application/octet-stream"; break;
+			case "504b": return "application/zip"; break;
+			case "5261": return "application/x-rar-compressed"; break;
+			case "377a": return "application/x-7z-compressed"; break;
+			case "2550": return "application/pdf"; break;
+			case "d0cf": return "application/msword"; break;
+			case "5249": return "video/avi"; break;
+			case "3026": return "video/x-ms-wmv"; break;
+			
 			default: return false; break;
 		}
 	}
