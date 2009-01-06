@@ -25,6 +25,7 @@
 	}
 	
 	require_once "../include/uploader.functions.php";
+	require_once "../include/file.functions.php";
 	
 	if(unformat_size($config['uploader']['max_file_size']) > unformat_size(ini_get('upload_max_filesize'))){
 		// Just throw an ugly warning here:
@@ -60,6 +61,13 @@
 				if($file['size'] > unformat_size($config['uploader']['max_file_size'])) $upload_error['file_too_big'] = true;
 								
 				if(count($upload_error) == 0){
+					if(empty($file['type']) && read_mime($file['tmp_name']) !== false){
+						$mime = read_mime($file['tmp_name']);
+					}elseif($file['type'] != read_mime($file['tmp_name'])){
+						//unlink($file['tmp_name']);
+						die("type mismatch! PHP reports: <b>". $file['type'] ."</b> real type is: <b>". read_mime($file['tmp_name']) ."</b>");
+					}
+					
 					list($file_type, ) = explode("/", $mime);
 					
 					$filename = md5(uniqid(rand(), true));
