@@ -88,10 +88,10 @@
 											". $file['size'] .",
 											". time() .")";
 						
-						if(!$dbconnection->query($query)){		// Destroy file if query doesn't succeed
+						if(!$db->query($query)){		// Destroy file if query doesn't succeed
 							unlink($target);
 						}else{
-							$download_link = jetbird_root_url() . "?download&amp;id=". $dbconnection->last_insert_id;
+							$download_link = jetbird_root_url() . "?download&amp;id=". $db->last_insert_id;
 							$smarty->assign("download_link", $download_link);
 							$smarty->assign("success", true);
 						}
@@ -109,13 +109,13 @@
 		case "delete":
 		
 			if(isset($_POST['submit']) && isset($_POST['id'])){
-				$file_query = $dbconnection->query("SELECT * FROM attachment_list WHERE attachment_id = ". $_POST['id']);
+				$file_query = $db->query("SELECT * FROM attachment_list WHERE attachment_id = ". $_POST['id']);
 				
-				if($dbconnection->num_rows($file_query) == 1){
-					$file_info = $dbconnection->fetch_array($file_query);
+				if($db->num_rows($file_query) == 1){
+					$file_info = $db->fetch_array($file_query);
 					
 					$query = "DELETE FROM attachment_list WHERE attachment_id = ". $_POST['id'];
-					if($dbconnection->query($query) &&
+					if($db->query($query) &&
 								@unlink($config['uploader']['upload_dir'] . $file_info[0]['attachment_file'])){
 						$success = true;
 					}else{
@@ -145,11 +145,11 @@
 						FROM attachment_list, user
 						WHERE user.user_id = attachment_list.attachment_owner
 						ORDER BY attachment_date DESC";
-			$smarty->assign("attachments", $dbconnection->fetch_array($query));
+			$smarty->assign("attachments", $db->fetch_array($query));
 		break;
 	}
 	
-	$smarty->assign("queries", $dbconnection->queries);
+	$smarty->assign("queries", $db->queries);
 	$smarty->display("admin.file.tpl");
 
 ?>

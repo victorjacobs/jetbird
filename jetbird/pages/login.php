@@ -28,10 +28,10 @@
 						WHERE user_name = '". $_POST['username'] ."'
 						AND user_pass = '$password'
 						AND NOT user_level = -2";
-			$result = $dbconnection->query($query);
+			$result = $db->query($query);
 			
-			if($dbconnection->num_rows($result) == 1){
-				$user = $dbconnection->fetch_array($result);
+			if($db->num_rows($result) == 1){
+				$user = $db->fetch_array($result);
 				
 				// Bootstrap
 				if(isset($_POST['rememberlogin'])){
@@ -53,7 +53,7 @@
 					$_SESSION['login'] = true;
 				}
 				
-				$dbconnection->query("	UPDATE user
+				$db->query("	UPDATE user
 										SET user_last_login = ". time() ."
 										WHERE user_id = ". $user[0]['user_id']);
 				
@@ -67,7 +67,7 @@
 		}
 	}
 	
-	$smarty->assign('queries', $dbconnection->queries);
+	$smarty->assign('queries', $db->queries);
 	$smarty->display("login.tpl");
 
 ?>

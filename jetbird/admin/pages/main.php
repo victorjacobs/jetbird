@@ -24,7 +24,7 @@
 		die();
 	}
 	
-	$comments = $dbconnection->fetch_array(
+	$comments = $db->fetch_array(
 	"	SELECT comment.*, post.post_title
 		FROM comment, post
 		WHERE comment.comment_parent_post_id = post.post_id
@@ -33,7 +33,7 @@
 	");
 	$smarty->assign("comments", $comments);
 	
-	$smarty->assign("queries", $dbconnection->queries);
+	$smarty->assign("queries", $db->queries);
 	$smarty->display('admin.index.tpl');
 	
 ?>

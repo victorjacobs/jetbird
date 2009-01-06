@@ -33,7 +33,7 @@
 	// Figure out what the lower limit is based on the current page and settings in configuration.php
 	$pagination_lower_limit = (($page * $config['blog']['landing_page_max_posts']) - $config['blog']['landing_page_max_posts']);
 	
-	$total_number_posts = $dbconnection->fetch_result("SELECT COUNT(post_id) FROM post");
+	$total_number_posts = $db->fetch_result("SELECT COUNT(post_id) FROM post");
 	
 	if($pagination_lower_limit > $total_number_posts){
 		while(($page * $config['blog']['landing_page_max_posts']) - $config['blog']['landing_page_max_posts'] > $total_number_posts) $page--;
@@ -67,10 +67,10 @@
 	$smarty->assign("pagination", array("next" => $display_next_link, "prev" => $display_prev_link,
 										"page" => $page, "total_pages" => $total_pages));
 	
-	$posts = $dbconnection->fetch_array($query);
+	$posts = $db->fetch_array($query);
 	
 	$smarty->assign("posts", $posts);
-	$smarty->assign("queries", $dbconnection->queries);
+	$smarty->assign("queries", $db->queries);
 	
 	$smarty->display('index.tpl');
 

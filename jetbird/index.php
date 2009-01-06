@@ -55,7 +55,7 @@
 		}
 	}
 	
-	$dbconnection->close();
+	$db->close();
 	
 	ob_end_flush();
 

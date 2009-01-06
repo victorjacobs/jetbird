@@ -41,14 +41,14 @@
 								
 				// putting key into DB
 				$query = "INSERT INTO user (user_reg_key) VALUES ('$key')";
-				$dbconnection->query($query);
+				$db->query($query);
 			}		
 		break;
 		
 		case "edit":
 			if(isset($_POST['submit']) && !empty($_GET['id'])){
 				// Checks
-				$user_info = $dbconnection->fetch_array("SELECT * FROM user WHERE user_id = ". $_GET['id']);
+				$user_info = $db->fetch_array("SELECT * FROM user WHERE user_id = ". $_GET['id']);
 				if(empty($user_info[0]['user_level'])) $user_edit_error['user_does_not_exist'] = true;
 				if(!isset($_POST['user_name']) || empty($_POST['user_name'])) $user_edit_error["username"] = true;
 				if(isset($_POST['user_mail']) && !empty($_POST['user_mail'])){
@@ -78,7 +78,7 @@
 									user_mail = '". $_POST['user_mail'] ."'
 									WHERE user_id = ". $_GET['id'];
 					}
-					$dbconnection->query($query);
+					$db->query($query);
 					
 					if($user_info[0]['user_level'] == -2){
 						redirect("./?user&deleted");
@@ -95,28 +95,28 @@
 					redirect("./?user");
 				}
 
-				$query = $dbconnection->query("SELECT * FROM user WHERE user_id = ". $_GET['id']);
+				$query = $db->query("SELECT * FROM user WHERE user_id = ". $_GET['id']);
 
-				if($dbconnection->num_rows($query) != 1){
+				if($db->num_rows($query) != 1){
 					redirect("./?user");
 				}			
 
-				$smarty->assign("user", $dbconnection->fetch_array($query));
+				$smarty->assign("user", $db->fetch_array($query));
 			}
 		break;
 		
 		case "delete":
 			if(isset($_POST['submit']) && isset($_POST['id'])){
-				$user_level_result = $dbconnection->query("SELECT user_level FROM user WHERE user_id = ". $_POST['id']);
+				$user_level_result = $db->query("SELECT user_level FROM user WHERE user_id = ". $_POST['id']);
 				
-				if($dbconnection->num_rows($user_level_result) == 1){
-					if($dbconnection->fetch_result($user_level_result) == -2){
+				if($db->num_rows($user_level_result) == 1){
+					if($db->fetch_result($user_level_result) == -2){
 						$delete_query = "UPDATE user SET user_level = 1 WHERE user_id = ". $_POST['id'];
 					}else{
 						$delete_query = "UPDATE user SET user_level = -2 WHERE user_id = ". $_POST['id'];
 					}
 					
-					if($dbconnection->query($delete_query)){
+					if($db->query($delete_query)){
 						$success = true;
 					}else{
 						$success = false;
@@ -153,7 +153,7 @@
 						$key = generate_reg_key();
 						$generated_keys[] = $key;
 						
-						$dbconnection->query(
+						$db->query(
 						"	INSERT INTO user (user_reg_key, user_last_login, user_level)
 							VALUES ('". $key ."', '". time() ."', '-1')
 						");
@@ -173,14 +173,14 @@
 				$query = "SELECT * FROM user WHERE NOT user_level = -1 AND NOT user_level = -2";
 			}
 			
-			$smarty->assign("users", $dbconnection->fetch_array($query));
+			$smarty->assign("users", $db->fetch_array($query));
 			
 			$query = "SELECT * FROM user WHERE user_level = -1";
-			$smarty->assign("keys", $dbconnection->fetch_array($query));
+			$smarty->assign("keys", $db->fetch_array($query));
 		break;
 	}
 	
-	$smarty->assign("queries", $dbconnection->queries);
+	$smarty->assign("queries", $db->queries);
 	$smarty->display('admin.user.tpl');
 	
 ?>

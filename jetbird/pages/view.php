@@ -30,10 +30,10 @@
 				WHERE post_id = ". $_GET['id'] ." 
 				AND user.user_id = post.post_author";			
 
-	$result = $dbconnection->query($query);
+	$result = $db->query($query);
 	
-	if($dbconnection->num_rows($result) == 1){
-		$result = $dbconnection->fetch_array($result);
+	if($db->num_rows($result) == 1){
+		$result = $db->fetch_array($result);
 		$smarty->assign("post", $result[0]);
 		
 		if(isset($_GET['page']) && $_GET['page'] <= 1){		// TODO: protect this with some regex or something
@@ -53,7 +53,7 @@
 	// Figure out what the lower limit is based on the current page and settings in configuration.php
 	$pagination_lower_limit = (($page * $config['blog']['view_post_max_comments']) - $config['blog']['view_post_max_comments']);
 	
-	$total_number_comments = $dbconnection->fetch_result("SELECT COUNT(comment_id) FROM comment WHERE comment_parent_post_id = ". $_GET['id']);
+	$total_number_comments = $db->fetch_result("SELECT COUNT(comment_id) FROM comment WHERE comment_parent_post_id = ". $_GET['id']);
 	
 	if($pagination_lower_limit > $total_number_comments){
 		while(($page * $config['blog']['view_post_max_comments']) - $config['blog']['view_post_max_comments'] > $total_number_posts) $page--;
@@ -66,7 +66,7 @@
 		ORDER BY comment_id DESC
 		LIMIT ". $pagination_lower_limit .", ". $config['blog']['view_post_max_comments'];	
 
-	$comments = $dbconnection->fetch_array($query);
+	$comments = $db->fetch_array($query);
 	
 	if(count($comments) != 0){
 		$smarty->assign("comments", $comments);
@@ -100,7 +100,7 @@
 		unset($_SESSION['comment_data']);
 	}
 	
-	$smarty->assign('queries', $dbconnection->queries);	
+	$smarty->assign('queries', $db->queries);	
 	$smarty->display('view.tpl');
 	
 ?>

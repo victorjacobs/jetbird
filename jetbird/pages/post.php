@@ -63,7 +63,7 @@
 							'". time() ."', 
 							'". addslashes($_POST['comment']) ."',
 							'". session_id() ."')";
-				$result = $dbconnection->query($query);
+				$result = $db->query($query);
 				redirect("./?view&id=" . $_GET['id'] ."#comments");
 			}else{
 				redirect("./");		// Just being lame here

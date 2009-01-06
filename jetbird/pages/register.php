@@ -31,7 +31,7 @@
 	}
 	
 	$query = "SELECT * FROM user WHERE user_reg_key = '". $key ."'";
-	$user_info = $dbconnection->fetch_array($query);
+	$user_info = $db->fetch_array($query);
 		
 	if(count($user_info) == 1){			
 		if(isset($_POST['submit'])){
@@ -50,7 +50,7 @@
 			}
 			
 			if(isset($_POST['username']) && !empty($_POST['username'])){
-				if($dbconnection->num_rows("SELECT * FROM user WHERE user_name = '". $_POST['username'] ."'") == 1){
+				if($db->num_rows("SELECT * FROM user WHERE user_name = '". $_POST['username'] ."'") == 1){
 					$register_error['username_exists'] = true;
 				}
 			}else{
@@ -71,7 +71,7 @@
 				$pass_encrypted = md5($_POST['pass']);
 				
 				// Use the user_id fetched earlier on to enter user info
-				$dbconnection->query(
+				$db->query(
 				"	UPDATE user
 					SET user_name = '". $_POST['username'] ."',
 					user_pass = '". $pass_encrypted ."',

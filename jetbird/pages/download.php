@@ -26,12 +26,12 @@
 	
 	require_once "include/uploader.functions.php";
 	
-	$file_info_query = $dbconnection->query("SELECT * FROM attachment_list WHERE attachment_id = ". $_GET['id']);
-	if($dbconnection->num_rows($file_info_query) != 1){
+	$file_info_query = $db->query("SELECT * FROM attachment_list WHERE attachment_id = ". $_GET['id']);
+	if($db->num_rows($file_info_query) != 1){
 		redirect("./");
 	}
 	
-	$file_info = $dbconnection->fetch_array($file_info_query);
+	$file_info = $db->fetch_array($file_info_query);
 	$file_info = $file_info[0];
 	
 	// Start teh magic
