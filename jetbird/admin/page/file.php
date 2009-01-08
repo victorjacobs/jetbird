@@ -24,8 +24,8 @@
 		die();
 	}
 	
-	require_once "../include/uploader.functions.php";
-	require_once "../include/file.functions.php";
+	load("uploader");
+	load("file");
 	
 	if(unformat_size($config['uploader']['max_file_size']) > unformat_size(ini_get('upload_max_filesize'))){
 		// Just throw an ugly warning here:

@@ -20,18 +20,18 @@
 	define("ADMIN_MODE", false);
 	ob_start();
 	session_start();
-	//making sure all the data we recieve is UTF-8, 
-	//from now on there is only one charset in the world for me: UTF-8
+	// Make sure all the data we recieve is UTF-8, 
+	// from now on there is only one charset in the world for me: UTF-8
 	header('Content-Type: text/html; charset=utf-8');
-	require_once "include/core.functions.php";
+	
+	require_once "include/bootstrap.functions.php";
+	
+	load("core");
 	$process_start = timer();		// Use this wherever you want, can be useful for debugging
-	require_once "include/configuration.php";
-	require_once "include/database.handler.class.php";
-	require_once "include/database.connect.php";
-	require_once "include/search.functions.php";
-	require_once "include/smarty/Smarty.class.php";
-	require_once "include/smarty.handler.class.php";
-	require_once "include/login.bootstrap.php";
+	load("configuration");
+	load("database_connect");
+	load("smarty_handler");
+	load("login_bootstrap");
 	
 	$smarty = new smarty_handler;
 	

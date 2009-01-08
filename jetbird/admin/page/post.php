@@ -25,6 +25,9 @@
 		die();
 	}
 	
+	// Load search functions
+	load("search");
+	
 	switch($action){
 		case "edit":
 		
