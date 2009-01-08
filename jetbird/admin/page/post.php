@@ -27,6 +27,9 @@
 		die();
 	}
 	
+	// Load search functions
+	load("search");
+	
 	switch($action){
 		case "edit":
 		
@@ -53,7 +56,7 @@
 								post_title = '". $_POST['post_title'] ."',
 								comment_status = '". $_POST['comment_status'] ."'
 								WHERE post_id = ". $_GET['id'];
-					$dbconnection->query($query);
+					$db->query($query);
 					redirect("../?view&id=". $_GET['id']);
 					die();
 				}
@@ -62,7 +65,7 @@
 							FROM post 
 							WHERE post_id =". $_GET['id'];
 						
-				$result = $dbconnection->fetch_array($query);
+				$result = $db->fetch_array($query);
 				
 				// Assume there is only one result
 				$main['post'] = htmlentities($result[0]["post_content"]);
@@ -91,11 +94,12 @@
 								'". $_POST['post_title'] ."',
 								'". $_POST['comment_status'] ."')";
 
-					$result = $dbconnection->query($query);
+					$result = $db->query($query);
 					
-					$created_post_id = $dbconnection->last_insert_id;
+					$created_post_id = $db->last_insert_id;
 					
 					
+
 
 					/*
 					 * Start of the indexing process.
@@ -146,6 +150,7 @@
 						$dbconnection->query($query);
 					}	
 				}	
+
 				redirect('../?view&id='. $created_post_id);
 			}
 
@@ -153,13 +158,13 @@
 		break;
 		
 		default:
-			$smarty->assign("posts", $dbconnection->fetch_array(
+			$smarty->assign("posts", $db->fetch_array(
 				"SELECT *
 				FROM post, user
 				WHERE post.post_author = user.user_id
 				ORDER BY post.post_date DESC
 				"));
-			// $foo = $dbconnection->fetch_array(
+			// $foo = $db->fetch_array(
 			// "	SELECT post. * , user.user_name , COUNT( comment.comment_id ) AS comment_count
 			// 	FROM comment LEFT JOIN (
 			// 	post, user
@@ -173,11 +178,11 @@
 		
 		case "delete":
 			if(isset($_POST['submit']) && isset($_POST['id'])){
-				if($dbconnection->num_rows("SELECT * FROM post WHERE post_id = ". $_POST['id']) == 1){
+				if($db->num_rows("SELECT * FROM post WHERE post_id = ". $_POST['id']) == 1){
 					$delete_post = "DELETE FROM post WHERE post_id = ". $_POST['id'];
 					$delete_comments = "DELETE FROM comment WHERE comment_parent_post_id = ". $_POST['id'];
 					$delete_search = "DELETE FROM search_word WHERE post_id = ". $_POST['id'] ."";
-					if($dbconnection->query($delete_post) && $dbconnection->query($delete_comments) && $dbconnection->query($delete_search)){
+					if($db->query($delete_post) && $db->query($delete_comments) && $db->query($delete_search)){
 						$success = true;
 					}else{
 						$success = false;
@@ -201,7 +206,7 @@
 		break;
 	}
 		
-	$smarty->assign("queries", $dbconnection->queries);
+	$smarty->assign("queries", $db->queries);
 	$smarty->display('admin.post.tpl');
 
 ?>

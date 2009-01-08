@@ -22,18 +22,18 @@
 	define("ADMIN_MODE", true);
 	ob_start();
 	session_start();
-	//making sure all the data we recieve is UTF-8, 
-	//from now on there is only one charset in the world for me: UTF-8
+	// Make sure all the data we recieve is UTF-8, 
+	// from now on there is only one charset in the world for me: UTF-8
 	header('Content-Type: text/html; charset=utf-8');
-	require_once "../include/core.functions.php";
-	$process_start = timer();		// use this wherever you want, can be useful for debugging
-	require_once "../include/configuration.php";
-	require_once "../include/database.handler.class.php";
-	require_once "../include/database.connect.php";
-	require_once "../include/search.functions.php";
-	require_once "../include/smarty/Smarty.class.php";
-	require_once "../include/smarty.handler.class.php";
-	require_once "../include/login.bootstrap.php";
+	
+	require_once "../include/bootstrap.functions.php";
+	
+	load("core");
+	$process_start = timer();		// Use this wherever you want, can be useful for debugging
+	load("configuration");
+	load("database_connect");
+	load("smarty_handler");
+	load("login_bootstrap");
 	
 	// We don't want regular users to sniff around in here
 	if(!$_SESSION['login'] || $_SESSION['user_level'] ==! 1){
@@ -48,7 +48,7 @@
 	
 	$action = $arguments[1];
 	
-	if(isset($arguments) && file_exists("pages/". $arguments[0] .".php") && is_readable("pages/". $arguments[0] .".php") && eregi("^[a-z0-9_-]+$", $arguments[0])){
+	if(isset($arguments) && file_exists("page/". $arguments[0] .".php") && is_readable("page/". $arguments[0] .".php") && eregi("^[a-z0-9_-]+$", $arguments[0])){
 		$include = strtolower($arguments[0]);
 	}elseif(empty($arguments[0]) || !empty($_GET[$arguments[0]])){		// if arguments for specific page like ./?page=1
 		$include = "main";
@@ -56,7 +56,7 @@
 		redirect("./");
 	}
 	
-	require_once "pages/". $include .".php";
+	require_once "page/". $include .".php";
 	
 	ob_end_flush();
 	

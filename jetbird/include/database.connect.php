@@ -16,8 +16,11 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
+	// Load class
+	load("database_handler");
+	
 	// Connect
-	$dbconnection = new database_handler;
-	$dbconnection->connect($config['database']['user'], $config['database']['pass'], $config['database']['database'], $config['database']['host']);
+	$db = new database_handler;
+	$db->connect($config['database']['user'], $config['database']['pass'], $config['database']['database'], $config['database']['host']);
 
 ?>

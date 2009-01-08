@@ -19,6 +19,8 @@
 		die();
 	}
 	
+	load("search");
+	
 	switch($_GET['action']) {
 		//BROKEN
 		case "search":
@@ -43,9 +45,11 @@
 			/*
 			 * Getting ID's
 			 */
-			
-			$query = create_query("SELECT id FROM search_index WHERE", "", $search_word , "word", "OR" );
-			$result = $dbconnection->query($query);
+
+				
+				$query = create_query("SELECT id FROM search_index WHERE", "", $search_word , "word", "OR" );
+				$result = $db->query($query);
+
 				
 				while ($row = mysql_fetch_array($result)) {
 					$word_id[] = $row['id'];
@@ -60,7 +64,7 @@
 				//Building the query...
 				
 				$query = create_query("SELECT post_id, title_match FROM search_word WHERE", "AND title_match = 1", $word_id , "word_id", "OR" );
-				$result = $dbconnection->query($query);
+				$result = $db->query($query);
 				while($row = mysql_fetch_array($result)) {
 					$id_title_match[] = $row['post_id'];
 				}
@@ -73,7 +77,7 @@
 			 * BODY SECTION: fetching the posts that don't have a title match
 			 */
 				$query = create_query("SELECT post_id, title_match FROM search_word WHERE", "AND title_match = 0", $word_id, "word_id", "OR" );
-				$result = $dbconnection->query($query);
+				$result = $db->query($query);
 				while($row = mysql_fetch_array($result)) {
 					$id_word_match[] = $row['post_id'];
 				}
@@ -98,16 +102,19 @@
 			 * fetching posts
 			 */
 			foreach($double as $id) {
-				$total[] = $dbconnection->fetch_array("SELECT * FROM post WHERE post_id = ". $id ."");
+				$total[] = $db->fetch_array("SELECT * FROM post WHERE post_id = ". $id ."");
 				//die(var_dump($double));
 			}
 			
 			foreach($title as $id) {
-				$total[] = $dbconnection->fetch_array("SELECT * FROM post WHERE post_id = ". $id ."");
+				$total[] = $db->fetch_array("SELECT * FROM post WHERE post_id = ". $id ."");
 			}
 			
-			foreach($body as $id) { //something is not right with the $body
-				$total[] = $dbconnection->fetch_array("SELECT * FROM post WHERE post_id = ". $id ."");
+
+
+			foreach($body as $id) {
+				$total[] = $db->fetch_array("SELECT * FROM post WHERE post_id = ". $id ."");
+
 			}
 			die(var_dump($body));
 		$smarty->assign("results", $total);	
@@ -122,17 +129,17 @@
 			
 			if($_GET['done'] != 1) {
 			$query = "TRUNCATE search_index";
-			$dbconnection->query($query);
+			$db->query($query);
 			
 			$query = "TRUNCATE search_word";
-			$dbconnection->query($query);
+			$db->query($query);
 			
 			$query = "TRUNCATE search_cache";
-			$dbconnection->query($query);
+			$db->query($query);
 			}
 			//fetching all the posts form the DB.
 			$query = "SELECT post_content, post_id, post_title FROM post";
-			$result = $dbconnection->query($query);
+			$result = $db->query($query);
 			while($row = mysql_fetch_array($result)) {
 				$array_post[$row['post_id']] = array($row['post_content'], $row['post_title']);
 			}
@@ -160,7 +167,7 @@
 						
 						//fetching the search_index from the DB and put it in a nice array
 						$query = "SELECT * FROM search_index";
-						$result = $dbconnection->query($query);
+						$result = $db->query($query);
 						
 						while($row = mysql_fetch_array($result)) {
 							$index[$row['id']] = $row['word'];
@@ -176,7 +183,7 @@
 								foreach ($keyword_uniq_all as $word) {
 									
 									$query = "INSERT INTO search_index (word) VALUES ('". addslashes($word) ."')";
-									$dbconnection->query($query);
+									$db->query($query);
 								}
 							
 							/*
@@ -190,7 +197,7 @@
 								
 								
 								$query = "SELECT * FROM search_index";
-								$result = $dbconnection->query($query);								
+								$result = $db->query($query);								
 								while($row = mysql_fetch_array($result)) {
 									$index[$row['word']] = $row['id'];
 								}
@@ -201,7 +208,7 @@
 									$word_id = $word_id + 1;
 									$query = "	INSERT INTO search_word(word_id, post_id, title_match) 
 												VALUES ('$word_id', '$post_id', 1)";
-									$dbconnection->query($query);
+									$db->query($query);
 								}
 								
 								$keyword_text_flip = array_flip($keyword_uniq_text);
@@ -210,7 +217,7 @@
 									$word_id = $word_id + 1;
 									$query = "	INSERT INTO search_word(word_id, post_id) 
 												VALUES ('$word_id', '$post_id')";
-									$dbconnection->query($query);
+									$db->query($query);
 								}
 								
 						
@@ -228,7 +235,7 @@
 							
 							foreach ($new_words as $word) {
 								$query = "INSERT INTO search_index (word) VALUES ('". addslashes($word) ."')";
-								$dbconnection->query($query);
+								$db->query($query);
 							}
 							
 						
@@ -246,7 +253,7 @@
 								$word_id = $word_id + 1;
 								$query = "	INSERT INTO search_word(word_id, post_id, title_match) 
 											VALUES ('$word_id', '$post_id', 1)";
-								$dbconnection->query($query);
+								$db->query($query);
 							}
 							
 							//text
@@ -256,13 +263,13 @@
 									$word_id = $word_id + 1;
 									$query = "	INSERT INTO search_word(word_id, post_id) 
 												VALUES ('$word_id', '$post_id')";
-									$dbconnection->query($query);
+									$db->query($query);
 								}
 				
 			}
 	}
 	
-	$smarty->assign("queries", $dbconnection->queries);
+	$smarty->assign("queries", $db->queries);
 	$smarty->display("search.tpl");
 	
 ?>	

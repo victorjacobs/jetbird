@@ -24,7 +24,14 @@
 		die();
 	}
 	
-	require_once "../include/uploader.functions.php";
+	load("uploader");
+	load("file");
+	
+	if(unformat_size($config['uploader']['max_file_size']) > unformat_size(ini_get('upload_max_filesize'))){
+		// Just throw an ugly warning here:
+		trigger_error("max_file_size is bigger than PHP allows us (". format_size(unformat_size(ini_get('upload_max_filesize'))) .")", E_USER_WARNING);
+		$config['uploader']['max_file_size'] = ini_get('upload_max_filesize');
+	}
 	
 	// Find attachment directory, since $config gives us a path relative to jetbird's root
 	// NOTE: Need to find out how this code behaves on windows hosts
@@ -54,10 +61,11 @@
 				if($file['size'] > unformat_size($config['uploader']['max_file_size'])) $upload_error['file_too_big'] = true;
 								
 				if(count($upload_error) == 0){
-					if(empty($_FILES['uploaded_file']['type'])){
-						$mime = mime($_FILES['uploaded_file']['name']);
-					}else{
-						$mime = $_FILES['uploaded_file']['type'];
+					if(empty($file['type']) && read_mime($file['tmp_name']) !== false){
+						$mime = read_mime($file['tmp_name']);
+					}elseif($file['type'] != read_mime($file['tmp_name'])){
+						//unlink($file['tmp_name']);
+						die("type mismatch! PHP reports: <b>". $file['type'] ."</b> real type is: <b>". read_mime($file['tmp_name']) ."</b>");
 					}
 					
 					list($file_type, ) = explode("/", $mime);
@@ -80,10 +88,10 @@
 											". $file['size'] .",
 											". time() .")";
 						
-						if(!$dbconnection->query($query)){		// Destroy file if query doesn't succeed
+						if(!$db->query($query)){		// Destroy file if query doesn't succeed
 							unlink($target);
 						}else{
-							$download_link = jetbird_root_url() . "?download&amp;id=". $dbconnection->last_insert_id;
+							$download_link = jetbird_root_url() . "?download&amp;id=". $db->last_insert_id;
 							$smarty->assign("download_link", $download_link);
 							$smarty->assign("success", true);
 						}
@@ -101,13 +109,13 @@
 		case "delete":
 		
 			if(isset($_POST['submit']) && isset($_POST['id'])){
-				$file_query = $dbconnection->query("SELECT * FROM attachment_list WHERE attachment_id = ". $_POST['id']);
+				$file_query = $db->query("SELECT * FROM attachment_list WHERE attachment_id = ". $_POST['id']);
 				
-				if($dbconnection->num_rows($file_query) == 1){
-					$file_info = $dbconnection->fetch_array($file_query);
+				if($db->num_rows($file_query) == 1){
+					$file_info = $db->fetch_array($file_query);
 					
 					$query = "DELETE FROM attachment_list WHERE attachment_id = ". $_POST['id'];
-					if($dbconnection->query($query) &&
+					if($db->query($query) &&
 								@unlink($config['uploader']['upload_dir'] . $file_info[0]['attachment_file'])){
 						$success = true;
 					}else{
@@ -137,11 +145,11 @@
 						FROM attachment_list, user
 						WHERE user.user_id = attachment_list.attachment_owner
 						ORDER BY attachment_date DESC";
-			$smarty->assign("attachments", $dbconnection->fetch_array($query));
+			$smarty->assign("attachments", $db->fetch_array($query));
 		break;
 	}
 	
-	$smarty->assign("queries", $dbconnection->queries);
+	$smarty->assign("queries", $db->queries);
 	$smarty->display("admin.file.tpl");
 
 ?>

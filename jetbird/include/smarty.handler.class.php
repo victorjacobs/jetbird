@@ -22,6 +22,7 @@
 		function __construct(){
 			global $config;
 			// Create smarty handle
+			load("smarty");
 			$this->smarty_handle = new Smarty;
 			
 			$this->template_dir = &$this->smarty_handle->template_dir;

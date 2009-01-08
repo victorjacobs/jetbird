@@ -20,18 +20,19 @@
 	define("ADMIN_MODE", false);
 	ob_start();
 	session_start();
-	//making sure all the data we recieve is UTF-8, 
-	//from now on there is only one charset in the world for me: UTF-8
+	// Make sure all the data we recieve is UTF-8, 
+	// from now on there is only one charset in the world for me: UTF-8
 	header('Content-Type: text/html; charset=utf-8');
-	require_once "include/core.functions.php";
+	
+	require_once "include/bootstrap.functions.php";
+	
+	load("core");
 	$process_start = timer();		// Use this wherever you want, can be useful for debugging
-	require_once "include/configuration.php";
-	require_once "include/database.handler.class.php";
-	require_once "include/database.connect.php";
-	require_once "include/search.functions.php";
-	require_once "include/smarty/Smarty.class.php";
-	require_once "include/smarty.handler.class.php";
-	require_once "include/login.bootstrap.php";
+
+	load("configuration");
+	load("database_connect");
+	load("smarty_handler");
+	load("login_bootstrap");
 
 	$smarty = new smarty_handler;
 	
@@ -44,10 +45,10 @@
 	}
 	
 	if(isset($arguments)){
-		if(file_exists("pages/". $arguments[0] .".php") && is_readable("pages/". $arguments[0] .".php")){
-			require_once "pages/". strtolower($arguments[0]) .".php";
+		if(file_exists("page/". $arguments[0] .".php") && is_readable("page/". $arguments[0] .".php")){
+			require_once "page/". strtolower($arguments[0]) .".php";
 		}elseif(empty($arguments[0]) || !empty($_GET[$arguments[0]])){		// if arguments for specific page like ./?page=1
-			require_once "pages/main.php";
+			require_once "page/main.php";
 		}elseif(file_exists($smarty->template_dir ."/static/". $arguments[0] .".tpl") && is_readable($smarty->template_dir ."/static/". $arguments[0] .".tpl")){
 			// These pages are called static for a reason, so let's enable smarty caching
 			$smarty->caching = 1;
@@ -55,7 +56,7 @@
 		}
 	}
 	
-	$dbconnection->close();
+	$db->close();
 	
 	ob_end_flush();
 

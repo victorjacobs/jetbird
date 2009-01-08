@@ -21,9 +21,9 @@
 				WHERE post.post_author = user.user_id
 				ORDER BY post_date DESC";
 	
-	$rss_main = $dbconnection->fetch_array($query);
+	$rss_main = $db->fetch_array($query);
 	
-	$rss['lastbuild'] = date("D, d M y H:i:s", $dbconnection->fetch_result("SELECT MAX(post_date) FROM post")) . " ". $config['global']['timezone'];
+	$rss['lastbuild'] = date("D, d M y H:i:s", $db->fetch_result("SELECT MAX(post_date) FROM post")) . " ". $config['global']['timezone'];
 	
 	//$rss['data'] = $rss_main;
 	$i = 0;

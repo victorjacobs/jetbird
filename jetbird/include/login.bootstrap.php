@@ -28,7 +28,7 @@
 		$query = "	SELECT *
 					FROM user
 					WHERE user_id = ". $_COOKIE['user_id'];
-		$user = $dbconnection->fetch_array($query);
+		$user = $db->fetch_array($query);
 		
 		$_SESSION['user_level'] = $user[0]['user_level'];
 		$_SESSION['user_name'] = $user[0]['user_name'];
@@ -36,7 +36,7 @@
 		$_SESSION['login'] = true;
 		
 		// Since our session expired, we are essentially just logging in again
-		$dbconnection->query("	UPDATE user
+		$db->query("	UPDATE user
 								SET user_last_login = ". time() ."
 								WHERE user_id = ". $user[0]['user_id']);
 	}
