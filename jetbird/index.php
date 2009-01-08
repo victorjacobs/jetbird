@@ -44,10 +44,10 @@
 	}
 	
 	if(isset($arguments)){
-		if(file_exists("pages/". $arguments[0] .".php") && is_readable("pages/". $arguments[0] .".php")){
-			require_once "pages/". strtolower($arguments[0]) .".php";
+		if(file_exists("page/". $arguments[0] .".php") && is_readable("page/". $arguments[0] .".php")){
+			require_once "page/". strtolower($arguments[0]) .".php";
 		}elseif(empty($arguments[0]) || !empty($_GET[$arguments[0]])){		// if arguments for specific page like ./?page=1
-			require_once "pages/main.php";
+			require_once "page/main.php";
 		}elseif(file_exists($smarty->template_dir ."/static/". $arguments[0] .".tpl") && is_readable($smarty->template_dir ."/static/". $arguments[0] .".tpl")){
 			// These pages are called static for a reason, so let's enable smarty caching
 			$smarty->caching = 1;

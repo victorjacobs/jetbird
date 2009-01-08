@@ -33,7 +33,7 @@
 	
 	// Uploader
 	$config['uploader']['max_file_size'] = "2mb";
-	$config['uploader']['upload_dir'] = "attachments/";
+	$config['uploader']['upload_dir'] = "attachment/";
 	
 	// RSS
 	$config['rss']['format'] = "rss2.0";

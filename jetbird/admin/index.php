@@ -48,7 +48,7 @@
 	
 	$action = $arguments[1];
 	
-	if(isset($arguments) && file_exists("pages/". $arguments[0] .".php") && is_readable("pages/". $arguments[0] .".php") && eregi("^[a-z0-9_-]+$", $arguments[0])){
+	if(isset($arguments) && file_exists("page/". $arguments[0] .".php") && is_readable("page/". $arguments[0] .".php") && eregi("^[a-z0-9_-]+$", $arguments[0])){
 		$include = strtolower($arguments[0]);
 	}elseif(empty($arguments[0]) || !empty($_GET[$arguments[0]])){		// if arguments for specific page like ./?page=1
 		$include = "main";
@@ -56,7 +56,7 @@
 		redirect("./");
 	}
 	
-	require_once "pages/". $include .".php";
+	require_once "page/". $include .".php";
 	
 	ob_end_flush();
 	
