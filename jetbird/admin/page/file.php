@@ -66,6 +66,8 @@
 					}elseif($file['type'] != read_mime($file['tmp_name'])){
 						//unlink($file['tmp_name']);
 						die("type mismatch! PHP reports: <b>". $file['type'] ."</b> real type is: <b>". read_mime($file['tmp_name']) ."</b>");
+					}else{
+						$mime = $file['type'];
 					}
 					
 					list($file_type, ) = explode("/", $mime);

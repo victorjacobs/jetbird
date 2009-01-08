@@ -56,9 +56,11 @@
 		
 		if(!empty($files['functions'][$load_file])){
 			require_once $files['functions'][$load_file];
-		}elseif(!empty($files['classes'][$load_file])){
+		}
+		if(!empty($files['classes'][$load_file])){
 			require_once $files['classes'][$load_file];
-		}elseif(!empty($files['private'][$load_file])){
+		}
+		if(!empty($files['private'][$load_file])){
 			$backtrace = debug_backtrace();
 
 			if(count($backtrace) != 1){		// Someone's trying to load private includes
@@ -68,11 +70,7 @@
 			// Make some vars global, otherwise they'll only last in this function
 			global $db, $config;
 			require_once $files['private'][$load_file];
-		}else{
-			return false;
-		}
-		
-		return true;
+		}		
 	}
 
 ?>
