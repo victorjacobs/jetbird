@@ -16,6 +16,56 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
+	function read_includes(){
+		$dir = "include/";
+		if(!file_exists($dir) && file_exists("../include/")){
+			$dir = "../include/";
+		}
+		
+		$dh = opendir($dir);
+		
+		while(($file = readdir($dh)) !== false){
+			$temp = explode(".", $file);
+			if(!is_dir($dir . $file) && $file != ".DS_Store" && end($temp) == "php" && $file != "core.functions.php"){
+				if(eregi("functions", $file)){
+					$temp = explode(".functions", $file);
+					$functions[str_replace(".", "_", $temp[0])] = $dir . $file;
+				}elseif(eregi("class", $file)){
+					$temp = explode(".class", $file);
+					$classes[str_replace(".", "_", $temp[0])] = $dir . $file;
+				}else{
+					$private[str_replace(".", "_", str_replace(".php", "", $file))] = $dir . $file;
+				}
+			}
+		}
+		
+		closedir($dh);
+		
+		return array(	"functions" => $functions,
+						"classes" => $classes,
+						"private" => $private);
+	}
+	
+	function load($load_file){
+		$files = read_includes();
+		
+		echo "<b>DEBUG:</b> Loading <b>". $load_file ."</b> ... ";
+		
+		if(!empty($files['functions'][$load_file])){
+			echo "function definition ... ";
+			require_once $files['functions'][$load_file];
+		}elseif(!empty($files['classes'][$load_file])){
+			echo "class definition ... ";
+			require_once($files['classes'][$load_file]);
+		}else{
+			echo "FAIL";
+			return false;
+		}
+		
+		echo "SUCCESS";
+		return true;
+	}
+	
 	// Some general functions
 	function BBCode($string){
 		// Clean up the input
