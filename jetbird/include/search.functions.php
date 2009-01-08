@@ -20,6 +20,7 @@
  * Thanks to http://nadeausoftware.com/articles/2007/9/php_tip_how_strip_punctuation_characters_web_page and the other articles referenced there
  * for the code, the following function is licensed under the OSI BSD
  */
+
 function clean_text( $text )
 {
 	$text = stripslashes($text);
@@ -55,7 +56,7 @@ function clean_text( $text )
 	        $text );
 	        
 	    //decoding HTML entities for further processing
-	   	//$text =  html_entity_decode( $text, ENT_QUOTES, "utf-8" );
+	   	$text =  html_entity_decode( $text, ENT_QUOTES, "utf-8" );
     
 	/*
 	 * Stripping all punctuations.
@@ -189,6 +190,9 @@ function get_word_id($words) {
  * Use this function to supply index_title and index_text an index.
  */
 function get_index() {
+	global $config;
+	global $dbconnection;
+	$dbconnection = new database_handler;
 	$query = "SELECT * FROM search_index";
 	$result = $dbconnection->query($query);
 	while($row = mysql_fetch_array($result)) {
@@ -241,11 +245,12 @@ return true;
 }
 
 /*
- * Returns an array with the post id's that have a title match for the provided word id's.
+ * Returns an array with the post id's that have a title match for the provided word id's
+ * NOTE: these results are not sorted in ANY way, use the process_results if you want a array sorted on importance
  */
 function search_title($word_id) {
 	foreach($word_id as $id) {
-		if(empty($query_append)) {
+		if(empty($sub_query)) {
 			$sub_query = " word_id = '". $id ."' AND title_match = 1";
 		} 
 		else 
@@ -260,12 +265,45 @@ function search_title($word_id) {
 	while($row = mysql_fetch_array($result)) {
 		$post_id[] = $row['post_id'];
 	}
+	return $post_id;
 }
 
 /*
  * Returns an array with the post id's that have a text match for the provided word id's.
+ * NOTE: not sorted, you must use process_results.
  */
 function search_text($word_id) {
-	
+	foreach($word_id as $id) {
+		if(empty($sub_query)) {
+			$sub_query = " word_id = '". $id ."' AND title_match = 0";
+		} 
+		else 
+		{
+			$sub_query .= " OR word_id = '". $id ."' AND title_match = 0";
+		}
+	}
+	$query = "  SELECT * 
+				FROM search_word
+				WHERE ". $sub_query."";
+	$result = $dbconnection->query($query);
+	while($row = mysql_fetch_array($result)) {
+		$post_id[] = $row['post_id'];
+	}
+	return $post_id;
 }
+
+
+/*
+ * takes the results of the search_title and search_text and orders them, returns an array with all the post data.
+ */
+function process_results($text, $title) {
+	// Sorting title and text on occurence, the more a post_id is in the array (thus more words) the higher it will be ranked in the array.
+	$title = array_count_values($title);
+	$text = array_count_values($text);
+	arsort($title, SORT_NUMERIC);
+	arsort($text, SORT_NUMERIC);
+	
+	//Finding words that are both in the title and the text and put them up front.
+}
+
 ?>

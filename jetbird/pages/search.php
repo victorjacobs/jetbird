@@ -43,7 +43,7 @@
 			/*
 			 * Getting ID's
 			 */
-				
+			
 			$query = create_query("SELECT id FROM search_index WHERE", "", $search_word , "word", "OR" );
 			$result = $dbconnection->query($query);
 				
@@ -68,7 +68,7 @@
 					$title_word_count = array_count_values($id_title_match);
 					arsort($title_word_count, SORT_NUMERIC);
 				}
-					
+				die (var_dump($title_word_count));
 			/*
 			 * BODY SECTION: fetching the posts that don't have a title match
 			 */
