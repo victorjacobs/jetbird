@@ -20,12 +20,13 @@
 		var $queries = 0, $link_identifier, $name, $connected, $new_link, $die_on_fail, $last_insert_id;
 		private $persistent_connect = false;
 		
-		function __construct($name = null, $die_on_fail = true, $new_link = true){
+		function __construct($dbtype = "mysql", $name = null, $die_on_fail = true, $new_link = true){
 			// set up object
 			$this->name = $name;
 			$this->new_link = $new_link;
 			$this->die_on_fail = $die_on_fail;
 			$this->connected = false;
+			$this->type = $dbtype;
 		}
 		
 		function __clone(){
@@ -43,9 +44,9 @@
 				return $this->link_identifier;
 			}
 			if($this->persistent_connect){
-				$this->link_identifier = @mysql_pconnect($host, $user, $pass, $new_link);	
+				$this->link_identifier = @call_user_func($this->type . "_pconnect", $host, $user, $pass, $new_link);
 			}else{
-				$this->link_identifier = @mysql_connect($host, $user, $pass, $new_link);
+				$this->link_identifier = @call_user_func($this->type . "_connect", $host, $user, $pass, $new_link);
 			}
 			if($this->link_identifier){
 				$select = mysql_select_db($db, $this->link_identifier);
@@ -64,12 +65,13 @@
 		}
 		
 		function query($query){
+			$dbtype = "mysql";
 			// query database
 			if(!$this->connected){
 				trigger_error('Not connected to a database', E_USER_ERROR);
 			}
-			$query = @mysql_query($query, $this->link_identifier);
-			$error = mysql_error($this->link_identifier);
+			$query = call_user_func($dbtype . "_query", $query, $this->link_identifier);
+			$error = call_user_func($dbtype . "_error", $this->link_identifier);
 			if(!empty($error)){
 				$backtrace = debug_backtrace();
 				
@@ -82,7 +84,7 @@
 				die();
 			}
 			$this->queries++;
-			$this->last_insert_id = mysql_insert_id($this->link_identifier);
+			$this->last_insert_id = call_user_func($dbtype . "_insert_id", $this->link_identifier);
 			return $query;
 		}
 		
