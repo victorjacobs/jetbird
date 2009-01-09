@@ -22,6 +22,25 @@
 	
 	switch($action){
 		
+		case "edit_comment":
+			if(isset($_POST['ajax'])){
+				if(empty($_POST['id'])){
+					die("no_id");
+				}
+				
+				// Get info
+				$comment_info = $db->fetch_array("SELECT * FROM comment WHERE comment_id = ". $_POST['id']);
+				
+				if($_SESSION['logged_in'] || $comment_info['comment_session_id'] == session_id()){
+					// This form doesn't need smarty, cause it's standard:
+					echo '
+						<form method="post" action="./?post&amp;edit_comment&amp;id=">
+						<textarea name="content">'. $comment_info['comment_content'] .'</textarea>
+						</form>';
+				}
+			}
+		break;
+		
 		case "comment":			
 			if(isset($_POST['submit'])){
 				// Check whether something is inserted in the fields
