@@ -16,7 +16,7 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
-	require_once "include/captcha.class.php";
+	load("captcha");
 	
 	$captcha = new Captcha;
 	$captcha->generate();
