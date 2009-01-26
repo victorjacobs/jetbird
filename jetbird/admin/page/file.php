@@ -16,6 +16,8 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
+	error_reporting(8192);		// DEBUG
+	
 	if(!function_exists("redirect")){		// This means that this page hasn't been included right
 		die();
 	}
@@ -62,14 +64,14 @@
 				if(count($upload_error) == 0){
 					if(empty($file['type']) && read_mime($file['tmp_name']) !== false){
 						$mime = read_mime($file['tmp_name']);
-					}elseif($file['type'] != read_mime($file['tmp_name'])){
+					}elseif($file['type'] != read_mime($file['tmp_name']) && read_mime($file['tmp_name']) !== false){
 						unlink($file['tmp_name']);
-						die("Type mismatch! PHP reports: <b>". $file['type'] ."</b> real type is: <b>". read_mime($file['tmp_name']) ."</b> <br /> Deleting file...");
+						die("Type mismatch! PHP reports: <b>". $file['type'] ."</b> real type is: <b>". read_mime($file['tmp_name']) ."</b> <br /> Deleting file... (to protect Jetbird)");
 					}else{
 						$mime = $file['type'];
 					}
 					
-					list($file_type, ) = explode("/", $mime);
+					list($file_type, $exact_type) = explode("/", $mime);
 					
 					$filename = md5(uniqid(rand(), true));
 					
@@ -98,7 +100,64 @@
 						}
 						
 						if($file_type = "image"){
-							// Resize images here
+							// For now just hardcode target size
+							$target_w = 200;
+							$target_h = 200;
+							
+							// Load up the original and get size
+							$original = imageCreateFromString(file_get_contents($target));
+							$original_w = imagesX($original);
+							$original_h = imagesY($original);
+							
+							// Only if the image is really too big, resize it
+							// NOTE: if image is smaller than target size, don't do anything.
+							//  We *could* copy the original to filename_thumb, but since it's the same
+							//  it would be a waste of precious resources
+							if($original_w > $target_w || $original_h > $target_h){
+								// If original is wider than it's high, resize the width and vice versa
+								// NOTE: '>=' cause otherwise it's possible that $scale isn't computed
+								if($original_w >= $original_h){
+									$scaled_w = $target_w;
+									// Figure out how much smaller that target is than original
+									//  and apply it to height
+									$scale = $target_w / $original_w;
+									$scaled_h = $original_h * $scale;
+								}elseif($original_w <= $original_h){
+									$scaled_h = $target_h;
+									$scale = $target_h / $original_h;
+									$scaled_w = $original_h * $scale;
+								}
+							}else{
+								// Break out of if($file_type = image) since no resize is needed
+								break;
+							}
+							
+							// Scale the image
+							$scaled = imageCreateTrueColor($scaled_w, $scaled_h);
+							imageCopyResampled($scaled, $original,
+							                   0, 0, /* dst (x,y) */
+							                   0, 0, /* src (x,y) */
+							                   $scaled_w, $scaled_h,
+							                   $original_w, $original_h);
+							
+							$target = $config['uploader']['upload_dir'] . $filename .":thumb";
+							// Copy exif information, only JPEG
+							if($exact_type == "jpeg" && false){
+								// Load pel to retain our exif info
+								// NOTE: only load pel_jpeg since GD doesn't know how to resize tiff
+								load("pel_jpeg");
+								$input_jpeg = new PelJpeg($original);
+								$output_jpeg = new PelJpeg($scaled);
+								$original_exif = $input_jpeg->getExif();
+								if($original_exif != null)
+									$output_jpeg->setExif($original_exif);
+								
+								// Write out the result
+								file_put_contents($output_jpeg, $target);
+							}else{
+								// Store thumbs in jpeg
+								imagejpeg($scaled, $target);
+							}
 						}
 					}
 				}else{
