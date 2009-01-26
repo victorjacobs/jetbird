@@ -93,7 +93,7 @@
 						if(!$db->query($query)){		// Destroy file if query doesn't succeed
 							unlink($target);
 						}else{
-							$download_link = jetbird_root_url() . "?download&amp;id=". $db->last_insert_id;
+							$download_link = jetbird_root_url() . "attachment/?download&amp;id=". $db->last_insert_id;
 							$smarty->assign("download_link", $download_link);
 							$smarty->assign("success", true);
 						}

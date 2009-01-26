@@ -19,9 +19,12 @@
 	// These functions are for bootstrapping our framework in both index.php's
 	
 	function read_includes(){
+		// Look for the includes directory, but within reasonable limits
 		$dir = "include/";
-		if(!file_exists($dir) && file_exists("../include/")){
-			$dir = "../include/";
+		$level = 0;
+		while(!file_exists($dir) && $level < 5){
+			$dir = "../". $dir;
+			$level++;
 		}
 		
 		$dh = opendir($dir);
@@ -41,8 +44,9 @@
 			}
 		}
 		
-		// Manually add the smarty class:
+		// Hardcode some modules
 		$classes['smarty'] = $dir . "smarty/Smarty.class.php";
+		$classes['pel_jpeg'] = $dir . "pel/PelJpeg.php";
 		
 		closedir($dh);
 		

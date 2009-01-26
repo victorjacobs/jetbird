@@ -29,6 +29,7 @@ Some rough ideas about where Jetbird's heading:
 		is present
 - Make the attachment uploader produce thumbnails of image files
 	>> Problem is that when using standard GD functions, exif info is destroyed
+		>> PHP Exif Library at http://pel.sourceforge.net/doc/
 	>> We need to get the file mime thing right before trying this, could have weird consequences
 - We should really rethink the structure of a template. it's getting way to complicated for a
 	designer to make a template

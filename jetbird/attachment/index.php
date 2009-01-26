@@ -17,48 +17,32 @@
 	*/
 	
 	// Global init
-	define("ADMIN_MODE", false);
-	ob_start();
-	session_start();
-	// Make sure all the data we recieve is UTF-8, 
-	// from now on there is only one charset in the world for me: UTF-8
-	header('Content-Type: text/html; charset=utf-8');
-	
-	require_once "include/bootstrap.functions.php";
+	require_once "../include/bootstrap.functions.php";
 	
 	load("core");
 	$process_start = timer();		// Use this wherever you want, can be useful for debugging
 	load("configuration");
 	load("database_connect");
-	load("smarty_handler");
-	load("login_bootstrap");
 	
-	$smarty = new smarty_handler;
+	// Find attachment directory, since $config gives us a path relative to jetbird's root
+	// NOTE: Need to find out how this code behaves on windows hosts
+	if($config['uploader']['upload_dir']{0} == "/"){
+		$config['uploader']['upload_dir'] = "..". $config['uploader']['upload_dir'];
+	}else{
+		$config['uploader']['upload_dir'] = "../". $config['uploader']['upload_dir'];
+	}
 	
 	// Getting ready for the real deal: including our pages
 	$arguments = array_keys($_GET);
-	$action = addslashes($arguments[1]);
-	
-	if(isset($arguments[0]) && !eregi("^[a-z0-9_-]+$", $arguments[0])){
-		redirect("./");
-	}
 	
 	if(isset($arguments)){
 		if(file_exists("page/". $arguments[0] .".php") && is_readable("page/". $arguments[0] .".php")){
 			require_once "page/". strtolower($arguments[0]) .".php";
-		}elseif(empty($arguments[0]) || !empty($_GET[$arguments[0]])){		// if arguments for specific page like ./?page=1
-			require_once "page/main.php";
-		}elseif(file_exists($smarty->template_dir ."/static/". $arguments[0] .".tpl") && is_readable($smarty->template_dir ."/static/". $arguments[0] .".tpl")){
-			// These pages are called static for a reason, so let's enable smarty caching
-			$smarty->caching = 1;
-			$smarty->display("static/". $arguments[0] .".tpl");
+		}else{
+			redirect("../");
 		}
 	}
 	
 	$db->close();
-	
-	echo round(timer() - $process_start, 2);
-	
-	ob_end_flush();
 
 ?>
