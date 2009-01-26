@@ -24,8 +24,6 @@
 		redirect("./");
 	}
 	
-	load("uploader");
-	
 	$file_info_query = $db->query("SELECT * FROM attachment_list WHERE attachment_id = ". $_GET['id']);
 	if($db->num_rows($file_info_query) != 1){
 		redirect("./");

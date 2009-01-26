@@ -24,7 +24,6 @@
 		die();
 	}
 	
-	load("uploader");
 	load("file");
 	
 	if(unformat_size($config['uploader']['max_file_size']) > unformat_size(ini_get('upload_max_filesize'))){
@@ -64,8 +63,8 @@
 					if(empty($file['type']) && read_mime($file['tmp_name']) !== false){
 						$mime = read_mime($file['tmp_name']);
 					}elseif($file['type'] != read_mime($file['tmp_name'])){
-						//unlink($file['tmp_name']);
-						die("type mismatch! PHP reports: <b>". $file['type'] ."</b> real type is: <b>". read_mime($file['tmp_name']) ."</b>");
+						unlink($file['tmp_name']);
+						die("Type mismatch! PHP reports: <b>". $file['type'] ."</b> real type is: <b>". read_mime($file['tmp_name']) ."</b> <br /> Deleting file...");
 					}else{
 						$mime = $file['type'];
 					}
@@ -106,6 +105,11 @@
 					$smarty->assign("upload_error", $upload_error);
 				}
 			}
+		break;
+		
+		case "regen_thumbs":
+			echo "We'll regenerate thumbs here";
+			die();
 		break;
 		
 		case "delete":

@@ -68,7 +68,9 @@
 					return false;
 				}
 			}
-			fseek($handle, ftell($handle) - 1);						// fgetc() moves the pointer foo far
+			
+			// The while loop makes file pointer jump too far, so fix this:
+			fseek($handle, ftell($handle) - 1);
 			
 			$signature = bin2hex(fgets($handle, 3));
 		}
@@ -83,6 +85,8 @@
 			case "8950": return "image/png"; break;
 			case "ffd8": return "image/jpeg"; break;
 			case "4749": return "image/gif"; break;
+			case "ll42": return "image/tiff"; break;	// Little endian
+			case "mm42": return "image/tiff"; break;	// Big endian
 			
 			case "4d5a": return "application/octet-stream"; break;
 			case "504b": return "application/zip"; break;
@@ -93,11 +97,40 @@
 			case "5249": return "video/avi"; break;
 			case "3026": return "video/x-ms-wmv"; break;
 			//case "2066": return "video/quicktime"; break;
-			case "1866": return "video/mp4"; break;
+			//case "1866": return "video/mp4"; break;
 			case "4944": return "audio/mpeg"; break;
 			
 			default: return false; break;
 		}
+	}
+	
+	function format_size($size){
+		$suffixes = array(" bytes", " kB", " MB", " GB", " TB");
+		$exp = 0;
+		while($size >= 1024){
+			$size /= 1024;
+			$exp++;
+		}
+		return round($size, 2) . $suffixes[$exp];
+	}
+	
+	function unformat_size($string_orig){
+		$string = strtolower(str_replace(" ", "", $string_orig));
+		$string = str_replace(",", ".", $string);		
+		$suffices_old = array("b", "k", "m", "g", "t");
+		$suffices = array("b" => 0, "bytes" => 0, "k" => 1, "kb" => 1, "m" => 2, "mb" => 2, "g" => 3, "gb" => 3, "t" => 4, "tb" => 4);
+		$keys = array_keys($suffices);
+		foreach($keys as $var){
+			if(eregi('^[0-9]*\.?[0-9]+'. $var .'$', $string)){
+				$string = trim(str_replace($var, "", $string));
+				$suffix = $var;
+				break;
+			}
+			if($exp == count($suffices) - 1){
+				return $string_orig;
+			}
+		}		
+		return (float)round($string * pow(1024, $suffices[$suffix]), 2);
 	}
 
 ?>
