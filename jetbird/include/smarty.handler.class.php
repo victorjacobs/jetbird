@@ -19,18 +19,11 @@
 	class smarty_handler {
 		var $smarty_handle, $output, $template;
 		
-		function __construct(){
+		public function __construct(){
 			global $config;
 			// Create smarty handle
 			load("smarty");
-			$this->smarty_handle = new Smarty;
-			
-			$this->template_dir = &$this->smarty_handle->template_dir;
-			$this->compile_dir = &$this->smarty_handle->compile_dir;
-			$this->cache_dir = &$this->smarty_handle->cache_dir;
-			$this->config_dir = &$this->smarty_handle->config_dir;
-			$this->compile_id = &$this->smarty_handle->compile_id;
-			$this->caching = &$this->smarty_handle->caching;		
+			$this->smarty_handle = new Smarty;	
 			
 			$included_files = get_included_files();
 			
@@ -62,25 +55,38 @@
 			$this->smarty_handle->register_modifier('bbcode', 'BBCode');
 		}
 		
-		function display($file){
-			$this->smarty_handle->display($file);
+		// Dynamically call low level smarty methods
+		public function __call($name, $arguments){
+			if(method_exists($this->smarty_handle, $name)){
+				return call_user_func_array(array($this->smarty_handle, $name), $arguments);
+			}else{
+				die("Function $name doesn't exist");
+			}
 		}
 		
-		function display_rss($file){
+		public function __set($name, $value){
+			$this->smarty_handle->$name = $value;
+		}
+		
+		public function __get($name){
+			return $this->smarty_handle->$name;
+		}
+		
+		public function __isset($name){
+			return isset($this->smarty_handle->$name);
+		}
+		
+		public function __unset($name){
+			unset($this->smarty_handle->$name);
+		}
+		
+		public function display_rss($file){
 			global $config;
 			$this->template_dir = str_replace($config['smarty']['template'], "rss", $this->template_dir);
 			$this->display($file);
 		}
 		
-		function assign($var, $value){
-			$this->smarty_handle->assign($var, $value);
-		}
-		
-		function fetch($file){
-			return $this->smarty_handle->fetch($file);
-		}
-		
-		function fetch_rss($file){
+		public function fetch_rss($file){
 			global $config;
 			$this->template_dir = $config['smarty']['template_dir'] ."rss/";
 			return $this->fetch($file);
