@@ -98,13 +98,42 @@
 							$smarty->assign("download_link", $download_link);
 							$smarty->assign("success", true);
 						}
+												
+						/*	------------------
+						*	Thumbnail creation
+						*	NOTE: only gif, png and jpeg are supported by GD
+						*	------------------
+						*/
 						
-						if($file_type = "image"){
+						// Find out GD capabilities
+						if($dummy = @imageCreate(1, 1)){
+							imageDestroy($dummy);
+							define("_JB_GD_INSTALLED", true);
+							
+							/*	Note on shorthands:
+							*	($foo == "bar") ? true : false
+							*/
+							define("_JB_GD_GIF", (imagetypes() & IMG_GIF) ? true : false);
+							define("_JB_GD_PNG", (imagetypes() & IMG_PNG) ? true : false);
+							define("_JB_GD_JPEG", (imagetypes() & IMG_JPG) ? true : false);
+							
+						}else{
+							define("_JB_GD_INSTALLED", false);
+						}
+						
+						if(_JB_GD_INSTALLED && $file_type = "image"){
+							if($exact_type != "gif" && $exact_type != "png" && $exact_type != "jpeg") die("1");
+							
+							if($exact_type == "gif" && !_JB_GD_GIF) die("2");
+							if($exact_type == "png" && !_JB_GD_PNG) die("3");
+							if($exact_type == "jpeg" && !_JB_GD_JPG) die("4");
+							
 							// For now just hardcode target size
 							$target_w = 200;
 							$target_h = 200;
 							
 							// Load up the original and get size
+							//  NOTE: use imageCreateFromString to avoid to check what type of image it is
 							$original = imageCreateFromString(file_get_contents($target));
 							$original_w = imagesX($original);
 							$original_h = imagesY($original);
@@ -114,19 +143,25 @@
 							//  We *could* copy the original to filename_thumb, but since it's the same
 							//  it would be a waste of precious resources
 							if($original_w > $target_w || $original_h > $target_h){
+								echo "1";
 								// If original is wider than it's high, resize the width and vice versa
 								// NOTE: '>=' cause otherwise it's possible that $scale isn't computed
 								if($original_w >= $original_h){
+									echo "2";
 									$scaled_w = $target_w;
 									// Figure out how much smaller that target is than original
 									//  and apply it to height
 									$scale = $target_w / $original_w;
+									echo "<br />". $scale;
 									$scaled_h = $original_h * $scale;
 								}elseif($original_w <= $original_h){
+									echo "3";
 									$scaled_h = $target_h;
 									$scale = $target_h / $original_h;
+									echo "<br />". $scale;
 									$scaled_w = $original_h * $scale;
 								}
+								die();
 							}else{
 								// Break out of if($file_type = image) since no resize is needed
 								break;
@@ -141,6 +176,7 @@
 							                   $original_w, $original_h);
 							
 							$target = $config['uploader']['upload_dir'] . $filename .":thumb";
+							
 							// Copy exif information, only JPEG
 							if($exact_type == "jpeg" && false){
 								// Load pel to retain our exif info
@@ -153,11 +189,19 @@
 									$output_jpeg->setExif($original_exif);
 								
 								// Write out the result
-								file_put_contents($output_jpeg, $target);
+								file_put_contents($target, $output_jpeg->getBytes());
 							}else{
+								header("Content-Type: ". $mime);
+								imageJpeg($scaled);
+								die();
+								
 								// Store thumbs in jpeg
-								imagejpeg($scaled, $target);
+								imageJpeg($scaled, $target);
 							}
+							
+							// Let's be nice to our server
+							imagedestroy($scaled);
+							imagedestroy($original);
 						}
 					}
 				}else{
