@@ -20,7 +20,6 @@
 	require_once "../include/bootstrap.functions.php";
 	
 	load("core");
-	$process_start = timer();		// Use this wherever you want, can be useful for debugging
 	load("configuration");
 	load("database_connect");
 	

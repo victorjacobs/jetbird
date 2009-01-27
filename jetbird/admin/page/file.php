@@ -122,11 +122,11 @@
 						}
 						
 						if(_JB_GD_INSTALLED && $file_type = "image"){
-							if($exact_type != "gif" && $exact_type != "png" && $exact_type != "jpeg") die("1");
+							if($exact_type != "gif" && $exact_type != "png" && $exact_type != "jpeg") break;
 							
-							if($exact_type == "gif" && !_JB_GD_GIF) die("2");
-							if($exact_type == "png" && !_JB_GD_PNG) die("3");
-							if($exact_type == "jpeg" && !_JB_GD_JPG) die("4");
+							if($exact_type == "gif" && !_JB_GD_GIF) break;
+							if($exact_type == "png" && !_JB_GD_PNG) break;
+							if($exact_type == "jpeg" && !_JB_GD_JPG) break;
 							
 							// For now just hardcode target size
 							$target_w = 200;
