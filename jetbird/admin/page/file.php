@@ -213,11 +213,17 @@
 				
 				if($db->num_rows($file_query) == 1){
 					$file_info = $db->fetch_array($file_query);
+					$target = $config['uploader']['upload_dir'] . $file_info[0]['attachment_file'];
 					
 					$query = "DELETE FROM attachment_list WHERE attachment_id = ". $_POST['id'];
-					if($db->query($query) &&
-								@unlink($config['uploader']['upload_dir'] . $file_info[0]['attachment_file'])){
-						$success = true;
+					if($db->query($query) && @unlink($target)){
+						if(file_exists($target . "_thumb")){
+							if(@unlink($target . "_thumb")){
+								$success = true;
+							}
+						}else{
+							$success = true;
+						}
 					}else{
 						$success = false;
 					}
