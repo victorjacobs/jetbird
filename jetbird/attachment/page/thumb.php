@@ -33,16 +33,20 @@
 	$file_info = $file_info[0];
 	
 	// Only some types of file are allowed to be displayed this way:
-	if(!eregi("application", $file_info['attachment_type']) || eregi("pdf", $file_info['attachment_type'])){
+	if(eregi("image", $file_info['attachment_type'])){
 		// Send headers
 		header("Cache-Control: public, must-revalidate");
 		header("Pragma: hack");
-		header("Content-Type: " . $file_info['attachment_type']);
-		header("Content-Length: " . $file_info['attachment_size']);
+		// Thumbs are always image/jpeg
+		header("Content-Type: image/jpeg");
 		header('Content-Disposition: inline; filename="'. $file_info['attachment_original_name'] .'"');
 		header("Content-Transfer-Encoding: binary\n");
-
-		readfile($config['uploader']['upload_dir'] . $file_info['attachment_file']);
+		
+		if(file_exists($config['uploader']['upload_dir'] . $file_info['attachment_file'] . "_thumb")){
+			readfile($config['uploader']['upload_dir'] . $file_info['attachment_file'] . "_thumb");
+		}else{
+			readfile($config['uploader']['upload_dir'] . $file_info['attachment_file']);
+		}
 	}else{
 		redirect("./?download&id=". $_GET['id']);
 	}
