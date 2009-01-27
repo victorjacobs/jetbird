@@ -143,25 +143,19 @@
 							//  We *could* copy the original to filename_thumb, but since it's the same
 							//  it would be a waste of precious resources
 							if($original_w > $target_w || $original_h > $target_h){
-								echo "1";
 								// If original is wider than it's high, resize the width and vice versa
 								// NOTE: '>=' cause otherwise it's possible that $scale isn't computed
 								if($original_w >= $original_h){
-									echo "2";
 									$scaled_w = $target_w;
 									// Figure out how much smaller that target is than original
 									//  and apply it to height
 									$scale = $target_w / $original_w;
-									echo "<br />". $scale;
 									$scaled_h = $original_h * $scale;
 								}elseif($original_w <= $original_h){
-									echo "3";
 									$scaled_h = $target_h;
 									$scale = $target_h / $original_h;
-									echo "<br />". $scale;
-									$scaled_w = $original_h * $scale;
+									$scaled_w = $original_w * $scale;
 								}
-								die();
 							}else{
 								// Break out of if($file_type = image) since no resize is needed
 								break;
@@ -175,7 +169,7 @@
 							                   $scaled_w, $scaled_h,
 							                   $original_w, $original_h);
 							
-							$target = $config['uploader']['upload_dir'] . $filename .":thumb";
+							$target = $config['uploader']['upload_dir'] . $filename ."_thumb";
 							
 							// Copy exif information, only JPEG
 							if($exact_type == "jpeg" && false){
@@ -183,20 +177,17 @@
 								// NOTE: only load pel_jpeg since GD doesn't know how to resize tiff
 								load("pel_jpeg");
 								$input_jpeg = new PelJpeg($original);
-								$output_jpeg = new PelJpeg($scaled);
 								$original_exif = $input_jpeg->getExif();
-								if($original_exif != null)
+								if($original_exif != null){
+									$output_jpeg = new PelJpeg($scaled);
 									$output_jpeg->setExif($original_exif);
+								}
 								
 								// Write out the result
 								file_put_contents($target, $output_jpeg->getBytes());
-							}else{
-								header("Content-Type: ". $mime);
-								imageJpeg($scaled);
-								die();
-								
-								// Store thumbs in jpeg
-								imageJpeg($scaled, $target);
+							}else{								
+								// Store thumbs in jpeg, hope no one minds the 100% quality lol
+								imageJpeg($scaled, $target, 100);
 							}
 							
 							// Let's be nice to our server
