@@ -106,8 +106,7 @@
 						*/
 						
 						// Find out GD capabilities
-						if($dummy = @imageCreate(1, 1)){
-							imageDestroy($dummy);
+						if(function_exists("imageCreate")){
 							define("_JB_GD_INSTALLED", true);
 							
 							/*	Note on shorthands:
