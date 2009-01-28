@@ -25,20 +25,22 @@
 			load("smarty");
 			$this->smarty_handle = new Smarty;	
 			
-			$included_files = get_included_files();
-			
-			if(eregi("admin", $included_files[0])){
-				$this->template_dir = "../". $config['smarty']['template_dir'];
-				$this->compile_dir = "../". $config['smarty']['compile_dir'];
-				$this->cache_dir = "../". $config['smarty']['cache_dir'];
-				$this->config_dir = "../". $config['smarty']['config_dir'];
-			}else{
-				$this->template_dir = $config['smarty']['template_dir'];
-				$this->compile_dir = $config['smarty']['compile_dir'];
-				$this->cache_dir = $config['smarty']['cache_dir'];
-				$this->config_dir = $config['smarty']['config_dir'];
+			// Look for smarty directories, since they are defined relative to jetbird root
+			unset($prefix);
+			while(!file_exists($prefix . $config['smarty']['template_dir'])){
+				$prefix .= "../";
+				
+				if($level == 5){
+					die("<b>Fatal error:</b> smarty directories not found");
+				}
+				
+				$level++;
 			}
-			unset($included_files);
+			
+			$this->template_dir = $prefix . $config['smarty']['template_dir'];
+	        $this->compile_dir = $prefix . $config['smarty']['compile_dir'];
+	        $this->cache_dir = $prefix . $config['smarty']['cache_dir'];
+	        $this->config_dir = $prefix . $config['smarty']['config_dir'];
 			
 			if(!is_readable($this->template_dir . $config['smarty']['template'] . '/') || $config['smarty']['template'] == "rss"){
 				$this->template = "default";
