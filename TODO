@@ -39,7 +39,8 @@ Some rough ideas about where Jetbird's heading:
 - Write own error handler
 - Write debug handler
 - Edit and delete comments (php's session_id and ajax magic probably)
-- Make a branch called core, containing a framework for other people to build upon
+- After some profiling with Xdebug, I noticed that read_includes uses readdir() an aweful 126 times
+	making read_includes terribly slow. Should fix this!
 
 resources:  http://www.phppatterns.com seems to have some good resources on patterns.
 			http://en.wikipedia.org/wiki/Design_Patterns

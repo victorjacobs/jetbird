@@ -17,7 +17,8 @@
 	*/
 	
 	class smarty_handler {
-		var $smarty_handle, $output, $template;
+		private $smarty_handle;
+		public $template;
 		
 		public function __construct(){
 			global $config;

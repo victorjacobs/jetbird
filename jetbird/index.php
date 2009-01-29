@@ -57,8 +57,6 @@
 	
 	$db->close();
 	
-	echo round(timer() - $process_start, 2);
-	
 	ob_end_flush();
 
 ?>
