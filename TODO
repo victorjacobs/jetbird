@@ -1,0 +1,46 @@
+Some rough ideas about where Jetbird's heading:
+
+- Possibly implement trackback? (http://www.sixapart.com/pronet/docs/trackback_spec)
+- Make jetbird someday modular, although it is already a bit modular
+- Make a framework to allow plugins (opensocial??)
+	After some googling i found this: http://coding.derkeiler.com/pdf/Archive/PHP/php.general/2007-08/msg00310.pdf
+	could be useful
+- Dynamic template generator? (XML,...)
+- Make database_handler work with other types of databases
+	Three options:
+		- Build an abstract class of database_handler + let other files implement core_* functions
+			that just link to the specific database functions
+			>> This produces a lot of overhead, but we still have control over what data comes out
+				of our functions, avoiding broken code
+		- Build an abstract class of database_handler + only make very basic functions final
+			>> We don't have any control over what data comes out of the db_handler functions
+		- Make use of the fact that all database functions have similar names:
+			mysql			<> frontbase
+			mysql_connect() <> fbsql_connect()
+			mysql_query()	<> fbsql_query()
+			...				<> ...
+			>> Make use of call_user_func()? NOTE: This works
+- Find a better way to get file mimes, we now just use $_FILES['file_type'] and that's not safe
+	since it's based on the file's extension
+	>> There is a PECL package called fileinfo that does just that, but we don't want Jetbird to
+		depend on external packages (http://pecl.php.net/package/Fileinfo)
+		>> Fileinfo will be part of PHP starting with version 5.3.0
+	>> Kinda implemented with read_mime(), but I only want to use it if no other alternative
+		is present
+- Make the attachment uploader produce thumbnails of image files
+	>> Problem is that when using standard GD functions, exif info is destroyed
+		>> PHP Exif Library at http://pel.sourceforge.net/doc/
+	>> We need to get the file mime thing right before trying this, could have weird consequences
+- We should really rethink the structure of a template. it's getting way to complicated for a
+	designer to make a template
+	>> Split up logic and UI
+- BBcode parser
+- Save configuration in the database
+- Write own error handler
+- Write debug handler
+- Edit and delete comments (php's session_id and ajax magic probably)
+- After some profiling with Xdebug, I noticed that read_includes uses readdir() an aweful 126 times
+	making read_includes terribly slow. Should fix this!
+
+resources:  http://www.phppatterns.com seems to have some good resources on patterns.
+			http://en.wikipedia.org/wiki/Design_Patterns

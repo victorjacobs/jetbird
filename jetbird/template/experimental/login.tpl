@@ -40,7 +40,7 @@
 							</tr>
 
 							<tr>
-								<td><b>Remind me</b></td>
+								<td><b>Remember me</b></td>
 								<td><input type="checkbox" name="rememberlogin" /></td>
 							</tr>
 
