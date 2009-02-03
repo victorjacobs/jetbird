@@ -26,7 +26,7 @@
 	// from now on there is only one charset in the world for me: UTF-8
 	header('Content-Type: text/html; charset=utf-8');
 	
-	require_once "../include/bootstrap.functions.php";
+	require_once "../include/bootstrap.php";
 	
 	load("core");
 	$process_start = timer();		// Use this wherever you want, can be useful for debugging

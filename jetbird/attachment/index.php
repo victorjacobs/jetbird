@@ -17,7 +17,7 @@
 	*/
 	
 	// Global init
-	require_once "../include/bootstrap.functions.php";
+	require_once "../include/bootstrap.php";
 	
 	load("core");
 	load("configuration");
