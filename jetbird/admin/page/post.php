@@ -115,43 +115,13 @@
 					$text = split_text($text);
 					$title = split_text($title);
 						
-					//make them unique
-					$title = array_unique($title);
-					$text = array_unique($text);
-						
-					//query to fetch the id's
-					$query = "SELECT * FROM search_index";
-					$result = $dbconnection->query($query);
-					while($row = mysql_fetch_array($result)) {
-						$index[$row['word']] = $row['id'];
-					}
-						
-					//adding title words to search_word
-					foreach($title as $word) {
-						if(empty($index[$word])) {
-							$query = "INSERT INTO search_index (word) VALUES ('". addslashes($word) ."')";
-							$dbconnection->query($query);
-							$index[$word] = $dbconnection->last_insert_id;
-						}
-						$query = "	INSERT INTO search_word(word_id, post_id, title_match) 
-									VALUES ('$index[$word]', '$post_id', 1)";
-						$dbconnection->query($query);
-					}
-						
-					//adding text words to search_word
-					foreach($text as $word) {
-						if(empty($index[$word])) {
-							$query = "INSERT INTO search_index (word) VALUES ('". addslashes($word) ."')";
-							$dbconnection->query($query);
-							$index[$word] = $dbconnection->last_insert_id;
-						}
-						$query = "	INSERT INTO search_word(word_id, post_id) 
-									VALUES ('$index[$word]', '$post_id')";
-						$dbconnection->query($query);
-					}	
-				}	
-
+					//making a search objecht
+					
+					$search = new search;
+					$index = $search->get_index();
+					$search->index_text($text, $index, $post_id);
 				redirect('../?view&id='. $created_post_id);
+			}
 			}
 
 			

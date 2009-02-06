@@ -28,11 +28,12 @@
 	
 	load("core");
 	$process_start = timer();		// Use this wherever you want, can be useful for debugging
-
+	
 	load("configuration");
 	load("database_connect");
 	load("smarty_handler");
 	load("login_bootstrap");
+	load("search.class");
 
 	$smarty = new smarty_handler;
 	
