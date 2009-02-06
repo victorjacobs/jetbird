@@ -53,7 +53,7 @@
 					</tr>
 					{foreach from=$attachments item=file}
 					<tr>
-						<td>{$file.attachment_original_name}</td>
+						<td><a href="../attachment/?view&amp;id={$file.attachment_id}" target="_blank">{$file.attachment_original_name}</a></td>
 						<td>{$file.user_name|ucfirst}</td>
 						<td>{$file.attachment_date|date_format:"%d/%m/%y %H:%I"}</td>
 						<td><a href="#" class="needs_confirmation" name="del_file_{$file.attachment_id}">Delete</a></td>

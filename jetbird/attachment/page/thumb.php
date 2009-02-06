@@ -37,8 +37,12 @@
 		// Send headers
 		header("Cache-Control: public, must-revalidate");
 		header("Pragma: hack");
-		// Thumbs are always image/jpeg
-		header("Content-Type: image/jpeg");
+		if(file_exists($config['uploader']['upload_dir'] . $file_info['attachment_file'] . "_thumb")){
+			// Thumbs are always image/jpeg
+			header("Content-Type: image/jpeg");
+		}else{
+			header("Content-Type: ". $file_info['attachment_type']);
+		}
 		header('Content-Disposition: inline; filename="'. $file_info['attachment_original_name'] .'"');
 		header("Content-Transfer-Encoding: binary\n");
 		
