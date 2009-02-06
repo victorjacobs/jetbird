@@ -2,6 +2,7 @@
 	class search {
 		
 		function get_word_id($words) {
+			global $db;
 			$index = get_index();
 			foreach($words as $word) {
 				$word_id[$word] = $index[$word];
@@ -15,6 +16,7 @@
 		}
 		
 		function get_index() {
+			global $db;
 			$dbconnection = new database_handler;
 			$query = "SELECT * FROM search_index";
 			$result = $dbconnection->query($query);
@@ -25,6 +27,7 @@
 		}
 		
 		function index_title($title, $index, $post_id) {
+			global $db;
 			//cleaning and splitting text
 			$title = split_text($title);
 			$title = array_unique($title);
@@ -47,6 +50,7 @@
 	 * $index must we in the format of word => id
 	 */
 		function index_text($text, $index, $post_id) {
+			global $db;
 			$text = split_text($text);
 			$text = array_unique($text);
 			
@@ -68,6 +72,7 @@
 	 * NOTE: these results are not sorted in ANY way, use the process_results if you want a array sorted on importance
 	 */
 	function search_title($word_id) {
+		global $db;
 		foreach($word_id as $id) {
 			if(empty($sub_query)) {
 				$sub_query = " word_id = '". $id ."' AND title_match = 1";
@@ -92,6 +97,7 @@
 	 * NOTE: not sorted, you must use process_results.
 	 */
 	function search_text($word_id) {
+		global $db;
 		foreach($word_id as $id) {
 			if(empty($sub_query)) {
 				$sub_query = " word_id = '". $id ."' AND title_match = 0";
@@ -116,6 +122,7 @@
 	 * takes the results of the search_title and search_text and orders them, returns an array with all the post data.
 	 */
 	function process_results($text, $title) {
+		global $db;
 		// Sorting title and text on occurence, the more a post_id is in the array (thus more words) the higher it will be ranked in the array.
 		$title = array_count_values($title);
 		$text = array_count_values($text);

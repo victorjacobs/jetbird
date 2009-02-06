@@ -21,6 +21,7 @@
 	
 	// Connect
 	$db = new database_handler;
+	global $db;
 	$db->connect($config['database']['user'], $config['database']['pass'], $config['database']['database'], $config['database']['host']);
 
 ?>
