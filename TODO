@@ -20,14 +20,14 @@ Some rough ideas about where Jetbird's heading:
 			mysql_query()	<> fbsql_query()
 			...				<> ...
 			>> Make use of call_user_func()? NOTE: This works
-- Find a better way to get file mimes, we now just use $_FILES['file_type'] and that's not safe
+- DONE: Find a better way to get file mimes, we now just use $_FILES['file_type'] and that's not safe
 	since it's based on the file's extension
 	>> There is a PECL package called fileinfo that does just that, but we don't want Jetbird to
 		depend on external packages (http://pecl.php.net/package/Fileinfo)
 		>> Fileinfo will be part of PHP starting with version 5.3.0
 	>> Kinda implemented with read_mime(), but I only want to use it if no other alternative
 		is present
-- Make the attachment uploader produce thumbnails of image files
+- DONE: Make the attachment uploader produce thumbnails of image files
 	>> Problem is that when using standard GD functions, exif info is destroyed
 		>> PHP Exif Library at http://pel.sourceforge.net/doc/
 	>> We need to get the file mime thing right before trying this, could have weird consequences
@@ -43,6 +43,7 @@ Some rough ideas about where Jetbird's heading:
 	making read_includes terribly slow. Should fix this!
 - Install script (write database connection info to file) + script that looks for server's capabilities and
 	writes them out
+	>> php_file class can write out constants to php files
 
 resources:  http://www.phppatterns.com seems to have some good resources on patterns.
 			http://en.wikipedia.org/wiki/Design_Patterns

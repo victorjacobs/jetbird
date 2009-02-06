@@ -19,7 +19,7 @@
 	/* Generic class definition for safely storing data
 	*  Doing it this way cause we don't want other people fiddling around in
 	*  the data.
-	*  NOTE: this can't be moved to an include, since this is the bootstrap
+	*  NOTE: this can't be moved to an include, since this is the bootstrapper
 	*/
 	class data{
 		// Restrict access
@@ -70,11 +70,13 @@
 	$classes['smarty'] = $dir . "smarty/Smarty.class.php";
 	$classes['pel_jpeg'] = $dir . "pel/PelJpeg.php";
 	
-	closedir($dh);
-	
 	$includes_data = new data(array("functions" => $functions,
 									"classes" => $classes,
 									"private" => $private));
+	
+	// Clean up
+	closedir($dh);
+	unset($functions, $classes, $private, $dh, $dir, $level, $file, $temp);
 	
 	function load($load_file){
 		global $includes_data;
