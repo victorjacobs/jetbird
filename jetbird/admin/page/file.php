@@ -170,24 +170,8 @@
 							
 							$target = $config['uploader']['upload_dir'] . $filename ."_thumb";
 							
-							// Copy exif information, only JPEG
-							if($exact_type == "jpeg" && false){
-								// Load pel to retain our exif info
-								// NOTE: only load pel_jpeg since GD doesn't know how to resize tiff
-								load("pel_jpeg");
-								$input_jpeg = new PelJpeg($original);
-								$original_exif = $input_jpeg->getExif();
-								if($original_exif != null){
-									$output_jpeg = new PelJpeg($scaled);
-									$output_jpeg->setExif($original_exif);
-								}
-								
-								// Write out the result
-								file_put_contents($target, $output_jpeg->getBytes());
-							}else{								
-								// Store thumbs in jpeg, hope no one minds the 100% quality lol
-								imageJpeg($scaled, $target, 100);
-							}
+							// Store thumbs in jpeg, hope no one minds the 100% quality lol
+							imageJpeg($scaled, $target, 100);
 							
 							// Let's be nice to our server
 							imagedestroy($scaled);

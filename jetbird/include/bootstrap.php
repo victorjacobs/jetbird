@@ -68,7 +68,6 @@
 	
 	// Hardcode some modules
 	$classes['smarty'] = $dir . "smarty/Smarty.class.php";
-	$classes['pel_jpeg'] = $dir . "pel/PelJpeg.php";
 	
 	$includes_data = new data(array("functions" => $functions,
 									"classes" => $classes,
