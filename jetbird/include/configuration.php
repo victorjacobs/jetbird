@@ -34,6 +34,8 @@
 	// Uploader
 	$config['uploader']['max_file_size'] = "2mb";
 	$config['uploader']['upload_dir'] = "attachment/data/";
+	$config['uploader']['thumb_h'] = 200;
+	$config['uploader']['thumb_w'] = 200;
 	
 	// RSS
 	$config['rss']['format'] = "rss2.0";

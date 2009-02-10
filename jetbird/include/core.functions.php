@@ -16,7 +16,7 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
-	// Some general functions
+	// Some general functions	
 	function BBCode($string){
 		// Clean up the input
 		$string = htmlentities($string);

@@ -16,8 +16,6 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
-	error_reporting(8192);		// DEBUG
-	
 	if(!function_exists("redirect")){		// This means that this page hasn't been included right
 		die();
 	}
@@ -71,8 +69,6 @@
 						$mime = $file['type'];
 					}
 					
-					list($file_type, $exact_type) = explode("/", $mime);
-					
 					$filename = md5(uniqid(rand(), true));
 					
 					$target = $config['uploader']['upload_dir'] . $filename;
@@ -105,78 +101,8 @@
 						*	------------------
 						*/
 						
-						// Find out GD capabilities
-						if(function_exists("imageCreate")){
-							define("_JB_GD_INSTALLED", true);
-							
-							/*	Note on shorthands:
-							*	($foo == "bar") ? true : false
-							*/
-							define("_JB_GD_GIF", (imagetypes() & IMG_GIF) ? true : false);
-							define("_JB_GD_PNG", (imagetypes() & IMG_PNG) ? true : false);
-							define("_JB_GD_JPEG", (imagetypes() & IMG_JPG) ? true : false);
-							
-						}else{
-							define("_JB_GD_INSTALLED", false);
-						}
-						
-						if(_JB_GD_INSTALLED && $file_type = "image"){
-							if($exact_type != "gif" && $exact_type != "png" && $exact_type != "jpeg") break;
-							
-							if($exact_type == "gif" && !_JB_GD_GIF) break;
-							if($exact_type == "png" && !_JB_GD_PNG) break;
-							if($exact_type == "jpeg" && !_JB_GD_JPG) break;
-							
-							// For now just hardcode target size
-							$target_w = 200;
-							$target_h = 200;
-							
-							// Load up the original and get size
-							//  NOTE: use imageCreateFromString to avoid to check what type of image it is
-							$original = imageCreateFromString(file_get_contents($target));
-							$original_w = imagesX($original);
-							$original_h = imagesY($original);
-							
-							// Only if the image is really too big, resize it
-							// NOTE: if image is smaller than target size, don't do anything.
-							//  We *could* copy the original to filename_thumb, but since it's the same
-							//  it would be a waste of precious resources
-							if($original_w > $target_w || $original_h > $target_h){
-								// If original is wider than it's high, resize the width and vice versa
-								// NOTE: '>=' cause otherwise it's possible that $scale isn't computed
-								if($original_w >= $original_h){
-									$scaled_w = $target_w;
-									// Figure out how much smaller that target is than original
-									//  and apply it to height
-									$scale = $target_w / $original_w;
-									$scaled_h = $original_h * $scale;
-								}elseif($original_w <= $original_h){
-									$scaled_h = $target_h;
-									$scale = $target_h / $original_h;
-									$scaled_w = $original_w * $scale;
-								}
-							}else{
-								// Break out of if($file_type = image) since no resize is needed
-								break;
-							}
-							
-							// Scale the image
-							$scaled = imageCreateTrueColor($scaled_w, $scaled_h);
-							imageCopyResampled($scaled, $original,
-							                   0, 0, /* dst (x,y) */
-							                   0, 0, /* src (x,y) */
-							                   $scaled_w, $scaled_h,
-							                   $original_w, $original_h);
-							
-							$target = $config['uploader']['upload_dir'] . $filename ."_thumb";
-							
-							// Store thumbs in jpeg, hope no one minds the 100% quality lol
-							imageJpeg($scaled, $target, 100);
-							
-							// Let's be nice to our server
-							imagedestroy($scaled);
-							imagedestroy($original);
-						}
+						load("image");
+						generate_thumbnail($target, $mime);
 					}
 				}else{
 					$smarty->assign("upload_error", $upload_error);
@@ -184,8 +110,19 @@
 			}
 		break;
 		
-		case "regen_thumbs":
-			echo "We'll regenerate thumbs here";
+		case "regenerate_thumbs":
+			load("image");
+			$images = $db->fetch_array("SELECT *
+										FROM attachment_list
+										WHERE attachment_type
+										LIKE '%image%'
+										ORDER BY attachment_date");
+			
+			foreach($images as $image){
+				$target = $config['uploader']['upload_dir'] . $image['attachment_file'];
+				generate_thumbnail($target, $image['attachment_type']);
+			}
+			
 			die();
 		break;
 		
