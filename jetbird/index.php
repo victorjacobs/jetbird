@@ -33,7 +33,6 @@
 	load("database_connect");
 	load("smarty_handler");
 	load("login_bootstrap");
-	
 	$smarty = new smarty_handler;
 	
 	// Getting ready for the real deal: including our pages

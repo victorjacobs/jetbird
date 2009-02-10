@@ -27,7 +27,7 @@
 			$this->smarty_handle = new Smarty;	
 			
 			// Look for smarty directories, since they are defined relative to jetbird root
-			unset($prefix);
+			$prefix = "";
 			while(!file_exists($prefix . $config['smarty']['template_dir'])){
 				$prefix .= "../";
 				

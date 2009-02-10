@@ -43,9 +43,9 @@
 				return $this->link_identifier;
 			}
 			if($this->persistent_connect){
-				$this->link_identifier = @mysql_pconnect($host, $user, $pass, $new_link);	
+				$this->link_identifier = @mysql_pconnect($host, $user, $pass, $this->new_link);	
 			}else{
-				$this->link_identifier = @mysql_connect($host, $user, $pass, $new_link);
+				$this->link_identifier = @mysql_connect($host, $user, $pass, $this->new_link);
 			}
 			if($this->link_identifier){
 				$select = mysql_select_db($db, $this->link_identifier);
