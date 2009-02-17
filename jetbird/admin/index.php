@@ -33,7 +33,7 @@
 	load("configuration");
 	load("text");
 	load("database_connect");
-	load("smarty_handler");
+	load("smarty_glue");
 	load("login_bootstrap");
 	
 	// We don't want regular users to sniff around in here
@@ -42,7 +42,7 @@
 		die();
 	}
 	
-	$smarty = new smarty_handler();
+	$smarty = new smarty_glue;
 	
 	// Getting ready for the real deal: including our pages
 	$arguments = array_keys($_GET);

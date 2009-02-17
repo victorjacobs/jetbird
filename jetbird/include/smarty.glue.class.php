@@ -16,15 +16,15 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
-	class smarty_handler {
+	load("smarty");
+	
+	class smarty_glue extends smarty{
 		private $smarty_handle;
 		public $template;
 		
 		public function __construct(){
 			global $config;
-			// Create smarty handle
-			load("smarty");
-			$this->smarty_handle = new Smarty;	
+			parent::__construct();
 			
 			// Look for smarty directories, since they are defined relative to jetbird root
 			$prefix = "";
@@ -54,33 +54,8 @@
 			
 			// Assign some vars
 			$this->assign("template_dir", $this->template_dir);
-			$this->smarty_handle->register_modifier('truncate', 'truncate');
-			$this->smarty_handle->register_modifier('bbcode', 'BBCode');
-		}
-		
-		// Dynamically call low level smarty methods
-		public function __call($name, $arguments){
-			if(method_exists($this->smarty_handle, $name)){
-				return call_user_func_array(array($this->smarty_handle, $name), $arguments);
-			}else{
-				die("Function $name doesn't exist");
-			}
-		}
-		
-		public function __set($name, $value){
-			$this->smarty_handle->$name = $value;
-		}
-		
-		public function __get($name){
-			return $this->smarty_handle->$name;
-		}
-		
-		public function __isset($name){
-			return isset($this->smarty_handle->$name);
-		}
-		
-		public function __unset($name){
-			unset($this->smarty_handle->$name);
+			$this->register_modifier('truncate', 'truncate');
+			$this->register_modifier('bbcode', 'BBCode');
 		}
 		
 		public function display_rss($file){
