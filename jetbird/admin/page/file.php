@@ -123,7 +123,7 @@
 				generate_thumbnail($target, $image['attachment_type']);
 			}
 			
-			die();
+			redirect("./?file", 3);
 		break;
 		
 		case "delete":

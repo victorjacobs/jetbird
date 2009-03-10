@@ -40,6 +40,12 @@
 				</form>
 			</p>
 			{/if}
+			{elseif isset($smarty.get.regenerate_thumbs)}
+			<h3>Regenerate thumbnails</h3>
+			
+			<p>
+				Regeneration was successful, redirecting
+			</p>
 			{else}
 			<h3>Overview</h3>
 			
@@ -62,7 +68,7 @@
 				</table>
 			</p>
 			<p>
-				<a href="./?file&amp;upload">Upload file</a>
+				<a href="./?file&amp;upload">Upload file</a> | <a href="./?file&amp;regenerate_thumbs">Regenerate thumbs</a>
 			</p>
 			{/if}
 		</div>

@@ -59,7 +59,7 @@
 				<p><table>
 					<tr>
 						<td><b>Title</b></td>
-						<td><input type="text" name="post_title"{if isset($post_data.post_title)} value="{$post_data.post_title}"{/if} /></td>
+						<td><input type="text" name="post_title" size="55"{if isset($post_data.post_title)} value="{$post_data.post_title}"{/if} /></td>
 					</tr>
 
 					<tr>
@@ -110,6 +110,10 @@
 					</tr>
 					{/foreach}
 				</table>
+			</p>
+			
+			<p>
+				<a href="./?post&amp;new">New post</a>
 			</p>
 			{/if}
 		</div>
