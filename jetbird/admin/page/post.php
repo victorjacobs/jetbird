@@ -95,11 +95,7 @@
 								'". $_POST['comment_status'] ."')";
 
 					$result = $db->query($query);
-					
 					$created_post_id = $db->last_insert_id;
-					
-					
-
 
 					/*
 					 * Start of the indexing process.
@@ -111,18 +107,15 @@
 					$title = $_POST['post_title'];
 					$post_id = $created_post_id;
 						
-					//splitting text and title into words and some cleanup.
-					$text = split_text($text);
-					$title = split_text($title);
-						
-					//making a search objecht
+					//indexing the text
 					
-					$search = new search;
-					$index = $search->get_index();
-					$search->index_text($text, $index, $post_id);
+					$search = new search_class;
+					$search->index($text, $post_id, 1); //indexing text
+					$search->index($title, $post_id, 2); //indexing title
+					
 				redirect('../?view&id='. $created_post_id);
 			}
-			}
+		}
 
 			
 		break;
