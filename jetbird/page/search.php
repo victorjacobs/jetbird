@@ -23,18 +23,12 @@
 	
 	switch($_GET['action']) {
 		case "search":
-			
-			//setting some vars
-			$text = $_POST['search'];
-			//split the search term into words
-	
-			/*
-			 * Start of new search engine
-			 */
+			$text = $_POST['search'];						
 			$search = new search_class;
-			$search->search($text); 
+			$post = $search->search($text); 
 			
 			
+			$smarty->assign("results", $post);
 			
 		break;
 		

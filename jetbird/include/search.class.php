@@ -217,15 +217,25 @@
 			$result = $db->query($query);
 			
 			while($row = mysql_fetch_array($result)) {
-				if(empty($post_id[$row['post_id']])) {
-					$post_id[$row['post_id']] = $row['weight'];
-				}
+					$post_id[] = $row['post_id'];	
 			}
-			die(var_dump($post_id));
-			return $post_id;
+			
+			//die(var_dump($query));
+			$this->get_post($post_id);
 		}
 	
-	
+		function get_post($post_id) {
+			global $db;
+			foreach($post_id as $id) {
+				$query = "SELECT post.* 
+					FROM post
+					WHERE post.post_id = ". $id ."";
+				//die(var_dump($query));
+				$post[] = $db->fetch_array($query);
+				die(var_dump($post));
+			}
+		return $post;
+		}
 
 
 	
