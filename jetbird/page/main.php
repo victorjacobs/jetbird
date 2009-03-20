@@ -68,7 +68,7 @@
 										"page" => $page, "total_pages" => $total_pages));
 	
 	$posts = $db->fetch_array($query);
-	
+	//die(var_dump($posts));
 	$smarty->assign("posts", $posts);
 	$smarty->assign("queries", $db->queries);
 	

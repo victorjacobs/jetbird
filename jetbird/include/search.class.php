@@ -217,23 +217,42 @@
 			$result = $db->query($query);
 			
 			while($row = mysql_fetch_array($result)) {
-					$post_id[] = $row['post_id'];	
+				if(!empty($post_id[$row['$post_id']])) {
+					$post_id[$row['post_id']] = $row['weight'];	
+				} else {
+					$weight = $post_id[$row['post_id']] + $row['weight'];
+					$post_id[$row['post_id']] = $weight;
+				}
 			}
+			arsort($post_id);
 			
-			//die(var_dump($query));
-			$this->get_post($post_id);
+			$post = $this->get_post($post_id);
+			return $post;
 		}
-	
+		
 		function get_post($post_id) {
+			$i = 0;
 			global $db;
-			foreach($post_id as $id) {
+			foreach($post_id as $id => $weight) {
 				$query = "SELECT post.* 
 					FROM post
 					WHERE post.post_id = ". $id ."";
 				//die(var_dump($query));
-				$post[] = $db->fetch_array($query);
-				die(var_dump($post));
+				//$post[] = $db->fetch_array($query);	
+				//die(var_dump($post));
+				$result = $db->query($query);
+				while ($row = mysql_fetch_array($result)) {
+					$post[$i]['post_id'] = $row['post_id'];
+					$post[$i]['post_title'] = $row['post_title'];
+					$post[$i]['post_author'] = $row['post_author'];
+					$post[$i]['post_content'] = $row['post_content'];
+					$post[$i]['comment_status'] = $row['comment_status'];
+				}
+			$i++;
 			}
+			
+		
+		//die(var_dump($post));
 		return $post;
 		}
 
