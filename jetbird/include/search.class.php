@@ -237,9 +237,7 @@
 				$query = "SELECT post.* 
 					FROM post
 					WHERE post.post_id = ". $id ."";
-				//die(var_dump($query));
-				//$post[] = $db->fetch_array($query);	
-				//die(var_dump($post));
+				
 				$result = $db->query($query);
 				while ($row = mysql_fetch_array($result)) {
 					$post[$i]['post_id'] = $row['post_id'];
@@ -250,9 +248,7 @@
 				}
 			$i++;
 			}
-			
-		
-		//die(var_dump($post));
+				
 		return $post;
 		}
 

@@ -26,15 +26,10 @@
 			$text = $_POST['search'];						
 			$search = new search_class;
 			$post = $search->search($text); 
-			
+			//die(var_dump($post));
 			
 			$smarty->assign("results", $post);
-			
 		break;
-		
-		
-		
-		case "repair_search":
 	}
 	
 	$smarty->assign("queries", $db->queries);
