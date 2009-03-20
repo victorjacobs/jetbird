@@ -178,7 +178,7 @@
 		function index($text, $post_id, $weight) {
 			global $db;
 			$index = $this->get_index();
-			$text = split_text($text);
+			$text = $this->split_text($text);
 			$text = array_unique($text);
 			
 			foreach($text as $word) {

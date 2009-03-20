@@ -34,7 +34,6 @@
 	load("smarty_handler");
 	load("login_bootstrap");
 	load("search.class");
-	include("include/search.functions.php");
 	include("include/search.class.php");
 
 	$smarty = new smarty_handler;
