@@ -28,6 +28,7 @@
 	
 	load("core");
 	$process_start = timer();		// Use this wherever you want, can be useful for debugging
+	
 	load("configuration");
 	load("text");
 	load("database_connect");

@@ -25,7 +25,7 @@
 	$config['database']['host'] = "localhost";
 	$config['database']['user'] = "root";
 	$config['database']['pass'] = "";
-	$config['database']['database'] = "jetbird_new";
+	$config['database']['database'] = "jetbird";
 	
 	// Blog engine
 	$config['blog']['landing_page_max_posts'] = 5;

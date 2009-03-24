@@ -22,24 +22,34 @@
 	load("search");
 	
 	switch($_GET['action']) {
-	
+		//BROKEN
 		case "search":
-			/*
-			 * Rank system: all the posts will recieve a certain rank depending on some factors
-			 * Array will be in the form of rank => post_id.
-			 */
 			
 			//setting some vars
 			$search = $_POST['search'];
 			//split the search term into words
 			$search_word = split_text($search);
+			/*
+			 * Start of new search engine
+			 */
+			$word_id = get_word_id($search_word);
+			if(!$word_id) {
+				die(); //no results.
+			}
+			
+			
+			/*
+			 * End of new search engine
+			 */
 			
 			/*
 			 * Getting ID's
 			 */
+
 				
 				$query = create_query("SELECT id FROM search_index WHERE", "", $search_word , "word", "OR" );
 				$result = $db->query($query);
+
 				
 				while ($row = mysql_fetch_array($result)) {
 					$word_id[] = $row['id'];
@@ -62,7 +72,7 @@
 					$title_word_count = array_count_values($id_title_match);
 					arsort($title_word_count, SORT_NUMERIC);
 				}
-					
+				die (var_dump($title_word_count));
 			/*
 			 * BODY SECTION: fetching the posts that don't have a title match
 			 */
@@ -82,11 +92,11 @@
 			/*
 			 * checking title and body matches for the same posts
 			 */
-			//THIS NEEDS A REVIEW TO CHECH IF IT WORKS DECENTLY: see if $double keeps the rank in order, some arrays need to be flipped??
+			//TODO: THIS NEEDS A REVIEW TO CHECH IF IT WORKS DECENTLY
 			$double = array_intersect_key($title_word_count, $id_word_count);
 			//filtering these values out of $title_word_count and $id_word_count because they will move more up in the array.
-			$title = array_diff($title_word_count, $double);
-			$body = array_diff($id_word_count, $double);
+			$title = array_diff_key($title_word_count, $double);
+			$body = array_diff_key($id_word_count, $double);
 			
 			/*
 			 * fetching posts
@@ -100,10 +110,13 @@
 				$total[] = $db->fetch_array("SELECT * FROM post WHERE post_id = ". $id ."");
 			}
 			
+
+
 			foreach($body as $id) {
 				$total[] = $db->fetch_array("SELECT * FROM post WHERE post_id = ". $id ."");
+
 			}
-			die(var_dump($total));
+			die(var_dump($body));
 		$smarty->assign("results", $total);	
 		break;
 		
