@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generatie Tijd: 24 Mar 2009 om 21:39
+-- Generatie Tijd: 24 Mar 2009 om 22:27
 -- Server versie: 5.1.30
 -- PHP Versie: 5.2.8
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `attachment_list` (
   `attachment_size` int(32) NOT NULL DEFAULT '0',
   `attachment_date` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`attachment_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=0 ;
 
 -- --------------------------------------------------------
 
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `comment_content` text NOT NULL,
   `comment_session_id` varchar(32) NOT NULL,
   PRIMARY KEY (`comment_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=0 ;
 
 -- --------------------------------------------------------
 
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `post` (
   `post_content` longtext CHARACTER SET utf8 NOT NULL,
   `comment_status` enum('open','closed') CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`post_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0 ;
 
 -- --------------------------------------------------------
 
@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `search_index` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `word` text CHARACTER SET utf8 NOT NULL,
   KEY `id` (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=86 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0 ;
 
 -- --------------------------------------------------------
 
@@ -102,7 +102,8 @@ CREATE TABLE IF NOT EXISTS `search_index` (
 CREATE TABLE IF NOT EXISTS `search_word` (
   `word_id` text NOT NULL,
   `post_id` text NOT NULL,
-  `weight` int(11) NOT NULL DEFAULT '0'
+  `weight` int(11) NOT NULL DEFAULT '0',
+  `group_id` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -120,4 +121,4 @@ CREATE TABLE IF NOT EXISTS `user` (
   `user_reg_key` varchar(13) NOT NULL,
   `user_last_login` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0 ;
