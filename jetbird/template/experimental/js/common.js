@@ -87,6 +87,7 @@ $(document).ready(function() {
 				break;
 				
 				case "reindex":
+					$(this).text("Please wait...");
 					$.post(link + "search&reindex",
 						{submit:"true", method:"ajax"},
 						function(returned_data) {
@@ -96,6 +97,7 @@ $(document).ready(function() {
 								
 							}
 					});
+				break;
 			}
 		}
 	});

@@ -23,15 +23,14 @@
 				<h2>Jetbird - Admin</h2>
 				<small>Search options</small>
 				{if $ask === true}
-				<form name="input" action="./?search&amp;reindex" method="post">				
-					Are you sure to reindex?<input type="submit" name="submit" value="Yes" />
-				</form>
+				<p>
+					<a href="#" name="reindex" class="needs_confirmation">Reindex?</a>
+				</p>
 				{/if}
 				
 				
 				{if $ask === false}
-				<br> </br>
-				Reindexed all the posts succesfull.
+				<p>Reindexed all the posts successful.</p>
 				{/if}
 			</div>
 		</div>

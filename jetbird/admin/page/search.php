@@ -17,30 +17,40 @@
 	
 	load("search");
 	
-	$search = new search_class;
-	
-	if (isset($_POST['submit'])) {
-		$query = "TRUNCATE search_word";
-		$db->query($query);
+	switch($action){
+		case "reindex":
+			$search = new search_class;
+
+			if (isset($_POST['submit'])) {
+				$query = "TRUNCATE search_word";
+				$db->query($query);
+
+
+				$query = "SELECT * FROM post";
+				$result = $db->query($query);
+				$post = $db->fetch_array($result);
+
+				foreach($post as $post) {
+					$search->index($post['post_content'], $post['post_id'], 1, 1); //indexing text
+					$search->index($post['post_title'], $post['post_id'], 2, 1); //indexing title
+				}
+
+				if($_POST['method'] == "ajax"){
+					echo "success";
+					die();
+				}
+
+				$smarty->assign('ask', false);
+			} else {
+				$smarty->assign('ask', true);
+			}
+		break;
 		
-		
-		$query = "SELECT * FROM post";
-		$result = $db->query($query);
-		$post = $db->fetch_array($result);
-		
-		foreach($post as $post) {
-			$search->index($post['post_content'], $post['post_id'], 1, 1); //indexing text
-			$search->index($post['post_title'], $post['post_id'], 2, 1); //indexing title
-		}
-		$smarty->assign('ask', false);
-	} else {
-		$smarty->assign('ask', true);
+		default:
+			redirect("./");
+		break;
 	}
+	
 	$smarty->display("admin.search.tpl");
-	
-	
-
-		
-
 
 ?>

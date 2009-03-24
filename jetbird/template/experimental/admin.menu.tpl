@@ -42,11 +42,8 @@
 						<li>
 							<a href="{if $smarty.const.ADMIN_MODE}.{/if}./admin/?file&amp;upload">Upload file</a>
 						</li>
-						<li>
-							<a href="#">Bla</a>
-						</li>
 					</ul>
-					<li><a href="{if $smarty.const.ADMIN_MODE}./?search{else}./admin/?search{/if}">search</a></li>
+					<li><a href="{if $smarty.const.ADMIN_MODE}.{/if}./admin/?search">Search</a></li>
 					<li>
 						<a href="{if $smarty.const.ADMIN_MODE}.{/if}./?logout">Log out</a>
 					</li>
