@@ -25,7 +25,7 @@
 	$config['database']['host'] = "localhost";
 	$config['database']['user'] = "root";
 	$config['database']['pass'] = "";
-	$config['database']['database'] = "jetbird_new";
+	$config['database']['database'] = "jetbird";
 	
 	// Blog engine
 	$config['blog']['landing_page_max_posts'] = 5;
@@ -46,7 +46,7 @@
 	
 	// Smarty config
 	$config['smarty']['template_dir'] = "template/";
-	$config['smarty']['template'] = "default";
+	$config['smarty']['template'] = "experimental";
 	$config['smarty']['compile_dir'] = "include/smarty/templates_c";
 	$config['smarty']['cache_dir'] = "include/smarty/cache";
 	$config['smarty']['config_dir'] = "include/smarty/configs";

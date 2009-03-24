@@ -17,12 +17,9 @@
 
 		<div id="menu">
 			<ul>
-				<li><a href="#">Home</a></li>
-				<li><a href="#">Home</a></li>
-				<ul>
-					<li><a href="#">Home</a></li>
-					<li><a href="#">Home</a></li>
-				</ul>
-				<a href="#">Home</a>
+				<li><a href="{if $smarty.const.ADMIN_MODE}.{/if}./">Home</a></li>
+				<li><a href="{if $smarty.const.ADMIN_MODE}../{/if}#">Projects</a></li>
+				<li><a href="{if $smarty.const.ADMIN_MODE}../{/if}?about">About us</a></li>
+				<li><a href="{if $smarty.const.ADMIN_MODE}../{/if}#">Contact</a></li>
 			</ul>
 		</div>

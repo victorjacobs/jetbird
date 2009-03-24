@@ -19,11 +19,8 @@
 
 		<div id="content">
 			
-			<h2>Blog</h2>
-			<small>The everyday problems of two geeks.</small>
-			
 			{foreach from=$posts item=post}
-			<h3>{$post.post_title}</h3>
+			<h2>{$post.post_title}</h2>
 			<small class="subtitle">By {$post.user_name|ucfirst} on {$post.post_date|date_format:"%d/%m/%y"}</small>
 			
 			<p>{$post.post_content|truncate:500|bbcode|nl2br}</p>

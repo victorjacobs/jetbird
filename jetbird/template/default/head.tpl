@@ -31,6 +31,10 @@
 		
 		<div id="head">
 			<h1>Jetbird</h1>
+			
+			<form action="{if $smarty.const.ADMIN_MODE}.{/if}./?search&amp;action=search" method="post">
+				<input id="search" type="text" name="search" accesskey="f" size="24" />
+			</form>
 		</div>
 
 		

@@ -14,12 +14,6 @@
     along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-function set_height() {
-	if($("#content").height() < $(window).height() - 35 && $("#sidewrap").height() < $(window).height() - 35){
-		$("#contentwrap").height($(window).height() - 35);
-	}
-}
-
 function ie6(){
 	if(jQuery.browser.msie){
 		if(jQuery.browser.version.substr(0, 1) == "6"){
@@ -29,12 +23,7 @@ function ie6(){
 	return false;
 }
 
-$(window).resize(function() {
-	set_height();
-});
-
 $(document).ready(function() {
-	set_height();
 	$("input#search").attr("value", "Search").css("color", "gray");
 	
 	if(ie6()){

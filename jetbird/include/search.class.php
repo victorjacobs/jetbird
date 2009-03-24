@@ -1,4 +1,20 @@
 <?php
+
+		/*	This file is part of Jetbird.
+	
+	    Jetbird is free software: you can redistribute it and/or modify
+	    it under the terms of the GNU General Public License as published by
+	    the Free Software Foundation, either version 3 of the License, or
+	    (at your option) any later version.
+	
+	    Jetbird is distributed in the hope that it will be useful,
+	    but WITHOUT ANY WARRANTY; without even the implied warranty of
+	    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	    GNU General Public License for more details.
+	
+	    You should have received a copy of the GNU General Public License
+	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
+	*/
 	class search_class {
 		
 				function debug($var) {					
@@ -175,7 +191,7 @@
 			return $index;
 		}
 	
-		function index($text, $post_id, $weight) {
+		function index($text, $post_id, $weight, $group_id) {
 			global $db;
 			$index = $this->get_index();
 			$text = $this->split_text($text);
@@ -187,15 +203,15 @@
 					$db->query($query);
 					$index[$word] = $db->last_insert_id;
 				}
-				$query = "	INSERT INTO search_word(word_id, post_id, weight) 
-							VALUES ('$index[$word]', '$post_id', $weight)";
+				$query = "	INSERT INTO search_word(word_id, post_id, weight, group_id) 
+							VALUES ('$index[$word]', '$post_id', $weight, $group_id)";
 				$db->query($query);
 			}
 			return true;
 		}
 	
 	
-		function search($text) {
+		function search($text, $group_id) {
 			//die(var_dump($text));
 			$text = $this->split_text($text);
 			
@@ -206,11 +222,11 @@
 			global $db;
 			foreach($word_id as $id) {
 				if(empty($sub_query)) {
-					$sub_query = " word_id = '". $id ."'";
+					$sub_query = " word_id = '". $id ."' AND group_id = '". $group_id ."'";
 				} 
 				else 
 				{
-					$sub_query .= " OR word_id = '". $id ."'";
+					$sub_query .= " OR word_id = '". $id ."' AND group_id = '". $group_id ."'";
 				}
 			}
 			$query = "  SELECT * 

@@ -1,5 +1,5 @@
 <?php
-	/*	This file is part of Jetbird.
+		/*	This file is part of Jetbird.
 	
 	    Jetbird is free software: you can redistribute it and/or modify
 	    it under the terms of the GNU General Public License as published by
@@ -15,27 +15,32 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
-	if(!function_exists("redirect")){		// This means that this page hasn't been included right
-		die();
-	}
-	
 	load("search");
 	
-	switch($_GET['action']) {
-		case "search":
-			$text = $_POST['search'];						
-			$search = new search_class;
-			$post = $search->search($text, 1); 
-			if (!$post) {
-				unset ($post);
-			}
-			//die(var_dump($post));
-			$smarty->assign("results", $post);
-		break;
+	$search = new search_class;
+	
+	if (isset($_POST['submit'])) {
+		$query = "TRUNCATE search_word";
+		$db->query($query);
+		
+		
+		$query = "SELECT * FROM post";
+		$result = $db->query($query);
+		$post = $db->fetch_array($result);
+		
+		foreach($post as $post) {
+			$search->index($post['post_content'], $post['post_id'], 1, 1); //indexing text
+			$search->index($post['post_title'], $post['post_id'], 2, 1); //indexing title
+		}
+		$smarty->assign('ask', false);
+	} else {
+		$smarty->assign('ask', true);
 	}
+	$smarty->display("admin.search.tpl");
 	
-	$smarty->assign("queries", $db->queries);
-	$smarty->display("search.tpl");
 	
-?>	
-	
+
+		
+
+
+?>
