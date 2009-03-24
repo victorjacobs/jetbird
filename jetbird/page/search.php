@@ -26,8 +26,10 @@
 			$text = $_POST['search'];						
 			$search = new search_class;
 			$post = $search->search($text); 
+			if (!$post) {
+				unset ($post);
+			}
 			//die(var_dump($post));
-			
 			$smarty->assign("results", $post);
 		break;
 	}

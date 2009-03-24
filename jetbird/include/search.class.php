@@ -200,6 +200,9 @@
 			$text = $this->split_text($text);
 			
 			$word_id = $this->get_word_id($text);
+			if(!$word_id) {
+				return false;
+			}
 			global $db;
 			foreach($word_id as $id) {
 				if(empty($sub_query)) {
