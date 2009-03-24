@@ -17,35 +17,31 @@
 	*/
 	
 	class smarty_handler {
-		var $smarty_handle, $output, $template;
+		private $smarty_handle;
+		public $template;
 		
-		function __construct(){
+		public function __construct(){
 			global $config;
 			// Create smarty handle
 			load("smarty");
-			$this->smarty_handle = new Smarty;
+			$this->smarty_handle = new Smarty;	
 			
-			$this->template_dir = &$this->smarty_handle->template_dir;
-			$this->compile_dir = &$this->smarty_handle->compile_dir;
-			$this->cache_dir = &$this->smarty_handle->cache_dir;
-			$this->config_dir = &$this->smarty_handle->config_dir;
-			$this->compile_id = &$this->smarty_handle->compile_id;
-			$this->caching = &$this->smarty_handle->caching;		
-			
-			$included_files = get_included_files();
-			
-			if(eregi("admin", $included_files[0])){
-				$this->template_dir = "../". $config['smarty']['template_dir'];
-				$this->compile_dir = "../". $config['smarty']['compile_dir'];
-				$this->cache_dir = "../". $config['smarty']['cache_dir'];
-				$this->config_dir = "../". $config['smarty']['config_dir'];
-			}else{
-				$this->template_dir = $config['smarty']['template_dir'];
-				$this->compile_dir = $config['smarty']['compile_dir'];
-				$this->cache_dir = $config['smarty']['cache_dir'];
-				$this->config_dir = $config['smarty']['config_dir'];
+			// Look for smarty directories, since they are defined relative to jetbird root
+			$prefix = "";
+			while(!file_exists($prefix . $config['smarty']['template_dir'])){
+				$prefix .= "../";
+				
+				if($level == 5){
+					die("<b>Fatal error:</b> smarty directories not found");
+				}
+				
+				$level++;
 			}
-			unset($included_files);
+			
+			$this->template_dir = $prefix . $config['smarty']['template_dir'];
+	        $this->compile_dir = $prefix . $config['smarty']['compile_dir'];
+	        $this->cache_dir = $prefix . $config['smarty']['cache_dir'];
+	        $this->config_dir = $prefix . $config['smarty']['config_dir'];
 			
 			if(!is_readable($this->template_dir . $config['smarty']['template'] . '/') || $config['smarty']['template'] == "rss"){
 				$this->template = "default";
@@ -62,25 +58,38 @@
 			$this->smarty_handle->register_modifier('bbcode', 'BBCode');
 		}
 		
-		function display($file){
-			$this->smarty_handle->display($file);
+		// Dynamically call low level smarty methods
+		public function __call($name, $arguments){
+			if(method_exists($this->smarty_handle, $name)){
+				return call_user_func_array(array($this->smarty_handle, $name), $arguments);
+			}else{
+				die("Function $name doesn't exist");
+			}
 		}
 		
-		function display_rss($file){
+		public function __set($name, $value){
+			$this->smarty_handle->$name = $value;
+		}
+		
+		public function __get($name){
+			return $this->smarty_handle->$name;
+		}
+		
+		public function __isset($name){
+			return isset($this->smarty_handle->$name);
+		}
+		
+		public function __unset($name){
+			unset($this->smarty_handle->$name);
+		}
+		
+		public function display_rss($file){
 			global $config;
 			$this->template_dir = str_replace($config['smarty']['template'], "rss", $this->template_dir);
 			$this->display($file);
 		}
 		
-		function assign($var, $value){
-			$this->smarty_handle->assign($var, $value);
-		}
-		
-		function fetch($file){
-			return $this->smarty_handle->fetch($file);
-		}
-		
-		function fetch_rss($file){
+		public function fetch_rss($file){
 			global $config;
 			$this->template_dir = $config['smarty']['template_dir'] ."rss/";
 			return $this->fetch($file);

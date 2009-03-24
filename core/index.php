@@ -20,11 +20,12 @@
 	ob_start();
 	session_start();
 	
-	require_once "include/bootstrap.functions.php";
+	require_once "include/bootstrap.php";
 	
 	load("core");
 	$process_start = timer();		// Use this wherever you want, can be useful for debugging
 	load("configuration");
+	load("text");
 	load("database_connect");
 	load("smarty_handler");
 	load("login_bootstrap");

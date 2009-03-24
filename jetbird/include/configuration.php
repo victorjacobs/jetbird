@@ -25,7 +25,7 @@
 	$config['database']['host'] = "localhost";
 	$config['database']['user'] = "root";
 	$config['database']['pass'] = "";
-	$config['database']['database'] = "jetbird";
+	$config['database']['database'] = "jetbird_new";
 	
 	// Blog engine
 	$config['blog']['landing_page_max_posts'] = 5;
@@ -34,6 +34,8 @@
 	// Uploader
 	$config['uploader']['max_file_size'] = "2mb";
 	$config['uploader']['upload_dir'] = "attachment/data/";
+	$config['uploader']['thumb_h'] = 200;
+	$config['uploader']['thumb_w'] = 200;
 	
 	// RSS
 	$config['rss']['format'] = "rss2.0";
@@ -44,7 +46,7 @@
 	
 	// Smarty config
 	$config['smarty']['template_dir'] = "template/";
-	$config['smarty']['template'] = "experimental";
+	$config['smarty']['template'] = "default";
 	$config['smarty']['compile_dir'] = "include/smarty/templates_c";
 	$config['smarty']['cache_dir'] = "include/smarty/cache";
 	$config['smarty']['config_dir'] = "include/smarty/configs";

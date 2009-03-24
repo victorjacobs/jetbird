@@ -40,6 +40,12 @@
 				</form>
 			</p>
 			{/if}
+			{elseif isset($smarty.get.regenerate_thumbs)}
+			<h3>Regenerate thumbnails</h3>
+			
+			<p>
+				Regeneration was successful, redirecting
+			</p>
 			{else}
 			<h3>Overview</h3>
 			
@@ -53,7 +59,7 @@
 					</tr>
 					{foreach from=$attachments item=file}
 					<tr>
-						<td>{$file.attachment_original_name}</td>
+						<td><a href="../attachment/?view&amp;id={$file.attachment_id}" target="_blank">{$file.attachment_original_name}</a></td>
 						<td>{$file.user_name|ucfirst}</td>
 						<td>{$file.attachment_date|date_format:"%d/%m/%y %H:%I"}</td>
 						<td><a href="#" class="needs_confirmation" name="del_file_{$file.attachment_id}">Delete</a></td>
@@ -62,7 +68,7 @@
 				</table>
 			</p>
 			<p>
-				<a href="./?file&amp;upload">Upload file</a>
+				<a href="./?file&amp;upload">Upload file</a> | <a href="./?file&amp;regenerate_thumbs">Regenerate thumbs</a>
 			</p>
 			{/if}
 		</div>

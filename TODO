@@ -1,9 +1,19 @@
-Some rough ideas about where Jetbird's heading:
+-----------------------------------
+//  Stuff blocking 1.0-release:  //
+-----------------------------------
+- Finish up search engine
+- Security
+- Check configuration file integrity (not sure if this is necessary)
+- Proper error handling (nothing fancies, that's for later releases)
 
+-----------------------------------
+//  Stuff for future releases:   //
+-----------------------------------
+- Display thumbnails in attachment overview, with nice artwork for binary files
 - Possibly implement trackback? (http://www.sixapart.com/pronet/docs/trackback_spec)
 - Make jetbird someday modular, although it is already a bit modular
 - Make a framework to allow plugins (opensocial??)
-	After some googling i found this: http://coding.derkeiler.com/pdf/Archive/PHP/php.general/2007-08/msg00310.pdf
+	After some googling I found this: http://coding.derkeiler.com/pdf/Archive/PHP/php.general/2007-08/msg00310.pdf
 	could be useful
 - Dynamic template generator? (XML,...)
 - Make database_handler work with other types of databases
@@ -20,6 +30,22 @@ Some rough ideas about where Jetbird's heading:
 			mysql_query()	<> fbsql_query()
 			...				<> ...
 			>> Make use of call_user_func()? NOTE: This works
+- We should really rethink the structure of a template. it's getting way to complicated for a
+	designer to make a template
+	>> Split up logic and UI
+- BBcode parser
+	>> Make a BBCode tag for attachments
+- Save configuration in the database
+- Write own error handler
+- Write debug handler
+- Edit and delete comments (php's session_id and ajax magic probably)
+- Install script (write database connection info to file) + script that looks for server's capabilities and
+	writes them out
+	>> php_file class can write out constants to php files
+
+-----------------------------------
+//             Done:             //
+-----------------------------------
 - Find a better way to get file mimes, we now just use $_FILES['file_type'] and that's not safe
 	since it's based on the file's extension
 	>> There is a PECL package called fileinfo that does just that, but we don't want Jetbird to
@@ -31,16 +57,12 @@ Some rough ideas about where Jetbird's heading:
 	>> Problem is that when using standard GD functions, exif info is destroyed
 		>> PHP Exif Library at http://pel.sourceforge.net/doc/
 	>> We need to get the file mime thing right before trying this, could have weird consequences
-- We should really rethink the structure of a template. it's getting way to complicated for a
-	designer to make a template
-	>> Split up logic and UI
-- BBcode parser
-- Save configuration in the database
-- Write own error handler
-- Write debug handler
-- Edit and delete comments (php's session_id and ajax magic probably)
 - After some profiling with Xdebug, I noticed that read_includes uses readdir() an aweful 126 times
 	making read_includes terribly slow. Should fix this!
 
-resources:  http://www.phppatterns.com seems to have some good resources on patterns.
-			http://en.wikipedia.org/wiki/Design_Patterns
+
+-----------------------------------
+//           Resources:          //
+-----------------------------------
+http://www.phppatterns.com seems to have some good resources on patterns.
+http://en.wikipedia.org/wiki/Design_Patterns

@@ -15,50 +15,33 @@
     along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 *}
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+{include file="head.tpl"}
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-<head>
-	<title>Jetbird Preview</title>
-	<link type="text/css" rel="stylesheet" media="screen" href="{$template_dir}/css/style.css" />
-</head>
-
-<body>
-
-	
-		<div id="wrap_main">
-		
-			{include file="head.tpl"}
+		<div id="content">
 			
-			<div id="wrap_content">
+			<h2>Blog</h2>
+			<small>The everyday problems of two geeks.</small>
+			
 			{foreach from=$posts item=post}
-				<div class="post">
-					<div class="title">
-					{$post.post_title}
-					</div>
-					
-					<div class="author">
-					By {$post.user_name|ucfirst} on {$post.post_date|date_format:"%d/%m/%y"}
-					</div>
-					
-					<p>{$post.post_content|truncate:500|bbcode|nl2br}</p>
-					<br />
-					
-					<div class="links">
-					<a href="./?view&amp;id={$post.post_id}">Read more</a>
-					{if $smarty.session.user_level == 1} | <a href="./?post&amp;edit&amp;id={$post.post_id}">Edit</a>{/if}
-
-					</div>
-				</div>
-				<br />
-				{/foreach}
-				
-			</div>	
-		{include file="menu.tpl"}
-		{include file="foot.tpl"}	
-	</div>
-	
-</body>
-</html>
-	
+			<h3>{$post.post_title}</h3>
+			<small class="subtitle">By {$post.user_name|ucfirst} on {$post.post_date|date_format:"%d/%m/%y"}</small>
+			
+			<p>{$post.post_content|truncate:500|bbcode|nl2br}</p>
+			<p><small>
+				<a href="./?view&amp;id={$post.post_id}">Read more</a>{if $smarty.session.user_level == 1} | <a href="./admin/?post&amp;edit&amp;id={$post.post_id}">Edit</a> | <a href="#" class="needs_confirmation" name="del_post_{$post.post_id}">Delete</a>{/if}
+		
+			</small></p>
+			{/foreach}
+			
+			{if $pagination.total_pages != 1}
+			<small>
+				<p>
+					{if $pagination.prev}<a href="./?page={math equation="x + 1" x=$pagination.page}">&laquo; Older posts</a>{/if}
+					{if $pagination.next}{if $pagination.prev} | {/if}<a href="./?page={math equation="x - 1" x=$pagination.page}">Newer posts &raquo;</a>{/if}
+				</p>
+			</small>
+			{/if}
+			
+		</div>
+		
+{include file="foot.tpl"}

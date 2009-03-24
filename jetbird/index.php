@@ -30,13 +30,11 @@
 	$process_start = timer();		// Use this wherever you want, can be useful for debugging
 	
 	load("configuration");
+	load("text");
 	load("database_connect");
-	load("smarty_handler");
+	load("smarty_glue");
 	load("login_bootstrap");
-	load("search.class");
-	include("include/search.class.php");
-
-	$smarty = new smarty_handler;
+	$smarty = new smarty_glue;
 	
 	// Getting ready for the real deal: including our pages
 	$arguments = array_keys($_GET);

@@ -30,17 +30,17 @@
 					<form name="input" action="./?login" method="post">
 						<table>
 							<tr>
-								<td><b>Username</b></td>
+								<td>Username</td>
 								<td><input type="text" name="username" /></td>
 							</tr>
 
 							<tr>
-								<td><b>Password</b></td>
+								<td>Password</td>
 								<td><input type="password" name="password"></td>
 							</tr>
 
 							<tr>
-								<td><b>Remember me</b></td>
+								<td>Remember me</td>
 								<td><input type="checkbox" name="rememberlogin" /></td>
 							</tr>
 
