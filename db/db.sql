@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `post` (
   `post_content` longtext CHARACTER SET utf8 NOT NULL,
   `comment_status` enum('open','closed') CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`post_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `search_index` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `word` text CHARACTER SET utf8 NOT NULL,
   KEY `id` (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=86 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -120,4 +120,4 @@ CREATE TABLE IF NOT EXISTS `user` (
   `user_reg_key` varchar(13) NOT NULL,
   `user_last_login` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
