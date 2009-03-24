@@ -1,81 +1,83 @@
-body,html { 	
-	height: 100%;
-}
+/* Global */
 
 body {
-	background-color: #252f33;
+	background: #c8c8c8 url(../image/background.png) 50%;
+	margin: 0;
+	padding: 0;
 }
 
-div#wrap_main { 
-	width: 1000px;
-	background-color: #5e6c70;
-	margin-left: 10%;
-	margin-right: 10%;
-	border: 4px solid #869c80;
+a:visited {
+	color: #00e;
+}
+
+p {
+	margin: 0;
+}
+
+#wrap {
+	margin: auto;
+	width: 739px;
+	padding-top: 40px;
+	padding-bottom: 40px;
+}
+
+/* Top */
+
+#head {
+	background-image: url(../image/head.png);
+	height: 148px;
+	width: 739px;
+}
+
+h1 {
+	font-size: 80px;
+	color: white;
+	margin: 0;
+	padding-left: 10px;
+	padding-top: 55px;
+}
+
+/* Content */
+
+#content {
+	height: 100%;
+	width: 529px;
 	float: left;
+	text-align: justify;
+	padding: 10px;
+	border-right: 2px solid #3371a3;
 }
 
-div#wrap_header {
+/* Menu */
+
+#menu {
+	width: 168px;
+	float: right;
+	padding: 10px;
+}
+
+#menu * {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+#menu ul > ul > li {
+	text-indent: 20px;
+}
+
+/* Foot */
+
+#foot {
+	clear: both;
+	background-image: url(../image/foot.png);
+	width: 739px;
 	color: white;
 	text-align: center;
-	margin: 30px;
+	padding-top: 35px;
+	height: 57px;
 }
 
-div#wrap_content {
-	width: 650px;
-	margin-top: 100px;
-	margin-bottom: 35px;
-	margin-left: 50px;
-	float: left;
-
+#foot > small {
+	word-spacing: 3px;
 }
-
-div#wrap_menu {
-	margin-top: 100px;
-	padding-bottom: 300px;
-	margin-right: 50px;
-	margin-left: 50px;
-	background-color: #b1bea4;
-	width: 150px;
-	float: right;
-	border: 3px solid #282828;
-	padding-left: 10px;
-	padding-right: 10px;
-}
-
-div#wrap_comments {
-	margin-top: 35px;
-	margin-left: 35px;
-}
-
-div#footer {
-	text-align: right;
-
-}
-
-div.comments {
-	border: 3px solid #282828;
-	background-color: #b1bea4;
-	padding: 10px;
-	min-height: 70px;
-}
-
-div.post {
-	border: 3px solid #282828;
-	background-color: #b1bea4;
-	padding-left: 10px;
-	padding-right: 10px;
-}
-
-div.title {
-	font-size: 20px;
-}
-	
-div.author {
-	font-size: small;
-}
-	
-div.links {
-	font-size: small;
-}
-	

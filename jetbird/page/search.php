@@ -19,7 +19,7 @@
 		die();
 	}
 	
-
+	load("search");
 	
 	switch($_GET['action']) {
 		case "search":
