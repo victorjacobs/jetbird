@@ -15,14 +15,26 @@
     along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 *}
 
-{include file="menu.tpl"}
+{include file="head.tpl"}
 
-		<div id="foot">
-			<small>Powered by <i>Jetbird 1.0</i> &raquo; Queries: {$queries}{if !isset($smarty.session.login)} &raquo; <a href="./?login">Log in</a>{/if}</small>
+		<div id="content">
+			
+			{if isset($results)}
+			{foreach from=$results item=result}
+			<h2>{$result.post_title}</h2>
+			<small class="subtitle">By {$result.user_name|ucfirst} on {$result.post_date|date_format:"%d/%m/%y"}</small>
+			
+			<p>{$result.post_content|truncate:500|bbcode|nl2br}</p>
+			
+			<p>
+				<small>
+					<a href="./?view&amp;id={$result.post_id}">Read more</a>{if $smarty.session.user_level == 1} | <a href="./?post&amp;edit&amp;id={$result.post_id}">Edit</a>{/if}
+				</small>
+			</p>{/foreach}
+			{else}
+			<p>No search results</p>
+			{/if}
+			
 		</div>
-	
-	</div>
-	
-</body>
-
-</html>
+		
+{include file="foot.tpl"}

@@ -48,6 +48,9 @@
 		$_SESSION['template'] = false;
 	}
 	
+	// Cleanup
+	unset($template);
+	
 	/* Generic class definition for safely storing data
 	*  Doing it this way cause we don't want other people fiddling around in
 	*  the data.
@@ -73,27 +76,22 @@
 		}
 	}
 	
-	// Look for the includes directory, but within reasonable limits
-	$dir = "include/";
-	$level = 0;
-	while(!file_exists($dir) && $level < 5){
-		$dir = "../". $dir;
-		$level++;
-	}
 	
-	$dh = opendir($dir);
+	$includes = find_dir("include/");
+	
+	$dh = opendir($includes);
 	
 	while(($file = readdir($dh)) !== false){
 		$temp = explode(".", $file);
-		if(!is_dir($dir . $file) && $file != ".DS_Store" && end($temp) == "php" && $file != "bootstrap.php"){
+		if(!is_dir($includes . $file) && $file != ".DS_Store" && end($temp) == "php" && $file != "bootstrap.php"){
 			if(eregi("functions", $file)){
 				$temp = explode(".functions", $file);
-				$functions[str_replace(".", "_", $temp[0])] = $dir . $file;
+				$functions[str_replace(".", "_", $temp[0])] = $includes . $file;
 			}elseif(eregi("class", $file)){
 				$temp = explode(".class", $file);
-				$classes[str_replace(".", "_", $temp[0])] = $dir . $file;
+				$classes[str_replace(".", "_", $temp[0])] = $includes . $file;
 			}else{
-				$private[str_replace(".", "_", str_replace(".php", "", $file))] = $dir . $file;
+				$private[str_replace(".", "_", str_replace(".php", "", $file))] = $includes . $file;
 			}
 		}
 	}
@@ -107,7 +105,7 @@
 	
 	// Clean up
 	closedir($dh);
-	unset($functions, $classes, $private, $dh, $dir, $level, $file, $temp);
+	unset($functions, $classes, $private, $dh, $includes, $level, $file, $temp);
 	
 	function load($load_file){
 		global $includes_data;

@@ -2,6 +2,10 @@
 
 /* Global */
 
+a > img {
+	border-style: none;
+}
+
 body {
 	background: #c8c8c8 url(../image/background.png) 50%;
 	margin: 0;
@@ -73,6 +77,24 @@ h2 {
 #content > p {
 	margin-top: 10px;
 	margin-bottom: 10px;
+}
+
+.comment {
+	background-color: #4885b6;
+	padding: 15px;
+	margin-bottom: 10px;
+}
+
+.comment * {
+	color: white;
+}
+
+.comment > p {
+	clear: both;
+}
+
+.comment > p > small {
+	float: right;
 }
 
 /* Menu */

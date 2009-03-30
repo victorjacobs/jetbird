@@ -18,7 +18,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-	<title>Jetbird</title>
+	<title>Jetbird{if $smarty.cookies.XDEBUG_PROFILE} &raquo; PROFILER ENABLED{/if}</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<script src="{$template_dir}/js/jquery-1.2.6.js" type="text/javascript"></script>
 	<script src="{$template_dir}/js/common.js" type="text/javascript"></script>
