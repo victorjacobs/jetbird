@@ -19,21 +19,9 @@
 
 		<div id="content">
 			
-			{if isset($results)}
-			{foreach from=$results item=result}
-			<h2><a href="./?view&amp;id={$result.post_id}">{$result.post_title}</a></h2>
-			<small class="subtitle">By {$result.user_name|ucfirst} on {$result.post_date|date_format:"%d/%m/%y"}</small>
+			<h2>About</h2>
 			
-			<p>{$result.post_content|truncate:500|bbcode|nl2br}</p>
-			
-			<p>
-				<small>
-					<a href="./?view&amp;id={$result.post_id}">Read more</a>{if $smarty.session.user_level == 1} | <a href="./?post&amp;edit&amp;id={$result.post_id}">Edit</a>{/if}
-				</small>
-			</p>{/foreach}
-			{else}
-			<p>No search results</p>
-			{/if}
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent congue laoreet risus. Quisque sit amet urna. Ut auctor eros a ipsum. Donec fringilla. Sed arcu nunc, fermentum volutpat, aliquam ac, semper fermentum, massa. Donec purus. Morbi congue laoreet lacus. Nam mi diam, pretium ac, pharetra faucibus, viverra eget, massa. Curabitur convallis. Suspendisse ullamcorper lacinia leo. Suspendisse adipiscing neque. Mauris gravida suscipit augue. Suspendisse id tellus vitae justo ultrices sodales. Sed varius nulla nec lacus. Curabitur nisi. Integer quis mauris.</p>
 			
 		</div>
 		

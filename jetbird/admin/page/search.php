@@ -47,7 +47,7 @@
 		break;
 		
 		default:
-			redirect("./");
+			$smarty->assign("ask", true);
 		break;
 	}
 	

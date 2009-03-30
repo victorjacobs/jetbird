@@ -19,20 +19,18 @@
 
 		<div id="content">
 			
-			{if isset($results)}
-			{foreach from=$results item=result}
-			<h2><a href="./?view&amp;id={$result.post_id}">{$result.post_title}</a></h2>
-			<small class="subtitle">By {$result.user_name|ucfirst} on {$result.post_date|date_format:"%d/%m/%y"}</small>
+			<h2>Search</h2>
 			
-			<p>{$result.post_content|truncate:500|bbcode|nl2br}</p>
-			
+			<h3>Statistics</h3>
+			{if $ask === true}
 			<p>
-				<small>
-					<a href="./?view&amp;id={$result.post_id}">Read more</a>{if $smarty.session.user_level == 1} | <a href="./?post&amp;edit&amp;id={$result.post_id}">Edit</a>{/if}
-				</small>
-			</p>{/foreach}
-			{else}
-			<p>No search results</p>
+				<a href="#" name="reindex" class="needs_confirmation">Reindex?</a>
+			</p>
+			{/if}
+			
+			
+			{if $ask === false}
+			<p>Reindexed all the posts successful.</p>
 			{/if}
 			
 		</div>

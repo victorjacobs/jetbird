@@ -17,6 +17,7 @@
 
 {include file="menu.tpl"}
 
+
 		<div id="foot">
 			<small>Powered by <i>Jetbird 1.0</i> &raquo; Queries: {$queries}{if !isset($smarty.session.login)} &raquo; <a href="./?login">Log in</a>{/if}</small>
 		</div>

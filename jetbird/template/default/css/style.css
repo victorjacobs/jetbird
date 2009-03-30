@@ -2,10 +2,6 @@
 
 /* Global */
 
-a > img {
-	border-style: none;
-}
-
 body {
 	background: #c8c8c8 url(../image/background.png) 50%;
 	margin: 0;
@@ -16,12 +12,20 @@ hr {
 	background-color: black;
 }
 
-a:visited {
-	color: #00e;
+a > img {
+	border-style: none;
+}
+
+a, a:visited {
+	color: #4885b6;
 }
 
 p {
 	margin: 0;
+}
+
+h3 {
+	color: #4885b6;
 }
 
 #wrap {
@@ -33,12 +37,6 @@ p {
 
 /* Top */
 
-#head {
-	background-image: url(../image/head.png);
-	height: 148px;
-	width: 739px;
-}
-
 h1 {
 	font-size: 80px;
 	color: white;
@@ -46,6 +44,12 @@ h1 {
 	padding-left: 10px;
 	padding-top: 55px;
 	float: left;
+}
+
+#head {
+	background-image: url(../image/head.png);
+	height: 148px;
+	width: 739px;
 }
 
 #head > form {
@@ -56,13 +60,24 @@ h1 {
 
 /* Content */
 
-small.subtitle {
-	padding-left: 20px;
-}
-
 h2 {
+	color: #4885b6;
 	font-size: 30px;
 	margin: 10px 0 0;
+}
+
+h2 > a {
+	color: #4885b6;
+	text-decoration: none;
+}
+
+h2 > a:visited {
+	color: #4885b6;
+}
+
+small.subtitle {
+	padding-left: 20px;
+	color: #4885b6;
 }
 
 #content {
@@ -78,6 +93,8 @@ h2 {
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
+
+/* Comment */
 
 .comment {
 	background-color: #4885b6;

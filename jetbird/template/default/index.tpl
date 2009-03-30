@@ -20,7 +20,7 @@
 		<div id="content">
 			
 			{foreach from=$posts item=post}
-			<h2>{$post.post_title}</h2>
+			<h2><a href="./?view&amp;id={$post.post_id}">{$post.post_title}</a></h2>
 			<small class="subtitle">By {$post.user_name|ucfirst} on {$post.post_date|date_format:"%d/%m/%y"}</small>
 			
 			<p>{$post.post_content|truncate:500|bbcode|nl2br}</p>

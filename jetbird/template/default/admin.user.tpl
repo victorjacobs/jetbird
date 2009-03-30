@@ -49,7 +49,7 @@
 						</tr>
 						
 						<tr>
-							<td><b>Userlevel</b></td>
+							<td><b>User level</b></td>
 							<td>
 								<select disabled>
 									<option>Owner</option>
@@ -141,7 +141,7 @@
 					<tr>
 						<td width="150"><b>Key</b></td>
 						<td><b>Sent to</b></td>
-						<td width="96"><b>Created on</b></td>
+						<td width="98"><b>Created on</b></td>
 					</tr>
 					{if !empty($keys)}
 					{foreach from=$keys item=key}

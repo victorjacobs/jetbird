@@ -135,7 +135,7 @@
 						{/foreach}
 					</table>
 				</p>
-				<p><a href="./?user&amp;action=new_user">Add user</a> | {if !isset($smarty.get.deleted)}<a href="./?user&amp;deleted">Also display deleted users</a>{else}<a href="./?user">Only display existing users</a>{/if}</p>
+				<p><a href="./?user&amp;invite">Invite user</a> | {if !isset($smarty.get.deleted)}<a href="./?user&amp;deleted">Also display deleted users</a>{else}<a href="./?user">Only display existing users</a>{/if}</p>
 				
 				<h3>Inactivated register keys</h3>
 				<p>

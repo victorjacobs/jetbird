@@ -24,6 +24,10 @@ function ie6(){
 }
 
 $(document).ready(function() {
+	if($("#content").height() < 285){
+		$("#content").height(285);
+	}
+	
 	$("input#search").attr("value", "Search").css("color", "gray");
 	
 	if(ie6()){
