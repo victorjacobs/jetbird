@@ -24,19 +24,20 @@
 			<small class="subtitle">By {$post.user_name|ucfirst} on {$post.post_date|date_format:"%d/%m/%y"}</small>
 			
 			<p>{$post.post_content|truncate:500|bbcode|nl2br}</p>
-			<p><small>
-				<a href="./?view&amp;id={$post.post_id}">Read more</a>{if $smarty.session.user_level == 1} | <a href="./admin/?post&amp;edit&amp;id={$post.post_id}">Edit</a> | <a href="#" class="needs_confirmation" name="del_post_{$post.post_id}">Delete</a>{/if}
-		
-			</small></p>
+			<p>
+				<small>
+					<a href="./?view&amp;id={$post.post_id}">Read more</a>{if $smarty.session.user_level == 1} | <a href="./admin/?post&amp;edit&amp;id={$post.post_id}">Edit</a> | <a href="#" class="needs_confirmation" name="del_post_{$post.post_id}">Delete</a>{/if}
+				</small>
+			</p>
 			{/foreach}
 			
 			{if $pagination.total_pages != 1}
-			<small>
-				<p>
+			<p>
+				<small>
 					{if $pagination.prev}<a href="./?page={math equation="x + 1" x=$pagination.page}">&laquo; Older posts</a>{/if}
 					{if $pagination.next}{if $pagination.prev} | {/if}<a href="./?page={math equation="x - 1" x=$pagination.page}">Newer posts &raquo;</a>{/if}
-				</p>
-			</small>
+				</small>
+			</p>
 			{/if}
 			
 		</div>

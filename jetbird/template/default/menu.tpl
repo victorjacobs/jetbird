@@ -15,7 +15,7 @@
     along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 *}
 
-		<div id="menu">
+		<div class="menu">
 			<ul>
 				<li><a href="{if $smarty.const.ADMIN_MODE}.{/if}./">Home</a></li>
 				<li><a href="{if $smarty.const.ADMIN_MODE}../{/if}#">Projects</a></li>
@@ -23,3 +23,5 @@
 				<li><a href="{if $smarty.const.ADMIN_MODE}../{/if}#">Contact</a></li>
 			</ul>
 		</div>
+		
+		{if isset($smarty.session.login)}{include file="admin.menu.tpl"}{/if}

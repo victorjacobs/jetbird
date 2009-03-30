@@ -8,6 +8,10 @@ body {
 	padding: 0;
 }
 
+hr {
+	background-color: black;
+}
+
 a:visited {
 	color: #00e;
 }
@@ -42,15 +46,19 @@ h1 {
 
 #head > form {
 	float: right;
-	padding-top: 105px;
+	padding-top: 108px;
 	padding-right: 10px;
 }
 
 /* Content */
 
+small.subtitle {
+	padding-left: 20px;
+}
+
 h2 {
-	margin: 0;
 	font-size: 30px;
+	margin: 10px 0 0;
 }
 
 #content {
@@ -58,29 +66,30 @@ h2 {
 	width: 529px;
 	float: left;
 	text-align: justify;
-	padding: 10px;
+	padding: 0 10px 10px;
 	border-right: 2px solid #3371a3;
+}
+
+#content > p {
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 /* Menu */
 
-#menu {
+.menu {
 	width: 168px;
 	float: right;
 	padding: 10px;
 }
 
-#menu * {
+.menu * {
 	margin: 0;
 	padding: 0;
 	list-style-type: none;
 }
 
-#menu > ul {
-	margin-bottom: 15px;
-}
-
-#menu ul > ul > li {
+.menu ul > ul > li {
 	text-indent: 20px;
 }
 
@@ -90,10 +99,13 @@ h2 {
 	clear: both;
 	background-image: url(../image/foot.png);
 	width: 739px;
-	color: white;
 	text-align: center;
 	padding-top: 35px;
 	height: 57px;
+}
+
+#foot * {
+	color: white;
 }
 
 #foot > small {

@@ -49,10 +49,13 @@
 			require_once "page/". strtolower($arguments[0]) .".php";
 		}elseif(empty($arguments[0]) || !empty($_GET[$arguments[0]])){		// if arguments for specific page like ./?page=1
 			require_once "page/main.php";
-		}elseif(file_exists($smarty->template_dir ."/static/". $arguments[0] .".tpl") && is_readable($smarty->template_dir ."/static/". $arguments[0] .".tpl")){
+		}elseif(file_exists($smarty->template_dir ."/static/". $arguments[0] .".tpl") &&
+						is_readable($smarty->template_dir ."/static/". $arguments[0] .".tpl")){
 			// These pages are called static for a reason, so let's enable smarty caching
 			$smarty->caching = 1;
 			$smarty->display("static/". $arguments[0] .".tpl");
+		}else{
+			require_once "page/main.php";
 		}
 	}
 	

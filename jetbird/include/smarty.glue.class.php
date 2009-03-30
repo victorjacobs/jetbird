@@ -27,21 +27,14 @@
 			parent::__construct();
 			
 			// Look for smarty directories, since they are defined relative to jetbird root
-			$prefix = "";
-			while(!file_exists($prefix . $config['smarty']['template_dir'])){
-				$prefix .= "../";
-				
-				if($level == 5){
-					die("<b>Fatal error:</b> smarty directories not found");
-				}
-				
-				$level++;
-			}
+			$this->template_dir = find_dir($config['smarty']['template_dir']);
+	        $this->compile_dir = find_dir($config['smarty']['compile_dir']);
+	        $this->cache_dir = find_dir($config['smarty']['cache_dir']);
+	        $this->config_dir = find_dir($config['smarty']['config_dir']);
 			
-			$this->template_dir = $prefix . $config['smarty']['template_dir'];
-	        $this->compile_dir = $prefix . $config['smarty']['compile_dir'];
-	        $this->cache_dir = $prefix . $config['smarty']['cache_dir'];
-	        $this->config_dir = $prefix . $config['smarty']['config_dir'];
+			if(!empty($_SESSION['template'])){
+				$config['smarty']['template'] = $_SESSION['template'];
+			}
 			
 			if(!is_readable($this->template_dir . $config['smarty']['template'] . '/') || $config['smarty']['template'] == "rss"){
 				$this->template = "default";

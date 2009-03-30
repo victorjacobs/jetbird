@@ -16,6 +16,38 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
+	// XDebug
+	if(isset($_GET['debug'])){
+		if($_COOKIE['XDEBUG_PROFILE']){
+			setcookie("XDEBUG_PROFILE", false);
+		}else{
+			setcookie("XDEBUG_PROFILE", true);
+		}
+	}
+	
+	// Core function for finding directories not found in ./
+	function find_dir($dir, $max_level = 5){
+		if(empty($dir)) return false;
+		
+		$prefix = "";
+		while(!file_exists($prefix . $dir) && $level != $max_level){
+			$level++;
+			$prefix .= "../";
+		}
+		
+		return $prefix . $dir;
+	}
+	
+	// On-the-fly template switcher, very useful for debugging
+	if(!empty($_GET['template'])){
+		$template = &$_GET['template'];
+		if(file_exists(find_dir("template/") . $template)){
+			$_SESSION['template'] = $template;
+		}
+	}elseif(isset($_GET['template'])){
+		$_SESSION['template'] = false;
+	}
+	
 	/* Generic class definition for safely storing data
 	*  Doing it this way cause we don't want other people fiddling around in
 	*  the data.
