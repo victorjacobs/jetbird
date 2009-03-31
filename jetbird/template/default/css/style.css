@@ -3,29 +3,29 @@
 /* Global */
 
 body {
-	background: #c8c8c8 url(../image/background.png) 50%;
+	background: #c8c8c8 url(../image/background.png) 50% repeat-y;
 	margin: 0;
 	padding: 0;
-}
-
-hr {
-	background-color: black;
-}
-
-a > img {
-	border-style: none;
-}
-
-a, a:visited {
-	color: #4885b6;
 }
 
 p {
 	margin: 0;
 }
 
+a > img {
+	border-style: none;
+}
+
+a, a:visited, b {
+	color: #4885b6;
+}
+
 h3 {
 	color: #4885b6;
+}
+
+hr {
+	background-color: black;
 }
 
 #wrap {
@@ -38,11 +38,11 @@ h3 {
 /* Top */
 
 h1 {
-	font-size: 80px;
+	font-size: 65px;
 	color: white;
 	margin: 0;
-	padding-left: 10px;
-	padding-top: 55px;
+	padding-left: 50px;
+	padding-top: 43px;
 	float: left;
 }
 
