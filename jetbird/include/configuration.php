@@ -46,7 +46,7 @@
 	
 	// Smarty config
 	$config['smarty']['template_dir'] = "template/";
-	$config['smarty']['template'] = "experimental";
+	$config['smarty']['template'] = "default";
 	$config['smarty']['compile_dir'] = "include/smarty/templates_c";
 	$config['smarty']['cache_dir'] = "include/smarty/cache";
 	$config['smarty']['config_dir'] = "include/smarty/configs";
