@@ -43,6 +43,23 @@
 		return preg_replace($search, $replace, $string);
 	}
 	
+	function strip_bbcode($string){
+		// Clean up the input
+		$string = htmlentities($string);
+		
+		$search = array(
+			'/\[b\](.*?)\[\/b\]/is',
+			'/\[i\](.*?)\[\/i\]/is',
+			'/\[u\](.*?)\[\/u\]/is',
+			'/\[img\](.*?)\[\/img\]/is',
+			'/\[url\=(.*?)\](.*?)\[\/url\]/is',
+			'/\[url\](.*?)\[\/url\]/is',
+			'/\[code\](.*?)\[\/code\]/is'
+		);
+		
+		return preg_replace($search, "$1", $string);
+	}
+	
 	function truncate($string, $limit, $break = ".", $pad = "."){
 		if(strlen($string) <= $limit) return $string;
 		if(false !== ($breakpoint = strpos($string, $break, $limit))) {

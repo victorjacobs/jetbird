@@ -29,6 +29,7 @@
 	
 	// Load search functions
 	load("search");
+	load("rss");
 	
 	switch($action){
 		case "edit":
@@ -57,6 +58,9 @@
 								comment_status = '". $_POST['comment_status'] ."'
 								WHERE post_id = ". $_GET['id'];
 					$db->query($query);
+					
+					write_rss_feed();
+					
 					redirect("../?view&id=". $_GET['id']);
 					die();
 				}
@@ -112,8 +116,9 @@
 					$search = new search_class;
 					$search->index($text, $post_id, 1, 1); //indexing text
 					$search->index($title, $post_id, 2, 1); //indexing title
+					write_rss_feed();
 					
-				redirect('../?view&id='. $created_post_id);
+					redirect('../?view&id='. $created_post_id);
 			}
 		}
 
@@ -147,6 +152,7 @@
 					$delete_search = "DELETE FROM search_word WHERE post_id = ". $_POST['id'] ."";
 					if($db->query($delete_post) && $db->query($delete_comments) && $db->query($delete_search)){
 						$success = true;
+						write_rss_feed();
 					}else{
 						$success = false;
 					}

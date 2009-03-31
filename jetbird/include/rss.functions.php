@@ -17,6 +17,8 @@
 	*/
 	
 	function generate_rss_feed(){
+		global $smarty, $config, $db;
+		
 		$data = $db->fetch_array("	SELECT *
 									FROM post, user
 									WHERE post.post_author = user.user_id
@@ -37,7 +39,6 @@
 		foreach($data as $item){
 			$rss[$i] = $item;
 			$rss[$i]['post_date'] = date("r", $item['post_date']);
-			$rss[$i]['description'] = truncate($item['post_content'], 200);
 			
 			$i++;
 		}
@@ -45,6 +46,19 @@
 		$smarty->assign("rss", $rss);
 		
 		return $smarty->fetch_rss("rss2.0.tpl");
+	}
+	
+	function write_rss_feed(){
+		$feed_home = find_dir("feed/");
+		
+		if(($fh = fopen($feed_home . "feed.xml", "w")) === false){
+			trigger_error("write_rss_feed could not lock file for writing", E_USER_WARNING);
+			return false;
+		}else{
+			fwrite($fh, generate_rss_feed());
+			fclose($fh);
+			return true;
+		}
 	}
 
 ?>
