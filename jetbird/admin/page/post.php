@@ -82,6 +82,7 @@
 		case "new":
 		
 			if(isset($_POST['submit'])){
+				//TODO add checks for the tag thingie.
 				if(!isset($_POST['post_title']) || empty($_POST['post_title'])) $post_error["post_title"] = true;
 				if(!isset($_POST['post_content']) || empty($_POST['post_content'])) $post_error["post_content"] = true;
 				if(count($post_error) != 0){
@@ -96,7 +97,7 @@
 
 					$result = $db->query($query);
 					$created_post_id = $db->last_insert_id;
-
+					
 					/*
 					 * Start of the indexing process.
 					 * TODO: add a word count.
@@ -106,12 +107,13 @@
 					$text = $_POST['post_content'];
 					$title = $_POST['post_title'];
 					$post_id = $created_post_id;
-						
+					$tags = $_POST['post_tags'];
 					//indexing the text
 					
 					$search = new search_class;
-					$search->index($text, $post_id, 1, 1); //indexing text
-					$search->index($title, $post_id, 2, 1); //indexing title
+					$search->index($text, $post_id, 1, 1); //indexing text.
+					$search->index($title, $post_id, 2, 1); //indexing title.
+					$search->index($tags, $post_id, 3, 1); // indexing tags.
 					
 				redirect('../?view&id='. $created_post_id);
 			}

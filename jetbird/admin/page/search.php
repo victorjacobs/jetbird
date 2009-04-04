@@ -16,11 +16,13 @@
 	*/
 	
 	load("search");
-	
+	//set_time_limit('60000');
 	$search = new search_class;
 	
 	if (isset($_POST['submit'])) {
 		$query = "TRUNCATE search_word";
+		$db->query($query);
+		$query = 'TRUNCATE search_index';
 		$db->query($query);
 		
 		

@@ -66,7 +66,12 @@
 						<td valign="top"><b>Text</b></td>
 						<td><textarea rows="20" cols="55" name="post_content">{if isset($post_data.post_content)}{$post_data.post_content}{/if}</textarea></td>
 					</tr>
-
+					
+					<tr>
+						<td><b>Tags</b></td>
+						<td><input type="text" name="post_tags" size="55"></td>
+					</tr>
+					
 					<tr>
 						<td><b>Comments</b></td>
 						<td>
@@ -76,6 +81,8 @@
 							</select>
 						</td>
 					</tr>
+					
+					
 
 					<tr>
 						<td>&nbsp;</td>
