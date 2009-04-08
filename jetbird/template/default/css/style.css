@@ -3,7 +3,7 @@
 /* Global */
 
 body {
-	background: #c8c8c8 url(../image/background.png) 50%;
+	background: #c8c8c8 url(../image/background.png) 50% repeat-y;
 	margin: 0;
 	padding: 0;
 }

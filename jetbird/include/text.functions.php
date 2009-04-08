@@ -18,7 +18,8 @@
 	
 	function BBCode($string){
 		// Clean up the input
-		$string = htmlentities($string);
+		$string = htmlspecialchars($string, UTF-8); 
+		//For more info check here: http://www.phpwact.org/php/i18n/charsets
 		
 		$search = array(
 			'/\[b\](.*?)\[\/b\]/is',

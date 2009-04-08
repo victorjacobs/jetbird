@@ -15,13 +15,15 @@
 	    You should have received a copy of the GNU General Public License
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
+	// this function will be used to detect problems in preg_replace.
+	
 	class search_class {
 		
 				function debug($var) {					
 					die(var_dump($var));
 				}
 				
-				function clean_text($text) {
+				function clean_text_utf8($text) {
 				$text = stripslashes($text);
 				/*
 				 * Removing HTML tags
@@ -152,11 +154,9 @@
 			}
 
 		function split_text($text)
-		{
-				//we assume from now on that all the text we recieve is UTF-8.
+		{								
+				$text = $this->clean_text_utf8($text);
 				
-				//remove all punctuations and unwanted symbols.
-				$text = $this->clean_text($text);
 				
 				//splitting the words with mb_split as the explode() function isn't safe on UTF-8
 				mb_regex_encoding( "utf-8" );
@@ -216,9 +216,11 @@
 			$text = $this->split_text($text);
 			
 			$word_id = $this->get_word_id($text);
+			
 			if(!$word_id) {
 				return false;
 			}
+			
 			global $db;
 			foreach($word_id as $id) {
 				if(empty($sub_query)) {
@@ -258,6 +260,7 @@
 					WHERE post.post_id = ". $id ."";
 				
 				$result = $db->query($query);
+				//TODO find a better way to get the post_id's in the search class.
 				while ($row = mysql_fetch_array($result)) {
 					$post[$i]['post_id'] = $row['post_id'];
 					$post[$i]['post_title'] = $row['post_title'];
@@ -267,8 +270,12 @@
 				}
 			$i++;
 			}
-				
 		return $post;
+		}
+		
+		function delete_from_index($post_id) {
+			$delete_search = "DELETE FROM search_word WHERE post_id = ". $post_id ."";
+			$db->query($query);
 		}
 
 
