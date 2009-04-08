@@ -24,7 +24,8 @@
 			if (isset($_POST['submit'])) {
 				$query = "TRUNCATE search_word";
 				$db->query($query);
-
+				$query = 'TRUNCATE search_index';
+				$db->query($query);
 
 				$query = "SELECT * FROM post";
 				$result = $db->query($query);
