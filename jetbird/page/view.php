@@ -15,7 +15,7 @@
 	    You should have received a copy of the GNU General Public License
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
-	
+	load('search');
 	if(!isset($_GET['id'])){
 		if(function_exists("redirect")){
 			redirect("./");
@@ -100,6 +100,14 @@
 		unset($_SESSION['comment_data']);
 	}
 	
+	// Getting tags of the post.
+	$query = "SELECT tag FROM tags WHERE post_id = ". $_GET['id'] ."";
+	$result = $db->query($query);
+	$tags = $db->fetch_array($result);
+	
+	
+	//die(var_dump($tags));
+	$smarty->assign('tags', $tags);
 	$smarty->assign('queries', $db->queries);	
 	$smarty->display('view.tpl');
 	

@@ -108,7 +108,6 @@
 					
 					/*
 					 * Start of the indexing process.
-					 * TODO: add a word count.
 					 */
 							
 					// Setting some vars
@@ -123,6 +122,12 @@
 					$search->index($title, $post_id, 2, 1); //indexing title.
 					$search->index($tags, $post_id, 3, 1); // indexing tags.
 					
+					//updating tags table.
+					$tags = $search->split_text($tags);
+					foreach ($tags as $tag) {
+						$query = "INSERT INTO tags (post_id, tag) VALUES ($post_id, '$tag')";
+						$db->query($query);					
+					}
 				redirect('../?view&id='. $created_post_id);
 			}
 		}

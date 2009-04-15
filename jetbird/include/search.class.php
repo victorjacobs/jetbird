@@ -16,9 +16,13 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	// this function will be used to detect problems in preg_replace.
-	
+	/*
+	 * TODO: allow searching accros multiple group_id's.
+	 * Then everything can get its own group id assigned, like titles, posts, etc...
+	 * Then we don't have to use weight AND group_id to do a specific search, in a certain way the weight is now our group_id.
+	 */
 	class search_class {
-		
+				
 				function debug($var) {					
 					die(var_dump($var));
 				}
@@ -251,6 +255,33 @@
 			return $post;
 		}
 		
+		/*
+		function search_by_id($weight, $group_id, $post_id) {
+			global $db;
+			
+			$query = "SELECT word_id FROM search_word WHERE post_id = ". $post_id ." AND weight = ". $weight ." AND group_id = ". $group_id ."";
+			$result = $db->query($query);
+			while ($row = mysql_fetch_array($result)) {
+				$word_id[] = $row['word_id'];	
+			}
+			
+			return $word_id;
+		}
+		
+		function get_word_from_index($word_id) {
+			global $db;
+			foreach($word_id as $id) {
+				$query = "SELECT word FROM search_index WHERE id = ". $id ."";
+				$result = $db->query($query);
+				while($row = mysql_fetch_array($result)) {
+					$word[] = $row['word'];
+				}
+			}
+			return $word;
+		}
+		*/
+		
+		//TODO: the get_post function actually doesn't belong in the search engine, normally all the functions should return a set of ID's.
 		function get_post($post_id) {
 			$i = 0;
 			global $db;
