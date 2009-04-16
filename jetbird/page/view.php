@@ -23,11 +23,16 @@
 			die();
 		}
 	}
+	//Checking all incoming Data of the user to prevent attacks.
+	if(!is_numeric){
+		redirect("./");
+	}
+	
 	
 	// Post
 	$query = "	SELECT *
 				FROM post, user
-				WHERE post_id = ". $_GET['id'] ." 
+				WHERE post_id = '". mysql_real_escape_string($_GET['id']) ."'
 				AND user.user_id = post.post_author";			
 
 	$result = $db->query($query);
@@ -110,5 +115,7 @@
 	$smarty->assign('tags', $tags);
 	$smarty->assign('queries', $db->queries);	
 	$smarty->display('view.tpl');
+	
+
 	
 ?>

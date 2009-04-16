@@ -63,8 +63,8 @@
 					//Updating the index of the search engine.
 					$search = new search_class;
 					$search->delete_from_index($_GET['id']);
-					$search->index($post_content, $_GET['id'], 1, 1);
-					$search->index($_POST['post_title'], $_GET['id'], 2, 1);
+					$search->index($post_content, $_GET['id'], 1); //post
+					$search->index($_POST['post_title'], $_GET['id'], 2); //title
 					redirect("../?view&id=". $_GET['id']);
 					die();
 				}
@@ -118,9 +118,9 @@
 					//indexing the text
 					
 					$search = new search_class;
-					$search->index($text, $post_id, 1, 1); //indexing text.
-					$search->index($title, $post_id, 2, 1); //indexing title.
-					$search->index($tags, $post_id, 3, 1); // indexing tags.
+					$search->index($text, $post_id, 1); //indexing text.
+					$search->index($title, $post_id, 2); //indexing title.
+					$search->index($tags, $post_id, 3); // indexing tags.
 					
 					//updating tags table.
 					$tags = $search->split_text($tags);

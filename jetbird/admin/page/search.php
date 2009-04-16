@@ -33,8 +33,8 @@
 				
 				// Indexing text
 				foreach($post as $post) {
-					$search->index($post['post_content'], $post['post_id'], 1, 1); //indexing text
-					$search->index($post['post_title'], $post['post_id'], 2, 1); //indexing title
+					$search->index($post['post_content'], $post['post_id'], 1); //indexing text
+					$search->index($post['post_title'], $post['post_id'], 2); //indexing title
 				}
 				
 				// Indexing Tags
@@ -43,7 +43,7 @@
 				$tags = $db->fetch_array($result);
 				
 				foreach($tags as $tag) {
-					$search-> index($tag['tag'], $tag['post_id'], 3, 1);
+					$search-> index($tag['tag'], $tag['post_id'], 3);
 				}
 				if($_POST['method'] == "ajax"){
 					echo "success";

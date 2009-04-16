@@ -195,7 +195,7 @@
 			return $index;
 		}
 	
-		function index($text, $post_id, $weight, $group_id) {
+		function index($text, $post_id, $weight) {
 			global $db;
 			$index = $this->get_index();
 			$text = $this->split_text($text);
@@ -207,32 +207,31 @@
 					$db->query($query);
 					$index[$word] = $db->last_insert_id;
 				}
-				$query = "	INSERT INTO search_word(word_id, post_id, weight, group_id) 
-							VALUES ('$index[$word]', '$post_id', $weight, $group_id)";
+				$query = "	INSERT INTO search_word(word_id, post_id, weight) 
+							VALUES ('$index[$word]', '$post_id', $weight)";
 				$db->query($query);
 			}
 			return true;
 		}
 	
 	
-		function search($text, $group_id) {
-			//die(var_dump($text));
+		function search($text) {
+			global $db;
+	
 			$text = $this->split_text($text);
-			
 			$word_id = $this->get_word_id($text);
 			
 			if(!$word_id) {
 				return false;
 			}
 			
-			global $db;
 			foreach($word_id as $id) {
 				if(empty($sub_query)) {
-					$sub_query = " word_id = '". $id ."' AND group_id = '". $group_id ."'";
+					$sub_query = " word_id = '". $id ."'";
 				} 
 				else 
 				{
-					$sub_query .= " OR word_id = '". $id ."' AND group_id = '". $group_id ."'";
+					$sub_query .= " OR word_id = '". $id ."'";
 				}
 			}
 			$query = "  SELECT * 
@@ -255,31 +254,47 @@
 			return $post;
 		}
 		
-		/*
-		function search_by_id($weight, $group_id, $post_id) {
+		//Searches the given fir the given text that has keywords with that given weight in it.
+		//can be used for title searches, content, tag searches,... if it all has a different weight else it will not work.
+		//TODO order it on date, because everything has the same weight here.
+		function search_by_weight($text, $weight) {
 			global $db;
+	
+			$text = $this->split_text($text);
+			$word_id = $this->get_word_id($text);
 			
-			$query = "SELECT word_id FROM search_word WHERE post_id = ". $post_id ." AND weight = ". $weight ." AND group_id = ". $group_id ."";
-			$result = $db->query($query);
-			while ($row = mysql_fetch_array($result)) {
-				$word_id[] = $row['word_id'];	
+			if(!$word_id) {
+				return false;
 			}
 			
-			return $word_id;
-		}
-		
-		function get_word_from_index($word_id) {
-			global $db;
 			foreach($word_id as $id) {
-				$query = "SELECT word FROM search_index WHERE id = ". $id ."";
-				$result = $db->query($query);
-				while($row = mysql_fetch_array($result)) {
-					$word[] = $row['word'];
+				if(empty($sub_query)) {
+					$sub_query = " word_id = '". $id ."' AND weight = '". $weight ."'";
+				} 
+				else 
+				{
+					$sub_query .= " OR word_id = '". $id ."' AND weight = '". $weight ."'";
 				}
 			}
-			return $word;
+			$query = "  SELECT * 
+						FROM search_word
+						WHERE ". $sub_query."";
+			//$this->debug($query);
+			$result = $db->query($query);
+			
+			while($row = mysql_fetch_array($result)) {
+				if(!empty($post_id[$row['$post_id']])) {
+					$post_id[$row['post_id']] = $row['weight'];	
+				} else {
+					$weight = $post_id[$row['post_id']] + $row['weight'];
+					$post_id[$row['post_id']] = $weight;
+				}
+			}
+			arsort($post_id);
+			
+			$post = $this->get_post($post_id);
+			return $post;
 		}
-		*/
 		
 		//TODO: the get_post function actually doesn't belong in the search engine, normally all the functions should return a set of ID's.
 		function get_post($post_id) {
