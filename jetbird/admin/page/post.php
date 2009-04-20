@@ -153,7 +153,7 @@
 					$delete_search = "DELETE FROM search_word WHERE post_id = ". $_POST['id'] ."";
 					if($db->query($delete_post) && $db->query($delete_comments) && $db->query($delete_search)){
 						$success = true;
-						write_rss_feed();
+						@write_rss_feed();				// If file is unreadable, just ignore the error here
 					}else{
 						$success = false;
 					}
