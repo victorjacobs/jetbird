@@ -48,10 +48,10 @@
 		return $smarty->fetch_rss("rss2.0.tpl");
 	}
 	
-	function write_rss_feed(){
+	function write_rss_feed(){		
 		$feed_home = find_dir("feed/");
 		
-		if(($fh = fopen($feed_home . "feed.xml", "w")) === false){
+		if(($fh = @fopen($feed_home . "feed.xml", "w")) === false){
 			trigger_error("write_rss_feed could not lock file for writing", E_USER_WARNING);
 			return false;
 		}else{

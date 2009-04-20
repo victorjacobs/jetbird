@@ -8,3 +8,5 @@ data/
 .cache/
 test.php
 test/
+feed.xml
+.htaccess
