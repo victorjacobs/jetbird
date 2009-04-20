@@ -117,6 +117,8 @@
 					$search->index($text, $post_id, 1, 1); //indexing text
 					$search->index($title, $post_id, 2, 1); //indexing title
 					
+					write_rss_feed();
+					
 					redirect('../?view&id='. $created_post_id);
 			}
 		}
