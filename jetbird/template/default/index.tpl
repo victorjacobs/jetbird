@@ -19,6 +19,9 @@
 
 		<div id="content">
 			
+			{if empty($posts)}
+			<p>No posts yet</p>
+			{else}
 			{foreach from=$posts item=post}
 			<h2><a href="./?view&amp;id={$post.post_id}">{$post.post_title}</a></h2>
 			<small class="subtitle">By {$post.user_name|ucfirst} on {$post.post_date|date_format:"%d/%m/%y"}</small>
@@ -38,6 +41,7 @@
 					{if $pagination.next}{if $pagination.prev} | {/if}<a href="./?page={math equation="x - 1" x=$pagination.page}">Newer posts &raquo;</a>{/if}
 				</small>
 			</p>
+			{/if}
 			{/if}
 			
 		</div>

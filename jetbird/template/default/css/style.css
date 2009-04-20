@@ -8,24 +8,24 @@ body {
 	padding: 0;
 }
 
-hr {
-	background-color: black;
+p {
+	margin: 0;
 }
 
 a > img {
 	border-style: none;
 }
 
-a, a:visited {
+a, a:visited, b {
 	color: #4885b6;
-}
-
-p {
-	margin: 0;
 }
 
 h3 {
 	color: #4885b6;
+}
+
+hr {
+	background-color: black;
 }
 
 #wrap {
@@ -38,11 +38,11 @@ h3 {
 /* Top */
 
 h1 {
-	font-size: 80px;
+	font-size: 65px;
 	color: white;
 	margin: 0;
-	padding-left: 10px;
-	padding-top: 55px;
+	padding-left: 50px;
+	padding-top: 43px;
 	float: left;
 }
 

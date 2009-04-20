@@ -82,8 +82,9 @@
 	$dh = opendir($includes);
 	
 	while(($file = readdir($dh)) !== false){
-		$temp = explode(".", $file);
-		if(!is_dir($includes . $file) && $file != ".DS_Store" && end($temp) == "php" && $file != "bootstrap.php"){
+		if(!is_dir($includes . $file) 	&& $file != ".DS_Store"
+										&& substr($file, strlen($file) - 3) == "php"
+										&& $file != "bootstrap.php"){
 			if(eregi("functions", $file)){
 				$temp = explode(".functions", $file);
 				$functions[str_replace(".", "_", $temp[0])] = $includes . $file;

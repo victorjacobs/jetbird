@@ -15,9 +15,8 @@
 	    You should have received a copy of the GNU General Public License
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
-	/*
-	 * TODO: add a tag system for easy searching
-	 */
+
+
 	if(!function_exists("redirect")){		// This means that this page hasn't been included right
 		die();
 	}
@@ -28,6 +27,7 @@
 	
 	// Load search functions
 	load("search");
+	load("rss");
 	
 	switch($action){
 		case "edit":
@@ -60,11 +60,14 @@
 								comment_status = '". $_POST['comment_status'] ."'
 								WHERE post_id = ". $_GET['id'];
 					$db->query($query);
+
+					
 					//Updating the index of the search engine.
 					$search = new search_class;
 					$search->delete_from_index($_GET['id']);
 					$search->index($post_content, $_GET['id'], 1); //post
-					$search->index($_POST['post_title'], $_GET['id'], 2); //title
+					$search->index($_POST['post_title'], $_GET['id'], 2); //title	
+					write_rss_feed();
 					redirect("../?view&id=". $_GET['id']);
 					die();
 				}
@@ -121,6 +124,8 @@
 					$search->index($text, $post_id, 1); //indexing text.
 					$search->index($title, $post_id, 2); //indexing title.
 					$search->index($tags, $post_id, 3); // indexing tags.
+					write_rss_feed();
+					
 					
 					//updating tags table.
 					$tags = $search->split_text($tags);
@@ -130,6 +135,7 @@
 					}
 				redirect('../?view&id='. $created_post_id);
 			}
+
 		}
 
 			
@@ -164,6 +170,7 @@
 					
 					if($db->query($delete_post) && $db->query($delete_comments) && $db->query($delete_search)){
 						$success = true;
+						write_rss_feed();
 					}else{
 						$success = false;
 					}

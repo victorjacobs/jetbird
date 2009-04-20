@@ -49,6 +49,7 @@
 			$this->assign("template_dir", $this->template_dir);
 			$this->register_modifier('truncate', 'truncate');
 			$this->register_modifier('bbcode', 'BBCode');
+			$this->register_modifier('strip_bbcode', "strip_bbcode");
 		}
 		
 		public function display_rss($file){
@@ -59,7 +60,7 @@
 		
 		public function fetch_rss($file){
 			global $config;
-			$this->template_dir = $config['smarty']['template_dir'] ."rss/";
+			$this->template_dir = str_replace($this->template, "rss", $this->template_dir);
 			return $this->fetch($file);
 		}
 	}

@@ -320,6 +320,7 @@
 		}
 		
 		function delete_from_index($post_id) {
+			global $db;
 			$delete_search = "DELETE FROM search_word WHERE post_id = ". $post_id ."";
 			$db->query($query);
 		}
