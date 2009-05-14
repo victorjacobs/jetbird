@@ -52,6 +52,16 @@
 			$this->register_modifier('strip_bbcode', "strip_bbcode");
 		}
 		
+		public function set_template($template_name){
+			if(file_exists(find_dir("template/") . $template_name)){
+				$this->template_dir = str_replace($this->template, $template_name, $this->template_dir);
+				$this->template = $template_name;
+				return true;
+			}else{
+				return false;
+			}
+		}
+		
 		public function display_rss($file){
 			global $config;
 			$this->template_dir = str_replace($config['smarty']['template'], "rss", $this->template_dir);

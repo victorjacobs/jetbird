@@ -16,6 +16,22 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
-	define("_JB_CONF_NOT_READY", true);
+	// Bootstrap install enviroment
+	ob_start();
+	session_start();
+	
+	require_once "../include/bootstrap.php";
+	
+	load("core");
+	load("smarty_glue");
+	
+	// Load up a bare configuration, containing some vitals for Smarty
+	require_once "data/configuration.bare.php";
+	
+	$smarty = new smarty_glue;
+	// Use special template, seperated from normal templates
+	$smarty->set_template("installer");
+	
+	$smarty->display("index.tpl");
 
 ?>

@@ -30,6 +30,13 @@
 	$process_start = timer();		// Use this wherever you want, can be useful for debugging
 	
 	load("configuration");
+	// If our configuration isn't set up yet, find installer and redirect
+	if(_JB_CONF_NOT_READY){
+		redirect(find_dir("install"));
+	}else{
+		// Remove installer here
+	}
+	
 	load("text");
 	load("database_connect");
 	load("smarty_glue");
