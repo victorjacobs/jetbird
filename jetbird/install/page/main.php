@@ -24,7 +24,7 @@
 	$manipulator->add_var("global/jaja", "aaaa");
 	$manipulator->add_var("tetten/zozo", 200);
 	
-	$manipulator->test();
+	$manipulator->write();
 	
 	// $config['global']['ja'] = "u moeder";
 	// echo eval('echo $config["global"]["ja"];');
