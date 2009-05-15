@@ -23,6 +23,8 @@
 	require_once "../include/bootstrap.php";
 	
 	load("core");
+	$process_start = timer();		// Use this wherever you want, can be useful for debugging
+	
 	load("smarty_glue");
 	
 	// Load up a bare configuration, containing some vitals for Smarty
@@ -32,6 +34,24 @@
 	// Use special template, seperated from normal templates
 	$smarty->set_template("installer");
 	
-	$smarty->display("index.tpl");
+	// Now the system is bootstrapped, give control to php scripts in page/*
+	$arguments = array_keys($_GET);
+	$action = addslashes($arguments[1]);
+	
+	if(isset($arguments[0]) && !eregi("^[a-z0-9_-]+$", $arguments[0])){
+		redirect("./");
+	}
+	
+	if(isset($arguments)){
+		if(file_exists("page/". $arguments[0] .".php") && is_readable("page/". $arguments[0] .".php")){
+			require_once "page/". strtolower($arguments[0]) .".php";
+		}elseif(empty($arguments[0]) || !empty($_GET[$arguments[0]])){		// if arguments for specific page like ./?page=1
+			require_once "page/main.php";
+		}else{
+			require_once "page/main.php";
+		}
+	}
+	
+	ob_end_flush();
 
 ?>

@@ -31,7 +31,7 @@
 	
 	load("configuration");
 	// If our configuration isn't set up yet, find installer and redirect
-	if(_JB_CONF_NOT_READY){
+	if(!file_exists(find_dir("include/") . "configuration.php")){
 		redirect(find_dir("install"));
 	}else{
 		// Remove installer here
