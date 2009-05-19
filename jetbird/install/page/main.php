@@ -23,6 +23,7 @@
 	$manipulator->add_var("global/test", 20);
 	$manipulator->add_var("global/jaja", "aaaa");
 	$manipulator->add_var("tetten/zozo", 200);
+	$manipulator->add_var("database/jazenne", true);
 	
 	$manipulator->write();
 	

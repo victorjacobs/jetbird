@@ -16,6 +16,13 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
+	// Define _JB_DEBUG if DEBUG_ENVIRONMENT is found in root
+	if(file_exists(find_dir("DEBUG_ENVIRONMENT"))){
+		define("_JB_DEBUG", true);
+	}else{
+		define("_JB_DEBUG", false);
+	}
+	
 	// XDebug
 	if(isset($_GET['debug'])){
 		if($_COOKIE['XDEBUG_PROFILE']){
