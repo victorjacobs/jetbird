@@ -171,12 +171,12 @@
 					}
 				}
 			}else{
-				$smarty->display("admin.post.tpl");
+				$smarty->display("post.tpl");
 			}
 		break;
 	}
 		
 	$smarty->assign("queries", $db->queries);
-	$smarty->display('admin.post.tpl');
+	$smarty->display('post.tpl');
 
 ?>

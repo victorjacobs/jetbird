@@ -135,7 +135,7 @@
 					}
 				}
 			}else{
-				$smarty->display("admin.user.tpl");
+				$smarty->display("user.tpl");
 			}
 		break;
 		
@@ -181,6 +181,6 @@
 	}
 	
 	$smarty->assign("queries", $db->queries);
-	$smarty->display('admin.user.tpl');
+	$smarty->display('user.tpl');
 	
 ?>

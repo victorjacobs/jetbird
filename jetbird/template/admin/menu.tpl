@@ -15,18 +15,40 @@
     along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 *}
 
-		<div class="menu">
-			<ul>
-				<li><a href="{if $smarty.const.ADMIN_MODE}.{/if}./">Home</a></li>
-				<li><a href="{if $smarty.const.ADMIN_MODE}../{/if}#">Projects</a></li>
-				<li><a href="{if $smarty.const.ADMIN_MODE}../{/if}?about">About us</a></li>
-				<li><a href="{if $smarty.const.ADMIN_MODE}../{/if}#">Contact</a></li>
-			</ul>
-		</div>
-		
-		{if isset($smarty.session.login)}
-		<div class="menu">
-			<ul>
-				<li><a href="{if $smarty.const.ADMIN_MODE}.{/if}./admin/">Admin panel</a></li>
-			</ul>
-		</div>{/if}
+	<div id="side">
+		<ul>
+			<li>
+				<a href="../">Go back</a>
+			</li>
+			
+			<li>
+				<a href="./?user">Users</a>
+				<ul>
+					<li><a href="./?user&amp;invite">Invite user</a></li>
+					<li><a href="./?user&amp;generate">Generate keys</a></li>
+				</ul>
+			</li>
+			
+			<li>
+				<a href="./?post">Posts</a>
+				<ul>
+					<li><a href="./?post&amp;new">New post</a></li>
+				</ul>
+			</li>
+			
+			<li>
+				<a href="./?file">Attachments</a>
+				<ul>
+					<li><a href="./?file&amp;upload">Upload file</a></li>
+				</ul>
+			</li>
+			
+			<li>
+				<a href="./?search">Search</a>
+			</li>
+			
+			<li>
+				<a href="../?logout">Log out</a>
+			</li>
+		</ul>
+	</div>

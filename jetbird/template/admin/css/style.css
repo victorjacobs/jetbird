@@ -1,0 +1,49 @@
+/* @override http://localhost/jetbird-git/jetbird/template/admin/css/style.css */
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: #909e67;
+}
+
+#head {
+	width: 100%;
+	border-bottom-style: solid;
+	height: 75px;
+	background-image: url(../image/bg.png);
+	color: white;
+}
+
+#head * {
+	padding-left: 15px;
+	padding-top: 10px;
+}
+
+#head > small {
+	margin-left: 20px;
+}
+
+#side {
+	width: 150px;
+	border-right-style: solid;
+	height: 2000px;
+	padding: 10px;
+	float: left;
+	border-right-color: white;
+}
+
+#side ul > li {
+	list-style-type: none;
+	padding-bottom: 3px;
+}
+
+#side > ul > li > ul {
+	padding-left: 20px;
+}
+
+#content {
+	padding: 10px 10px 10px 180px;
+}

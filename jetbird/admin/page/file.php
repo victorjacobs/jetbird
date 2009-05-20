@@ -161,7 +161,7 @@
 					}
 				}
 			}else{
-				$smarty->display("admin.file.tpl");
+				$smarty->display("file.tpl");
 			}
 		
 		break;
@@ -176,6 +176,6 @@
 	}
 	
 	$smarty->assign("queries", $db->queries);
-	$smarty->display("admin.file.tpl");
+	$smarty->display("file.tpl");
 
 ?>

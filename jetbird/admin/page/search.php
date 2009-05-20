@@ -51,6 +51,6 @@
 		break;
 	}
 	
-	$smarty->display("admin.search.tpl");
+	$smarty->display("search.tpl");
 
 ?>

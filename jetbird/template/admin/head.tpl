@@ -15,18 +15,20 @@
     along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 *}
 
-		<div class="menu">
-			<ul>
-				<li><a href="{if $smarty.const.ADMIN_MODE}.{/if}./">Home</a></li>
-				<li><a href="{if $smarty.const.ADMIN_MODE}../{/if}#">Projects</a></li>
-				<li><a href="{if $smarty.const.ADMIN_MODE}../{/if}?about">About us</a></li>
-				<li><a href="{if $smarty.const.ADMIN_MODE}../{/if}#">Contact</a></li>
-			</ul>
-		</div>
-		
-		{if isset($smarty.session.login)}
-		<div class="menu">
-			<ul>
-				<li><a href="{if $smarty.const.ADMIN_MODE}.{/if}./admin/">Admin panel</a></li>
-			</ul>
-		</div>{/if}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<title>Jetbird Interface Preview</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<link type="text/css" rel="stylesheet" media="screen" href="{$template_dir}/css/style.css" />
+</head>
+
+<body>
+	
+	<div id="head">
+		<h1>Jetbird - Admin</h1>
+		<small>v1.0</small>
+	</div>
+	
+	{include file="menu.tpl"}

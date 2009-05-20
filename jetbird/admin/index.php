@@ -43,6 +43,7 @@
 	}
 	
 	$smarty = new smarty_glue;
+	$smarty->set_template("admin");
 	
 	// Getting ready for the real deal: including our pages
 	$arguments = array_keys($_GET);
