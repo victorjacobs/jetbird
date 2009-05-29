@@ -35,7 +35,14 @@
 			</div>
 			
 			<hr />
-			{if isset($smarty.session.login)}{include file="admin.menu.tpl"}{/if}
+			{if isset($smarty.session.login)}
+			<div class="menu">
+				<ul>
+					<li>
+						<a href="./admin/">Admin panel</a>
+					</li>
+				</ul>
+			</div>{/if}
 			
 			{if !isset($smarty.session.login)}
 			<div id="adsense">
