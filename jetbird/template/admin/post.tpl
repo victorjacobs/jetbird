@@ -30,12 +30,12 @@
 					<table>
 						<tr>
 							<td><b>Title</b></td>
-							<td><input type="text" name="post_title" size="57" value="{$post_title}" /></td>
+							<td><input type="text" name="post_title" size="82" value="{$post_title}" /></td>
 						</tr>
 						
 						<tr>
 							<td valign="top"><b>Text</b></td>
-							<td><textarea rows="20" cols="55" name="post_content">{$post_content}</textarea></td>
+							<td><textarea rows="20" cols="80" name="post_content">{$post_content}</textarea></td>
 						</tr>
 						
 						<tr>
@@ -64,12 +64,12 @@
 					<table>
 						<tr>
 							<td><b>Title</b></td>
-							<td><input type="text" name="post_title" size="57"{if isset($post_data.post_title)} value="{$post_data.post_title}"{/if} /></td>
+							<td><input type="text" name="post_title" size="82"{if isset($post_data.post_title)} value="{$post_data.post_title}"{/if} /></td>
 						</tr>
                 	
 						<tr>
 							<td valign="top"><b>Text</b></td>
-							<td><textarea rows="20" cols="55" name="post_content">{if isset($post_data.post_content)}{$post_data.post_content}{/if}</textarea></td>
+							<td><textarea rows="20" cols="80" name="post_content">{if isset($post_data.post_content)}{$post_data.post_content}{/if}</textarea></td>
 						</tr>
                 	
 						<tr>
@@ -97,11 +97,11 @@
 			<p>
 				<table width="100%">
 					<tr>
-						<td width="35%"><b>Title</b></td>
-						<td><b>Author</b></td>
-						<td><b>Date</b></td>
-						<td><b>Comments</b></td>
-						<td width="1">&nbsp;</td>
+						<td><b>Title</b></td>
+						<td width="80"><b>Author</b></td>
+						<td width="120"><b>Date</b></td>
+						<td width="100"><b>Comments</b></td>
+						<td width="30">&nbsp;</td>
 						<td width="1">&nbsp;</td>
 					</tr>
 					
