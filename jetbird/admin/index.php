@@ -19,7 +19,6 @@
 	// Note: this page is very similar to the main index.php
 	
 	// Global init
-	define("ADMIN_MODE", true);
 	ob_start();
 	session_start();
 	// Make sure all the data we recieve is UTF-8, 

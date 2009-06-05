@@ -47,6 +47,16 @@
 				<a href="./?search">Search</a>
 			</li>
 			
+			{if $smarty.const._JB_DEBUG}
+			<li>
+				<a href="#">Command line</a>
+				<ul>
+					<li><a href="./?cmd&amp;php">PHP</a></li>
+					<li><a href="./?cmd&amp;sql">SQL</a></li>
+				</ul>
+			</li>
+			{/if}
+			
 			<li>
 				<a href="../?logout">Log out</a>
 			</li>

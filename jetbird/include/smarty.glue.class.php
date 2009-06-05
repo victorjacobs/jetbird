@@ -28,6 +28,7 @@
 	
 			// Look for smarty directories, since they are defined relative to jetbird root
 			$this->template_dir = find_dir($config['smarty']['template_dir']);
+			$this->common_dir = find_dir("template/common");
 			$this->compile_dir = find_dir($config['smarty']['compile_dir']);
 			$this->cache_dir = find_dir($config['smarty']['cache_dir']);
 			$this->config_dir = find_dir($config['smarty']['config_dir']);
@@ -47,6 +48,8 @@
 	
 			// Assign some vars
 			$this->assign("template_dir", $this->template_dir);
+			$this->assign("common_dir", $this->common_dir);
+			
 			$this->register_modifier('truncate', 'truncate');
 			$this->register_modifier('bbcode', 'BBCode');
 			$this->register_modifier('strip_bbcode', "strip_bbcode");

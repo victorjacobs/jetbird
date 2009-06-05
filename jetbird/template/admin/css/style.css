@@ -5,6 +5,11 @@
 	padding: 0;
 }
 
+h1 > a {
+	color: white;
+	margin-left: -15px;		/* Should find out what's wrong with this */
+}
+
 h2 {
 	margin-bottom: 15px;
 }

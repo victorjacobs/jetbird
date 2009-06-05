@@ -15,20 +15,24 @@
     along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 *}
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+{include file="head.tpl"}
 
-<head>
-	<title>Jetbird</title>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<link type="text/css" rel="stylesheet" media="screen" href="{$template_dir}/css/style.css" />
-</head>
-
-<body>
-	
-	<div id="head">
-		<h1><a href="./">Jetbird - Admin</a></h1>
-		<small>v1.0</small>
-	</div>
-	
-	{include file="menu.tpl"}
+		<div id="content">
+			{$common_dir}
+			<h2>Command line</h2>
+			<h3>Execute some {if isset($smarty.get.php)}PHP{/if}{if isset($smarty.get.sql)}SQL{/if} right on the server</h3>
+			
+			<form action="./?cmd&amp;{if isset($smarty.get.php)}php{/if}{if isset($smarty.get.sql)}sql{/if}" method="post">
+				<p>
+					<textarea name="command" cols="70" rows="20"></textarea>
+				</p>
+				
+				<p>
+					<input type="submit" name="submit" value="Go" />
+				</p>
+			</form>
+				
+			
+		</div>
+		
+{include file="foot.tpl"}
