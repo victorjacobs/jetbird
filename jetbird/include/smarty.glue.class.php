@@ -49,6 +49,7 @@
 			// Assign some vars
 			$this->assign("template_dir", $this->template_dir);
 			$this->assign("common_dir", $this->common_dir);
+			$this->assign("jquery", $this->common_dir . "/js/jquery-1.3.2.min.js");
 			
 			$this->register_modifier('truncate', 'truncate');
 			$this->register_modifier('bbcode', 'BBCode');

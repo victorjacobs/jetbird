@@ -21,6 +21,8 @@
 <head>
 	<title>Jetbird</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<script src="{$jquery}" type="text/javascript"></script>
+	<script src="{$template_dir}/js/ui.js" type="text/javascript"></script>
 	<link type="text/css" rel="stylesheet" media="screen" href="{$template_dir}/css/style.css" />
 </head>
 
