@@ -69,14 +69,12 @@
 		}
 	
 		public function display_rss($file){
-			global $config;
-			$this->template_dir = str_replace($config['smarty']['template'], "rss", $this->template_dir);
+			$this->set_template("rss");
 			$this->display($file);
 		}
 	
 		public function fetch_rss($file){
-			global $config;
-			$this->template_dir = str_replace($this->template, "rss", $this->template_dir);
+			$this->set_template("rss");
 			return $this->fetch($file);
 		}
 	}

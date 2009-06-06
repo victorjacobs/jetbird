@@ -20,6 +20,7 @@
 		<div id="content">
 			
 			<h2>Statistics</h2>
+			<small>Server time: {$smarty.now|date_format:"%d/%m/%Y %H:%M:%S"}</small>
 			
 			<h3>Recent comments</h3>
 			
