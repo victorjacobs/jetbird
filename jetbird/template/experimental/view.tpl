@@ -24,7 +24,11 @@
 				<small>The everyday problems of two geeks.</small>
 				
 				<h3>{$post.post_title}</h3>
-				<small class="subtitle">By {$post.user_name|ucfirst} on {$post.post_date|date_format:"%d/%m/%y"}</small>
+				<small class="subtitle">By {$post.user_name|ucfirst} on {$post.post_date|date_format:"%d/%m/%y"} in 
+				{foreach from=$tags item=tag} 
+				<a href="./?search&action=search_weight&text={$tag.tag}">{$tag.tag}</a>
+				{/foreach}
+				</small>
 				
 				<p>{$post.post_content|bbcode|nl2br}</p>
 				

@@ -65,6 +65,7 @@
 		
 		function query($query){
 			// query database
+			// TODO escape input.
 			if(!$this->connected){
 				trigger_error('Not connected to a database', E_USER_ERROR);
 			}

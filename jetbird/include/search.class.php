@@ -15,13 +15,19 @@
 	    You should have received a copy of the GNU General Public License
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
+	// this function will be used to detect problems in preg_replace.
+	/*
+	 * TODO: allow searching accros multiple group_id's.
+	 * Then everything can get its own group id assigned, like titles, posts, etc...
+	 * Then we don't have to use weight AND group_id to do a specific search, in a certain way the weight is now our group_id.
+	 */
 	class search_class {
-		
+				
 				function debug($var) {					
 					die(var_dump($var));
 				}
 				
-				function clean_text($text) {
+				function clean_text_utf8($text) {
 				$text = stripslashes($text);
 				/*
 				 * Removing HTML tags
@@ -152,11 +158,9 @@
 			}
 
 		function split_text($text)
-		{
-				//we assume from now on that all the text we recieve is UTF-8.
+		{								
+				$text = $this->clean_text_utf8($text);
 				
-				//remove all punctuations and unwanted symbols.
-				$text = $this->clean_text($text);
 				
 				//splitting the words with mb_split as the explode() function isn't safe on UTF-8
 				mb_regex_encoding( "utf-8" );
@@ -191,7 +195,7 @@
 			return $index;
 		}
 	
-		function index($text, $post_id, $weight, $group_id) {
+		function index($text, $post_id, $weight) {
 			global $db;
 			$index = $this->get_index();
 			$text = $this->split_text($text);
@@ -203,30 +207,31 @@
 					$db->query($query);
 					$index[$word] = $db->last_insert_id;
 				}
-				$query = "	INSERT INTO search_word(word_id, post_id, weight, group_id) 
-							VALUES ('$index[$word]', '$post_id', $weight, $group_id)";
+				$query = "	INSERT INTO search_word(word_id, post_id, weight) 
+							VALUES ('$index[$word]', '$post_id', $weight)";
 				$db->query($query);
 			}
 			return true;
 		}
 	
 	
-		function search($text, $group_id) {
-			//die(var_dump($text));
+		function search($text) {
+			global $db;
+	
 			$text = $this->split_text($text);
-			
 			$word_id = $this->get_word_id($text);
+			
 			if(!$word_id) {
 				return false;
 			}
-			global $db;
+			
 			foreach($word_id as $id) {
 				if(empty($sub_query)) {
-					$sub_query = " word_id = '". $id ."' AND group_id = '". $group_id ."'";
+					$sub_query = " word_id = '". $id ."'";
 				} 
 				else 
 				{
-					$sub_query .= " OR word_id = '". $id ."' AND group_id = '". $group_id ."'";
+					$sub_query .= " OR word_id = '". $id ."'";
 				}
 			}
 			$query = "  SELECT * 
@@ -249,6 +254,49 @@
 			return $post;
 		}
 		
+		//Searches the given fir the given text that has keywords with that given weight in it.
+		//can be used for title searches, content, tag searches,... if it all has a different weight else it will not work.
+		//TODO order it on date, because everything has the same weight here.
+		function search_by_weight($text, $weight) {
+			global $db;
+	
+			$text = $this->split_text($text);
+			$word_id = $this->get_word_id($text);
+			
+			if(!$word_id) {
+				return false;
+			}
+			
+			foreach($word_id as $id) {
+				if(empty($sub_query)) {
+					$sub_query = " word_id = '". $id ."' AND weight = '". $weight ."'";
+				} 
+				else 
+				{
+					$sub_query .= " OR word_id = '". $id ."' AND weight = '". $weight ."'";
+				}
+			}
+			$query = "  SELECT * 
+						FROM search_word
+						WHERE ". $sub_query."";
+			//$this->debug($query);
+			$result = $db->query($query);
+			
+			while($row = mysql_fetch_array($result)) {
+				if(!empty($post_id[$row['$post_id']])) {
+					$post_id[$row['post_id']] = $row['weight'];	
+				} else {
+					$weight = $post_id[$row['post_id']] + $row['weight'];
+					$post_id[$row['post_id']] = $weight;
+				}
+			}
+			arsort($post_id);
+			
+			$post = $this->get_post($post_id);
+			return $post;
+		}
+		
+		//TODO: the get_post function actually doesn't belong in the search engine, normally all the functions should return a set of ID's.
 		function get_post($post_id) {
 			$i = 0;
 			global $db;
@@ -258,6 +306,7 @@
 					WHERE post.post_id = ". $id ."";
 				
 				$result = $db->query($query);
+				//TODO find a better way to get the post_id's in the search class.
 				while ($row = mysql_fetch_array($result)) {
 					$post[$i]['post_id'] = $row['post_id'];
 					$post[$i]['post_title'] = $row['post_title'];
@@ -267,8 +316,13 @@
 				}
 			$i++;
 			}
-				
 		return $post;
+		}
+		
+		function delete_from_index($post_id) {
+			global $db;
+			$delete_search = "DELETE FROM search_word WHERE post_id = ". $post_id ."";
+			$db->query($query);
 		}
 
 

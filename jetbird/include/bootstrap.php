@@ -19,6 +19,8 @@
 	// Define _JB_DEBUG if DEBUG_ENVIRONMENT is found in root
 	if(file_exists(find_dir("DEBUG_ENVIRONMENT"))){
 		define("_JB_DEBUG", true);
+		
+		if($_SERVER['REMOTE_ADDR'] == "::1") $_SERVER['REMOTE_ADDR'] = "127:0:0:1";
 	}else{
 		define("_JB_DEBUG", false);
 	}

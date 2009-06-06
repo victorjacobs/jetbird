@@ -15,10 +15,8 @@
 	    You should have received a copy of the GNU General Public License
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
-	//setting magic quotes to avoid intersect problems in indexer
-	/*
-	 * TODO: add a tag system for easy searching
-	 */
+
+
 	if(!function_exists("redirect")){		// This means that this page hasn't been included right
 		die();
 	}
@@ -33,7 +31,7 @@
 	
 	switch($action){
 		case "edit":
-		
+			
 			if(empty($_GET['id'])){
 				redirect("./");
 			}
@@ -52,15 +50,24 @@
 					$smarty->assign('post_title', $_POST['post_title']);
 					$smarty->assign('comment_status', $_POST['comment_status']);
 				}else{
+					// The input that we recieved has gone through the BBCode function, and thus has html entities, so we should decode them.
+					// we should write our own function for this, but now i'm a bit lazy.
+					$post_content = html_entity_decode($_POST['post_content'], UTF-8);
+			
 					$query = "	UPDATE post 
-								SET post_content = '". $_POST['post_content'] ."',
+								SET post_content = '". $post_content ."',
 								post_title = '". $_POST['post_title'] ."',
 								comment_status = '". $_POST['comment_status'] ."'
 								WHERE post_id = ". $_GET['id'];
 					$db->query($query);
+
 					
+					//Updating the index of the search engine.
+					$search = new search_class;
+					$search->delete_from_index($_GET['id']);
+					$search->index($post_content, $_GET['id'], 1); //post
+					$search->index($_POST['post_title'], $_GET['id'], 2); //title	
 					write_rss_feed();
-					
 					redirect("../?view&id=". $_GET['id']);
 					die();
 				}
@@ -72,7 +79,7 @@
 				$result = $db->fetch_array($query);
 				
 				// Assume there is only one result
-				$main['post'] = htmlentities($result[0]["post_content"]);
+				$main['post'] = htmlspecialchars($result[0]["post_content"]);
 				$main['title'] = $result[0]['post_title'];
 				$main['comment_status'] = $result[0]['comment_status'];
 				
@@ -86,6 +93,7 @@
 		case "new":
 		
 			if(isset($_POST['submit'])){
+				//TODO add checks for the tag thingie.
 				if(!isset($_POST['post_title']) || empty($_POST['post_title'])) $post_error["post_title"] = true;
 				if(!isset($_POST['post_content']) || empty($_POST['post_content'])) $post_error["post_content"] = true;
 				if(count($post_error) != 0){
@@ -100,27 +108,35 @@
 
 					$result = $db->query($query);
 					$created_post_id = $db->last_insert_id;
-
+					
 					/*
 					 * Start of the indexing process.
-					 * TODO: add a word count.
 					 */
 							
 					// Setting some vars
 					$text = $_POST['post_content'];
 					$title = $_POST['post_title'];
 					$post_id = $created_post_id;
-						
+					$tags = $_POST['post_tags'];
 					//indexing the text
 					
 					$search = new search_class;
-					$search->index($text, $post_id, 1, 1); //indexing text
-					$search->index($title, $post_id, 2, 1); //indexing title
+					$search->index($text, $post_id, 1); //indexing text.
+					$search->index($title, $post_id, 2); //indexing title.
+					$search->index($tags, $post_id, 3); // indexing tags.
 					
 					write_rss_feed();
 					
-					redirect('../?view&id='. $created_post_id);
+					
+					//updating tags table.
+					$tags = $search->split_text($tags);
+					foreach ($tags as $tag) {
+						$query = "INSERT INTO tags (post_id, tag) VALUES ($post_id, '$tag')";
+						$db->query($query);					
+					}
+				redirect('../?view&id='. $created_post_id);
 			}
+
 		}
 
 			
@@ -150,7 +166,9 @@
 				if($db->num_rows("SELECT * FROM post WHERE post_id = ". $_POST['id']) == 1){
 					$delete_post = "DELETE FROM post WHERE post_id = ". $_POST['id'];
 					$delete_comments = "DELETE FROM comment WHERE comment_parent_post_id = ". $_POST['id'];
-					$delete_search = "DELETE FROM search_word WHERE post_id = ". $_POST['id'] ."";
+					$search = new search_class;
+					$search->delete_from_index($_POST['id']);
+					
 					if($db->query($delete_post) && $db->query($delete_comments) && $db->query($delete_search)){
 						$success = true;
 						@write_rss_feed();				// If file is unreadable, just ignore the error here

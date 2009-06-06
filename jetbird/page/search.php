@@ -25,7 +25,22 @@
 		case "search":
 			$text = $_POST['search'];						
 			$search = new search_class;
-			$post = $search->search($text, 1); 
+			
+			
+			$post = $search->search($text); 
+			if (!$post) {
+				unset ($post);
+			}
+			//die(var_dump($post));
+			$smarty->assign("results", $post);
+		break;
+		
+		case "search_weight":
+			$text = $_GET['text'];						
+			$search = new search_class;
+			
+			
+			$post = $search->search_by_weight($text, 3); 
 			if (!$post) {
 				unset ($post);
 			}
