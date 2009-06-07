@@ -77,6 +77,12 @@
 						$this->out_temp .= $data . ";";
 					}elseif(is_string($data)){
 						$this->out_temp .= '"'. $data .'";';
+					}elseif(is_bool($data)){
+						if($data){
+							$this->out_temp .= 'true;';
+						}else{
+							$this->out_temp .= 'false;';
+						}
 					}
 					
 					$this->out_temp .= "\n";
