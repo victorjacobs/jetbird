@@ -22,7 +22,7 @@
 	
 	if(isset($_COOKIE['login_key'])){
 		$db->query("DELETE FROM user_session
-					WHERE user_session_key = ". $_COOKIE['login_key']);
+					WHERE user_session_key = '". $_COOKIE['login_key'] ."'");
 		
 		cookie_destroy("login_key");
 	}
