@@ -158,6 +158,7 @@
 				$table_name = $table['Tables_in_'. $this->database];
 				
 				list($table_structure_temp) = $this->fetch_array("SHOW CREATE TABLE ". $table_name);
+				// This is a fresh database, so don't include AUTO_INCREMENT values
 				$table_structure[] = preg_replace('$AUTO_INCREMENT=[0-9]+ $', "", $table_structure_temp['Create Table']);
 			}
 			
