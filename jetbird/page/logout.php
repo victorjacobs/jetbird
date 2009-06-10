@@ -20,8 +20,11 @@
 		die();
 	}
 	
-	if(isset($_COOKIE['logged_in_as'])){
-		cookie_destroy("logged_in_as", "user_id");
+	if(isset($_COOKIE['login_key'])){
+		$db->query("DELETE FROM user_session
+					WHERE user_session_key = ". $_COOKIE['login_key']);
+		
+		cookie_destroy("login_key");
 	}
 	
 	// Let's be nice to other people who might be needing $_SESSION
