@@ -17,8 +17,6 @@
 	*/
 	
 	if(isset($_COOKIE['login_key']) && !$_SESSION['login']){
-		echo "<b>DEBUG:</b> Bootstrapping login";
-		
 		// Let's check whether the login_key is valid
 		$session_info_query = $db->query("	SELECT *
 											FROM user_session
