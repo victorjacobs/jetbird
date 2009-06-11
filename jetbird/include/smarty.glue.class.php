@@ -27,11 +27,11 @@
 			parent::__construct();
 	
 			// Look for smarty directories, since they are defined relative to jetbird root
-			$this->template_dir = find_dir($config['smarty']['template_dir']);
-			$this->common_dir = find_dir("template/common");
-			$this->compile_dir = find_dir($config['smarty']['compile_dir']);
-			$this->cache_dir = find_dir($config['smarty']['cache_dir']);
-			$this->config_dir = find_dir($config['smarty']['config_dir']);
+			$this->template_dir = find($config['smarty']['template_dir']);
+			$this->common_dir = find("template/common");
+			$this->compile_dir = find($config['smarty']['compile_dir']);
+			$this->cache_dir = find($config['smarty']['cache_dir']);
+			$this->config_dir = find($config['smarty']['config_dir']);
 	
 			if(!empty($_SESSION['template'])){
 				$config['smarty']['template'] = $_SESSION['template'];
@@ -57,7 +57,7 @@
 		}
 	
 		public function set_template($template_name){
-			if(file_exists(find_dir("template/") . $template_name)){
+			if(file_exists(find("template/") . $template_name)){
 				$this->template_dir = str_replace($this->template, $template_name, $this->template_dir);
 				$this->template = $template_name;
 				$this->compile_id = $this->template;

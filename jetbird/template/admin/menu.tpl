@@ -55,6 +55,10 @@
 					<li><a href="./?cmd&amp;sql">SQL</a></li>
 				</ul>
 			</li>
+			
+			<li>
+				<a href="./?dump">Dump db structure</a>
+			</li>
 			{/if}
 			
 			<li>

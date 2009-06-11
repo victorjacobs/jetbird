@@ -114,7 +114,7 @@
 			<p>
 				<table>
 					<tr>
-						<td width="150"><b>Name</b></td>
+						<td width="255"><b>Name</b></td>
 						<td width="170"><b>Mail</b></td>
 						<td width="110"><b>Last login</b></td>
 						<td width="30">&nbsp;</td>
@@ -137,9 +137,10 @@
 			<p>
 				<table>
 					<tr>
-						<td width="150"><b>Key</b></td>
+						<td width="255"><b>Key</b></td>
 						<td width="170"><b>Sent to</b></td>
-						<td width="98"><b>Created on</b></td>
+						<td width="140"><b>Created on</b></td>
+						<td width="1">&nbsp;</td>
 					</tr>
 					{if !empty($keys)}
 					{foreach from=$keys item=key}
@@ -147,6 +148,7 @@
 						<td>{$key.user_reg_key}</td>
 						<td>{if empty($key.user_mail)}<i>No one</i>{else}{$key.user_mail}{/if}</td>
 						<td>{$key.user_last_login|date_format:"%d/%m/%y %H:%I"}</td>
+						<td><a href="#" class="needs_confirmation" name="del_user_{$key.user_id}">Delete</a></td>
 					</tr>
 					{/foreach}
 					{/if}

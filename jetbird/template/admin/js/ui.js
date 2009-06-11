@@ -15,7 +15,7 @@
 */
 
 function set_height() {
-	if($("#content").height() < $(window).height() - 98 && $("#side").height() < $(window).height() - 98){
+	if($("#content").height() < $(window).height() - 98 || $("#side").height() < $(window).height() - 98){
 		$("#side").height($(window).height() - 98);
 	}
 }
@@ -26,4 +26,48 @@ $(window).resize(function() {
 
 $(document).ready(function() {
 	set_height();
+	
+	$(".needs_confirmation").click(function() {
+		if($(this).text() != "Sure?"){
+			$(this).fadeOut(200, function() {
+				$(this).text("Sure?");
+				$(this).fadeIn();
+			});
+		}else{
+			var mode = $(this).attr("name").split("_");
+			var id = mode[2];
+			if(location.pathname.match("admin") != "admin"){
+				var link = "./admin/?";
+			}else{
+				var link = "./?";
+			}
+			
+			switch(mode[0]){
+				case "del":
+					$.post(link + mode[1] + "&delete",
+						{submit:"true", id:id, method:"ajax"},
+						function(returned_data) {
+							if(returned_data == "success"){
+								location.reload();
+							}else{
+								alert(returned_data);
+							}
+					});
+				break;
+				
+				case "reindex":
+					$(this).text("Please wait...");
+					$.post(link + "search&reindex",
+						{submit:"true", method:"ajax"},
+						function(returned_data) {
+							if(returned_data == "success"){
+								location.reload();
+							}else{
+								
+							}
+					});
+				break;
+			}
+		}
+	});
 });

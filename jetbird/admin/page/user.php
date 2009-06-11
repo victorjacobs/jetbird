@@ -112,6 +112,9 @@
 				if($db->num_rows($user_level_result) == 1){
 					if($db->fetch_result($user_level_result) == -2){
 						$delete_query = "UPDATE user SET user_level = 1 WHERE user_id = ". $_POST['id'];
+					}elseif($db->fetch_result($user_level_result) == -1){
+						// Inactivated user keys should be deleted permanently tho
+						$delete_query = "DELETE FROM user WHERE user_id = ". $_POST['id'];
 					}else{
 						$delete_query = "UPDATE user SET user_level = -2 WHERE user_id = ". $_POST['id'];
 					}
@@ -141,28 +144,17 @@
 		
 		case "generate":
 			if(isset($_POST['submit'])){
-				if(isset($_POST['key_count']) && !empty($_POST['key_count'])){
-					// I don't think someone would like to create more than 10 keys at a time
-					if(!eregi("[0-9]+", $_POST['key_count']) || $_POST['key_count'] > 10 || $_POST['key_count'] < 0) $generate_error['key_count_invalid'] = true;
-				}else{
-					$generate_error['key_count'] = true;
+				for($i = 1; $i <= $_POST['key_count']; $i++){
+					$key = generate_reg_key();
+					$generated_keys[] = $key;
+					
+					$db->query(
+					"	INSERT INTO user (user_reg_key, user_last_login, user_level)
+						VALUES ('". $key ."', '". time() ."', '-1')
+					");
 				}
 				
-				if(count($generate_error) == 0){
-					for($i = 1; $i <= $_POST['key_count']; $i++){
-						$key = generate_reg_key();
-						$generated_keys[] = $key;
-						
-						$db->query(
-						"	INSERT INTO user (user_reg_key, user_last_login, user_level)
-							VALUES ('". $key ."', '". time() ."', '-1')
-						");
-					}
-					
-					$smarty->assign("keys", $generated_keys);
-				}else{
-					$smarty->assign("generate_error", $generate_error);
-				}
+				$smarty->assign("keys", $generated_keys);
 			}
 		break;
 		

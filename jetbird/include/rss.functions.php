@@ -49,7 +49,7 @@
 	}
 	
 	function write_rss_feed(){		
-		$feed_home = find_dir("feed/");
+		$feed_home = find("feed/");
 		
 		if(($fh = @fopen($feed_home . "feed.xml", "w")) === false){
 			trigger_error("write_rss_feed could not lock file for writing", E_USER_WARNING);

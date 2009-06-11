@@ -116,7 +116,7 @@
 		}
 		
 		public function write(){
-			$out = find_dir("include/") . "configuration.php";
+			$out = find("include/") . "configuration.php";
 			
 			if(!($file_handle = fopen($out, "w"))){
 				die("Could not lock $out for writing");
