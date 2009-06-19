@@ -4,18 +4,72 @@
 		<title>Jetbird</title>
 		<link>http://localhost/jetbird/</link>
 		<description>The everyday problems of two geeks</description>
-		<lastBuildDate>Mon, 20 Apr 2009 20:13:21 +0200</lastBuildDate>
-		<pubDate>Mon, 20 Apr 2009 20:13:21 +0200</pubDate>
+		<lastBuildDate>Fri, 15 May 2009 23:13:09 +0200</lastBuildDate>
+		<pubDate>Fri, 15 May 2009 23:13:09 +0200</pubDate>
 		<generator>Jetbird 1.0</generator>
 		<ttl>120</ttl>
 
 		<item>
-			<title>test</title>
-			<link>http://localhost/jetbird/?view&amp;id=40</link>
-			<description>test</description>
+			<title>kak</title>
+			<link>http://localhost/jetbird/?view&amp;id=47</link>
+			<description>kak</description>
 			<author>Tidus</author>
-			<comments>http://localhost/jetbird/?view&amp;id=40#comments</comments>
-			<pubDate>Mon, 20 Apr 2009 20:13:21 +0200</pubDate>
+			<comments>http://localhost/jetbird/?view&amp;id=47#comments</comments>
+			<pubDate>Fri, 15 May 2009 23:13:09 +0200</pubDate>
+		</item>
+
+		<item>
+			<title>test</title>
+			<link>http://localhost/jetbird/?view&amp;id=46</link>
+			<description>TEST TEST TEST TEST TEST TEST TEST</description>
+			<author>Tidus</author>
+			<comments>http://localhost/jetbird/?view&amp;id=46#comments</comments>
+			<pubDate>Fri, 15 May 2009 23:12:43 +0200</pubDate>
+		</item>
+
+		<item>
+			<title>test</title>
+			<link>http://localhost/jetbird/?view&amp;id=45</link>
+			<description>moeder</description>
+			<author>Tidus</author>
+			<comments>http://localhost/jetbird/?view&amp;id=45#comments</comments>
+			<pubDate>Fri, 15 May 2009 23:12:13 +0200</pubDate>
+		</item>
+
+		<item>
+			<title>test</title>
+			<link>http://localhost/jetbird/?view&amp;id=44</link>
+			<description>dit is weer een test om de cacher te testen, zou niet in de search results mogen komen na 24.00 u</description>
+			<author>Tidus</author>
+			<comments>http://localhost/jetbird/?view&amp;id=44#comments</comments>
+			<pubDate>Fri, 15 May 2009 23:05:07 +0200</pubDate>
+		</item>
+
+		<item>
+			<title>test</title>
+			<link>http://localhost/jetbird/?view&amp;id=43</link>
+			<description>dit is een test om de cacher te testen</description>
+			<author>Tidus</author>
+			<comments>http://localhost/jetbird/?view&amp;id=43#comments</comments>
+			<pubDate>Fri, 15 May 2009 23:03:53 +0200</pubDate>
+		</item>
+
+		<item>
+			<title>u MOEDER</title>
+			<link>http://localhost/jetbird/?view&amp;id=42</link>
+			<description>jaja</description>
+			<author>Tidus</author>
+			<comments>http://localhost/jetbird/?view&amp;id=42#comments</comments>
+			<pubDate>Wed, 13 May 2009 19:48:24 +0200</pubDate>
+		</item>
+
+		<item>
+			<title>test</title>
+			<link>http://localhost/jetbird/?view&amp;id=41</link>
+			<description>dit is nieuw</description>
+			<author>Tidus</author>
+			<comments>http://localhost/jetbird/?view&amp;id=41#comments</comments>
+			<pubDate>Fri, 01 May 2009 14:11:46 +0200</pubDate>
 		</item>
 
 		<item>
@@ -202,62 +256,6 @@
 			<author>Tidus</author>
 			<comments>http://localhost/jetbird/?view&amp;id=27#comments</comments>
 			<pubDate>Thu, 09 Apr 2009 19:44:39 +0200</pubDate>
-		</item>
-
-		<item>
-			<title>alert ('hacked');</title>
-			<link>http://localhost/jetbird/?view&amp;id=26</link>
-			<description>alert ('hacked');
-
-</description>
-			<author>Tidus</author>
-			<comments>http://localhost/jetbird/?view&amp;id=26#comments</comments>
-			<pubDate>Thu, 09 Apr 2009 19:44:24 +0200</pubDate>
-		</item>
-
-		<item>
-			<title>Japanase works</title>
-			<link>http://localhost/jetbird/?view&amp;id=22</link>
-			<description></description>
-			<author>Tidus</author>
-			<comments>http://localhost/jetbird/?view&amp;id=22#comments</comments>
-			<pubDate>Sun, 29 Mar 2009 00:29:45 +0100</pubDate>
-		</item>
-
-		<item>
-			<title>kak </title>
-			<link>http://localhost/jetbird/?view&amp;id=20</link>
-			<description>&amp; &amp; &amp; &quot; ' &gt; &lt;</description>
-			<author>Tidus</author>
-			<comments>http://localhost/jetbird/?view&amp;id=20#comments</comments>
-			<pubDate>Sun, 29 Mar 2009 00:24:12 +0100</pubDate>
-		</item>
-
-		<item>
-			<title>moeder</title>
-			<link>http://localhost/jetbird/?view&amp;id=19</link>
-			<description>I&Atilde;&plusmn;t&Atilde;&laquo;rn&Atilde;&cent;ti&Atilde;&acute;n&Atilde;&nbsp;liz&Atilde;&brvbar;ti&Atilde;&cedil;n</description>
-			<author>Tidus</author>
-			<comments>http://localhost/jetbird/?view&amp;id=19#comments</comments>
-			<pubDate>Sun, 29 Mar 2009 00:09:06 +0100</pubDate>
-		</item>
-
-		<item>
-			<title>edqsd</title>
-			<link>http://localhost/jetbird/?view&amp;id=18</link>
-			<description>be&Atilde;&macr;vloedbaar</description>
-			<author>Tidus</author>
-			<comments>http://localhost/jetbird/?view&amp;id=18#comments</comments>
-			<pubDate>Sat, 28 Mar 2009 23:53:04 +0100</pubDate>
-		</item>
-
-		<item>
-			<title>ja</title>
-			<link>http://localhost/jetbird/?view&amp;id=17</link>
-			<description>be&Atilde;&macr;nvloedbaar</description>
-			<author>Tidus</author>
-			<comments>http://localhost/jetbird/?view&amp;id=17#comments</comments>
-			<pubDate>Sat, 28 Mar 2009 23:51:46 +0100</pubDate>
 		</item>
 
 	</channel>
