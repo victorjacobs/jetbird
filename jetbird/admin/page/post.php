@@ -161,8 +161,10 @@
 		break;
 		
 		case "delete":
+			
 			if(isset($_POST['submit']) && isset($_POST['id'])){
 				if($db->num_rows("SELECT * FROM post WHERE post_id = ". $_POST['id']) == 1){
+					
 					$delete_post = "DELETE FROM post WHERE post_id = ". $_POST['id'];
 					$delete_comments = "DELETE FROM comment WHERE comment_parent_post_id = ". $_POST['id'];
 					$search = new search_class;
