@@ -67,6 +67,13 @@
 				return false;
 			}
 		}
+		
+		public function display($file){
+			global $process_start;
+			$this->assign("process_time", round(timer() - $process_start, 3));
+			
+			parent::display($file);
+		}
 	
 		public function display_rss($file){
 			$this->set_template("rss");

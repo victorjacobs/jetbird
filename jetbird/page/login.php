@@ -20,6 +20,10 @@
 		die();
 	}
 	
+	$smarty->set_template("admin");
+	
+	if($_SESSION['login']) redirect("./admin");
+	
 	if(isset($_POST['submit'])){
 		if(isset($_POST['username'])){
 			$password = md5($_POST['password']);

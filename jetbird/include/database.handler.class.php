@@ -17,12 +17,11 @@
 	*/
 	
 	class database_handler {
-		var $queries = 0, $link_identifier, $name, $connected, $new_link, $die_on_fail, $last_insert_id;
+		var $queries = 0, $link_identifier, $connected, $new_link, $die_on_fail, $last_insert_id;
 		private $persistent_connect = false, $database;
 		
-		public function __construct($name = null, $die_on_fail = true, $new_link = true){
+		public function __construct($die_on_fail = true, $new_link = true){
 			// set up object
-			$this->name = $name;
 			$this->new_link = $new_link;
 			$this->die_on_fail = $die_on_fail;
 			$this->connected = false;
@@ -49,11 +48,12 @@
 				$this->link_identifier = @mysql_connect($host, $user, $pass, $this->new_link);
 			}
 			if($this->link_identifier){
-				$select = mysql_select_db($db, $this->link_identifier);
-				if(!$select){
-					trigger_error("Database <b>". $db ."</b> doesn't exist", E_USER_ERROR);
-				}
+				$select = @mysql_select_db($db, $this->link_identifier);
+				// Don't throw an error when the database doesn't exist, maybe we are installing
+				$this->db_exists = $select;
+				
 				$this->connected = true;
+				
 				return $this->link_identifier;
 			}else{
 				$this->connected = false;
@@ -141,7 +141,7 @@
 		
 		public function export_structure($file, $exported_db_name = "jetbird"){
 			// Only enable this function when debugging
-			if(!_JB_DEBUG && !$this->connected){
+			if(!_JB_DEBUG || !$this->connected){
 				return false;
 			}
 			
@@ -171,10 +171,16 @@
 				$output .= $table .";\n\n";
 			}
 			
+			$output = str_replace("CREATE TABLE", "CREATE TABLE IF NOT EXISTS", $output);
+			
 			$success = @fwrite($fh, $output);
 			fclose($fh);
 			
 			return $success;
+		}
+		
+		public function import($file){
+			
 		}
 		
 		public function __destruct(){

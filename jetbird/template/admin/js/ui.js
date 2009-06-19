@@ -63,7 +63,7 @@ $(document).ready(function() {
 							if(returned_data == "success"){
 								location.reload();
 							}else{
-								
+								alert(returned_data);
 							}
 					});
 				break;
