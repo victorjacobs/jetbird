@@ -70,7 +70,7 @@
 					$scaled_w = ceil($original_w * $scale);
 				}
 			}else{
-				// Break out of if($file_type = image) since no resize is needed
+				// Break out of if($file_type = image) since no resize is possible
 				return false;
 			}
 			

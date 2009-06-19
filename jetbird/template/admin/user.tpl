@@ -24,17 +24,11 @@
 			{if isset($smarty.get.invite)}
 			<h3>Invite</h3>
 			<p>
-				<form action="./?user&amp;add_user" method="post">
-					<table>
-						<tr>
-							<td>Email address</td>
-							<td><input type="text" name="email" /></td>
-						</tr>
-						<tr>
-							<td>&nbsp;</td>
-							<td><input type="submit" name="submit" value="Send" /></td>
-						</tr>
-					</table>
+				<form action="./?user&amp;invite" method="post">
+					<p>
+						Email address: <input type="text" name="email" />
+					</p>
+					<input type="submit" name="submit" value="Send" />
 				</form>
 			</p>
 			{elseif isset($smarty.get.edit)}
@@ -87,18 +81,22 @@
 				{if isset($generate_error)}<p class="error"><b>Error:</b> Please fill in all the required fields correctly</p>{/if}
 				<form action="./?user&amp;generate" method="post">
 					<p>
-						<table>
-							<tr>
-								<td>Number</td>
-								<td><input type="text" name="key_count" value="1" /></td>
-							</tr>
-
-							<tr>
-								<td>&nbsp;</td>
-								<td><input type="submit" name="submit" value="Create" /></td>
-							</tr>
-						</table>
+						Number:
+						<select name="key_count">
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+						</select>
 					</p>
+					
+					<input type="submit" name="submit" value="Generate" />
 				</form>
 				{else}
 				<p>Following keys were created:</p>
@@ -114,12 +112,12 @@
 			{else}
 			<h3>Overview</h3>
 			<p>
-				<table width="100%">
+				<table>
 					<tr>
-						<td width="100"><b>Name</b></td>
-						<td><b>Mail</b></td>
-						<td><b>Last login</b></td>
-						<td width="1">&nbsp;</td>
+						<td width="255"><b>Name</b></td>
+						<td width="170"><b>Mail</b></td>
+						<td width="110"><b>Last login</b></td>
+						<td width="30">&nbsp;</td>
 						<td width="1">&nbsp;</td>
 					</tr>
 					{foreach from=$users item=user}
@@ -137,11 +135,12 @@
 			
 			<h3>Inactivated keys</h3>
 			<p>
-				<table width="100%">
+				<table>
 					<tr>
-						<td width="150"><b>Key</b></td>
-						<td><b>Sent to</b></td>
-						<td width="98"><b>Created on</b></td>
+						<td width="255"><b>Key</b></td>
+						<td width="170"><b>Sent to</b></td>
+						<td width="140"><b>Created on</b></td>
+						<td width="1">&nbsp;</td>
 					</tr>
 					{if !empty($keys)}
 					{foreach from=$keys item=key}
@@ -149,6 +148,7 @@
 						<td>{$key.user_reg_key}</td>
 						<td>{if empty($key.user_mail)}<i>No one</i>{else}{$key.user_mail}{/if}</td>
 						<td>{$key.user_last_login|date_format:"%d/%m/%y %H:%I"}</td>
+						<td><a href="#" class="needs_confirmation" name="del_user_{$key.user_id}">Delete</a></td>
 					</tr>
 					{/foreach}
 					{/if}

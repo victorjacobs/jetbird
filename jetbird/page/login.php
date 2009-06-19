@@ -35,27 +35,23 @@
 				
 				// Bootstrap
 				if(isset($_POST['rememberlogin'])){
-					// We only set two cookies here, to minimize security breaches, we set real login
+					// We only set one cookie here, to minimize security breaches, we set real login
 					//  info in $_SESSION
-					$login_id = uniqid();
-					setcookie('logged_in_as', $login_id, time() + $config['global']['login_expire']);
-					setcookie('user_id', $user[0]['user_id'], time() + $config['global']['login_expire']);
-					$_SESSION['logged_in_as'] = $login_id;
+					$login_key = uniqid();
+					setcookie('login_key', $login_key, time() + $config['global']['login_expire']);
 					
-					$_SESSION['user_level'] = $user[0]['user_level'];
-					$_SESSION['user_name'] = $user[0]['user_name'];
-					$_SESSION['user_id'] = $user[0]['user_id'];
-					$_SESSION['login'] = true;
-				}else{
-					$_SESSION['user_level'] = $user[0]['user_level'];
-					$_SESSION['user_name'] = $user[0]['user_name'];
-					$_SESSION['user_id'] = $user[0]['user_id'];
-					$_SESSION['login'] = true;
+					$db->query('INSERT INTO user_session (user_session_key, user_session_uid, user_session_age)
+								VALUES(\''. $login_key .'\', '. $user[0]['user_id'] .', '. time() .')');
 				}
 				
-				$db->query("	UPDATE user
-										SET user_last_login = ". time() ."
-										WHERE user_id = ". $user[0]['user_id']);
+				$_SESSION['user_level'] = $user[0]['user_level'];
+				$_SESSION['user_name'] = $user[0]['user_name'];
+				$_SESSION['user_id'] = $user[0]['user_id'];
+				$_SESSION['login'] = true;
+				
+				$db->query("UPDATE user
+							SET user_last_login = ". time() ."
+							WHERE user_id = ". $user[0]['user_id']);
 				
 				$smarty->assign('login', TRUE);
 				

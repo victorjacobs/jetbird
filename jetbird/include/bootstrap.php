@@ -16,6 +16,15 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
+	// Define _JB_DEBUG if DEBUG_ENVIRONMENT is found in root
+	if(file_exists(find("DEBUG_ENVIRONMENT"))){
+		define("_JB_DEBUG", true);
+		
+		if($_SERVER['REMOTE_ADDR'] == "::1") $_SERVER['REMOTE_ADDR'] = "127:0:0:1";
+	}else{
+		define("_JB_DEBUG", false);
+	}
+	
 	// XDebug
 	if(isset($_GET['debug'])){
 		if($_COOKIE['XDEBUG_PROFILE']){
@@ -26,7 +35,7 @@
 	}
 	
 	// Core function for finding directories not found in ./
-	function find_dir($dir, $max_level = 5){
+	function find($dir, $max_level = 5){
 		if(empty($dir)) return false;
 		
 		$prefix = "";
@@ -41,7 +50,7 @@
 	// On-the-fly template switcher, very useful for debugging
 	if(!empty($_GET['template'])){
 		$template = &$_GET['template'];
-		if(file_exists(find_dir("template/") . $template)){
+		if(file_exists(find("template/") . $template)){
 			$_SESSION['template'] = $template;
 		}
 	}elseif(isset($_GET['template'])){
@@ -77,7 +86,7 @@
 	}
 	
 	
-	$includes = find_dir("include/");
+	$includes = find("include/");
 	
 	$dh = opendir($includes);
 	

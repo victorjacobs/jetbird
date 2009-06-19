@@ -15,18 +15,16 @@
     along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 *}
 
-		<div class="menu">
-			<ul>
-				<li><a href="./">Home</a></li>
-				<li><a href="#">Projects</a></li>
-				<li><a href="./?about">About us</a></li>
-				<li><a href="#">Contact</a></li>
-			</ul>
+{include file="head.tpl"}
+
+		<div id="content">
+			
+			{if $status}
+			<p>Database structure successfully dumped to db/db.sql</p>
+			{else}
+			<p>Something went wrong dumping the database structure</p>
+			{/if}
+			
 		</div>
 		
-		{if isset($smarty.session.login)}
-		<div class="menu">
-			<ul>
-				<li><a href="./admin/">Admin panel</a></li>
-			</ul>
-		</div>{/if}
+{include file="foot.tpl"}

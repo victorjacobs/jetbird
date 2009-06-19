@@ -124,6 +124,7 @@
 					$search->index($text, $post_id, 1); //indexing text.
 					$search->index($title, $post_id, 2); //indexing title.
 					$search->index($tags, $post_id, 3); // indexing tags.
+					
 					write_rss_feed();
 					
 					
@@ -172,7 +173,7 @@
 					
 					if($db->query($delete_post) && $db->query($delete_comments) && $db->query($delete_search)){
 						$success = true;
-						write_rss_feed();
+						@write_rss_feed();				// If file is unreadable, just ignore the error here
 					}else{
 						$success = false;
 					}
@@ -190,12 +191,12 @@
 					}
 				}
 			}else{
-				$smarty->display("admin.post.tpl");
+				$smarty->display("post.tpl");
 			}
 		break;
 	}
 		
 	$smarty->assign("queries", $db->queries);
-	$smarty->display('admin.post.tpl');
+	$smarty->display('post.tpl');
 
 ?>

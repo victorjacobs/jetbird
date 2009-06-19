@@ -15,18 +15,24 @@
     along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 *}
 
-		<div class="menu">
-			<ul>
-				<li><a href="./">Home</a></li>
-				<li><a href="#">Projects</a></li>
-				<li><a href="./?about">About us</a></li>
-				<li><a href="#">Contact</a></li>
-			</ul>
+{include file="head.tpl"}
+
+		<div id="content">
+			{$common_dir}
+			<h2>Command line</h2>
+			<h3>Execute some {if isset($smarty.get.php)}PHP{/if}{if isset($smarty.get.sql)}SQL{/if} right on the server</h3>
+			
+			<form action="./?cmd&amp;{if isset($smarty.get.php)}php{/if}{if isset($smarty.get.sql)}sql{/if}" method="post">
+				<p>
+					<textarea name="command" cols="70" rows="20"></textarea>
+				</p>
+				
+				<p>
+					<input type="submit" name="submit" value="Go" />
+				</p>
+			</form>
+				
+			
 		</div>
 		
-		{if isset($smarty.session.login)}
-		<div class="menu">
-			<ul>
-				<li><a href="./admin/">Admin panel</a></li>
-			</ul>
-		</div>{/if}
+{include file="foot.tpl"}

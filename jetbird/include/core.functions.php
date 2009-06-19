@@ -55,7 +55,7 @@
 	}
 	
 	function generate_reg_key(){
-		return crypt(uniqid(sha1(md5(rand())), true));
+		return md5(uniqid(mt_rand(), true));
 	}
 	
 	function cookie_destroy(){

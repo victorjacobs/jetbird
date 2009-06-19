@@ -17,7 +17,6 @@
 	*/
 	
 	// Global init
-	define("ADMIN_MODE", false);
 	ob_start();
 	session_start();
 	// Make sure all the data we recieve is UTF-8, 
