@@ -43,6 +43,11 @@
 		redirect("./");
 	}
 	
+	// Just for fun
+	$load = exec('uptime');
+	$load = split('load averages: ', $load);
+	$smarty->assign("server_load", $load[1]);
+	
 	if(isset($arguments)){
 		if(file_exists("page/". $arguments[0] .".php") && is_readable("page/". $arguments[0] .".php")){
 			require_once "page/". strtolower($arguments[0]) .".php";

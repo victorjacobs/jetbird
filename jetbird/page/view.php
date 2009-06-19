@@ -15,7 +15,9 @@
 	    You should have received a copy of the GNU General Public License
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
+	
 	load('search');
+	
 	if(!isset($_GET['id'])){
 		if(function_exists("redirect")){
 			redirect("./");
@@ -23,8 +25,9 @@
 			die();
 		}
 	}
+	
 	//Checking all incoming Data of the user to prevent attacks.
-	if(!is_numeric){
+	if(!is_numeric($_GET['id'])){
 		redirect("./");
 	}
 	
@@ -106,9 +109,7 @@
 	}
 	
 	// Getting tags of the post.
-	$query = "SELECT tag FROM tags WHERE post_id = ". $_GET['id'] ."";
-	$result = $db->query($query);
-	$tags = $db->fetch_array($result);
+	$tags = $db->fetch_array("SELECT tag FROM tags WHERE post_id = ". $_GET['id']);
 	
 	
 	//die(var_dump($tags));
