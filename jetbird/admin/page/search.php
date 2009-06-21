@@ -24,17 +24,27 @@
 			if (isset($_POST['submit'])) {
 				$query = "TRUNCATE search_word";
 				$db->query($query);
-
+				$query = 'TRUNCATE search_index';
+				$db->query($query);
 
 				$query = "SELECT * FROM post";
 				$result = $db->query($query);
 				$post = $db->fetch_array($result);
-
+				
+				// Indexing text
 				foreach($post as $post) {
-					$search->index($post['post_content'], $post['post_id'], 1, 1); //indexing text
-					$search->index($post['post_title'], $post['post_id'], 2, 1); //indexing title
+					$search->index($post['post_content'], $post['post_id'], 1); //indexing text
+					$search->index($post['post_title'], $post['post_id'], 2); //indexing title
 				}
-
+				
+				// Indexing Tags
+				$query = "SELECT * FROM tags";
+				$result = $db->query($query);
+				$tags = $db->fetch_array($result);
+				
+				foreach($tags as $tag) {
+					$search-> index($tag['tag'], $tag['post_id'], 3);
+				}
 				if($_POST['method'] == "ajax"){
 					echo "success";
 					die();
@@ -51,6 +61,6 @@
 		break;
 	}
 	
-	$smarty->display("admin.search.tpl");
+	$smarty->display("search.tpl");
 
 ?>

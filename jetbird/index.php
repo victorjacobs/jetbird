@@ -17,7 +17,6 @@
 	*/
 	
 	// Global init
-	define("ADMIN_MODE", false);
 	ob_start();
 	session_start();
 	// Make sure all the data we recieve is UTF-8, 
@@ -50,6 +49,11 @@
 	if(isset($arguments[0]) && !eregi("^[a-z0-9_-]+$", $arguments[0])){
 		redirect("./");
 	}
+	
+	// Just for fun
+	$load = exec('uptime');
+	$load = split('load averages: ', $load);
+	$smarty->assign("server_load", $load[1]);
 	
 	if(isset($arguments)){
 		if(file_exists("page/". $arguments[0] .".php") && is_readable("page/". $arguments[0] .".php")){

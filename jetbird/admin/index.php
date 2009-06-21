@@ -19,7 +19,6 @@
 	// Note: this page is very similar to the main index.php
 	
 	// Global init
-	define("ADMIN_MODE", true);
 	ob_start();
 	session_start();
 	// Make sure all the data we recieve is UTF-8, 
@@ -43,6 +42,7 @@
 	}
 	
 	$smarty = new smarty_glue;
+	$smarty->set_template("admin");
 	
 	// Getting ready for the real deal: including our pages
 	$arguments = array_keys($_GET);

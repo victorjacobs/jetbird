@@ -17,11 +17,16 @@
 
 		<div class="menu">
 			<ul>
-				<li><a href="{if $smarty.const.ADMIN_MODE}.{/if}./">Home</a></li>
-				<li><a href="{if $smarty.const.ADMIN_MODE}../{/if}#">Projects</a></li>
-				<li><a href="{if $smarty.const.ADMIN_MODE}../{/if}?about">About us</a></li>
-				<li><a href="{if $smarty.const.ADMIN_MODE}../{/if}#">Contact</a></li>
+				<li><a href="./">Home</a></li>
+				<li><a href="#">Projects</a></li>
+				<li><a href="./?about">About us</a></li>
+				<li><a href="#">Contact</a></li>
 			</ul>
 		</div>
 		
-		{if isset($smarty.session.login)}{include file="admin.menu.tpl"}{/if}
+		{if isset($smarty.session.login)}
+		<div class="menu">
+			<ul>
+				<li><a href="./admin/">Admin panel</a></li>
+			</ul>
+		</div>{/if}

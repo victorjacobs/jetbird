@@ -20,7 +20,7 @@
 <head>
 	<title>Jetbird{if $smarty.cookies.XDEBUG_PROFILE} &raquo; PROFILER ENABLED{/if}</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<script src="{$template_dir}/js/jquery-1.2.6.js" type="text/javascript"></script>
+	<script src="{$jquery}" type="text/javascript"></script>
 	<script src="{$template_dir}/js/common.js" type="text/javascript"></script>
 	<link type="text/css" rel="stylesheet" media="screen" href="{$template_dir}/css/style.css" />
 	<link href="./feed/" rel="alternate" type="application/rss+xml" title="Jetbird RSS Feed" />
@@ -33,7 +33,7 @@
 		<div id="head">
 			<h1>Jetbird</h1>
 			
-			<form action="{if $smarty.const.ADMIN_MODE}.{/if}./?search&amp;action=search" method="post">
+			<form action="./?search&amp;action=search" method="post">
 				<input id="search" type="text" name="search" accesskey="f" size="24" />
 			</form>
 		</div>

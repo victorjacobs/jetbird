@@ -34,6 +34,6 @@
 	$smarty->assign("comments", $comments);
 	
 	$smarty->assign("queries", $db->queries);
-	$smarty->display('admin.index.tpl');
+	$smarty->display('index.tpl');
 	
 ?>

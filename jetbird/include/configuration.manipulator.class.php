@@ -17,7 +17,7 @@
 	*/
 	
 	class configuration_manipulator{
-		private $out_array = array(), $out_string, $out_temp;
+		private $status, $raw_data, $out_array = array(), $out_string, $out_temp;
 		
 		// Declare some statics
 		const FILE_BASE =
@@ -116,7 +116,7 @@
 		}
 		
 		public function write(){
-			$out = find_dir("include/") . "configuration.php";
+			$out = find("include/") . "configuration.php";
 			
 			if(!($file_handle = fopen($out, "w"))){
 				die("Could not lock $out for writing");
