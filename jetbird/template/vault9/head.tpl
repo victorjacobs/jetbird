@@ -6,6 +6,7 @@
 	<title>Jetbird</title>
 	<link rel="stylesheet" href="{$template_dir}/css/style.css" type="text/css" media="screen" />
 	<link href="./feed/" rel="alternate" type="application/rss+xml" title="Jetbird RSS Feed" />
+	<script src="{$jquery}" type="text/javascript"></script>
 </head>
 
 <body style="background: url({$template_dir}/image/blue_flower/bg.jpg) repeat-y top center #AAAAAA fixed;">
@@ -14,7 +15,7 @@
 
 		<div id="topbar">
 			<div class="alignleft">&nbsp;&nbsp;&nbsp;Server load: {$server_load}</div>
-			{if $smarty.session.login}Logged in as {$smarty.session.user_name|ucfirst} &raquo; <a href="./admin/">Admin panel</a>| <a href="./?logout">Log out</a>{else}<a href="./?login">Log in</a>{/if}
+			{if $smarty.session.login}Welcome {$smarty.session.user_name|ucfirst} &raquo; <a href="./admin/">Admin panel</a>| <a href="./?logout">Log out</a>{else}<a href="./?login">Log in</a>{/if}
 		</div>
 
 	<div id="header">

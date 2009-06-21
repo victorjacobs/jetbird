@@ -2,6 +2,17 @@
 
 	<div id="content">
 		
+		{if empty($posts)}
+		<div class="post">
+			<h2>Welcome to Jetbird v1.0</h2>
+			<small>{$smarty.now|date_format:"%e %B %Y"}</small>
+			
+			<div class="entry">
+				Seems that the owner of this site hasn't posted anything yet!
+				Please come back later.
+			</div>
+		</div>
+		{else}
 		{foreach from=$posts item=post}
 		<div class="post">
 			<h2><a href="./?view&amp;id={$post.post_id}">{$post.post_title}</a></h2>
@@ -28,6 +39,7 @@
 			{if $pagination.prev}<div class="alignleft"><a href="./?page={math equation="x + 1" x=$pagination.page}">&laquo; Previous Entries</a></div>{/if}
 			{if $pagination.next}<div class="alignright"><a href="./?page={math equation="x - 1" x=$pagination.page}">Next Entries &raquo;</a></div>{/if}
 		</div>
+		{/if}
 		{/if}
 		
 	</div>

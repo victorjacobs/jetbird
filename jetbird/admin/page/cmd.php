@@ -21,18 +21,30 @@
 		redirect("./");
 	}
 	
-	switch($action){
-		case "php":
-			
-		break;
+	if(empty($action)) redirect("./");
+	
+	if(isset($_POST['submit'])){
+		if(empty($_POST['command'])) die("nothing entered");
 		
-		case "sql":
+		switch($action){
+			case "php":
+				
+				// First flush anything that might contaminate the buffer
+				ob_flush();
+				
+				// Catch eval() output
+				eval(stripslashes($_POST['command']));
+				$out = ob_get_contents();
+				ob_clean();
+				
+				$smarty->assign("return", $out);
+				
+			break;
 			
-		break;
-		
-		default:
-			redirect("./");
-		break;
+			case "sql":
+				
+			break;
+		}
 	}
 	
 	

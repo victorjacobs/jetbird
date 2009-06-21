@@ -18,13 +18,19 @@
 {include file="head.tpl"}
 
 		<div id="content">
-			{$common_dir}
 			<h2>Command line</h2>
 			<h3>Execute some {if isset($smarty.get.php)}PHP{/if}{if isset($smarty.get.sql)}SQL{/if} right on the server</h3>
 			
+			{if isset($return)}
+			<h2>Script output:</h2>
+			<div style="margin-left:10px; border-style:solid; border-width:1px; margin-right: 35px; padding:5px">
+				{$return}
+			</div>
+			{/if}
+			
 			<form action="./?cmd&amp;{if isset($smarty.get.php)}php{/if}{if isset($smarty.get.sql)}sql{/if}" method="post">
 				<p>
-					<textarea name="command" cols="70" rows="20"></textarea>
+					<textarea name="command" cols="70" rows="20">{if isset($smarty.post.command)}{$smarty.post.command}{/if}</textarea>
 				</p>
 				
 				<p>
