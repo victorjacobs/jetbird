@@ -32,7 +32,7 @@
 	
 	$smarty = new smarty_glue;
 	// Use special template, seperated from normal templates
-	$smarty->set_template("installer");
+	$smarty->set_template("install");
 	
 	// Now the system is bootstrapped, give control to php scripts in page/*
 	$arguments = array_keys($_GET);

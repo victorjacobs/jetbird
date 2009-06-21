@@ -16,18 +16,6 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
-	load("configuration_manipulator");
-	
-	$manipulator = new configuration_manipulator;
-	
-	$manipulator->add_var("global/test", 20);
-	$manipulator->add_var("global/jaja", "aaaa");
-	$manipulator->add_var("tetten/zozo", 200);
-	$manipulator->add_var("database/jazenne", true);
-	
-	$manipulator->write();
-	
-	// $config['global']['ja'] = "u moeder";
-	// echo eval('echo $config["global"]["ja"];');
+	$smarty->display("index.tpl");
 
 ?>

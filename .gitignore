@@ -3,7 +3,6 @@ templates_c/
 cache
 .svn
 .DS_Store
-data/
 .project
 .cache/
 test.php
