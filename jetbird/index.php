@@ -30,8 +30,8 @@
 	
 	load("configuration");
 	// If our configuration isn't set up yet, find installer and redirect
-	if(!file_exists(find_dir("include/") . "configuration.php")){
-		redirect(find_dir("install"));
+	if(!file_exists(find("include/") . "configuration.php")){
+		redirect(find("install"));
 	}else{
 		// Remove installer here
 	}
