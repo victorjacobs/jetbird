@@ -17,5 +17,13 @@
 	*/
 	
 	$smarty->display("index.tpl");
+	
+	if(isset($_POST['submit'])){
+		$db = new database_handler;
+		
+		$db->connect($_POST['user'], $_POST['password'], $_POST['database'], $_POST['host']);
+		
+		var_dump($db);
+	}
 
 ?>

@@ -26,6 +26,7 @@
 	$process_start = timer();		// Use this wherever you want, can be useful for debugging
 	
 	load("smarty_glue");
+	load("database_handler");
 	
 	// Load up a bare configuration, containing some vitals for Smarty
 	require_once "data/configuration.bare.php";
