@@ -25,7 +25,7 @@
 			
 			<p class="postmetadata">
 				<img src="{$template_dir}/image/blog/speech_bubble.gif" alt="" /> {if $post.comment_count == 0}No comments{elseif $post.comment_count == 1}1 comment{else}{$post.comment_count} comments{/if}
-				| <img src="{$template_dir}/image/blog/documents.gif" alt="" /> <i>Tagslist here</i>
+				| <img src="{$template_dir}/image/blog/documents.gif" alt="" /> {if empty($post.tags)}No tags{else}{$post.tags}{/if}
 				<!--| <img src="{$template_dir}/image/blog/permalink.gif" alt="" /> <a href="#" rel="bookmark" title="Permanent Link to test">Permalink</a>-->
 				<br />
 				<img src="{$template_dir}/image/blog/figure_ver1.gif" alt="" /> Posted by {$post.user_name|ucfirst}

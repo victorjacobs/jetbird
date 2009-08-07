@@ -60,21 +60,25 @@
 								comment_status = '". $_POST['comment_status'] ."'
 								WHERE post_id = ". $_GET['id'];
 					$db->query($query);
-
 					
-					//Updating the index of the search engine.
-					$search = new search_class;
-					$search->delete_from_index($_GET['id']);
-					$search->index($post_content, $_GET['id'], 1); //post
-					$search->index($_POST['post_title'], $_GET['id'], 2); //title	
+					// Update tags
+					$db->query("UPDATE tags
+								SET tag = '". $_POST['post_tags'] ."'
+								WHERE post_id = ". $_GET['id']);
+					
+					// Update search index and rss feed
+					search::delete_from_index($_GET['id']);
+					search::add_to_index($post_content, $_GET['id'], search::WEIGHT_POST);			//post
+					search::add_to_index($_POST['post_title'], $_GET['id'], search::WEIGHT_TITLE);  //title	
 					write_rss_feed();
+					
 					redirect("../?view&id=". $_GET['id']);
 					die();
 				}
 			}else{
 				$query = "	SELECT post_content, post_id, post_title, comment_status 
 							FROM post 
-							WHERE post_id =". $_GET['id'];
+							WHERE post_id = ". $_GET['id'];
 						
 				$result = $db->fetch_array($query);
 				
@@ -82,10 +86,12 @@
 				$main['post'] = htmlspecialchars($result[0]["post_content"]);
 				$main['title'] = $result[0]['post_title'];
 				$main['comment_status'] = $result[0]['comment_status'];
+				$main['tags'] = $db->fetch_result("SELECT tag FROM tags WHERE post_id = ". $_GET['id']);
 				
 				$smarty->assign('post_content', $main['post']);
 				$smarty->assign('post_title', $main['title']);
 				$smarty->assign('comment_status', $main['comment_status']);
+				$smarty->assign('post_tags', $main['tags']);
 			}
 			
 		break;
@@ -118,26 +124,26 @@
 					$title = $_POST['post_title'];
 					$post_id = $created_post_id;
 					$tags = $_POST['post_tags'];
-					//indexing the text
 					
-					$search = new search_class;
-					$search->index($text, $post_id, 1); //indexing text.
-					$search->index($title, $post_id, 2); //indexing title.
-					$search->index($tags, $post_id, 3); // indexing tags.
+					// Add new post to index
+					search::index($text, $post_id, search::WEIGHT_POST); //indexing text.
+					search::index($title, $post_id, search::WEIGHT_TITLE); //indexing title.
+					search::index($tags, $post_id, search::WEIGHT_TAG); // indexing tags.
 					
 					write_rss_feed();
 					
 					
-					//updating tags table.
-					$tags = $search->split_text($tags);
+					// updating tags table.
+					$tags = search::split_text($tags);
 					foreach ($tags as $tag) {
 						$query = "INSERT INTO tags (post_id, tag) VALUES ($post_id, '$tag')";
 						$db->query($query);					
 					}
-				redirect('../?view&id='. $created_post_id);
-			}
+					
+					redirect('../?view&id='. $created_post_id);
+				}
 
-		}
+			}
 
 			
 		break;
@@ -168,8 +174,7 @@
 					
 					$delete_post = "DELETE FROM post WHERE post_id = ". $_POST['id'];
 					$delete_comments = "DELETE FROM comment WHERE comment_parent_post_id = ". $_POST['id'];
-					$search = new search_class;
-					$search->delete_from_index($_POST['id']);
+					search::delete_from_index($_POST['id']);
 					
 					if($db->query($delete_post) && $db->query($delete_comments) && $db->query($delete_search)){
 						$success = true;

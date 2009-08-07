@@ -16,55 +16,53 @@
 	    along with Jetbird.  If not, see <http://www.gnu.org/licenses/>.
 	*/
 	
-	class search_class {
-				
-		function debug($var) {					
-			die(var_dump($var));
-		}
+	class search {
+		const WEIGHT_POST = 1;
+		const WEIGHT_TITLE = 2;
+		const WEIGHT_TAG = 3;
 		
-		function cache_result($keywords, $result) {
+		public static function cache_result($keywords, $result) {
 			global $db;
 			foreach ($keywords as $word) {
 				$words .= $word;
 			}
+			
 			$words = md5($words);
 			$result = serialize($result);
 			$date = time();
 			
 			$query = "INSERT INTO search_cache (search_key, search_result, date) VALUES ('". $words ."', '". $result ."', '". $date ."' )";
-			$db->query($query);
+			return $db->query($query);
 		}
 				
-		function find_in_cache($keywords) {
+		public static function find_in_cache($keywords) {
 			global $db;
-			foreach ($keywords as $word) {
+			foreach($keywords as $word){
 				$words .= $word;
 			}
+			
 			$key = md5($words);
 			$query = "SELECT * FROM search_cache WHERE search_key = '". $key ."'";
-			$result = $db->query($query);
-			if(!$result){
+
+			if(!($result = $db->query($query))){
 				return false;
-			} 
-			else
-			{
-				while($row = mysql_fetch_array($result)) {
+			}else{
+				while($row = mysql_fetch_array($result)){
 					$post_id = unserialize($row['search_result']);
 					$time_cache = $row['date'];
 				}
+				
 				$time_now = time();
 				$timediff = $time_now - $time_cache;
 				if($timediff > 3600) {
 					return false;
-				}
-				else
-				{
-				return $post_id;
+				}else{
+					return $post_id;
 				}
 			}	
 		}
 				
-		function clean_text_utf8($text) {
+		private static function clean_text_utf8($text) {
 		$text = stripslashes($text);
 		/*
 		 * Removing HTML tags
@@ -194,32 +192,33 @@
 	    return $text;
 	}
 
-		function split_text($text){								
-			$text = $this->clean_text_utf8($text);	
+		public static function split_text($text){								
+			$text = self::clean_text_utf8($text);	
 			//splitting the words with mb_split as the explode() function isn't safe on UTF-8
-			mb_regex_encoding( "utf-8" );
-			$text = mb_split( ' +', $text );
+			mb_regex_encoding("utf-8");
+			$text = mb_split(' +', $text);
 				
 			return $text;
 		}
 		
-		function get_word_id($words) {			
+		private static function get_word_id($words) {			
 			global $db;
-			$index = $this->get_index();
-			foreach($words as $word) {
+			$index = self::get_index();
+			
+			foreach($words as $word){
 				if(!empty($index[$word])) {
 					$word_id[$word] = $index[$word];
 				}
 			}
-			if(empty($word_id)) {
+			
+			if(empty($word_id)){
 				return false;
-			}
-			else {
+			}else{
 				return $word_id;
 			}
 		}
 		
-		function get_index() {
+		private static function get_index() {
 			global $db;
 			$query = "SELECT * FROM search_index";
 			$result = $db->query($query);
@@ -229,10 +228,10 @@
 			return $index;
 		}
 	
-		function index($text, $post_id, $weight) {
+		public static function add_to_index($text, $post_id, $weight) {
 			global $db;
-			$index = $this->get_index();
-			$text = $this->split_text($text);
+			$index = self::get_index();
+			$text = self::split_text($text);
 			$text = array_unique($text);
 			
 			foreach($text as $word) {
@@ -245,28 +244,25 @@
 							VALUES ('$index[$word]', '$post_id', $weight)";
 				$db->query($query);
 			}
+			
 			return true;
 		}
 	
 	
-		function search($text) {
+		public static function go($text) {
 			global $db;
 	
-			$text = $this->split_text($text);
+			$text = self::split_text($text);
 			//checking cache for a result.
-			$cache = $this->find_in_cache($text);
-			if(!$cache) {
-				$word_id = $this->get_word_id($text);
-				if(!$word_id) {
-					return false;
-				}
+			$cache = self::find_in_cache($text);
+			if(!$cache){
+				$word_id = self::get_word_id($text);
+				if(!$word_id) return false;
 				
-				foreach($word_id as $id) {
-					if(empty($sub_query)) {
+				foreach($word_id as $id){
+					if(empty($sub_query)){
 						$sub_query = " word_id = '". $id ."'";
-					} 
-					else 
-					{
+					}else{
 						$sub_query .= " OR word_id = '". $id ."'";
 					}
 				}
@@ -279,41 +275,38 @@
 				while($row = mysql_fetch_array($result)) {
 					if(!empty($post_id[$row['$post_id']])) {
 						$post_id[$row['post_id']] = $row['weight'];	
-					} else {
+					}else{
 						$weight = $post_id[$row['post_id']] + $row['weight'];
 						$post_id[$row['post_id']] = $weight;
 					}
 				}
+				
 				arsort($post_id);
-				$this->cache_result($text, $post_id);
-				}
-				else
-				{
-					$post_id = $cache;
-				}
-			$post = $this->get_post($post_id);
+				self::cache_result($text, $post_id);
+			}else{
+				$post_id = $cache;
+			}
+				
+			$post = self::get_post($post_id);
 		
 			return $post;
 		}
 		
-		//TODO order it on date, because everything has the same weight here.
-		function search_by_weight($text, $weight) {
+		//TODO order it by date, because everything has the same weight here.
+		public static function search_by_weight($text, $weight) {
 			global $db;
-			$text = $this->split_text($text);
-			$word_id = $this->get_word_id($text);
-			if(!$word_id) {
-				return false;
-			}
+			$text = self::split_text($text);
+			$word_id = self::get_word_id($text);
+			if(!$word_id) return false;
 	
 			foreach($word_id as $id) {
 				if(empty($sub_query)) {
 					$sub_query = " word_id = '". $id ."' AND weight = '". $weight ."'";
-				} 
-				else 
-				{
+				}else{
 					$sub_query .= " OR word_id = '". $id ."' AND weight = '". $weight ."'";
 				}
 			}
+			
 			$query = "  SELECT * 
 						FROM search_word
 						WHERE ". $sub_query."";
@@ -330,12 +323,12 @@
 			}
 			arsort($post_id);
 			
-			$post = $this->get_post($post_id);
+			$post = self::get_post($post_id);
 			return $post;
 		}
 		
 		//TODO: the get_post function actually doesn't belong in the search engine.
-		function get_post($post_id) {
+		private static function get_post($post_id) {
 			$i = 0;
 			global $db;
 			foreach($post_id as $id => $weight) {
@@ -357,9 +350,9 @@
 		return $post;
 		}
 		
-		function delete_from_index($post_id) {
+		public static function delete_from_index($post_id) {
 			global $db;
-			$delete_search = "DELETE FROM search_word WHERE post_id = ". $post_id ."";
+			$query = "DELETE FROM search_word WHERE post_id = ". $post_id;
 			$db->query($query);
 		}
 }

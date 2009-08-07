@@ -41,7 +41,7 @@
 	}
 	
 	// Fetching data from DB, limiting results for pagination
-	$query = "SELECT post.*, user.user_name, (SELECT COUNT(*) FROM comment WHERE post.post_id = comment_parent_post_id) AS comment_count 
+	$query = "SELECT post.*, user.user_name, (SELECT COUNT(*) FROM comment WHERE post.post_id = comment_parent_post_id) AS comment_count, (SELECT tag FROM tags WHERE post.post_id = tags.post_id) AS tags
 				FROM post 
 				INNER JOIN user ON post.post_author = user.user_id 
 				ORDER BY post.post_date DESC

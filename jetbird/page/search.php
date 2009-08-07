@@ -23,26 +23,22 @@
 	
 	switch($_GET['action']) {
 		case "search":
-			$text = $_POST['search'];						
-			$search = new search_class;
+			$text = $_POST['search'];
 			
-			
-			$post = $search->search($text); 
-			if (!$post) {
-				unset ($post);
+			$post = search::go($text); 
+			if(!$post){
+				unset($post);
 			}
 			//die(var_dump($post));
 			$smarty->assign("results", $post);
 		break;
 		
 		case "search_weight":
-			$text = $_GET['text'];						
-			$search = new search_class;
+			$text = $_GET['text'];
 			
-			
-			$post = $search->search_by_weight($text, 3); 
-			if (!$post) {
-				unset ($post);
+			$post = search::search_by_weight($text, 3); 
+			if(!$post){
+				unset($post);
 			}
 			//die(var_dump($post));
 			$smarty->assign("results", $post);
