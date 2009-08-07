@@ -9,8 +9,9 @@
 			
 			<div class="entry">
 				Seems that the owner of this site hasn't posted anything yet!
-				Please come back later.
-			</div>
+				Please come back later.{if $smarty.session.login}<br />
+				<a href="./admin/?post&amp;new">New post</a>
+			</div>{/if}
 		</div>
 		{else}
 		{foreach from=$posts item=post}
@@ -23,7 +24,7 @@
 			</div>
 			
 			<p class="postmetadata">
-				<img src="{$template_dir}/image/blog/speech_bubble.gif" alt="" /> No comments
+				<img src="{$template_dir}/image/blog/speech_bubble.gif" alt="" /> {if $post.comment_count == 0}No comments{elseif $post.comment_count == 1}1 comment{else}{$post.comment_count} comments{/if}
 				| <img src="{$template_dir}/image/blog/documents.gif" alt="" /> <i>Tagslist here</i>
 				<!--| <img src="{$template_dir}/image/blog/permalink.gif" alt="" /> <a href="#" rel="bookmark" title="Permanent Link to test">Permalink</a>-->
 				<br />

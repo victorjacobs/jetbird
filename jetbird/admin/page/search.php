@@ -58,6 +58,10 @@
 		
 		default:
 			$smarty->assign("ask", true);
+			
+			$stats['total_words'] = $db->num_rows("SELECT * FROM search_word");
+			
+			$smarty->assign("stats", $stats);
 		break;
 	}
 	

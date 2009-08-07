@@ -22,6 +22,8 @@
 			<h2>Search</h2>
 			
 			<h3>Statistics</h3>
+			<p>Total words: <b>{$stats.total_words}</b></p>
+			
 			{if $ask === true}
 			<p>
 				<a href="#" name="reindex" class="needs_confirmation">Reindex?</a>

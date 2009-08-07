@@ -41,11 +41,11 @@
 	}
 	
 	// Fetching data from DB, limiting results for pagination
-	$query = "SELECT post.* , user.user_name 
-				FROM post, user
-				WHERE post.post_author = user.user_id
+	$query = "SELECT post.*, user.user_name, (SELECT COUNT(*) FROM comment WHERE post.post_id = comment_parent_post_id) AS comment_count 
+				FROM post 
+				INNER JOIN user ON post.post_author = user.user_id 
 				ORDER BY post.post_date DESC
-				LIMIT ". $pagination_lower_limit .", ". $config['blog']['landing_page_max_posts'];	
+	 			LIMIT ". $pagination_lower_limit .", ". $config['blog']['landing_page_max_posts'];
 	
 	// Figure out what links to show in template, it's better to do this here than in template, would
 	//  be a mess otherwise
