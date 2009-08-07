@@ -26,16 +26,16 @@
 		}
 	}
 	
-	//Checking all incoming Data of the user to prevent attacks.
+	// Checking all incoming Data of the user to prevent attacks.
 	if(!is_numeric($_GET['id'])){
 		redirect("./");
 	}
 	
 	
 	// Post
-	$query = "	SELECT *
+	$query = "	SELECT *, (SELECT tag FROM tags WHERE tags.post_id = '". $_GET['id'] ."') AS tags
 				FROM post, user
-				WHERE post_id = '". mysql_real_escape_string($_GET['id']) ."'
+				WHERE post_id = '". $_GET['id'] ."'
 				AND user.user_id = post.post_author";			
 
 	$result = $db->query($query);

@@ -14,8 +14,8 @@
 			<small>
 				This entry was posted
 
-				on {$post.post_date|date_format:"%e %B %Y at %R"} by {$post.user_name|ucfirst}
-				and is filed under <i>Tags here</i>.
+				on {$post.post_date|date_format:"%e %B %Y at %R"} by {$post.user_name|ucfirst}{if !empty($post.tags)}
+				and is filed under {$post.tags|replace:' ':', '}{/if}.
 				You can follow any responses to this entry through the <a href="./feed/">RSS</a> feed.
 				{if $post.comment_status == "open"}You can <a href="./?view&amp;id={$smarty.get.id}#comments">leave a response
 				{else}Comments are closed{/if}

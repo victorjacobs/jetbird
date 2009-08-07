@@ -19,31 +19,23 @@
 	
 	switch($action){
 		case "reindex":
-			$search = new search_class;
-
 			if (isset($_POST['submit'])) {
-				$query = "TRUNCATE search_word";
-				$db->query($query);
-				$query = 'TRUNCATE search_index';
-				$db->query($query);
+				$db->query("TRUNCATE search_word");
+				$db->query("TRUNCATE search_index");
 
-				$query = "SELECT * FROM post";
-				$result = $db->query($query);
-				$post = $db->fetch_array($result);
+				$post = $db->fetch_array("SELECT * FROM post");
 				
 				// Indexing text
 				foreach($post as $post) {
-					$search->index($post['post_content'], $post['post_id'], 1); //indexing text
-					$search->index($post['post_title'], $post['post_id'], 2); //indexing title
+					search::add_to_index($post['post_content'], $post['post_id'], search::WEIGHT_POST); //indexing text
+					search::add_to_index($post['post_title'], $post['post_id'], serach::WEIGHT_TITLE); //indexing title
 				}
 				
 				// Indexing Tags
-				$query = "SELECT * FROM tags";
-				$result = $db->query($query);
-				$tags = $db->fetch_array($result);
+				$tags = $db->fetch_array("SELECT * FROM tags");
 				
 				foreach($tags as $tag) {
-					$search-> index($tag['tag'], $tag['post_id'], 3);
+					search::add_to_index($tag['tag'], $tag['post_id'], search::WEIGHT_TAG);
 				}
 				if($_POST['method'] == "ajax"){
 					echo "success";

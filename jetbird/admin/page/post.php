@@ -126,9 +126,9 @@
 					$tags = $_POST['post_tags'];
 					
 					// Add new post to index
-					search::index($text, $post_id, search::WEIGHT_POST); //indexing text.
-					search::index($title, $post_id, search::WEIGHT_TITLE); //indexing title.
-					search::index($tags, $post_id, search::WEIGHT_TAG); // indexing tags.
+					search::add_to_index($text, $post_id, search::WEIGHT_POST); //indexing text.
+					search::add_to_index($title, $post_id, search::WEIGHT_TITLE); //indexing title.
+					search::add_to_index($tags, $post_id, search::WEIGHT_TAG); // indexing tags.
 					
 					write_rss_feed();
 					
@@ -176,7 +176,7 @@
 					$delete_comments = "DELETE FROM comment WHERE comment_parent_post_id = ". $_POST['id'];
 					search::delete_from_index($_POST['id']);
 					
-					if($db->query($delete_post) && $db->query($delete_comments) && $db->query($delete_search)){
+					if($db->query($delete_post) && $db->query($delete_comments)){
 						$success = true;
 						@write_rss_feed();				// If file is unreadable, just ignore the error here
 					}else{
