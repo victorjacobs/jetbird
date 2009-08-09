@@ -48,6 +48,7 @@
 	$load = split('load averages: ', $load);
 	$smarty->assign("server_load", $load[1]);
 	
+	// Giving control to page/*.php
 	if(isset($arguments)){
 		if(file_exists("page/". $arguments[0] .".php") && is_readable("page/". $arguments[0] .".php")){
 			require_once "page/". strtolower($arguments[0]) .".php";
