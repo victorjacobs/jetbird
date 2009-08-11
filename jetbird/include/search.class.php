@@ -355,5 +355,7 @@
 			$query = "DELETE FROM search_word WHERE post_id = ". $post_id;
 			$db->query($query);
 		}
-}
+		
+	}
+	
 ?>

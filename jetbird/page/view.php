@@ -33,7 +33,7 @@
 	
 	
 	// Post
-	$query = "	SELECT *, (SELECT tag FROM tags WHERE tags.post_id = '". $_GET['id'] ."') AS tags
+	$query = "	SELECT *
 				FROM post, user
 				WHERE post_id = '". $_GET['id'] ."'
 				AND user.user_id = post.post_author";			
@@ -42,6 +42,13 @@
 	
 	if($db->num_rows($result) == 1){
 		$result = $db->fetch_array($result);
+		$tags = $db->fetch_array("SELECT tag_data FROM tags WHERE post_id = ". $_GET['id']);
+		
+		foreach($tags as $tag){
+			$result[0]['tags'] .= " ". $tag['tag_data'];
+		}
+		$result[0]['tags'] = trim($result[0]['tags']);
+		
 		$smarty->assign("post", $result[0]);
 		
 		if(isset($_GET['page']) && $_GET['page'] <= 1){		// TODO: protect this with some regex or something
@@ -108,12 +115,6 @@
 		unset($_SESSION['comment_data']);
 	}
 	
-	// Getting tags of the post.
-	$tags = $db->fetch_array("SELECT tag FROM tags WHERE post_id = ". $_GET['id']);
-	
-	
-	//die(var_dump($tags));
-	$smarty->assign('tags', $tags);
 	$smarty->assign('queries', $db->queries);	
 	$smarty->display('view.tpl');
 	

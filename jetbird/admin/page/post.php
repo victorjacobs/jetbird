@@ -54,22 +54,29 @@
 					// we should write our own function for this, but now i'm a bit lazy.
 					$post_content = html_entity_decode($_POST['post_content'], UTF-8);
 			
-					$query = "	UPDATE post 
+					$db->query("UPDATE post 
 								SET post_content = '". $post_content ."',
 								post_title = '". $_POST['post_title'] ."',
 								comment_status = '". $_POST['comment_status'] ."'
-								WHERE post_id = ". $_GET['id'];
-					$db->query($query);
-					
-					// Update tags
-					$db->query("UPDATE tags
-								SET tag = '". $_POST['post_tags'] ."'
 								WHERE post_id = ". $_GET['id']);
+					
+					// Update tags, just delete them all and re-import them
+					$db->query("DELETE FROM tags WHERE post_id = ". $_GET['id']);
+					
+					if(!empty($_POST['post_tags'])){
+						$tags = search::split_text($_POST['post_tags']);
+						
+						foreach($tags as $tag){
+							$db->query("INSERT INTO tags (post_id, tag_data)
+										VALUES (". $_GET['id'] .", '". strtolower($tag) ."')");
+						}
+					}
 					
 					// Update search index and rss feed
 					search::delete_from_index($_GET['id']);
 					search::add_to_index($post_content, $_GET['id'], search::WEIGHT_POST);			//post
-					search::add_to_index($_POST['post_title'], $_GET['id'], search::WEIGHT_TITLE);  //title	
+					search::add_to_index($_POST['post_title'], $_GET['id'], search::WEIGHT_TITLE);  //title
+					search::add_to_index($_POST['post_tags'], $_GET['id'], search::WEIGHT_TAGS);	// tags
 					write_rss_feed();
 					
 					redirect("../?view&id=". $_GET['id']);
@@ -86,7 +93,7 @@
 				$main['post'] = htmlspecialchars($result[0]["post_content"]);
 				$main['title'] = $result[0]['post_title'];
 				$main['comment_status'] = $result[0]['comment_status'];
-				$main['tags'] = $db->fetch_result("SELECT tag FROM tags WHERE post_id = ". $_GET['id']);
+				$main['tags'] = $db->fetch_array("SELECT tag_data FROM tags WHERE post_id = ". $_GET['id']);
 				
 				$smarty->assign('post_content', $main['post']);
 				$smarty->assign('post_title', $main['title']);
@@ -134,10 +141,12 @@
 					
 					
 					// updating tags table.
-					$tags = search::split_text($tags);
-					foreach ($tags as $tag) {
-						$query = "INSERT INTO tags (post_id, tag) VALUES ($post_id, '$tag')";
-						$db->query($query);					
+					if(!empty($tags)){
+						$tags = search::split_text($tags);
+						foreach ($tags as $tag) {
+							$query = "INSERT INTO tags (post_id, tag_data) VALUES ($post_id, '$tag')";
+							$db->query($query);					
+						}
 					}
 					
 					redirect('../?view&id='. $created_post_id);

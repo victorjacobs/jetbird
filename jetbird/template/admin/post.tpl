@@ -86,6 +86,11 @@
 								</select>
 							</td>
 						</tr>
+						
+						<tr>
+							<td>Tags</td>
+							<td><input type="text" name="post_tags" size="82" value="{$post_tags}" /></td>
+						</tr>
                 	
 						<tr>
 							<td>&nbsp;</td>
